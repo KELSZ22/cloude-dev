@@ -1,0 +1,2159 @@
+{
+  "verified_at": "2026-10-09T12:47:46.277425+00:00",
+  "books": 129,
+  "asset_statuses": {
+    "downloaded": 248
+  },
+  "reference_statuses": {
+    "downloaded": 888,
+    "restricted": 1292,
+    "external_or_not_downloadable": 180,
+    "no_pdf_published": 6
+  },
+  "downloaded_bytes": 12984572310,
+  "pdfs_inside_archives": [
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.4_CoreqSkills.pdf",
+      "bytes": 548398,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_13.3_CoreqSkills.pdf",
+      "bytes": 415403,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.2_CoreqSkills.pdf",
+      "bytes": 934004,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.5_CoreqSkills.pdf",
+      "bytes": 377757,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_1.2_CoreqSkills.pdf",
+      "bytes": 131082,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_2.3_CoreqSkills.pdf",
+      "bytes": 94910,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_3.4_CoreqSkills.pdf",
+      "bytes": 316196,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_4.2_CoreqSkills.pdf",
+      "bytes": 383173,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.5_CoreqSkills.pdf",
+      "bytes": 381997,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_12.4_CoreqSkills.pdf",
+      "bytes": 408538,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_7.3_CoreqSkills.pdf",
+      "bytes": 634964,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_7.4_CoreqSkills.pdf",
+      "bytes": 318084,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_12.3_CoreqSkills.pdf",
+      "bytes": 451265,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.2_CoreqSkills.pdf",
+      "bytes": 353894,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_3.3_CoreqSkills.pdf",
+      "bytes": 446149,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_2.4_CoreqSkills.pdf",
+      "bytes": 338522,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_1.5_CoreqSkills.pdf",
+      "bytes": 321665,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.2_CoreqSkills.pdf",
+      "bytes": 439278,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.5_CoreqSkills.pdf",
+      "bytes": 1133607,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_13.4_CoreqSkills.pdf",
+      "bytes": 420772,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.3_CoreqSkills.pdf",
+      "bytes": 361649,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.3_CoreqSkills.pdf",
+      "bytes": 686879,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_12.2_CoreqSkills.pdf",
+      "bytes": 887820,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_3.2_CoreqSkills.pdf",
+      "bytes": 493086,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_1.4_CoreqSkills.pdf",
+      "bytes": 260404,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_8.1_CoreqSkills.pdf",
+      "bytes": 138693,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_2.5_CoreqSkills.pdf",
+      "bytes": 374920,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_13.5_CoreqSkills.pdf",
+      "bytes": 339415,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.2_CoreqSkills.pdf",
+      "bytes": 560696,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.3_CoreqSkills.pdf",
+      "bytes": 171799,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.4_CoreqSkills.pdf",
+      "bytes": 628944,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.3_CoreqSkills.pdf",
+      "bytes": 785953,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.4_CoreqSkills.pdf",
+      "bytes": 447708,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.5_CoreqSkills.pdf",
+      "bytes": 405002,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_13.2_CoreqSkills.pdf",
+      "bytes": 446782,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_2.2_CoreqSkills.pdf",
+      "bytes": 362754,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_1.3_CoreqSkills.pdf",
+      "bytes": 55058,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_9.1_CoreqSkills.pdf",
+      "bytes": 189309,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_3.5_CoreqSkills.pdf",
+      "bytes": 330073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_7.2_CoreqSkills.pdf",
+      "bytes": 671463,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_4.3_CoreqSkills.pdf",
+      "bytes": 314376,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.4_CoreqSkills.pdf",
+      "bytes": 167230,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_9.4_CoreqSkills.pdf",
+      "bytes": 332916,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.1_CoreqSkills.pdf",
+      "bytes": 312728,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_13.7_CoreqSkills.pdf",
+      "bytes": 387950,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.6_CoreqSkills.pdf",
+      "bytes": 373955,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.1_CoreqSkills.pdf",
+      "bytes": 388521,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_1.6_CoreqSkills.pdf",
+      "bytes": 134547,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_8.3_CoreqSkills.pdf",
+      "bytes": 456697,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_1.1_CoreqSkills.pdf",
+      "bytes": 94010,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.6_CoreqSkills.pdf",
+      "bytes": 385453,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.1_CoreqSkills.pdf",
+      "bytes": 848111,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.7_CoreqSkills.pdf",
+      "bytes": 358102,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.6_CoreqSkills.pdf",
+      "bytes": 481647,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.8_CoreqSkills.pdf",
+      "bytes": 483484,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_4.1_CoreqSkills.pdf",
+      "bytes": 414974,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_9.3_CoreqSkills.pdf",
+      "bytes": 393354,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_3.7_CoreqSkills.pdf",
+      "bytes": 470355,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_2.1_CoreqSkills.pdf",
+      "bytes": 359534,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_13.1_CoreqSkills.pdf",
+      "bytes": 397002,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.6_CoreqSkills.pdf",
+      "bytes": 115246,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.8_CoreqSkills.pdf",
+      "bytes": 247201,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.7_CoreqSkills.pdf",
+      "bytes": 565804,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_11.7_CoreqSkills.pdf",
+      "bytes": 438174,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_7.1_CoreqSkills.pdf",
+      "bytes": 1034714,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_5.8_CoreqSkills.pdf",
+      "bytes": 433073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_3.6_CoreqSkills.pdf",
+      "bytes": 347981,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_9.2_CoreqSkills.pdf",
+      "bytes": 423514,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_9.5_CoreqSkills.pdf",
+      "bytes": 442683,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_3.1_CoreqSkills.pdf",
+      "bytes": 462832,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_12.1_CoreqSkills.pdf",
+      "bytes": 525378,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.8_CoreqSkills.pdf",
+      "bytes": 2219009,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_10.7_CoreqSkills.pdf",
+      "bytes": 1270678,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_6.1_CoreqSkills.pdf",
+      "bytes": 356787,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_13.6_CoreqSkills.pdf",
+      "bytes": 281018,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+      "member": "OpenStax_AlgebraTrig_8.2_CoreqSkills.pdf",
+      "bytes": 378836,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.4_CoreqSkills.pdf",
+      "bytes": 548398,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_13.3_CoreqSkills.pdf",
+      "bytes": 415403,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.2_CoreqSkills.pdf",
+      "bytes": 934004,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.5_CoreqSkills.pdf",
+      "bytes": 377757,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_1.2_CoreqSkills.pdf",
+      "bytes": 131082,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_2.3_CoreqSkills.pdf",
+      "bytes": 94910,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_3.4_CoreqSkills.pdf",
+      "bytes": 316196,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_4.2_CoreqSkills.pdf",
+      "bytes": 383173,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.5_CoreqSkills.pdf",
+      "bytes": 381997,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_12.4_CoreqSkills.pdf",
+      "bytes": 408538,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_7.3_CoreqSkills.pdf",
+      "bytes": 634964,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_7.4_CoreqSkills.pdf",
+      "bytes": 318084,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_12.3_CoreqSkills.pdf",
+      "bytes": 451265,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.2_CoreqSkills.pdf",
+      "bytes": 353894,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_3.3_CoreqSkills.pdf",
+      "bytes": 446149,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_2.4_CoreqSkills.pdf",
+      "bytes": 338522,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_1.5_CoreqSkills.pdf",
+      "bytes": 321665,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.2_CoreqSkills.pdf",
+      "bytes": 439278,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.5_CoreqSkills.pdf",
+      "bytes": 1133607,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_13.4_CoreqSkills.pdf",
+      "bytes": 420772,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.3_CoreqSkills.pdf",
+      "bytes": 361649,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.3_CoreqSkills.pdf",
+      "bytes": 686879,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_12.2_CoreqSkills.pdf",
+      "bytes": 887820,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_3.2_CoreqSkills.pdf",
+      "bytes": 493086,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_1.4_CoreqSkills.pdf",
+      "bytes": 260404,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_8.1_CoreqSkills.pdf",
+      "bytes": 138693,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_2.5_CoreqSkills.pdf",
+      "bytes": 374920,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_13.5_CoreqSkills.pdf",
+      "bytes": 339415,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.2_CoreqSkills.pdf",
+      "bytes": 560696,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.3_CoreqSkills.pdf",
+      "bytes": 171799,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.4_CoreqSkills.pdf",
+      "bytes": 628944,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.3_CoreqSkills.pdf",
+      "bytes": 785953,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.4_CoreqSkills.pdf",
+      "bytes": 447708,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.5_CoreqSkills.pdf",
+      "bytes": 405002,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_13.2_CoreqSkills.pdf",
+      "bytes": 446782,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_2.2_CoreqSkills.pdf",
+      "bytes": 362754,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_1.3_CoreqSkills.pdf",
+      "bytes": 55058,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_9.1_CoreqSkills.pdf",
+      "bytes": 189309,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_3.5_CoreqSkills.pdf",
+      "bytes": 330073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_7.2_CoreqSkills.pdf",
+      "bytes": 671463,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_4.3_CoreqSkills.pdf",
+      "bytes": 314376,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.4_CoreqSkills.pdf",
+      "bytes": 167230,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_9.4_CoreqSkills.pdf",
+      "bytes": 332916,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.1_CoreqSkills.pdf",
+      "bytes": 312728,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_13.7_CoreqSkills.pdf",
+      "bytes": 387950,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.6_CoreqSkills.pdf",
+      "bytes": 373955,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.1_CoreqSkills.pdf",
+      "bytes": 388521,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_1.6_CoreqSkills.pdf",
+      "bytes": 134547,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_8.3_CoreqSkills.pdf",
+      "bytes": 456697,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_1.1_CoreqSkills.pdf",
+      "bytes": 94010,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.6_CoreqSkills.pdf",
+      "bytes": 385453,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.1_CoreqSkills.pdf",
+      "bytes": 848111,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.7_CoreqSkills.pdf",
+      "bytes": 358102,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.6_CoreqSkills.pdf",
+      "bytes": 481647,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.8_CoreqSkills.pdf",
+      "bytes": 483484,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_4.1_CoreqSkills.pdf",
+      "bytes": 414974,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_9.3_CoreqSkills.pdf",
+      "bytes": 393354,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_3.7_CoreqSkills.pdf",
+      "bytes": 470355,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_2.1_CoreqSkills.pdf",
+      "bytes": 359534,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_13.1_CoreqSkills.pdf",
+      "bytes": 397002,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.6_CoreqSkills.pdf",
+      "bytes": 115246,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.8_CoreqSkills.pdf",
+      "bytes": 247201,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.7_CoreqSkills.pdf",
+      "bytes": 565804,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_11.7_CoreqSkills.pdf",
+      "bytes": 438174,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_7.1_CoreqSkills.pdf",
+      "bytes": 1034714,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_5.8_CoreqSkills.pdf",
+      "bytes": 433073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_3.6_CoreqSkills.pdf",
+      "bytes": 347981,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_9.2_CoreqSkills.pdf",
+      "bytes": 423514,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_9.5_CoreqSkills.pdf",
+      "bytes": 442683,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_3.1_CoreqSkills.pdf",
+      "bytes": 462832,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_12.1_CoreqSkills.pdf",
+      "bytes": 525378,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.8_CoreqSkills.pdf",
+      "bytes": 2219009,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_10.7_CoreqSkills.pdf",
+      "bytes": 1270678,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_6.1_CoreqSkills.pdf",
+      "bytes": 356787,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_13.6_CoreqSkills.pdf",
+      "bytes": 281018,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+      "member": "OpenStax_AlgebraTrig_8.2_CoreqSkills.pdf",
+      "bytes": 378836,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip"
+    },
+    {
+      "archive_path": "files/science/anatomy-and-physiology-2e/anatomy-and-physiology-2e-student-solution-guide-3c1465b06fa5.zip",
+      "member": "Anatomy and Physiology 2e - Student Solution Guide/Anatomy and Physiology 2e - Student Solution Guide.pdf",
+      "bytes": 334349,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Anatomy_and_Physiology_2e_-_Student_Solution_Guide.zip"
+    },
+    {
+      "archive_path": "files/science/biology-ap-courses/student-solutions-manual-apbiology-ba22cfb56357.zip",
+      "member": "AP\u00ae Biology Student Solution Manual Part 1.pdf",
+      "bytes": 17658971,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual-APBiology.zip"
+    },
+    {
+      "archive_path": "files/science/biology-ap-courses/student-solutions-manual-apbiology-ba22cfb56357.zip",
+      "member": "AP\u00ae Biology Student Solution Manual Part 2.pdf",
+      "bytes": 3928728,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual-APBiology.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_8.4.pdf",
+      "bytes": 382840,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.8.pdf",
+      "bytes": 483484,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_8.3.pdf",
+      "bytes": 427071,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_8.2.pdf",
+      "bytes": 869488,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_8.1.pdf",
+      "bytes": 499770,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_9.6.pdf",
+      "bytes": 262889,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_9.7.pdf",
+      "bytes": 356331,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.8.pdf",
+      "bytes": 222407,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_9.5.pdf",
+      "bytes": 322025,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.8.pdf",
+      "bytes": 433073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_9.4.pdf",
+      "bytes": 397211,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_9.1.pdf",
+      "bytes": 365564,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_9.3.pdf",
+      "bytes": 398526,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_9.2.pdf",
+      "bytes": 415425,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_3.4.pdf",
+      "bytes": 316196,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_1.6.pdf",
+      "bytes": 134547,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.2.pdf",
+      "bytes": 439278,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.3.pdf",
+      "bytes": 171799,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.1.pdf",
+      "bytes": 277676,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_3.5.pdf",
+      "bytes": 330073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_3.7.pdf",
+      "bytes": 470355,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_1.5.pdf",
+      "bytes": 321665,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.3.pdf",
+      "bytes": 671153,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.1.pdf",
+      "bytes": 388521,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.2.pdf",
+      "bytes": 333329,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_1.4.pdf",
+      "bytes": 260404,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_3.6.pdf",
+      "bytes": 347981,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_3.2.pdf",
+      "bytes": 493086,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.6.pdf",
+      "bytes": 463797,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.4.pdf",
+      "bytes": 447708,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.5.pdf",
+      "bytes": 377757,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.7.pdf",
+      "bytes": 420956,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_1.1.pdf",
+      "bytes": 94010,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_3.3.pdf",
+      "bytes": 446149,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_3.1.pdf",
+      "bytes": 462832,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_1.3.pdf",
+      "bytes": 55058,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.5.pdf",
+      "bytes": 362160,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.7.pdf",
+      "bytes": 565804,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_5.6.pdf",
+      "bytes": 385453,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_7.4.pdf",
+      "bytes": 138844,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_1.2.pdf",
+      "bytes": 131082,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_4.1.pdf",
+      "bytes": 414974,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.3.pdf",
+      "bytes": 361649,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.2.pdf",
+      "bytes": 560696,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_4.2.pdf",
+      "bytes": 383173,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_2.4.pdf",
+      "bytes": 338522,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_2.5.pdf",
+      "bytes": 374920,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.1.pdf",
+      "bytes": 356787,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_4.3.pdf",
+      "bytes": 314376,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.5.pdf",
+      "bytes": 405002,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_2.1.pdf",
+      "bytes": 359534,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.4.pdf",
+      "bytes": 548398,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.6.pdf",
+      "bytes": 115246,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_2.2.pdf",
+      "bytes": 362754,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_2.3.pdf",
+      "bytes": 94910,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+      "member": "CoReq_Skillsheet_6.7.pdf",
+      "bytes": 358102,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_8.4.pdf",
+      "bytes": 382840,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.8.pdf",
+      "bytes": 483484,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_8.3.pdf",
+      "bytes": 427071,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_8.2.pdf",
+      "bytes": 869488,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_8.1.pdf",
+      "bytes": 499770,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_9.6.pdf",
+      "bytes": 262889,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_9.7.pdf",
+      "bytes": 356331,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.8.pdf",
+      "bytes": 222407,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_9.5.pdf",
+      "bytes": 322025,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.8.pdf",
+      "bytes": 433073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_9.4.pdf",
+      "bytes": 397211,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_9.1.pdf",
+      "bytes": 365564,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_9.3.pdf",
+      "bytes": 398526,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_9.2.pdf",
+      "bytes": 415425,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_3.4.pdf",
+      "bytes": 316196,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_1.6.pdf",
+      "bytes": 134547,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.2.pdf",
+      "bytes": 439278,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.3.pdf",
+      "bytes": 171799,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.1.pdf",
+      "bytes": 277676,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_3.5.pdf",
+      "bytes": 330073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_3.7.pdf",
+      "bytes": 470355,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_1.5.pdf",
+      "bytes": 321665,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.3.pdf",
+      "bytes": 671153,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.1.pdf",
+      "bytes": 388521,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.2.pdf",
+      "bytes": 333329,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_1.4.pdf",
+      "bytes": 260404,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_3.6.pdf",
+      "bytes": 347981,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_3.2.pdf",
+      "bytes": 493086,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.6.pdf",
+      "bytes": 463797,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.4.pdf",
+      "bytes": 447708,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.5.pdf",
+      "bytes": 377757,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.7.pdf",
+      "bytes": 420956,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_1.1.pdf",
+      "bytes": 94010,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_3.3.pdf",
+      "bytes": 446149,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_3.1.pdf",
+      "bytes": 462832,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_1.3.pdf",
+      "bytes": 55058,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.5.pdf",
+      "bytes": 362160,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.7.pdf",
+      "bytes": 565804,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_5.6.pdf",
+      "bytes": 385453,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_7.4.pdf",
+      "bytes": 138844,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_1.2.pdf",
+      "bytes": 131082,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_4.1.pdf",
+      "bytes": 414974,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.3.pdf",
+      "bytes": 361649,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.2.pdf",
+      "bytes": 560696,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_4.2.pdf",
+      "bytes": 383173,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_2.4.pdf",
+      "bytes": 338522,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_2.5.pdf",
+      "bytes": 374920,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.1.pdf",
+      "bytes": 356787,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_4.3.pdf",
+      "bytes": 314376,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.5.pdf",
+      "bytes": 405002,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_2.1.pdf",
+      "bytes": 359534,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.4.pdf",
+      "bytes": 548398,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.6.pdf",
+      "bytes": 115246,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_2.2.pdf",
+      "bytes": 362754,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_2.3.pdf",
+      "bytes": 94910,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+      "member": "CoReq_Skillsheet_6.7.pdf",
+      "bytes": 358102,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_8.4.pdf",
+      "bytes": 382840,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.8.pdf",
+      "bytes": 483484,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_8.3.pdf",
+      "bytes": 427071,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_8.2.pdf",
+      "bytes": 869488,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_8.1.pdf",
+      "bytes": 499770,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_9.6.pdf",
+      "bytes": 262889,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_9.7.pdf",
+      "bytes": 356331,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.8.pdf",
+      "bytes": 222407,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_9.5.pdf",
+      "bytes": 322025,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.8.pdf",
+      "bytes": 433073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_9.4.pdf",
+      "bytes": 397211,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_9.1.pdf",
+      "bytes": 365564,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_9.3.pdf",
+      "bytes": 398526,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_9.2.pdf",
+      "bytes": 415425,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_3.4.pdf",
+      "bytes": 316196,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_1.6.pdf",
+      "bytes": 134547,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.2.pdf",
+      "bytes": 439278,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.3.pdf",
+      "bytes": 171799,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.1.pdf",
+      "bytes": 277676,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_3.5.pdf",
+      "bytes": 330073,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_3.7.pdf",
+      "bytes": 470355,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_1.5.pdf",
+      "bytes": 321665,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.3.pdf",
+      "bytes": 671153,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.1.pdf",
+      "bytes": 388521,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.2.pdf",
+      "bytes": 333329,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_1.4.pdf",
+      "bytes": 260404,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_3.6.pdf",
+      "bytes": 347981,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_3.2.pdf",
+      "bytes": 493086,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.6.pdf",
+      "bytes": 463797,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.4.pdf",
+      "bytes": 447708,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.5.pdf",
+      "bytes": 377757,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.7.pdf",
+      "bytes": 420956,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_1.1.pdf",
+      "bytes": 94010,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_3.3.pdf",
+      "bytes": 446149,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_3.1.pdf",
+      "bytes": 462832,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_1.3.pdf",
+      "bytes": 55058,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.5.pdf",
+      "bytes": 362160,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.7.pdf",
+      "bytes": 565804,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_5.6.pdf",
+      "bytes": 385453,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_7.4.pdf",
+      "bytes": 138844,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_1.2.pdf",
+      "bytes": 131082,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_4.1.pdf",
+      "bytes": 414974,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.3.pdf",
+      "bytes": 361649,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.2.pdf",
+      "bytes": 560696,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_4.2.pdf",
+      "bytes": 383173,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_2.4.pdf",
+      "bytes": 338522,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_2.5.pdf",
+      "bytes": 374920,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.1.pdf",
+      "bytes": 356787,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_4.3.pdf",
+      "bytes": 314376,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.5.pdf",
+      "bytes": 405002,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_2.1.pdf",
+      "bytes": 359534,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.4.pdf",
+      "bytes": 548398,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.6.pdf",
+      "bytes": 115246,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_2.2.pdf",
+      "bytes": 362754,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_2.3.pdf",
+      "bytes": 94910,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+      "member": "OpenStax_Corequisite2e_Skillsheets/CoReq_Skillsheet_6.7.pdf",
+      "bytes": 358102,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip"
+    },
+    {
+      "archive_path": "files/science/concepts-biology/concepts-of-biology-ssm-f1d63a01918d.zip",
+      "member": "Concepts of Biology - SSM/ConceptsofBiology-SSM.pdf",
+      "bytes": 701996,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Concepts_of_Biology_-_SSM.zip"
+    },
+    {
+      "archive_path": "files/math/introductory-business-statistics/business-statistics-try-it-answers-7289830b49cd.zip",
+      "member": "Answers to Try It Exercises/BusinessStatistics-TryItAnswers.pdf",
+      "bytes": 1156517,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Business_Statistics_Try-It_Answers.zip"
+    },
+    {
+      "archive_path": "files/math/introductory-statistics/introductory-statistics-try-it-answers-8bfe8be86d3c.zip",
+      "member": "Answers to Try It Exercises/Statistics-TryItAnswers.pdf",
+      "bytes": 1730999,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introductory_Statistics_Try-it_answers.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch01.pdf",
+      "bytes": 1635500,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch17.pdf",
+      "bytes": 3786905,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch14.pdf",
+      "bytes": 2368794,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch31.pdf",
+      "bytes": 1787128,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch13.pdf",
+      "bytes": 2283577,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch20.pdf",
+      "bytes": 2368382,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch21.pdf",
+      "bytes": 4279676,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch19.pdf",
+      "bytes": 4565360,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch27.pdf",
+      "bytes": 2310268,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch02.pdf",
+      "bytes": 1639965,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch30.pdf",
+      "bytes": 2224697,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch09.pdf",
+      "bytes": 3132687,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch18.pdf",
+      "bytes": 3128941,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch26.pdf",
+      "bytes": 2682134,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch05.pdf",
+      "bytes": 2323806,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch24.pdf",
+      "bytes": 4870967,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch22.pdf",
+      "bytes": 3332140,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch03.pdf",
+      "bytes": 2560911,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch12.pdf",
+      "bytes": 1192419,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch08.pdf",
+      "bytes": 3469850,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch15.pdf",
+      "bytes": 1962683,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch11.pdf",
+      "bytes": 2927936,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch10.pdf",
+      "bytes": 2540959,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch04.pdf",
+      "bytes": 2509416,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch28.pdf",
+      "bytes": 1467831,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch06.pdf",
+      "bytes": 1857557,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch16.pdf",
+      "bytes": 4435195,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch23.pdf",
+      "bytes": 4813336,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch29.pdf",
+      "bytes": 2371331,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch25.pdf",
+      "bytes": 3199824,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    },
+    {
+      "archive_path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+      "member": "OrganicChemistry10e-SSM-Ch07.pdf",
+      "bytes": 2882237,
+      "source_url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip"
+    }
+  ],
+  "failures": []
+}

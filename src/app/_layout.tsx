@@ -69,6 +69,7 @@ export default function RootLayout() {
             name="packs/index"
             options={{ title: "Knowledge Packs" }}
           />
+          <Stack.Screen name="article/[id]" options={{ headerShown: false }} />
         </Stack>
       </ModelProvider>
     </ThemeProvider>
