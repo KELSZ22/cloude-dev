@@ -9,6 +9,7 @@ import { contentSources } from "@/shared/constants/content-sources";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
+import { ChallengeInvite } from "./components/ChallengeInvite";
 import { DashboardActionCard } from "./components/DashboardActionCard";
 import { DashboardHero } from "./components/DashboardHero";
 
@@ -125,23 +126,6 @@ export default function HomePage() {
                 accent={colors.tint}
               />
               <DashboardActionCard
-                label={t("home.addDocuments")}
-                title={t("home.addDocumentsTitle")}
-                href="/import"
-                icon={{
-                  ios: "doc.text",
-                  android: "description",
-                  web: "description",
-                }}
-                accent={colors.accentBlue}
-              />
-              <DashboardActionCard
-                label={t("home.tryChallenge")}
-                title={t("home.tryChallengeTitle")}
-                icon={{ ios: "star.fill", android: "star", web: "star" }}
-                accent={colors.accentGold}
-              />
-              <DashboardActionCard
                 label={t("home.viewLibrary")}
                 title={t("home.viewLibraryTitle")}
                 href="/(tabs)/library"
@@ -150,46 +134,8 @@ export default function HomePage() {
                 useLogo
               />
             </View>
+            <ChallengeInvite />
           </View>
-
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t("home.prepareOffline")}
-            onPress={() => router.navigate("/setup")}
-            style={({ pressed }) => [
-              styles.offline,
-              {
-                backgroundColor: colors.backgroundSelected,
-                borderColor: colors.dashboardBorder,
-              },
-              pressed && styles.pressed,
-            ]}
-          >
-            <SymbolView
-              name={{ ios: "wifi", android: "wifi", web: "wifi" }}
-              size={30}
-              tintColor={colors.tint}
-            />
-            <View style={styles.grow}>
-              <ThemedText type="smallBold">{t("home.prepareOffline")}</ThemedText>
-              <ThemedText
-                type="small"
-                themeColor="textSecondary"
-                style={styles.offlineDescription}
-              >
-                {t("home.prepareOfflineBody")}
-              </ThemedText>
-            </View>
-            <SymbolView
-              name={{
-                ios: "chevron.right",
-                android: "chevron_right",
-                web: "chevron_right",
-              }}
-              size={20}
-              tintColor={colors.tint}
-            />
-          </Pressable>
         </View>
       </ScrollView>
     </ThemedView>
@@ -242,15 +188,5 @@ const styles = StyleSheet.create({
   section: { gap: 12, marginTop: Spacing.one },
   sectionTitle: { fontSize: 18, lineHeight: 24 },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  offline: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    padding: 12,
-    minHeight: 76,
-    borderWidth: 1,
-    borderRadius: 16,
-  },
-  offlineDescription: { fontSize: 12, lineHeight: 16, marginTop: Spacing.one },
   pressed: { opacity: 0.7 },
 });

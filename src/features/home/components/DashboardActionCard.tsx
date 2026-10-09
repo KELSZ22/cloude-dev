@@ -63,7 +63,6 @@ export function DashboardActionCard({ label, title, href, icon, accent, useLogo 
 const styles = StyleSheet.create({
   card: {
     width: "46%",
-    flexGrow: 1,
     minHeight: 112,
     alignItems: "center",
     justifyContent: "center",
