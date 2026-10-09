@@ -1,0 +1,14 @@
+---
+description: Expo SDK alignment, commands, and quality bar for this React Native app
+globs: "{src/**/*.{ts,tsx},app.json,package.json}"
+alwaysApply: false
+---
+
+# Expo / React Native core
+
+- Match APIs to the `expo` major version in `package.json`; verify on https://docs.expo.dev/llms.txt when unsure.
+- Add packages with `bunx expo install <pkg>` — not `bun add` alone for Expo-managed deps.
+- Routes only under `src/app/`; components, hooks, and utils live outside `src/app/`.
+- Prefer Expo modules over random native libs; check docs for SDK support before adding.
+- Native folders from prebuild: configure via `app.json` and plugins, not manual edits unless the team explicitly maintains native projects.
+- Before finishing: `bunx expo lint` and `bunx tsc --noEmit`.

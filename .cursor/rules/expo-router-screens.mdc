@@ -1,0 +1,13 @@
+---
+description: Expo Router file-based routes and navigation in src/app
+globs: src/app/**/*
+alwaysApply: false
+---
+
+# Expo Router screens
+
+- One route per file in `src/app/`; use `_layout.tsx` for navigators and shared providers for that subtree.
+- Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
+- Keep screens thin: compose `@/components/*` and hooks; avoid large inline UI or data layers in route files.
+- Use `router.push` / `router.replace` for imperative navigation; `Link` for tappable navigation.
+- Do not add non-route modules under `src/app/` — they become accidental routes.
