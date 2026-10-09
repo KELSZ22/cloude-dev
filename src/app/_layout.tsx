@@ -1,24 +1,26 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
-
-import { AnimatedSplashOverlay } from '@/shared/components/animated-icon';
-import { AppShell } from '@/shared/components/app-shell';
-import AppTabs from '@/shared/components/app-tabs';
-
-SplashScreen.preventAutoHideAsync();
+import { useColorScheme } from '@/shared/hooks/use-color-scheme';
+import { useTheme } from '@/shared/hooks/use-theme';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const colors = useTheme();
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AppShell>
-        <StatusBar style="auto" />
-        <AnimatedSplashOverlay />
-        <AppTabs />
-      </AppShell>
+      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+      <Stack screenOptions={{
+        headerStyle: { backgroundColor: colors.backgroundElement },
+        headerTintColor: colors.text,
+        contentStyle: { backgroundColor: colors.background },
+      }}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding" options={{ title: 'Offline setup' }} />
+        <Stack.Screen name="import" options={{ title: 'Import a document' }} />
+        <Stack.Screen name="model" options={{ title: 'On-device model' }} />
+        <Stack.Screen name="packs/index" options={{ title: 'Knowledge Packs' }} />
+      </Stack>
     </ThemeProvider>
   );
 }
