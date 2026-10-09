@@ -1,5 +1,6 @@
 export type ModelState =
   | { status: 'not-installed' }
+  | { status: 'unloaded'; modelUri: string }
   | { status: 'loading'; modelUri: string }
   | { status: 'ready'; modelUri: string }
   | { status: 'generating'; modelUri: string }

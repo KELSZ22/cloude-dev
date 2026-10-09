@@ -2,6 +2,7 @@ import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from '@/shared/hooks/use-color-scheme';
 import { useTheme } from '@/shared/hooks/use-theme';
+import { ModelProvider } from '@/shared/providers/model-provider';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -9,6 +10,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ModelProvider>
       <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
       <Stack screenOptions={{
         headerStyle: { backgroundColor: colors.backgroundElement },
@@ -21,6 +23,7 @@ export default function RootLayout() {
         <Stack.Screen name="model" options={{ title: 'On-device model' }} />
         <Stack.Screen name="packs/index" options={{ title: 'Knowledge Packs' }} />
       </Stack>
+      </ModelProvider>
     </ThemeProvider>
   );
 }

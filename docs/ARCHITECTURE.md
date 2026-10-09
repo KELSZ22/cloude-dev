@@ -50,7 +50,7 @@ Routes import public feature `index.ts` exports. Features must not import other 
 
 When the database implementation exists, add a shared services provider at the root for dependency injection. A single model manager will own load/unload, cancellation, and background cleanup; do not store a mutable LLM context in a module global. Add Zustand when ephemeral UI state needs it; persisted records belong in SQLite.
 
-Contracts are types only. There is no simulated search repository or AI engine. `readiness.ts` explicitly describes the unconfigured foundation; replace it with actual adapter health checks when services are connected.
+Database/importer contracts remain type-only. Local inference now has a real adapter: `shared/providers/model-provider.tsx` owns one injected engine and storage instance; native adapters under `infrastructure/llm` manage the context and model files. Web uses unavailable adapters. See `LOCAL-MODEL.md`. No simulated search repository or generated response is supplied. Search/import readiness is still explicitly unconfigured; model status reflects actual storage and native-engine state.
 
 ## Next vertical slice
 
