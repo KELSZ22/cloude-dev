@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Pressable, ScrollView, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/shared/components/themed-text";
@@ -8,9 +9,10 @@ type FilterChipsProps<T extends string> = {
   options: readonly { id: T; label: string }[];
   value: T;
   onChange: (id: T) => void;
+  trailing?: ReactNode;
 };
 
-export function FilterChips<T extends string>({ options, value, onChange }: FilterChipsProps<T>) {
+export function FilterChips<T extends string>({ options, value, onChange, trailing }: FilterChipsProps<T>) {
   const colors = useTheme();
 
   return (
@@ -45,6 +47,7 @@ export function FilterChips<T extends string>({ options, value, onChange }: Filt
           </Pressable>
         );
       })}
+      {trailing}
     </ScrollView>
   );
 }

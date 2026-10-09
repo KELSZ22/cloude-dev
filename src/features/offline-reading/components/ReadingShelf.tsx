@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import { SymbolView } from "expo-symbols";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
@@ -27,9 +28,6 @@ export function ReadingShelf({ query = "", compact = false }: { query?: string; 
   return (
     <View style={styles.shelf}>
       <ThemedText type="smallBold" accessibilityRole="header">{t("reading.savedTitle")}</ThemedText>
-      {!compact ? (
-        <ActionButton label={t("reading.browse")} onPress={() => router.navigate("/(tabs)/search")} />
-      ) : null}
       {!hydrated && !error ? <ActivityIndicator color={colors.tint} accessibilityLabel={t("reading.loading")} /> : null}
       {error ? (
         <View style={styles.shelf}>
@@ -60,23 +58,16 @@ export function ReadingShelf({ query = "", compact = false }: { query?: string; 
             </ThemedText>
           </Pressable>
           {!compact ? (
-            <View style={styles.manage}>
-              {removingId === item.id ? (
-                <>
-                  <ThemedText type="small">{t("reading.removePrompt")}</ThemedText>
-                  <ActionButton label={t("reading.remove")} destructive onPress={() => {
-                    removeCatalog(item.id);
-                    setRemovingId(null);
-                  }} />
-                  <ActionButton label={t("common.cancel")} onPress={() => setRemovingId(null)} />
-                </>
-              ) : (
-                <Pressable accessibilityRole="button" accessibilityLabel={t("reading.removeTitle", { title: item.title })}
-                  onPress={() => setRemovingId(item.id)} style={styles.remove}>
-                  <ThemedText type="small" themeColor="textSecondary">{t("reading.remove")}</ThemedText>
-                </Pressable>
-              )}
-            </View>
+            <RemoveDownload
+              title={item.title}
+              confirming={removingId === item.id}
+              onAsk={() => setRemovingId(item.id)}
+              onConfirm={() => {
+                removeCatalog(item.id);
+                setRemovingId(null);
+              }}
+              onCancel={() => setRemovingId(null)}
+            />
           ) : null}
         </View>
       ))}
@@ -99,22 +90,16 @@ export function ReadingShelf({ query = "", compact = false }: { query?: string; 
             </ThemedText>
           </Pressable>
           {!compact ? (
-            <View style={styles.manage}>
-              {removingId === item.id ? (
-                <>
-                  <ThemedText type="small">{t("reading.removePrompt")}</ThemedText>
-                  <ActionButton label={t("reading.remove")} destructive disabled={!!busyId} onPress={() => {
-                    void remove(item.id).then(() => setRemovingId(null));
-                  }} />
-                  <ActionButton label={t("common.cancel")} disabled={!!busyId} onPress={() => setRemovingId(null)} />
-                </>
-              ) : (
-                <Pressable accessibilityRole="button" accessibilityLabel={t("reading.removeTitle", { title: item.title })}
-                  disabled={!!busyId} onPress={() => setRemovingId(item.id)} style={styles.remove}>
-                  <ThemedText type="small" themeColor="textSecondary">{t("reading.remove")}</ThemedText>
-                </Pressable>
-              )}
-            </View>
+            <RemoveDownload
+              title={item.title}
+              confirming={removingId === item.id}
+              busy={!!busyId}
+              onAsk={() => setRemovingId(item.id)}
+              onConfirm={() => {
+                void remove(item.id).then(() => setRemovingId(null));
+              }}
+              onCancel={() => setRemovingId(null)}
+            />
           ) : null}
         </View>
       ))}
@@ -122,10 +107,63 @@ export function ReadingShelf({ query = "", compact = false }: { query?: string; 
   );
 }
 
+function RemoveDownload({
+  title,
+  confirming,
+  busy = false,
+  onAsk,
+  onConfirm,
+  onCancel,
+}: {
+  title: string;
+  confirming: boolean;
+  busy?: boolean;
+  onAsk: () => void;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  const { t } = useTranslation();
+  const colors = useTheme();
+
+  return (
+    <>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={t("reading.removeTitle", { title })}
+        disabled={busy}
+        onPress={onAsk}
+        style={styles.trash}
+      >
+        <SymbolView
+          name={{ ios: "trash", android: "delete", web: "delete" }}
+          size={18}
+          tintColor={busy ? colors.disabled : colors.error}
+        />
+      </Pressable>
+      {confirming ? (
+        <View style={styles.manage}>
+          <ThemedText type="small">{t("reading.removePrompt")}</ThemedText>
+          <ActionButton label={t("reading.remove")} destructive disabled={busy} onPress={onConfirm} />
+          <ActionButton label={t("common.cancel")} disabled={busy} onPress={onCancel} />
+        </View>
+      ) : null}
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   shelf: { gap: Spacing.three },
   card: { borderWidth: 1, borderRadius: 18, overflow: "hidden" },
-  open: { padding: Spacing.three, gap: Spacing.two, minHeight: 100 },
+  open: { padding: Spacing.three, paddingRight: 52, gap: Spacing.two, minHeight: 100 },
+  trash: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1,
+  },
   manage: { paddingHorizontal: Spacing.three, paddingBottom: Spacing.two, gap: Spacing.two },
-  remove: { minHeight: 44, justifyContent: "center", alignSelf: "flex-start" },
 });

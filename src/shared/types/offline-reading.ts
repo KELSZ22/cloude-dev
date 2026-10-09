@@ -96,6 +96,21 @@ export function isFigureFileName(name: string) {
   return /^fig-[1-8]\.(jpg|png|webp|gif)$/.test(name);
 }
 
+/** Average adult silent reading speed in English. */
+export const READING_WORDS_PER_MINUTE = 238;
+
+export function readingMinutes(sections: readonly { paragraphs: readonly string[] }[]) {
+  let words = 0;
+  for (const section of sections) {
+    for (const paragraph of section.paragraphs) {
+      const trimmed = paragraph.trim();
+      if (trimmed) words += trimmed.split(/\s+/).length;
+    }
+  }
+  if (words === 0) return 1;
+  return Math.max(1, Math.round(words / READING_WORDS_PER_MINUTE));
+}
+
 export function mimeForFigureFile(name: string): ReadingImageMime | null {
   if (name.endsWith(".jpg")) return "image/jpeg";
   if (name.endsWith(".png")) return "image/png";

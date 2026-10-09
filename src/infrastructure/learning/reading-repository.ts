@@ -1,5 +1,5 @@
 import {
-  figureFileName, isFigureFileName, isFigureId, isReadingId, mimeForFigureFile, readingId, ReadingError,
+  figureFileName, isFigureFileName, isFigureId, isReadingId, mimeForFigureFile, readingId, readingMinutes, ReadingError,
   type DisplayFigure, type OpenedReading, type ReadingAsset, type ReadingFigure, type ReadingImageMime,
   type ReadingSummary, type SavedReading,
 } from "../../shared/types/offline-reading";
@@ -70,6 +70,7 @@ function summarize(item: SavedReading, raw: string, extraBytes = 0): ReadingSumm
   const { sections: _sections, figures: _figures, ...summary } = item;
   return {
     ...summary,
+    readMinutes: readingMinutes(item.sections),
     figureCount: item.figures.length,
     sizeBytes: new TextEncoder().encode(raw).byteLength + extraBytes,
   };
@@ -98,7 +99,7 @@ export function createReadingRepository(storage: ReadingStorage) {
         const uri = await storage.readAsset(item.id, figureFileName(figure));
         if (uri) figures.push({ ...figure, uri });
       }
-      return { ...item, figures };
+      return { ...item, figures, readMinutes: readingMinutes(item.sections) };
     },
     async save(item: SavedReading, assets: ReadingAsset[] = []) {
       const raw = JSON.stringify(item);

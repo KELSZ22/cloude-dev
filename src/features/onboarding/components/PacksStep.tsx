@@ -1,50 +1,64 @@
-import { SymbolView } from "expo-symbols";
-import { useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 import { StateFigure } from "@/shared/components/state-figure";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
-import { useTranslation } from "@/shared/i18n";
-import { useKnowledge } from "@/shared/providers/knowledge-provider";
-import { useOnboardingStore } from "@/shared/stores/onboarding-store";
+import { useTranslation, type MessageKey } from "@/shared/i18n";
+import { useOnboardingStore, type OnboardingTopicId } from "@/shared/stores/onboarding-store";
+import { ARTICLES_PER_TOPIC, useTopicPackStore } from "@/shared/stores/topic-pack-store";
 import { SetupStep } from "./SetupStep";
+
+const topicLabelKey = {
+  general: "topics.general",
+  science: "topics.science",
+  technology: "topics.technology",
+  history: "topics.history",
+  health: "topics.health",
+  business: "topics.business",
+  arts: "topics.arts",
+  environment: "topics.environment",
+} as const satisfies Record<OnboardingTopicId, MessageKey>;
 
 export function PacksStep() {
   const colors = useTheme();
   const { t } = useTranslation();
   const complete = useOnboardingStore((state) => state.complete);
-  const knowledge = useKnowledge();
-  const [chosen, setChosen] = useState<readonly string[]>(() =>
-    knowledge.bundled.map((pack) => pack.id),
-  );
+  const topics = useOnboardingStore((state) => state.topics);
+  const preparing = useTopicPackStore((state) => state.preparing);
+  const activeTopic = useTopicPackStore((state) => state.activeTopic);
+  const articleIds = useTopicPackStore((state) => state.articleIds);
+  const savedInTopic = useTopicPackStore((state) => state.savedInTopic);
+  const error = useTopicPackStore((state) => state.error);
+  const ensure = useTopicPackStore((state) => state.ensure);
+  const [pendingStart, setPendingStart] = useState(topics.length > 0);
 
-  const library = knowledge.state;
-  const installed =
-    library.status === "ready" ? library.packs.map((pack) => pack.id) : [];
-  const problem =
-    library.status === "unavailable"
-      ? library.reason
-      : library.status === "error"
-        ? library.message
-        : null;
-  // Nothing can be added until the library opens, so the step offers to move on instead.
-  const pending =
-    library.status === "ready"
-      ? knowledge.bundled.filter(
-          (pack) => chosen.includes(pack.id) && !installed.includes(pack.id),
-        )
-      : [];
-  const passages = knowledge.bundled
-    .filter((pack) => chosen.includes(pack.id) || installed.includes(pack.id))
-    .reduce((total, pack) => total + pack.passages, 0);
+  useEffect(() => {
+    if (!topics.length) {
+      setPendingStart(false);
+      return;
+    }
+    let active = true;
+    setPendingStart(true);
+    void ensure(topics).finally(() => {
+      if (active) setPendingStart(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, [ensure, topics]);
+
+  const savedArticles = topics.reduce(
+    (total, topic) => total + Math.min(ARTICLES_PER_TOPIC, articleIds[topic]?.length ?? 0),
+    0,
+  );
+  const articleTarget = topics.length * ARTICLES_PER_TOPIC;
+  const downloading = topics.length > 0 && (preparing || pendingStart);
 
   function finish() {
-    if (pending.length === 0) return complete();
-    void knowledge
-      .installPacks(pending.map((pack) => pack.id))
-      .then(complete, complete);
+    if (downloading) return;
+    complete();
   }
 
   return (
@@ -52,143 +66,50 @@ export function PacksStep() {
       dotIndex={4}
       title={t("onboarding.packsTitle")}
       body={t("onboarding.packsBody")}
-      primaryLabel={
-        knowledge.installing
-          ? t("onboarding.packsAdding")
-          : pending.length > 0
-            ? t("onboarding.packsAdd", { count: pending.length })
-            : t("onboarding.packsFinish")
-      }
+      primaryLabel={downloading ? t("onboarding.packsDownloading") : t("onboarding.packsFinish")}
       onPrimary={finish}
-      primaryDisabled={knowledge.installing || library.status === "opening"}
+      primaryDisabled={downloading}
     >
-      <View style={styles.figure}>
+      <View style={styles.loading}>
+        {downloading ? (
+          <ActivityIndicator color={colors.tint} accessibilityLabel={t("onboarding.packsDownloading")} />
+        ) : null}
         <StateFigure
-          tone={passages > 0 ? "active" : "cost"}
-          value={passages.toString()}
+          tone={downloading ? "active" : savedArticles > 0 ? "done" : "cost"}
+          label={downloading ? t("onboarding.packsDownloading") : undefined}
+          value={savedArticles.toString()}
           unit={t("onboarding.passages")}
-          caption={t("onboarding.packsCaption")}
-          progress={null}
+          caption={
+            downloading && activeTopic
+              ? t("library.packPreparing", {
+                  topic: t(topicLabelKey[activeTopic]),
+                  count: savedInTopic,
+                  total: ARTICLES_PER_TOPIC,
+                })
+              : t("onboarding.packsCaption")
+          }
+          progress={articleTarget > 0 ? savedArticles / articleTarget : null}
         />
       </View>
-
-      {problem ? (
-        <ThemedText
-          type="small"
-          themeColor="textSecondary"
-          style={styles.problem}
-        >
-          {problem}
-        </ThemedText>
+      {error ? (
+        <View style={styles.errorRow}>
+          <ThemedText type="small" accessibilityRole="alert" style={{ color: colors.error }}>
+            {t(`reading.errors.${error}`)}
+          </ThemedText>
+          <Pressable accessibilityRole="button" onPress={() => void ensure(topics)} style={styles.retry}>
+            <ThemedText type="smallBold" themeColor="tint">{t("reading.retry")}</ThemedText>
+          </Pressable>
+        </View>
       ) : null}
-
-      <View style={styles.list}>
-        {knowledge.bundled.map((pack) => {
-          const added = installed.includes(pack.id);
-          const selected = added || chosen.includes(pack.id);
-          return (
-            <Pressable
-              key={pack.id}
-              accessibilityRole="checkbox"
-              accessibilityState={{
-                checked: selected,
-                disabled: added || !!problem,
-              }}
-              accessibilityLabel={pack.title}
-              disabled={added || !!problem || knowledge.installing}
-              onPress={() =>
-                setChosen((current) =>
-                  current.includes(pack.id)
-                    ? current.filter((id) => id !== pack.id)
-                    : [...current, pack.id],
-                )
-              }
-              style={[
-                styles.pack,
-                {
-                  backgroundColor: selected
-                    ? colors.backgroundSelected
-                    : colors.backgroundElement,
-                  borderColor: selected ? colors.tint : colors.dashboardBorder,
-                },
-              ]}
-            >
-              <View
-                style={[
-                  styles.tick,
-                  {
-                    backgroundColor: selected ? colors.tint : "transparent",
-                    borderColor: selected
-                      ? colors.tint
-                      : colors.dashboardBorder,
-                  },
-                ]}
-              >
-                {selected ? (
-                  <SymbolView
-                    name={{ ios: "checkmark", android: "check", web: "check" }}
-                    size={13}
-                    tintColor={colors.backgroundElement}
-                  />
-                ) : null}
-              </View>
-              <View style={styles.packBody}>
-                <ThemedText type="smallBold" style={styles.packTitle}>
-                  {pack.title}
-                </ThemedText>
-                <ThemedText type="small" themeColor="textSecondary">
-                  {t("onboarding.packMeta", {
-                    passages: pack.passages,
-                    language: pack.language.toUpperCase(),
-                    license: pack.license,
-                  })}
-                </ThemedText>
-                <ThemedText
-                  type="small"
-                  themeColor="textSecondary"
-                  numberOfLines={3}
-                >
-                  {pack.description}
-                </ThemedText>
-                {added ? (
-                  <ThemedText type="small" themeColor="tint">
-                    {t("onboarding.packAdded")}
-                  </ThemedText>
-                ) : null}
-              </View>
-            </Pressable>
-          );
-        })}
-        <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
-          {t("onboarding.packsLater")}
-        </ThemedText>
-      </View>
+      <ThemedText type="small" themeColor="textSecondary">
+        {t("onboarding.packsLater")}
+      </ThemedText>
     </SetupStep>
   );
 }
 
 const styles = StyleSheet.create({
-  figure: { marginBottom: Spacing.three },
-  problem: { marginBottom: Spacing.three },
-  list: { gap: Spacing.two },
-  pack: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    gap: Spacing.two,
-    borderWidth: 1,
-    borderRadius: 20,
-    padding: Spacing.three,
-  },
-  tick: {
-    width: 22,
-    height: 22,
-    borderRadius: 7,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 2,
-  },
-  packBody: { flex: 1, gap: 2 },
-  packTitle: { fontSize: 15, lineHeight: 21 },
-  note: { marginTop: Spacing.one },
+  loading: { gap: Spacing.three, marginBottom: Spacing.three },
+  errorRow: { gap: Spacing.two, marginBottom: Spacing.three },
+  retry: { alignSelf: "flex-start" },
 });

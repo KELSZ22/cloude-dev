@@ -61,6 +61,7 @@ type OnboardingState = {
   step: OnboardingStep;
   language: AppLocale;
   topics: OnboardingTopicId[];
+  customTopics: string[];
   setHasHydrated: (value: boolean) => void;
   next: () => void;
   back: () => void;
@@ -68,8 +69,25 @@ type OnboardingState = {
   complete: () => void;
   setLanguage: (language: AppLocale) => void;
   toggleTopic: (id: OnboardingTopicId) => void;
+  addCustomTopic: (label: string) => string | null;
   resetTour: () => void;
 };
+
+function savedCustomTopics(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+  const topics: string[] = [];
+  for (const item of value) {
+    if (typeof item !== "string") continue;
+    const topic = item.trim().replace(/\s+/g, " ").slice(0, 40);
+    const key = topic.toLowerCase();
+    if (topic.length < 2 || seen.has(key)) continue;
+    seen.add(key);
+    topics.push(topic);
+    if (topics.length >= 12) break;
+  }
+  return topics;
+}
 
 const stepIndex = (step: OnboardingStep) => ONBOARDING_STEPS.indexOf(step);
 
@@ -81,11 +99,13 @@ export const useOnboardingStore = create<OnboardingState>()(
       step: "splash",
       language: deviceLocale(),
       topics: [],
+      customTopics: [],
       setHasHydrated: (value) => set({ hasHydrated: value }),
       next: () => {
         const index = stepIndex(get().step);
-        const nextStep = ONBOARDING_STEPS[index + 1];
+        const nextStep = index >= 0 ? ONBOARDING_STEPS[index + 1] : undefined;
         if (nextStep) set({ step: nextStep });
+        else set({ completed: true, step: "splash" });
       },
       back: () => {
         const index = stepIndex(get().step);
@@ -103,6 +123,16 @@ export const useOnboardingStore = create<OnboardingState>()(
             : [...topics, id],
         });
       },
+      addCustomTopic: (label) => {
+        const topic = savedCustomTopics([label])[0];
+        if (!topic) return null;
+        const current = savedCustomTopics(get().customTopics);
+        const existing = current.find((item) => item.toLowerCase() === topic.toLowerCase());
+        if (existing) return existing;
+        if (current.length >= 12) return null;
+        set({ customTopics: [...current, topic] });
+        return topic;
+      },
       resetTour: () => set({ completed: false, step: "splash" }),
     }),
     {
@@ -114,17 +144,24 @@ export const useOnboardingStore = create<OnboardingState>()(
         step: state.completed ? "splash" : state.step,
         language: state.language,
         topics: state.topics,
+        customTopics: state.customTopics,
       }),
       merge: (persisted, current) => {
         if (!persisted || typeof persisted !== "object") return current;
         const saved = persisted as Partial<OnboardingState> & {
           language?: unknown;
+          customTopics?: unknown;
+          step?: unknown;
         };
-        const { language: stored, ...rest } = saved;
+        const { language: stored, customTopics: storedTopics, step: storedStep, completed, ...rest } = saved;
+        const step = ONBOARDING_STEPS.find((item) => item === storedStep);
         return {
           ...current,
           ...rest,
+          step: step ?? current.step,
+          completed: completed ?? current.completed,
           language: savedLocale(stored) ?? current.language,
+          customTopics: savedCustomTopics(storedTopics),
         };
       },
     },
