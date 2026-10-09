@@ -1,6 +1,12 @@
+import { useEventListener } from "expo";
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
 import { SymbolView } from "expo-symbols";
+import { useVideoPlayer, VideoView } from "expo-video";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
+import { useReducedMotion } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/shared/components/themed-text";
@@ -9,14 +15,43 @@ import { useColorScheme } from "@/shared/hooks/use-color-scheme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 
+const mascotWave = require("@/assets/dashboard/dashboard.mp4");
+
 export function DashboardHero() {
   const colors = useTheme();
   const { t } = useTranslation();
   const isDark = useColorScheme() === "dark";
+  const reducedMotion = useReducedMotion();
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const height = Math.max(220, Math.min(width * 0.7, 300)) + insets.top;
   const headerColor = isDark ? Colors.dark.text : Colors.light.brand;
+  const [waving, setWaving] = useState(false);
+  const player = useVideoPlayer(mascotWave, (player) => {
+    player.loop = false;
+    player.muted = true;
+  });
+
+  useEventListener(player, "playToEnd", () => {
+    setWaving(false);
+  });
+  useEventListener(player, "statusChange", ({ status }) => {
+    if (status === "error") setWaving(false);
+  });
+
+  // The view has to be mounted before play(), so the picture stays underneath and the wave
+  // is only revealed once this visit's playback actually starts.
+  useFocusEffect(
+    useCallback(() => {
+      if (reducedMotion) return;
+      player.replay();
+      player.play();
+      setWaving(true);
+      return () => {
+        player.pause();
+      };
+    }, [player, reducedMotion]),
+  );
 
   return (
     <View style={[styles.hero, { height }]}>
@@ -28,12 +63,33 @@ export function DashboardHero() {
         accessibilityLabel=""
         style={StyleSheet.absoluteFill}
       />
-      {isDark ? (
-        <View
+      {reducedMotion ? null : (
+        <VideoView
+          player={player}
+          nativeControls={false}
+          contentFit="cover"
+          surfaceType="textureView"
           pointerEvents="none"
-          style={[styles.shade, { backgroundColor: Colors.dark.background }]}
+          accessible={false}
+          style={[
+            StyleSheet.absoluteFill,
+            styles.wave,
+            { opacity: waving ? 1 : 0 },
+          ]}
         />
-      ) : null}
+      )}
+      <LinearGradient
+        pointerEvents="none"
+        colors={
+          isDark
+            ? ["rgba(13,27,42,0.88)", "rgba(13,27,42,0.42)", "rgba(13,27,42,0)"]
+            : ["rgba(13,27,42,0.62)", "rgba(13,27,42,0.26)", "rgba(13,27,42,0)"]
+        }
+        locations={[0, 0.12, 0.25]}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 0 }}
+        style={styles.shade}
+      />
       <View style={[styles.header, { paddingTop: insets.top + Spacing.two }]}>
         <View accessible accessibilityLabel="Seekora" style={styles.brand}>
           <Image
@@ -77,7 +133,10 @@ export function DashboardHero() {
 
 const styles = StyleSheet.create({
   hero: { overflow: "hidden" },
-  shade: { ...StyleSheet.absoluteFill, opacity: 0.45 },
+  // A video is a replaced element, so pinning its edges does not shrink it. Without an
+  // explicit size it stays at its own pixel size and the hero clips the middle out.
+  wave: { width: "100%", height: "100%" },
+  shade: { ...StyleSheet.absoluteFill },
   header: {
     flexDirection: "row",
     alignItems: "center",
