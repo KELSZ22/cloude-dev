@@ -14,5 +14,5 @@ export function ModelStatus() {
     : !native ? 'Use an Android development build for local inference.'
     : installed ? 'Qwen3.5 0.8B is stored on this device. Offline research also requires a local search index.'
     : 'Import the selected Qwen3.5 GGUF from your device. No model is downloaded automatically.';
-  return <StatusCard title={title} description={description} />;
+  return <StatusCard variant="ai" title={title} description={description} />;
 }

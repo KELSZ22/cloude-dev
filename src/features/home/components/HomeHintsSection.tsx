@@ -1,25 +1,36 @@
-import type { ReactNode } from 'react';
-import { StyleSheet } from 'react-native';
+import type { ReactNode } from "react";
+import { StyleSheet } from "react-native";
 
-import { HintRow } from '@/shared/components/hint-row';
-import { ThemedText } from '@/shared/components/themed-text';
-import { ThemedView } from '@/shared/components/themed-view';
-import { Spacing } from '@/shared/constants/theme';
+import { HintRow } from "@/shared/components/hint-row";
+import { ThemedText } from "@/shared/components/themed-text";
+import { ThemedView } from "@/shared/components/themed-view";
+import { Spacing } from "@/shared/constants/theme";
+import { useTheme } from "@/shared/hooks/use-theme";
 
 type HomeHintsSectionProps = {
   devMenuHint: ReactNode;
 };
 
 export function HomeHintsSection({ devMenuHint }: HomeHintsSectionProps) {
+  const theme = useTheme();
   return (
     <ThemedView style={styles.section}>
-      <ThemedText type="smallBold" themeColor="textSecondary" style={styles.label}>
+      <ThemedText
+        type="smallBold"
+        themeColor="textSecondary"
+        style={styles.label}
+      >
         Get started
       </ThemedText>
-      <ThemedView type="backgroundElement" style={styles.group}>
+      <ThemedView
+        type="backgroundElement"
+        style={[styles.group, { borderColor: theme.border }]}
+      >
         <HintRow
           title="Try editing"
-          hint={<ThemedText type="code">src/features/home/HomePage.tsx</ThemedText>}
+          hint={
+            <ThemedText type="code">src/features/home/HomePage.tsx</ThemedText>
+          }
         />
         <HintRow title="Dev tools" hint={devMenuHint} last={false} />
         <HintRow
@@ -38,12 +49,13 @@ const styles = StyleSheet.create({
   },
   label: {
     marginHorizontal: Spacing.four,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
     letterSpacing: 0.6,
   },
   group: {
     marginHorizontal: Spacing.four,
+    borderWidth: 1,
     borderRadius: 12,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
 });

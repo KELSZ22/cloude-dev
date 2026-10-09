@@ -16,7 +16,7 @@ export function HintRow({ title = 'Try editing', hint = 'app/index.tsx', last = 
   const theme = useTheme();
 
   return (
-    <View style={[styles.row, !last && { borderBottomColor: theme.separator, borderBottomWidth: StyleSheet.hairlineWidth }]}>
+    <View style={[styles.row, !last && { borderBottomColor: theme.border, borderBottomWidth: StyleSheet.hairlineWidth }]}>
       <ThemedText type="default">{title}</ThemedText>
       <View style={styles.hint}>{hint}</View>
     </View>
