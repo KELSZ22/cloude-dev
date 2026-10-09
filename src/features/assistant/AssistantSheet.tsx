@@ -3,23 +3,23 @@ import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useRef, useState } from "react";
 import {
-  KeyboardAvoidingView,
-  Modal,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  useWindowDimensions,
-  View,
+    AppState,
+    KeyboardAvoidingView,
+    Modal,
+    Platform,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    useWindowDimensions,
+    View,
 } from "react-native";
 import Animated, {
-  Easing,
-  runOnJS,
-  useAnimatedStyle,
-  useReducedMotion,
-  useSharedValue,
-  withTiming,
+    Easing,
+    useAnimatedStyle,
+    useReducedMotion,
+    useSharedValue,
+    withTiming,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -28,11 +28,14 @@ import { ThemedView } from "@/shared/components/themed-view";
 import { Fonts, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
-import { assistantModelStatus, type AssistantModelStatus } from "@/shared/lib/assistant-status";
-import { useOnboardingStore } from "@/shared/stores/onboarding-store";
+import {
+    assistantModelStatus,
+    type AssistantModelStatus,
+} from "@/shared/lib/assistant-status";
 import { useKnowledge } from "@/shared/providers/knowledge-provider";
 import { useModel } from "@/shared/providers/model-provider";
 import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
+import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import type { SourceCitation } from "@/shared/types/knowledge";
 
 import { ChatThread, type ChatMessage } from "./components/ChatThread";
@@ -52,7 +55,9 @@ export function AssistantSheet() {
   const requestId = useAssistantSheetStore((state) => state.requestId);
   const articleTitle = useAssistantSheetStore((state) => state.articleTitle);
   const pageText = useAssistantSheetStore((state) => state.pageText);
-  const closeAssistant = useAssistantSheetStore((state) => state.closeAssistant);
+  const closeAssistant = useAssistantSheetStore(
+    (state) => state.closeAssistant,
+  );
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
@@ -103,7 +108,8 @@ export function AssistantSheet() {
   }, [t]);
 
   useEffect(() => {
-    pageRef.current = articleTitle && pageText ? { title: articleTitle, text: pageText } : null;
+    pageRef.current =
+      articleTitle && pageText ? { title: articleTitle, text: pageText } : null;
   }, [articleTitle, pageText]);
 
   useEffect(() => {
@@ -111,17 +117,30 @@ export function AssistantSheet() {
   }, [travel, width]);
 
   useEffect(() => {
-    openRef.current = open;
     if (!presented) return;
     const duration = reducedMotion ? 0 : open ? 320 : 240;
-    progress.value = withTiming(
-      open ? 1 : 0,
-      { duration, easing: open ? Easing.out(Easing.cubic) : Easing.in(Easing.cubic) },
-      (finished) => {
-        if (finished && !openRef.current) runOnJS(setPresented)(false);
-      },
-    );
+    progress.value = withTiming(open ? 1 : 0, {
+      duration,
+      easing: open ? Easing.out(Easing.cubic) : Easing.in(Easing.cubic),
+    });
+    if (open) return;
+    // The modal is transparent and covers the screen, so it must always be removed once the sheet has
+    // slid away. A timer does that even if the animation is interrupted; reopening cancels it.
+    const timer = setTimeout(() => setPresented(false), duration + 60);
+    return () => clearTimeout(timer);
   }, [open, presented, progress, reducedMotion]);
+
+  // A system dialog (the microphone permission prompt, for one) pauses the app. On return Android can
+  // show the sheet at its starting, off-screen position, leaving an empty window that blocks every tap.
+  // Moving the value again puts the open sheet back on screen.
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (next) => {
+      if (next !== "active" || !useAssistantSheetStore.getState().open) return;
+      progress.value = 0.98;
+      progress.value = withTiming(1, { duration: 120 });
+    });
+    return () => subscription.remove();
+  }, [progress]);
 
   const slide = useAnimatedStyle(() => ({
     transform: [{ translateX: (1 - progress.value) * travel.value }],
@@ -175,7 +194,9 @@ export function AssistantSheet() {
     if (!open || !articleTitle || requestId === 0) return;
     if (handledRequest.current === requestId) return;
     handledRequest.current = requestId;
-    void submitRef.current(tRef.current("assistant.aboutArticle", { title: articleTitle }));
+    void submitRef.current(
+      tRef.current("assistant.aboutArticle", { title: articleTitle }),
+    );
   }, [open, articleTitle, requestId]);
 
   useEffect(() => {
@@ -186,7 +207,10 @@ export function AssistantSheet() {
   function openSource(citation: SourceCitation) {
     if (citation.chunkId.startsWith("page:")) return;
     closeAssistant();
-    router.push({ pathname: "/passage/[chunkId]", params: { chunkId: citation.chunkId } });
+    router.push({
+      pathname: "/passage/[chunkId]",
+      params: { chunkId: citation.chunkId },
+    });
   }
 
   const canSend = draft.trim().length > 0 && !busy;
@@ -221,7 +245,11 @@ export function AssistantSheet() {
                 style={styles.back}
               >
                 <SymbolView
-                  name={{ ios: "chevron.left", android: "arrow_back", web: "arrow_back" }}
+                  name={{
+                    ios: "chevron.left",
+                    android: "arrow_back",
+                    web: "arrow_back",
+                  }}
                   size={22}
                   tintColor={colors.text}
                 />
@@ -230,13 +258,24 @@ export function AssistantSheet() {
                 source={require("@/assets/seekora-assistant.png")}
                 accessibilityLabel={t("assistant.avatar")}
                 contentFit="cover"
-                style={[styles.headerAvatar, { borderColor: colors.dashboardBorder }]}
+                style={[
+                  styles.headerAvatar,
+                  { borderColor: colors.dashboardBorder },
+                ]}
               />
               <View style={styles.headerText}>
-                <ThemedText type="smallBold" accessibilityRole="header" style={styles.title}>
+                <ThemedText
+                  type="smallBold"
+                  accessibilityRole="header"
+                  style={styles.title}
+                >
                   {t("assistant.chatTitle")}
                 </ThemedText>
-                <ThemedText type="small" themeColor="textSecondary" style={styles.status}>
+                <ThemedText
+                  type="small"
+                  themeColor="textSecondary"
+                  style={styles.status}
+                >
                   {t(statusKey[assistantModelStatus(model)])}
                 </ThemedText>
               </View>
@@ -252,7 +291,9 @@ export function AssistantSheet() {
                 messages={messages}
                 streamed={streamed}
                 pageById={pageById}
-                onPage={(id, page) => setPageById((current) => ({ ...current, [id]: page }))}
+                onPage={(id, page) =>
+                  setPageById((current) => ({ ...current, [id]: page }))
+                }
                 onOpenSource={openSource}
                 onLoadModel={() => {
                   void model.loadModel();
@@ -288,7 +329,9 @@ export function AssistantSheet() {
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel={
-                  listening ? t("assistant.stopVoice") : t("assistant.startVoice")
+                  listening
+                    ? t("assistant.stopVoice")
+                    : t("assistant.startVoice")
                 }
                 accessibilityState={{ disabled: busy, selected: listening }}
                 disabled={busy}
@@ -298,7 +341,9 @@ export function AssistantSheet() {
                 style={[
                   styles.mic,
                   {
-                    borderColor: listening ? colors.tint : colors.dashboardBorder,
+                    borderColor: listening
+                      ? colors.tint
+                      : colors.dashboardBorder,
                     backgroundColor: listening
                       ? colors.backgroundSelected
                       : colors.backgroundElement,
@@ -318,7 +363,11 @@ export function AssistantSheet() {
               <TextInput
                 value={draft}
                 onChangeText={setDraft}
-                placeholder={messages.length > 0 ? t("assistant.followUp") : t("assistant.askFirst")}
+                placeholder={
+                  messages.length > 0
+                    ? t("assistant.followUp")
+                    : t("assistant.askFirst")
+                }
                 placeholderTextColor={colors.textSecondary}
                 accessibilityLabel={t("assistant.questionLabel")}
                 editable={!busy}
@@ -339,7 +388,9 @@ export function AssistantSheet() {
               />
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={busy ? t("assistant.stop") : t("assistant.send")}
+                accessibilityLabel={
+                  busy ? t("assistant.stop") : t("assistant.send")
+                }
                 disabled={!busy && !canSend}
                 onPress={() => {
                   if (busy) stop();
@@ -347,14 +398,21 @@ export function AssistantSheet() {
                 }}
                 style={[
                   styles.send,
-                  { backgroundColor: busy || canSend ? colors.tint : colors.disabled },
+                  {
+                    backgroundColor:
+                      busy || canSend ? colors.tint : colors.disabled,
+                  },
                 ]}
               >
                 <SymbolView
                   name={
                     busy
                       ? { ios: "stop.fill", android: "stop", web: "stop" }
-                      : { ios: "arrow.up", android: "arrow_upward", web: "arrow_upward" }
+                      : {
+                          ios: "arrow.up",
+                          android: "arrow_upward",
+                          web: "arrow_upward",
+                        }
                   }
                   size={18}
                   tintColor={colors.backgroundElement}
@@ -378,7 +436,12 @@ const styles = StyleSheet.create({
     gap: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  back: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
+  back: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   headerAvatar: { width: 32, height: 32, borderRadius: 10, borderWidth: 1 },
   headerText: { flex: 1, minWidth: 0 },
   title: { fontSize: 17, lineHeight: 22 },

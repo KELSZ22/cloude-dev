@@ -68,9 +68,10 @@ export default function RootLayout() {
                 name="onboarding"
                 options={{ headerShown: false, animation: "fade" }}
               />
+              {/* These screens carry their own large title, so the header is just the way back. */}
               <Stack.Screen
                 name="setup"
-                options={{ title: t("stack.offlineSetup") }}
+                options={{ title: "", headerShadowVisible: false }}
               />
               <Stack.Screen
                 name="import"
@@ -78,7 +79,7 @@ export default function RootLayout() {
               />
               <Stack.Screen
                 name="model"
-                options={{ title: t("stack.onDeviceModel") }}
+                options={{ title: "", headerShadowVisible: false }}
               />
               <Stack.Screen
                 name="packs/index"
@@ -98,7 +99,7 @@ export default function RootLayout() {
               />
               <Stack.Screen
                 name="floating-assistant"
-                options={{ title: t("stack.floatingAssistant") }}
+                options={{ title: "", headerShadowVisible: false }}
               />
             </Stack>
             <AssistantSheet />

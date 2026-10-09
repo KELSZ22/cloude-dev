@@ -5,11 +5,14 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 
-export function SettingsRow({
+/** A row the user can act on. Without `onPress` it reads as a feature that is not ready yet. */
+export function ActionRow({
   icon,
   label,
   value,
   onPress,
+  disabled = false,
+  destructive = false,
   first = false,
 }: {
   icon: SymbolViewProps["name"];
@@ -17,41 +20,43 @@ export function SettingsRow({
   value?: string;
   /** Omit to render the row as not yet available. */
   onPress?: () => void;
+  /** Set when the action exists but cannot run right now. */
+  disabled?: boolean;
+  destructive?: boolean;
   first?: boolean;
 }) {
   const colors = useTheme();
   const { t } = useTranslation();
   const available = Boolean(onPress);
   const soon = t("common.comingSoon");
+  const inactive = !available || disabled;
+  const labelColor = inactive
+    ? colors.textSecondary
+    : destructive
+      ? colors.error
+      : colors.text;
 
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={
-        available
-          ? value
-            ? `${label}, ${value}`
-            : label
-          : `${label}, ${soon}`
+        available ? (value ? `${label}, ${value}` : label) : `${label}, ${soon}`
       }
-      accessibilityState={{ disabled: !available }}
-      disabled={!available}
+      accessibilityState={{ disabled: inactive }}
+      disabled={inactive}
       onPress={onPress}
       style={({ pressed }) => [
         styles.row,
         !first && { borderTopWidth: 1, borderTopColor: colors.border },
-        pressed && available && { backgroundColor: colors.backgroundSelected },
+        pressed && !inactive && { backgroundColor: colors.backgroundSelected },
       ]}
     >
       <SymbolView
         name={icon}
         size={21}
-        tintColor={available ? colors.text : colors.textSecondary}
+        tintColor={inactive ? colors.textSecondary : destructive ? colors.error : colors.text}
       />
-      <ThemedText
-        type="small"
-        style={[styles.label, !available && { color: colors.textSecondary }]}
-      >
+      <ThemedText type="small" style={[styles.label, { color: labelColor }]}>
         {label}
       </ThemedText>
       {available ? (
@@ -67,11 +72,7 @@ export function SettingsRow({
             </ThemedText>
           ) : null}
           <SymbolView
-            name={{
-              ios: "chevron.right",
-              android: "chevron_right",
-              web: "chevron_right",
-            }}
+            name={{ ios: "chevron.right", android: "chevron_right", web: "chevron_right" }}
             size={18}
             tintColor={colors.textSecondary}
           />

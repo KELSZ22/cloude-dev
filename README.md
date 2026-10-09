@@ -47,6 +47,8 @@ After adding a route file, run `bunx expo customize tsconfig.json` (or start the
 
 The `android/` directory is generated and git-ignored. Do not edit it by hand; change `app.json` or a config plugin and run `bunx expo prebuild --platform android --no-install`. iOS builds require macOS or EAS.
 
+Run that prebuild command again after pulling a change to the `plugins` list in `app.json`. `expo run:android` reuses an existing `android/` folder as it is, so a plugin added by a teammate is not applied until then. The symptom is a feature that never asks for its permission: voice input, for example, needs the `RECORD_AUDIO` entry that the `expo-speech-recognition` plugin writes into the manifest.
+
 The first build compiles native code for every library and takes a long time. To build one ABI and limit memory use:
 
 ```bash

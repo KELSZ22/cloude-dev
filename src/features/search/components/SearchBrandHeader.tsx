@@ -1,5 +1,4 @@
 import { Image } from "expo-image";
-import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { Pressable, StyleSheet, View } from "react-native";
 
@@ -44,18 +43,6 @@ export function SearchBrandHeader() {
           />
           <View style={[styles.badge, { borderColor: colors.background }]} />
         </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={t("home.openSettings")}
-          onPress={() => router.navigate("/(tabs)/settings")}
-          style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
-        >
-          <SymbolView
-            name={{ ios: "gearshape", android: "settings", web: "settings" }}
-            size={22}
-            tintColor={iconColor}
-          />
-        </Pressable>
       </View>
     </View>
   );
@@ -87,5 +74,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#F97316",
     borderWidth: 1.5,
   },
-  pressed: { opacity: 0.6 },
 });

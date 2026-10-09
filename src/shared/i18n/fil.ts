@@ -213,7 +213,6 @@ export const fil = {
     hello: "Kumusta!",
     greeting: "Ano ang gusto mong tuklasin ngayon?",
     notificationsSoon: "Mga abiso, malapit na",
-    openSettings: "Buksan ang mga setting",
   },
   library: {
     title: "Aking Aklatan",
@@ -400,13 +399,19 @@ export const fil = {
   },
   setup: {
     title: "Maghanda para sa offline",
-    description:
-      "Maaari mong i-explore ang app habang hindi pa tapos ang setup.",
-    searchTitle: "Hindi pa handa ang paghahanap",
-    searchBody:
-      "Mag-browse ng mga textbook at resource ng OpenStax mula sa content/openstax. Kailangan pa ng lokal na index para sa buong PDF search.",
-    continueSearch: "Magpatuloy sa Paghahanap",
-    reviewModel: "Suriin ang mga kinakailangan ng modelo",
+    stateReady: "Handa offline",
+    stateReadyBody: "Mga siping mababasa at mahahanap kahit walang koneksyon",
+    stateEmpty: "Wala pang offline",
+    stateEmptyBody:
+      "Magdagdag ng knowledge pack para makabasa at makahanap nang walang koneksyon",
+    rowPacks: "Mga knowledge pack",
+    packCount: "{{count}} naka-install",
+    rowModel: "Modelo ng AI",
+    rowReadings: "Mga naka-save na babasahin",
+    readingCount: "{{count}} naka-save",
+    rowSearch: "Hanapin sa aklatan mo",
+    rowUnavailable: "Hindi available dito",
+    note: "Nasa teleponong ito ang lahat ng nakalista. Hindi kailangan ng koneksyon para hanapin ito.",
   },
   import: {
     title: "Mag-import ng lokal na kaalaman",
@@ -432,14 +437,25 @@ export const fil = {
   model: {
     description:
       "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
-    cardBody:
-      "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito. Binubuksan ng import ang file picker ng telepono; kung Google Drive o Recent ang lumabas, buksan ang menu nito at piliin ang Downloads. Walang ina-upload.",
+    stateReady: "Handa na",
+    stateReadyBody: "Sumasagot sa mga tanong mo sa teleponong ito",
+    stateResting: "Naka-set up",
+    stateRestingBody: "Nasa teleponong ito, naghihintay na i-load",
+    stateMissing: "Hindi pa naka-set up",
+    stateMissingBody: "Kasama sa app, hindi pa nabubuksan",
+    stateSettingUp: "Ini-set up",
+    stateUnavailable: "Hindi available dito",
+    loadIntoMemory: "I-load ang modelo",
+    rowModel: "Modelo",
+    rowStorage: "Storage",
+    rowLicence: "Lisensya",
+    rowTest: "Subukan ang assistant",
+    rowUnload: "I-unload sa memory",
+    rowRemove: "Alisin ang modelo",
+    privacyNote:
+      "Nananatili sa teleponong ito ang mga tanong at sagot mo. Walang ina-upload, may koneksyon man o wala.",
     setUpBundled: "I-set up ang modelong kasama sa app na ito",
-    openDownload: "Buksan ang download ng modelo (529 MB · online)",
-    importGguf: "Mag-import ng lokal na GGUF",
-    verifyLoad: "I-verify at i-load ang modelo",
-    unload: "I-unload ang modelo",
-    removeFiles: "Alisin ang mga file ng modelo",
+    openDownload: "I-download ang file ng modelo (529 MB · kailangan ng koneksyon)",
     removeTitle: "Alisin ang lokal na modelo?",
     removeBody:
       "Buburahin nito ang kopya ng modelong pag-aari ng app at magpapalaya ng storage. Mananatili ang orihinal mong file.",
@@ -453,10 +469,7 @@ export const fil = {
     choosing: "Piliin ang GGUF file sa iyong device.",
     updating: "Ina-update ang estado ng modelo…",
     cancelOperation: "Kanselahin ang operasyon",
-    testTitle: "Subukan ang lokal na inference",
-    testBody:
-      "Magpapadala ito ng nakapirming instruksyon sa on-device na modelo. Runtime check ito, hindi isang sagot na may source.",
-    runTest: "Patakbuhin ang lokal na test",
+    testTitle: "Resulta ng pagsubok",
     devBuildTitle: "Kailangan ng development build",
     devBuildBody:
       "Hindi kayang patakbuhin ng Expo Go ang llama.rn. Gumagamit ang loading ng hangganan sa CPU. Kailangan pa ring i-validate sa device ang performance at memory. Ina-unload ang modelo kapag napunta sa background ang app.",
@@ -466,7 +479,7 @@ export const fil = {
     generating: "Gumagawa ang lokal na modelo",
     installedNotLoaded: "Naka-install ang modelo · hindi naka-load",
     notInstalled: "Hindi naka-install ang modelo",
-    webBody: "Gumamit ng Android development build para sa lokal na inference.",
+    webBody: "Kailangan ng assistant ang Android o iOS na app",
     preparingBody:
       "Inihahanda ang built-in na Qwen3.5 0.8B. Sandali lang ito sa unang pagkakataon.",
     runningBody:
@@ -478,8 +491,7 @@ export const fil = {
   },
   floating: {
     introTitle: "I-enable ang Lumulutang na Assistant",
-    introBody:
-      "Payagan ang Seekora na magpakita ng lumulutang na assistant sa ibabaw ng ibang app para magamit mo ang iyong offline na AI companion habang ginagamit ang iyong telepono.",
+    introBody: "I-on ito para maabot ang Seekora mula sa loob ng ibang app mo",
     featureBubble: "Lumulutang na bubble na may Seekora assistant",
     featureAsk: "Magtanong habang nasa kahit anong app",
     featureVoice:
@@ -501,11 +513,19 @@ export const fil = {
     successScreen:
       "May pagsusuri ng screen, na may pahintulot mo sa bawat pagkakataon",
     getStarted: "Magsimula",
+    stateOn: "Tumatakbo",
+    stateOff: "Naka-off",
+    stateUnavailable: "Hindi available dito",
+    on: "Naka-on",
+    off: "Naka-off",
+    rowNotifications: "Status notification",
+    rowScreenText: "Teksto sa screen",
+    rowScreenKept: "Nasa memory",
+    rowScreenNone: "Wala",
     unavailableTitle: "Hindi available dito",
     unavailableBody:
-      "Kailangan ng lumulutang na assistant ang Android app. Hindi ito available sa web preview, o sa build na ginawa bago idinagdag ang feature na ito.",
-    statusOn:
-      "Naka-on. Nananatili ang bubble sa screen sa ibabaw ng ibang app.",
+      "Kailangan ng lumulutang na assistant ang Android app. Hindi ito available sa web preview.",
+    statusOn: "Nananatili ang bubble sa screen sa ibabaw ng ibang app mo",
     statusOff: "Naka-off",
     turnOn: "I-on ang lumulutang na assistant",
     turnOff: "I-off ang lumulutang na assistant",
@@ -515,12 +535,12 @@ export const fil = {
     openPermission: "Buksan ang mga setting ng pahintulot ng Android",
     screenTitle: "Tungkol sa pagsusuri ng screen",
     screenBody:
-      "Binabasa lang ng Seekora ang iyong screen kapag pinindot mo ang Suriin at inaprubahan mo ang kahilingan ng Android. Kumukuha ito ng isang larawan, binabasa ang teksto sa device na ito, at itinatapon ang larawan. Walang ina-upload o sine-save. Hindi mababasa ang mga app na humaharang sa capture, gaya ng mga screen ng password at bayad. Teksto lang ang naiintindihan, hindi mga larawan o chart.",
+      "Binabasa lang ng Seekora ang screen mo kapag pinindot mo ang Suriin at inaprubahan ang kahilingan ng Android. Kumukuha ito ng isang larawan, binabasa ang teksto sa teleponong ito, at itinatapon ang larawan. Hindi mababasa ang mga screen ng password at bayad.",
     modelTitle: "Parehong modelo, parehong telepono",
     modelBody:
       "Ginagamit ng assistant ang on-device na modelong na-set up mo na, at kailangang tumatakbo ang Seekora sa background. Kapag sarado ang Seekora, hihilingin ng bubble na buksan mo itong muli.",
     resetBubble: "I-reset ang posisyon ng bubble",
-    clearContext: "Burahin ang pansamantalang konteksto ng screen",
+    clearContext: "Kalimutan ang teksto sa screen",
     contextKept:
       "Nakatabi sa memory ang teksto mula sa huli mong screen capture.",
     contextNone: "Walang nakatabing teksto ng screen.",
