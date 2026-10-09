@@ -10,6 +10,7 @@ import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
+import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
 
 import { articleById, type SearchKind } from "./catalog";
 
@@ -26,6 +27,7 @@ export default function ArticlePage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const article = articleById(typeof id === "string" ? id : "");
   const [saved, setSaved] = useState(false);
+  const openAssistant = useAssistantSheetStore((state) => state.openAssistant);
 
   if (!article) {
     return (
@@ -147,7 +149,7 @@ export default function ArticlePage() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t("article.askAi")}
-          onPress={() => router.navigate("/(tabs)/assistant")}
+          onPress={() => openAssistant({ articleTitle: article.title })}
           style={({ pressed }) => [
             styles.ask,
             { backgroundColor: pressed ? colors.tintPressed : colors.tint },

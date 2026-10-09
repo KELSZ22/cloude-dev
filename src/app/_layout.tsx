@@ -10,6 +10,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 
+import { AssistantSheet } from "@/features/assistant";
 import { Fonts } from "@/shared/constants/theme";
 import { useColorScheme } from "@/shared/hooks/use-color-scheme";
 import { useTranslation } from "@/shared/i18n";
@@ -85,6 +86,7 @@ export default function RootLayout() {
                 options={{ title: t("stack.floatingAssistant") }}
               />
             </Stack>
+            <AssistantSheet />
           </FloatingAssistantProvider>
         </ModelProvider>
       </KnowledgeProvider>

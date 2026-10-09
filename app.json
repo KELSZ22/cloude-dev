@@ -69,7 +69,14 @@
         }
       ],
       "expo-font",
-      "expo-localization"
+      "expo-localization",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Seekora uses the microphone so you can ask questions by voice. Audio stays on your device.",
+          "speechRecognitionPermission": "Seekora converts your speech to text on your device so you can ask questions without typing."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

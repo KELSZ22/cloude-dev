@@ -76,7 +76,7 @@ export default function SearchPage() {
   }
 
   return (
-    <ThemedView style={styles.screen}>
+    <ThemedView type="backgroundWarm" style={styles.screen}>
       {noResults ? <LeafDecor width={130} /> : null}
       <ScrollView
         keyboardShouldPersistTaps="handled"
