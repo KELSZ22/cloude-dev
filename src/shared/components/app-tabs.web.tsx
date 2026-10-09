@@ -45,7 +45,10 @@ function TabButton({ children, isFocused, icon, ...props }: TabButtonProps) {
   return (
     <Pressable
       {...props}
-      style={({ pressed }) => [styles.tabButton, pressed && styles.pressed]}
+      style={({ pressed }) => [
+        styles.tabButton,
+        (pressed || isFocused) && { backgroundColor: theme.backgroundSelected },
+      ]}
       accessibilityRole="tab"
       accessibilityState={{ selected: Boolean(isFocused) }}
     >
@@ -74,8 +77,8 @@ function CustomTabList(props: TabListProps) {
       style={[
         styles.tabBar,
         {
-          backgroundColor: theme.background,
-          borderTopColor: theme.separator,
+          backgroundColor: theme.backgroundElement,
+          borderTopColor: theme.border,
           paddingBottom: Math.max(insets.bottom, Spacing.two),
         },
       ]}
@@ -110,8 +113,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 2,
     paddingVertical: Spacing.one,
-  },
-  pressed: {
-    opacity: 0.7,
   },
 });

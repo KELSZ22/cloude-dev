@@ -18,10 +18,10 @@ export function Collapsible({
 
   return (
     <ThemedView
-      type="backgroundElement"
+      type={isOpen ? 'backgroundSelected' : 'backgroundElement'}
       style={
         !last && {
-          borderBottomColor: theme.separator,
+          borderBottomColor: theme.border,
           borderBottomWidth: StyleSheet.hairlineWidth,
         }
       }
@@ -33,10 +33,10 @@ export function Collapsible({
         onPress={() => setIsOpen((value) => !value)}
         style={({ pressed }) => [
           styles.heading,
-          pressed && styles.pressedHeading,
+          (pressed || isOpen) && { backgroundColor: theme.backgroundSelected },
         ]}
       >
-        <ThemedText style={styles.title}>{title}</ThemedText>
+        <ThemedText style={styles.title} themeColor={isOpen ? 'tint' : 'text'}>{title}</ThemedText>
         <SymbolView
           name={{
             ios: "chevron.right",
@@ -65,9 +65,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: Spacing.two,
-  },
-  pressedHeading: {
-    opacity: 0.7,
   },
   title: {
     flex: 1,
