@@ -1,4 +1,5 @@
 import { useColorScheme } from "@/shared/hooks/use-color-scheme";
+import { useInitializeTheme } from "@/shared/hooks/use-initialize-theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { ModelProvider } from "@/shared/providers/model-provider";
 import { useHydrateOnboardingStore } from "@/shared/stores/onboarding-store";
@@ -8,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const colors = useTheme();
+  useInitializeTheme();
   useHydrateOnboardingStore();
 
   return (

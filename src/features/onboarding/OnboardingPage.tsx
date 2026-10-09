@@ -22,16 +22,18 @@ export default function OnboardingPage() {
 
   return (
     <ThemedView type="backgroundElement" style={styles.screen}>
-      <LeafDecor />
       <View
         style={[
           styles.frame,
           {
-            paddingTop: insets.top + Spacing.two,
-            paddingBottom: insets.bottom + Spacing.two,
+            paddingTop: step === "preferences" ? insets.top + Spacing.two : 0,
+            paddingBottom: step === "splash" ? 0 : insets.bottom + Spacing.two,
           },
         ]}
       >
+        {step !== "splash" ? (
+          <LeafDecor showRight={step === "preferences"} />
+        ) : null}
         {step === "splash" ? <WelcomeStep /> : null}
         {step === "intro1" ? (
           <IntroStep
@@ -57,5 +59,11 @@ export default function OnboardingPage() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  frame: { flex: 1, width: "100%", maxWidth: 430, alignSelf: "center" },
+  frame: {
+    flex: 1,
+    width: "100%",
+    maxWidth: 430,
+    alignSelf: "center",
+    overflow: "hidden",
+  },
 });

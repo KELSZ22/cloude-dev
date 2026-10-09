@@ -1,13 +1,15 @@
+import { Image } from "expo-image";
 import { useEffect } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/shared/components/themed-text";
-import { Spacing } from "@/shared/constants/theme";
+import { Colors, Spacing } from "@/shared/constants/theme";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { BrandMark } from "./BrandMark";
-import { MascotScene } from "./MascotScene";
 
 export function WelcomeStep() {
+  const insets = useSafeAreaInsets();
   const next = useOnboardingStore((state) => state.next);
 
   useEffect(() => {
@@ -22,14 +24,22 @@ export function WelcomeStep() {
       onPress={next}
       style={styles.screen}
     >
-      <MascotScene scene="welcome" />
-      <BrandMark size={72} />
-      <ThemedText type="title" accessibilityRole="header" style={styles.title}>
-        ARALSEARCH
-      </ThemedText>
-      <ThemedText themeColor="textSecondary" style={styles.tagline}>
-        Discover. Learn. Grow. Anywhere.
-      </ThemedText>
+      <Image
+        source={require("@/assets/splash/splash.jpg")}
+        accessible={false}
+        accessibilityLabel=""
+        contentFit="cover"
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={[styles.brand, { paddingTop: insets.top + Spacing.five }]}>
+        <BrandMark size={64} />
+        <ThemedText type="title" accessibilityRole="header" style={styles.title}>
+          ARALSEARCH
+        </ThemedText>
+        <ThemedText style={styles.tagline}>
+          {"Discover. Learn. Grow.\nAnywhere."}
+        </ThemedText>
+      </View>
     </Pressable>
   );
 }
@@ -37,11 +47,24 @@ export function WelcomeStep() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+  brand: {
     alignItems: "center",
-    justifyContent: "center",
-    gap: Spacing.three,
+    gap: Spacing.two,
     paddingHorizontal: Spacing.four,
   },
-  title: { textAlign: "center" },
-  tagline: { textAlign: "center" },
+  title: {
+    textAlign: "center",
+    color: Colors.light.brand,
+    textShadowColor: Colors.light.backgroundElement,
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 8,
+  },
+  tagline: {
+    textAlign: "center",
+    color: Colors.light.brand,
+    textShadowColor: Colors.light.backgroundElement,
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 8,
+  },
 });

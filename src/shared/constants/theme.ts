@@ -13,6 +13,11 @@ export const Colors = {
     backgroundSecondary: "#E5F8F4",
     /** White surface — cards, sheets and input backgrounds */
     backgroundElement: "#FFFFFF",
+    /** Warm canvas and colored accents for the illustrated dashboard. */
+    backgroundWarm: "#FFFCF5",
+    dashboardBorder: "#BEDDDD",
+    accentBlue: "#009AAF",
+    accentGold: "#E9A008",
     /** Light green tint — selected cards and AI panels */
     backgroundSelected: "#E4F5EE",
     /** Captions, metadata and hints */
@@ -32,6 +37,10 @@ export const Colors = {
     background: "#0D1B2A",
     backgroundSecondary: "#122A28",
     backgroundElement: "#162638",
+    backgroundWarm: "#0D1B2A",
+    dashboardBorder: "#365653",
+    accentBlue: "#007F94",
+    accentGold: "#B77905",
     backgroundSelected: "#193C35",
     textSecondary: "#A7B5C6",
     tint: "#34D399",

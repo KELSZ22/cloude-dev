@@ -17,7 +17,8 @@ export function StepDots({ total, index }: { total: number; index: number }) {
           style={[
             styles.dot,
             {
-              width: i === index ? 22 : 8,
+              width: i === index ? 10 : 8,
+              height: i === index ? 10 : 8,
               backgroundColor: i === index ? colors.tint : colors.disabled,
             },
           ]}
@@ -28,6 +29,6 @@ export function StepDots({ total, index }: { total: number; index: number }) {
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: "row", alignItems: "center", gap: Spacing.one },
+  row: { flexDirection: "row", alignItems: "center", gap: Spacing.two },
   dot: { height: 8, borderRadius: 999 },
 });

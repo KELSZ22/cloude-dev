@@ -8,7 +8,7 @@ const tabs: { name: string; title: string; icon: SymbolViewProps["name"] }[] = [
   {
     name: "index",
     title: "Home",
-    icon: { ios: "house", android: "home", web: "home" },
+    icon: { ios: "house.fill", android: "home", web: "home" },
   },
   {
     name: "search",
@@ -19,15 +19,15 @@ const tabs: { name: string; title: string; icon: SymbolViewProps["name"] }[] = [
     name: "library",
     title: "Library",
     icon: {
-      ios: "books.vertical",
-      android: "library_books",
-      web: "library_books",
+      ios: "book",
+      android: "menu_book",
+      web: "menu_book",
     },
   },
   {
     name: "assistant",
-    title: "Assistant",
-    icon: { ios: "bubble.left", android: "chat_bubble", web: "chat_bubble" },
+    title: "AI",
+    icon: { ios: "sparkles", android: "auto_awesome", web: "auto_awesome" },
   },
   {
     name: "settings",

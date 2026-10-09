@@ -1,67 +1,42 @@
-import { StyleSheet } from "react-native";
-import { SymbolView } from "expo-symbols";
+import { Image } from "expo-image";
+import { StyleSheet, View } from "react-native";
 
-import { useTheme } from "@/shared/hooks/use-theme";
-
-export function LeafDecor() {
-  const colors = useTheme();
+export function LeafDecor({ showRight = true }: { showRight?: boolean }) {
   return (
-    <>
-      <SymbolView
-        name={{ ios: "leaf.fill", android: "eco", web: "eco" }}
-        size={88}
-        tintColor={colors.tint}
-        style={styles.topLeft}
-      />
-      <SymbolView
-        name={{ ios: "leaf.fill", android: "eco", web: "eco" }}
-        size={72}
-        tintColor={colors.tint}
-        style={styles.topRight}
-      />
-      <SymbolView
-        name={{ ios: "leaf.fill", android: "eco", web: "eco" }}
-        size={96}
-        tintColor={colors.tint}
+    <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+      <Image
+        source={require("@/assets/elements/left-leaves.png")}
+        accessible={false}
+        accessibilityLabel=""
+        contentFit="contain"
         style={styles.bottomLeft}
       />
-      <SymbolView
-        name={{ ios: "leaf.fill", android: "eco", web: "eco" }}
-        size={80}
-        tintColor={colors.tint}
-        style={styles.bottomRight}
-      />
-    </>
+      {showRight ? (
+        <Image
+          source={require("@/assets/elements/right-leaves.png")}
+          accessible={false}
+          accessibilityLabel=""
+          contentFit="contain"
+          style={styles.bottomRight}
+        />
+      ) : null}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  topLeft: {
-    position: "absolute",
-    top: -12,
-    left: -16,
-    opacity: 0.22,
-    transform: [{ rotate: "-24deg" }],
-  },
-  topRight: {
-    position: "absolute",
-    top: 8,
-    right: -18,
-    opacity: 0.18,
-    transform: [{ rotate: "28deg" }],
-  },
   bottomLeft: {
     position: "absolute",
-    bottom: 48,
-    left: -22,
-    opacity: 0.16,
-    transform: [{ rotate: "16deg" }],
+    bottom: 0,
+    left: 0,
+    width: 120,
+    aspectRatio: 704 / 434,
   },
   bottomRight: {
     position: "absolute",
-    bottom: 36,
-    right: -20,
-    opacity: 0.2,
-    transform: [{ rotate: "-18deg" }],
+    bottom: 0,
+    right: 0,
+    width: 120,
+    aspectRatio: 638 / 422,
   },
 });
