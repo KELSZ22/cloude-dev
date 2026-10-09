@@ -2,6 +2,8 @@ import {
   figureFileName,
   ReadingError,
   readingId,
+  readingMinutes,
+  type DisplayFigure,
   type ReadingAsset,
   type ReadingDownload,
   type ReadingFigure,
@@ -17,7 +19,7 @@ const MAX_EXTRACT = 1_000_000;
 const MAX_FIGURES = 8;
 const MAX_FIGURE_BYTES = 400_000;
 const MIN_FIGURE_WIDTH = 240;
-const DECORATIVE = /logo|icon|ambox|symbol_|speaker|wiktionary|wikibooks|commons-logo|edit-clear|question.?book|padlock|disambig|crystal|nuvola|increase|decrease|office-book|red.?pencil|featured|sound-icon|videoicon|lock-|folder_|check\.svg|x.?mark|star_of|p_?vip|wikimedia/i;
+const DECORATIVE = /logo|icon|ambox|symbol[_ ]|speaker|wiktionary|wikibooks|commons-logo|edit-clear|question.?book|padlock|disambig|crystal|nuvola|increase|decrease|office-book|red.?pencil|featured|sound-icon|videoicon|lock-|folder_|check\.svg|x.?mark|star_of|p_?vip|wikimedia|activemarker/i;
 
 function object(value: unknown): JsonObject {
   return value && typeof value === "object" ? value as JsonObject : {};
@@ -291,6 +293,51 @@ async function downloadFigures(
   return { figures, assets };
 }
 
+/** Image captions and Wikimedia URLs for the reader. Does not download file bytes. */
+export async function listWikipediaFigureReferences(
+  pageId: number,
+  language: WikipediaLanguage,
+  signal?: AbortSignal,
+  fetcher: typeof fetch = fetch,
+): Promise<DisplayFigure[]> {
+  if (!positiveInteger(pageId)) return [];
+  try {
+    const [media, pageResult] = await Promise.all([
+      queryWikipedia(language, {
+        generator: "images", pageids: String(pageId), gimlimit: "40",
+        prop: "imageinfo", iiprop: "url|size|mime|extmetadata", iiurlwidth: "720",
+      }, signal, fetcher),
+      queryWikipedia(language, {
+        pageids: String(pageId), prop: "pageimages", piprop: "name",
+      }, signal, fetcher),
+    ]);
+    const page = object(Array.isArray(pageResult.pages) ? pageResult.pages[0] : undefined);
+    const leadName = typeof page.pageimage === "string" ? page.pageimage : "";
+    const pages = Array.isArray(media.pages) ? media.pages.map(object) : [];
+    return pages.map((item) => candidateFromFilePage(item, leadName))
+      .filter((item): item is NonNullable<ReturnType<typeof candidateFromFilePage>> => item !== null)
+      .sort((a, b) => Number(b.lead) - Number(a.lead))
+      .slice(0, MAX_FIGURES)
+      .map((candidate, index): DisplayFigure => ({
+        id: `fig-${index + 1}`,
+        caption: candidate.caption,
+        credit: candidate.credit,
+        license: candidate.license,
+        filePageUrl: candidate.filePageUrl,
+        mime: candidate.mime === "image/jpeg" || candidate.mime === "image/png" ||
+          candidate.mime === "image/webp" || candidate.mime === "image/gif"
+          ? candidate.mime
+          : "image/png",
+        width: candidate.width,
+        height: candidate.height,
+        uri: candidate.thumburl,
+      }));
+  } catch (error) {
+    if (error instanceof ReadingError && error.code === "cancelled") throw error;
+    return [];
+  }
+}
+
 export async function downloadWikipedia(
   pageId: number,
   language: WikipediaLanguage,
@@ -335,7 +382,7 @@ export async function downloadWikipedia(
       sourceUrl: `${base}/w/index.php?oldid=${revision.revid}`,
       historyUrl: `${base}/w/index.php?curid=${pageId}&action=history`,
       license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
-      readMinutes: Math.max(1, Math.ceil(page.extract.split(/\s+/).length / 220)),
+      readMinutes: readingMinutes(sections),
       sections, figures,
     },
     assets,

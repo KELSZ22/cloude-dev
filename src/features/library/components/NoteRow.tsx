@@ -1,5 +1,5 @@
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
@@ -11,22 +11,29 @@ export function NoteRow({
   accent,
   title,
   meta,
+  onPress,
 }: {
   icon: SymbolViewProps["name"];
   accent: string;
   title: string;
   meta: string;
+  onPress?: () => void;
 }) {
   const colors = useTheme();
 
   return (
-    <View
-      style={[
+    <Pressable
+      accessibilityRole={onPress ? "button" : undefined}
+      accessibilityLabel={onPress ? title : undefined}
+      disabled={!onPress}
+      onPress={onPress}
+      style={({ pressed }) => [
         styles.card,
         {
           backgroundColor: colors.backgroundElement,
           borderColor: colors.border,
         },
+        pressed && onPress ? styles.pressed : null,
       ]}
     >
       <View style={[styles.tile, { backgroundColor: withAlpha(accent, 0.12) }]}>
@@ -40,7 +47,7 @@ export function NoteRow({
           {meta}
         </ThemedText>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -63,4 +70,5 @@ const styles = StyleSheet.create({
   body: { flex: 1, gap: Spacing.half },
   title: { fontSize: 14, lineHeight: 20 },
   meta: { fontSize: 12, lineHeight: 16, fontWeight: "500" },
+  pressed: { opacity: 0.7 },
 });

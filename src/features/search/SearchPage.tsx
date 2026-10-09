@@ -3,6 +3,7 @@ import { SymbolView } from "expo-symbols";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
+  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -28,30 +29,24 @@ import {
 } from "@/shared/stores/onboarding-store";
 import {
   ReadingError,
+  READING_WORDS_PER_MINUTE,
   type ReadingErrorCode,
   type WikipediaResult,
 } from "@/shared/types/offline-reading";
 
+import { topicQuery } from "@/shared/constants/topic-queries";
 import { topicLabelKey } from "./catalog";
 import { EmptyResults } from "./components/EmptyResults";
 import { ResultCard, type SearchResult } from "./components/ResultCard";
 import { SearchBrandHeader } from "./components/SearchBrandHeader";
 
-type FilterId = "all" | OnboardingTopicId;
+type FilterId = "all" | OnboardingTopicId | `custom:${string}`;
+
+function customFilterId(label: string): FilterId {
+  return `custom:${label}`;
+}
 
 const TOPIC_PAGE_SIZE = 20;
-
-/** Subject articles, so a topic matches what the page is about rather than its title. */
-const topicQuery: Record<OnboardingTopicId, string> = {
-  general: "morelike:Knowledge|Education|Culture|Society",
-  science: "morelike:Physics|Chemistry|Biology|Astronomy|Geology",
-  technology: "morelike:Engineering|Computer_science|Internet|Electronics",
-  history: "morelike:Civilization|Archaeology|Ancient_Rome|Middle_Ages",
-  health: "morelike:Medicine|Disease|Anatomy|Public_health",
-  business: "morelike:Economics|Finance|Marketing|Accounting",
-  arts: "morelike:Visual_arts|Literature|Music|Theatre",
-  environment: "morelike:Ecology|Climate_change|Biodiversity|Conservation_biology",
-};
 
 type WikiSnapshot = {
   query: string;
@@ -72,20 +67,27 @@ export default function SearchPage() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const selectedTopics = useOnboardingStore((state) => state.topics);
+  const customTopics = useOnboardingStore((state) => state.customTopics);
+  const toggleTopic = useOnboardingStore((state) => state.toggleTopic);
+  const addCustomTopic = useOnboardingStore((state) => state.addCustomTopic);
   const topicsReady = useOnboardingStore((state) => state.hasHydrated);
+  const [topicPickerOpen, setTopicPickerOpen] = useState(false);
+  const topicPickerOpenedAt = useRef(0);
+  const [draftTopic, setDraftTopic] = useState("");
+  const availableTopics = ONBOARDING_TOPIC_IDS.filter((id) => !selectedTopics.includes(id));
   const filters: { id: FilterId; label: string }[] = [
     { id: "all", label: t("search.all") },
     ...ONBOARDING_TOPIC_IDS
       .filter((id) => selectedTopics.includes(id))
       .map((id) => ({ id, label: t(topicLabelKey[id]) })),
+    ...customTopics.map((label) => ({ id: customFilterId(label), label })),
   ];
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterId>("all");
-  const active: FilterId =
-    filter !== "all" && selectedTopics.includes(filter) ? filter : "all";
+  const active: FilterId = filters.some((item) => item.id === filter) ? filter : "all";
   const [submitted, setSubmitted] = useState("");
   const [wiki, setWiki] = useState<WikiSnapshot | null>(null);
-  const [topicFeed, setTopicFeed] = useState<(WikiSnapshot & { id: OnboardingTopicId; nextOffset: number | null }) | null>(null);
+  const [topicFeed, setTopicFeed] = useState<(WikiSnapshot & { id: FilterId; nextOffset: number | null }) | null>(null);
   const [topicLoading, setTopicLoading] = useState(false);
   const [topicLoadingMore, setTopicLoadingMore] = useState(false);
   const topicMore = useRef<AbortController | null>(null);
@@ -116,11 +118,12 @@ export default function SearchPage() {
     const controller = new AbortController();
     setFeaturedLoading(true);
     const topics = ONBOARDING_TOPIC_IDS.filter((id) => selectedTopics.includes(id));
-    const perTopic = Math.max(4, Math.ceil(20 / Math.max(topics.length, 1)));
-    const load = topics.length
+    const interests = [...topics.map((id) => topicQuery[id]), ...customTopics];
+    const perTopic = Math.max(4, Math.ceil(20 / Math.max(interests.length, 1)));
+    const load = interests.length
       ? Promise.all(
-          topics.map((id) =>
-            searchWikipedia(topicQuery[id], "en", controller.signal, undefined, perTopic).catch(
+          interests.map((request) =>
+            searchWikipedia(request, "en", controller.signal, undefined, perTopic).catch(
               (cause: unknown) => {
                 if (cause instanceof ReadingError && cause.code === "cancelled") throw cause;
                 return [] as WikipediaResult[];
@@ -144,7 +147,7 @@ export default function SearchPage() {
         if (!controller.signal.aborted) setFeaturedLoading(false);
       });
     return () => controller.abort();
-  }, [topicsReady, selectedTopics]);
+  }, [topicsReady, selectedTopics, customTopics]);
 
   useEffect(() => {
     if (submitted.length < 2) return;
@@ -170,7 +173,7 @@ export default function SearchPage() {
     topicMore.current?.abort();
     const controller = new AbortController();
     const id = active;
-    const request = topicQuery[id];
+    const request = id.startsWith("custom:") ? id.slice("custom:".length) : topicQuery[id as OnboardingTopicId];
     setTopicLoading(true);
     setTopicLoadingMore(false);
     void searchWikipediaPage(request, "en", controller.signal, undefined, TOPIC_PAGE_SIZE, 0)
@@ -278,8 +281,89 @@ export default function SearchPage() {
     void downloadArticle(result);
   }
 
+  function closeTopicPicker() {
+    setTopicPickerOpen(false);
+    setDraftTopic("");
+  }
+
+  function openTopicPicker() {
+    topicPickerOpenedAt.current = Date.now();
+    setTopicPickerOpen(true);
+  }
+
+  function commitTopic(raw = draftTopic) {
+    const label = raw.trim().replace(/\s+/g, " ").slice(0, 40);
+    if (label.length < 2) return;
+    const preset = ONBOARDING_TOPIC_IDS.find(
+      (id) => t(topicLabelKey[id]).toLowerCase() === label.toLowerCase(),
+    );
+    if (preset) {
+      if (!selectedTopics.includes(preset)) toggleTopic(preset);
+      setFilter(preset);
+    } else {
+      const saved = addCustomTopic(label);
+      if (saved) setFilter(customFilterId(saved));
+    }
+    closeTopicPicker();
+  }
+
   return (
     <ThemedView type="backgroundWarm" style={styles.screen}>
+      <Modal
+        visible={topicPickerOpen}
+        transparent
+        animationType="fade"
+        onRequestClose={closeTopicPicker}
+      >
+        <Pressable
+          style={styles.overlay}
+          onPress={() => {
+            if (Date.now() - topicPickerOpenedAt.current < 400) return;
+            closeTopicPicker();
+          }}
+        >
+          <Pressable
+            onPress={() => undefined}
+            style={[styles.sheet, { backgroundColor: colors.backgroundElement, borderColor: colors.dashboardBorder }]}
+          >
+            <ThemedText type="smallBold">{t("search.addTopic")}</ThemedText>
+            <TextInput
+              value={draftTopic}
+              onChangeText={setDraftTopic}
+              placeholder={t("search.topicPlaceholder")}
+              placeholderTextColor={colors.textSecondary}
+              accessibilityLabel={t("search.addTopic")}
+              autoFocus
+              autoCorrect={false}
+              returnKeyType="done"
+              onSubmitEditing={() => commitTopic()}
+              style={[
+                styles.topicField,
+                {
+                  color: colors.text,
+                  borderColor: colors.dashboardBorder,
+                  backgroundColor: colors.background,
+                },
+              ]}
+            />
+            {availableTopics.map((id) => (
+              <Pressable
+                key={id}
+                accessibilityRole="button"
+                accessibilityLabel={t(topicLabelKey[id])}
+                onPress={() => {
+                  toggleTopic(id);
+                  setFilter(id);
+                  closeTopicPicker();
+                }}
+                style={styles.topicOption}
+              >
+                <ThemedText>{t(topicLabelKey[id])}</ThemedText>
+              </Pressable>
+            ))}
+          </Pressable>
+        </Pressable>
+      </Modal>
       {noResults ? <LeafDecor width={130} /> : null}
       <ScrollView
         keyboardShouldPersistTaps="handled"
@@ -363,6 +447,20 @@ export default function SearchPage() {
               options={filters}
               value={active}
               onChange={setFilter}
+              trailing={(
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={t("search.addTopic")}
+                  onPress={openTopicPicker}
+                  style={[styles.addTopic, { borderColor: colors.dashboardBorder, backgroundColor: colors.backgroundElement }]}
+                >
+                  <SymbolView
+                    name={{ ios: "plus", android: "add", web: "add" }}
+                    size={18}
+                    tintColor={colors.tint}
+                  />
+                </Pressable>
+              )}
             />
             {query.trim().length > 0 && (total > 0 || loading) ? (
               <View style={styles.countRow}>
@@ -448,7 +546,7 @@ function toWikipediaCard(
   unnamed = false,
 ): SearchResult {
   const stored = saved.find((entry) => entry.id === item.id);
-  const minutes = Math.max(1, Math.ceil(item.wordCount / 220));
+  const minutes = Math.max(1, Math.round(item.wordCount / READING_WORDS_PER_MINUTE));
   return {
     id: item.id,
     title: item.title,
@@ -467,8 +565,8 @@ function toWikipediaCard(
       saved: Boolean(stored),
       busy: busyId === item.id,
       error: errorId === item.id && saveError ? t(readingErrorKey[saveError]) : null,
-      idleLabel: t("reading.download"),
-      savedLabel: t("reading.read"),
+      idleLabel: t("search.save"),
+      savedLabel: t("search.readSaved"),
       busyLabel: t("reading.downloading"),
       onPress: () => onOpen(item),
     },
@@ -523,4 +621,38 @@ const styles = StyleSheet.create({
   list: { gap: 12 },
   empty: { paddingHorizontal: Spacing.three },
   more: { paddingHorizontal: Spacing.three },
+  addTopic: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  topicField: {
+    minHeight: 44,
+    borderRadius: 12,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    fontSize: 16,
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: "center",
+    padding: Spacing.four,
+    backgroundColor: "rgba(0, 0, 0, 0.45)",
+  },
+  sheet: {
+    alignSelf: "center",
+    width: "100%",
+    maxWidth: 360,
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: Spacing.three,
+    gap: Spacing.two,
+  },
+  topicOption: {
+    minHeight: 44,
+    justifyContent: "center",
+  },
 });

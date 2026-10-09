@@ -1,12 +1,10 @@
-import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ReadingShelf } from "@/features/offline-reading/components/ReadingShelf";
-import { pdfLibrary } from "@/infrastructure/resources/pdf-library";
-import type { SavedPdfSummary } from "@/infrastructure/resources/pdf-record";
 import { FilterChips } from "@/shared/components/filter-chips";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
@@ -14,27 +12,29 @@ import { contentSources } from "@/shared/constants/content-sources";
 import {
   formatLibraryDate,
   libraryPacksForInstalled,
-  sampleBookmarks,
-  sampleDocuments,
-  sampleHistory,
 } from "@/shared/constants/sample-library";
 import { BottomTabInset, Fonts, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
+import { useOnboardingStore } from "@/shared/stores/onboarding-store";
+import { useReadingHistoryStore } from "@/shared/stores/reading-history-store";
 import { usePackDownloadStore } from "@/shared/stores/pack-download-store";
-import {
-  DocumentRow,
-  EmptyShelf,
-  NoteRow,
-  PackRow,
-  SectionHeader,
-} from "./components";
+import { EmptyShelf, NoteRow, PackRow, SectionHeader } from "./components";
+import { TopicPackShelf } from "./components/TopicPackShelf";
 
-type ShelfId = "reading" | "packs" | "documents" | "bookmarks" | "history";
+type ShelfId = "reading" | "packs" | "history";
 
 function matchesQuery(text: string, needle: string) {
   if (!needle) return true;
   return text.toLowerCase().includes(needle);
+}
+
+function libraryViewedDate(iso: string) {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return formatLibraryDate(iso.slice(0, 10));
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return formatLibraryDate(`${date.getFullYear()}-${month}-${day}`);
 }
 
 export default function LibraryPage() {
@@ -43,12 +43,13 @@ export default function LibraryPage() {
   const insets = useSafeAreaInsets();
   const inputRef = useRef<TextInput>(null);
   const { shelf: requestedShelf } = useLocalSearchParams<{ shelf?: string }>();
+  const selectedTopics = useOnboardingStore((state) => state.topics);
   const shelves = [
     { id: "reading" as const, label: t("reading.shelf") },
-    ...(contentSources.openStax ? [{ id: "packs" as const, label: t("library.packs") }] : []),
-    { id: "documents" as const, label: t("library.documents") },
-    { id: "bookmarks" as const, label: t("library.bookmarks") },
-    { id: "history" as const, label: t("library.history") },
+    ...(selectedTopics.length || contentSources.openStax
+      ? [{ id: "packs" as const, label: t("library.packs") }]
+      : []),
+    { id: "history" as const, label: t("library.recentlyViewed") },
   ];
   const shelf = shelves.find((item) => item.id === requestedShelf)?.id ?? "reading";
   const [searchOpen, setSearchOpen] = useState(false);
@@ -57,19 +58,6 @@ export default function LibraryPage() {
   const installed = usePackDownloadStore((state) => state.installed);
   const catalogPacks = contentSources.openStax ? libraryPacksForInstalled(installed) : [];
   const [hiddenPackIds, setHiddenPackIds] = useState<string[]>([]);
-  const [documentIds, setDocumentIds] = useState(
-    sampleDocuments.map((document) => document.id),
-  );
-  const [savedPdfs, setSavedPdfs] = useState<SavedPdfSummary[]>([]);
-
-  useFocusEffect(
-    useCallback(() => {
-      void pdfLibrary
-        .listSummaries()
-        .then(setSavedPdfs)
-        .catch(() => setSavedPdfs([]));
-    }, []),
-  );
 
   const needle = query.trim().toLowerCase();
 
@@ -80,33 +68,14 @@ export default function LibraryPage() {
         .filter((pack) => matchesQuery(pack.name, needle)),
     [catalogPacks, hiddenPackIds, needle],
   );
-  const documents = useMemo(
-    () =>
-      (contentSources.openStax ? sampleDocuments : [])
-        .filter((document) => documentIds.includes(document.id))
-        .filter((document) => matchesQuery(document.name, needle)),
-    [documentIds, needle],
-  );
-  const localPdfs = useMemo(
-    () => savedPdfs.filter((pdf) => matchesQuery(pdf.title, needle)),
-    [needle, savedPdfs],
-  );
-  const bookmarks = useMemo(
-    () =>
-      (contentSources.openStax ? sampleBookmarks : []).filter(
-        (bookmark) =>
-          matchesQuery(bookmark.title, needle) ||
-          matchesQuery(bookmark.source, needle),
-      ),
-    [needle],
-  );
+  const viewed = useReadingHistoryStore((state) => state.items);
   const history = useMemo(
     () =>
-      (contentSources.openStax ? sampleHistory : []).filter(
+      viewed.filter(
         (entry) =>
-          matchesQuery(entry.query, needle) || matchesQuery(entry.source, needle),
+          matchesQuery(entry.title, needle) || matchesQuery(entry.source, needle),
       ),
-    [needle],
+    [needle, viewed],
   );
 
   function selectShelf(next: ShelfId) {
@@ -127,9 +96,7 @@ export default function LibraryPage() {
 
   const shelfEmpty =
     needle.length > 0 &&
-    ((shelf === "packs" && packs.length === 0) ||
-      (shelf === "documents" && documents.length === 0 && localPdfs.length === 0) ||
-      (shelf === "bookmarks" && bookmarks.length === 0) ||
+    ((shelf === "packs" && !selectedTopics.length && packs.length === 0) ||
       (shelf === "history" && history.length === 0));
 
   return (
@@ -234,7 +201,11 @@ export default function LibraryPage() {
           </ThemedText>
         ) : null}
 
-        {shelf === "packs" && !shelfEmpty ? (
+        {shelf === "packs" && selectedTopics.length ? (
+          <TopicPackShelf query={query} />
+        ) : null}
+
+        {shelf === "packs" && !selectedTopics.length && !shelfEmpty ? (
           <View style={styles.section}>
             <SectionHeader
               title={t("library.downloadedPacks")}
@@ -261,85 +232,10 @@ export default function LibraryPage() {
           </View>
         ) : null}
 
-        {shelf === "documents" && !shelfEmpty ? (
-          <View style={styles.section}>
-            <SectionHeader
-              title={t("library.myDocuments")}
-              editing={editing}
-              onToggleEdit={
-                documents.length
-                  ? () => setEditing((value) => !value)
-                  : undefined
-              }
-            />
-            {localPdfs.map((pdf) => (
-              <DocumentRow
-                key={pdf.id}
-                document={{
-                  id: pdf.id,
-                  name: pdf.title,
-                  sizeMb: 0,
-                  addedAt: pdf.savedAt,
-                  kind: "pdf",
-                }}
-                editing={false}
-                onRemove={() => undefined}
-                meta={t("library.savedOn", {
-                  date: formatLibraryDate(pdf.savedAt),
-                })}
-                onPress={() =>
-                  router.push({ pathname: "/pdf/[id]", params: { id: pdf.id } })
-                }
-              />
-            ))}
-            {documents.length || localPdfs.length ? (
-              documents.map((document) => (
-                <DocumentRow
-                  key={document.id}
-                  document={document}
-                  editing={editing}
-                  onRemove={() =>
-                    setDocumentIds((ids) =>
-                      ids.filter((id) => id !== document.id),
-                    )
-                  }
-                />
-              ))
-            ) : (
-              <EmptyShelf
-                title={t("library.noDocumentsTitle")}
-                body={t("library.noDocumentsBody")}
-              />
-            )}
-          </View>
-        ) : null}
-
-        {shelf === "bookmarks" && !shelfEmpty ? (
-          <View style={styles.section}>
-            <SectionHeader title={t("library.savedPassages")} />
-            {!contentSources.openStax ? (
-              <ThemedText themeColor="textSecondary">{t("reading.noBookmarks")}</ThemedText>
-            ) : null}
-            {bookmarks.map((bookmark) => (
-              <NoteRow
-                key={bookmark.id}
-                icon={{
-                  ios: "bookmark.fill",
-                  android: "bookmark",
-                  web: "bookmark",
-                }}
-                accent={colors.accentGold}
-                title={bookmark.title}
-                meta={`${bookmark.source} · ${t("library.savedOn", { date: formatLibraryDate(bookmark.savedAt) })}`}
-              />
-            ))}
-          </View>
-        ) : null}
-
         {shelf === "history" && !shelfEmpty ? (
           <View style={styles.section}>
             <SectionHeader title={t("library.recentlyViewed")} />
-            {!contentSources.openStax ? (
+            {history.length === 0 ? (
               <ThemedText themeColor="textSecondary">{t("reading.noHistory")}</ThemedText>
             ) : null}
             {history.map((entry) => (
@@ -351,8 +247,9 @@ export default function LibraryPage() {
                   web: "history",
                 }}
                 accent={colors.accentBlue}
-                title={entry.query}
-                meta={`${entry.source} · ${formatLibraryDate(entry.viewedAt)}`}
+                title={entry.title}
+                meta={libraryViewedDate(entry.viewedAt)}
+                onPress={() => router.push({ pathname: "/read/[id]", params: { id: entry.id } })}
               />
             ))}
           </View>
