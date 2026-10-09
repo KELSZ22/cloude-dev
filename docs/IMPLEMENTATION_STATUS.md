@@ -1,6 +1,14 @@
 # Implementation status
 
-## Current milestone: offline RAG proof of concept (2026-10-09)
+## Floating AI assistant (2026-10-10, branch `17-adding-floating-ai-assistant`)
+
+A bubble over other apps that opens a chat answered by the existing on-device model, with user-approved, one-frame screen reading through on-device text recognition. It is a feature addition: the engine, the library prompts, the database and the other screens are unchanged.
+
+**Status: runs on an Android 17 emulator; not yet run on a physical phone.** The permission flow, the bubble, the chat, a streamed answer from the existing model, and one hand-run screen capture over another app worked there. Several interactions are still unexercised, including dragging, the long-press menu, rotation, the on-screen keyboard layout and the turn-off paths. [Floating AI assistant](FLOATING-ASSISTANT.md) lists exactly what was and was not checked, the permissions added, and the device test steps.
+
+It adds a local native module (`modules/floating-assistant`), so it needs a new native build; older installed builds show the feature as unavailable and are otherwise unaffected. Tests are now 141 (38 for this feature); typecheck and lint pass; debug and release APKs build.
+
+## Earlier milestone: offline RAG proof of concept (2026-10-09)
 
 Goal: a user asks an algebra question, Seekora retrieves a relevant passage from its local knowledge pack, the on-device Qwen model writes an explanation, and a citation opens the stored passage.
 
