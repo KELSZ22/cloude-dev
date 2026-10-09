@@ -5,15 +5,26 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation, type MessageKey } from "@/shared/i18n";
 
-import { kindLabel, type CatalogArticle } from "../catalog";
+import type { CatalogArticle, SearchKind } from "../catalog";
+
+const kindKey: Record<SearchKind, MessageKey> = {
+  article: "search.article",
+  document: "search.document",
+  pack: "search.pack",
+};
 
 export function ResultCard({ article }: { article: CatalogArticle }) {
   const colors = useTheme();
+  const { t } = useTranslation();
   const meta =
     article.kind === "pack"
-      ? "Pack · ready to download"
-      : `${kindLabel(article.kind)} · ${article.readMinutes} min read`;
+      ? t("search.packReady")
+      : t("search.readMeta", {
+          kind: t(kindKey[article.kind]),
+          minutes: article.readMinutes,
+        });
 
   return (
     <Pressable
@@ -40,7 +51,9 @@ export function ResultCard({ article }: { article: CatalogArticle }) {
           {article.title}
         </ThemedText>
         <ThemedText type="small" style={[styles.pack, { color: colors.tint }]} numberOfLines={1}>
-          {article.kind === "document" ? article.pack : `From ${article.pack}`}
+          {article.kind === "document"
+            ? article.pack
+            : t("search.fromPack", { pack: article.pack })}
         </ThemedText>
         <ThemedText type="small" themeColor="textSecondary" numberOfLines={2} style={styles.summary}>
           {article.summary}

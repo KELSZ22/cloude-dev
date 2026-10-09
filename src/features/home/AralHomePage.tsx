@@ -6,11 +6,13 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 import { DashboardActionCard } from "./components/DashboardActionCard";
 import { DashboardHero } from "./components/DashboardHero";
 
 export default function HomePage() {
   const colors = useTheme();
+  const { t } = useTranslation();
 
   return (
     <ThemedView type="backgroundWarm" style={styles.screen}>
@@ -31,7 +33,7 @@ export default function HomePage() {
           >
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Search your library"
+              accessibilityLabel={t("home.searchLibrary")}
               onPress={() => router.navigate("/(tabs)/search")}
               style={({ pressed }) => [
                 styles.searchAction,
@@ -48,13 +50,13 @@ export default function HomePage() {
                 tintColor={colors.tint}
               />
               <ThemedText themeColor="textSecondary" style={styles.searchLabel}>
-                Search anything...
+                {t("home.searchPlaceholder")}
               </ThemedText>
             </Pressable>
             <Pressable
               disabled
               accessibilityRole="button"
-              accessibilityLabel="Voice search, coming soon"
+              accessibilityLabel={t("home.voiceSoon")}
               accessibilityState={{ disabled: true }}
               style={styles.microphone}
             >
@@ -68,7 +70,7 @@ export default function HomePage() {
 
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Ask AI a question"
+            accessibilityLabel={t("home.askAi")}
             onPress={() => router.navigate("/(tabs)/assistant")}
             style={({ pressed }) => [
               styles.assistant,
@@ -90,7 +92,7 @@ export default function HomePage() {
               tintColor={colors.tint}
             />
             <ThemedText type="smallBold" style={styles.grow}>
-              Ask AI a question
+              {t("home.askAi")}
             </ThemedText>
             <SymbolView
               name={{
@@ -109,19 +111,19 @@ export default function HomePage() {
               accessibilityRole="header"
               style={styles.sectionTitle}
             >
-              Get started
+              {t("home.getStarted")}
             </ThemedText>
             <View style={styles.grid}>
               <DashboardActionCard
-                label="Explore Knowledge Packs"
-                title={"Explore\nKnowledge Packs"}
+                label={t("home.explorePacks")}
+                title={t("home.explorePacksTitle")}
                 href="/(tabs)/library"
                 icon={{ ios: "book", android: "menu_book", web: "menu_book" }}
                 accent={colors.tint}
               />
               <DashboardActionCard
-                label="Add Documents"
-                title={"Add\nDocuments"}
+                label={t("home.addDocuments")}
+                title={t("home.addDocumentsTitle")}
                 href="/import"
                 icon={{
                   ios: "doc.text",
@@ -131,14 +133,14 @@ export default function HomePage() {
                 accent={colors.accentBlue}
               />
               <DashboardActionCard
-                label="Try a Knowledge Challenge"
-                title={"Try a\nKnowledge Challenge"}
+                label={t("home.tryChallenge")}
+                title={t("home.tryChallengeTitle")}
                 icon={{ ios: "star.fill", android: "star", web: "star" }}
                 accent={colors.accentGold}
               />
               <DashboardActionCard
-                label="View Your Library"
-                title={"View\nYour Library"}
+                label={t("home.viewLibrary")}
+                title={t("home.viewLibraryTitle")}
                 href="/(tabs)/library"
                 icon={{ ios: "leaf", android: "eco", web: "eco" }}
                 accent={colors.tint}
@@ -149,7 +151,7 @@ export default function HomePage() {
 
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Prepare for offline use"
+            accessibilityLabel={t("home.prepareOffline")}
             onPress={() => router.navigate("/setup")}
             style={({ pressed }) => [
               styles.offline,
@@ -166,13 +168,13 @@ export default function HomePage() {
               tintColor={colors.tint}
             />
             <View style={styles.grow}>
-              <ThemedText type="smallBold">Prepare for offline use</ThemedText>
+              <ThemedText type="smallBold">{t("home.prepareOffline")}</ThemedText>
               <ThemedText
                 type="small"
                 themeColor="textSecondary"
                 style={styles.offlineDescription}
               >
-                Set up knowledge packs and an AI model to explore offline.
+                {t("home.prepareOfflineBody")}
               </ThemedText>
             </View>
             <SymbolView

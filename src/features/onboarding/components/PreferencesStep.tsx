@@ -6,13 +6,26 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation, type MessageKey } from "@/shared/i18n";
 import {
-  ONBOARDING_LANGUAGES,
-  ONBOARDING_TOPICS,
+  APP_LOCALES,
+  LOCALE_NAMES,
+  ONBOARDING_TOPIC_IDS,
   type OnboardingTopicId,
   useOnboardingStore,
 } from "@/shared/stores/onboarding-store";
 import { OnboardingButton } from "./OnboardingButton";
+
+const topicLabelKey = {
+  general: "topics.general",
+  science: "topics.science",
+  technology: "topics.technology",
+  history: "topics.history",
+  health: "topics.health",
+  business: "topics.business",
+  arts: "topics.arts",
+  environment: "topics.environment",
+} as const satisfies Record<OnboardingTopicId, MessageKey>;
 
 const topicIcons: Record<OnboardingTopicId, SymbolViewProps["name"]> = {
   general: { ios: "graduationcap.fill", android: "school", web: "school" },
@@ -31,6 +44,7 @@ const topicIcons: Record<OnboardingTopicId, SymbolViewProps["name"]> = {
 
 export function PreferencesStep() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const [pickerOpen, setPickerOpen] = useState(false);
   const language = useOnboardingStore((state) => state.language);
   const topics = useOnboardingStore((state) => state.topics);
@@ -47,7 +61,7 @@ export function PreferencesStep() {
       >
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Back"
+          accessibilityLabel={t("common.back")}
           onPress={back}
           style={styles.back}
         >
@@ -62,19 +76,20 @@ export function PreferencesStep() {
           />
         </Pressable>
         <ThemedText type="title" accessibilityRole="header">
-          Let&apos;s personalize your experience
+          {t("onboarding.personalizeTitle")}
         </ThemedText>
         <ThemedText themeColor="textSecondary" style={styles.lead}>
-          Choose your preferred language and topics of interest. You can change
-          this later in Settings.
+          {t("onboarding.personalizeBody")}
         </ThemedText>
 
         <ThemedText type="smallBold" style={styles.section}>
-          Preferred Language
+          {t("onboarding.preferredLanguage")}
         </ThemedText>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={`Preferred language, ${language}`}
+          accessibilityLabel={t("onboarding.preferredLanguageValue", {
+            language: LOCALE_NAMES[language],
+          })}
           onPress={() => setPickerOpen(true)}
           style={StyleSheet.flatten([
             styles.select,
@@ -84,7 +99,7 @@ export function PreferencesStep() {
             },
           ])}
         >
-          <ThemedText>{language}</ThemedText>
+          <ThemedText>{LOCALE_NAMES[language]}</ThemedText>
           <SymbolView
             name={{
               ios: "chevron.down",
@@ -97,18 +112,19 @@ export function PreferencesStep() {
         </Pressable>
 
         <ThemedText type="smallBold" style={styles.section}>
-          Topics of Interest (optional)
+          {t("onboarding.topicsOptional")}
         </ThemedText>
         <View style={styles.grid}>
-          {ONBOARDING_TOPICS.map((topic) => {
-            const selected = topics.includes(topic.id);
+          {ONBOARDING_TOPIC_IDS.map((id) => {
+            const selected = topics.includes(id);
+            const label = t(topicLabelKey[id]);
             return (
               <Pressable
-                key={topic.id}
+                key={id}
                 accessibilityRole="button"
                 accessibilityState={{ selected }}
-                accessibilityLabel={topic.label}
-                onPress={() => toggleTopic(topic.id)}
+                accessibilityLabel={label}
+                onPress={() => toggleTopic(id)}
                 style={StyleSheet.flatten([
                   styles.topic,
                   {
@@ -120,7 +136,7 @@ export function PreferencesStep() {
                 ])}
               >
                 <SymbolView
-                  name={topicIcons[topic.id]}
+                  name={topicIcons[id]}
                   size={18}
                   tintColor={selected ? colors.tint : colors.textSecondary}
                 />
@@ -128,7 +144,7 @@ export function PreferencesStep() {
                   type="small"
                   style={{ color: selected ? colors.tint : colors.text }}
                 >
-                  {topic.label}
+                  {label}
                 </ThemedText>
               </Pressable>
             );
@@ -136,7 +152,7 @@ export function PreferencesStep() {
         </View>
 
         <View style={styles.footer}>
-          <OnboardingButton label="Continue" onPress={complete} />
+          <OnboardingButton label={t("common.continue")} onPress={complete} />
         </View>
       </ScrollView>
 
@@ -151,8 +167,10 @@ export function PreferencesStep() {
             type="backgroundElement"
             style={[styles.sheet, { borderColor: colors.border }]}
           >
-            <ThemedText type="smallBold">Preferred Language</ThemedText>
-            {ONBOARDING_LANGUAGES.map((option) => (
+            <ThemedText type="smallBold">
+              {t("onboarding.preferredLanguage")}
+            </ThemedText>
+            {APP_LOCALES.map((option) => (
               <Pressable
                 key={option}
                 accessibilityRole="button"
@@ -163,7 +181,7 @@ export function PreferencesStep() {
                 style={styles.option}
               >
                 <ThemedText themeColor={option === language ? "tint" : "text"}>
-                  {option}
+                  {LOCALE_NAMES[option]}
                 </ThemedText>
               </Pressable>
             ))}

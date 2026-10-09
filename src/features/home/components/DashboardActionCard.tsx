@@ -6,6 +6,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Colors, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 type DashboardActionCardProps = {
   label: string;
@@ -18,12 +19,13 @@ type DashboardActionCardProps = {
 
 export function DashboardActionCard({ label, title, href, icon, accent, useLogo }: DashboardActionCardProps) {
   const colors = useTheme();
+  const { t } = useTranslation();
   const disabled = !href;
 
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={disabled ? `${label}, coming soon` : label}
+      accessibilityLabel={disabled ? `${label}, ${t("common.comingSoon")}` : label}
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={() => { if (href) router.navigate(href); }}
@@ -51,7 +53,7 @@ export function DashboardActionCard({ label, title, href, icon, accent, useLogo 
       <ThemedText type="smallBold" style={styles.title}>{title}</ThemedText>
       {disabled ? (
         <ThemedText type="small" themeColor="textSecondary" style={styles.soon}>
-          Coming soon
+          {t("common.comingSoonLabel")}
         </ThemedText>
       ) : null}
     </Pressable>

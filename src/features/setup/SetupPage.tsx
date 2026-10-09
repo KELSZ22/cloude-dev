@@ -2,15 +2,17 @@ import { NavigationButton } from '@/shared/components/navigation-button';
 import { ModelStatus } from '@/shared/components/model-status';
 import { Page } from '@/shared/components/page';
 import { StatusCard } from '@/shared/components/status-card';
-import { readiness } from '@/shared/constants/readiness';
+import { useTranslation } from '@/shared/i18n';
 
 export default function SetupPage() {
+  const { t } = useTranslation();
+
   return (
-    <Page nested title="Prepare for offline use" description="You can explore the app while setup is pending.">
-      <StatusCard {...readiness.search} />
+    <Page nested title={t('setup.title')} description={t('setup.description')}>
+      <StatusCard title={t('setup.searchTitle')} description={t('setup.searchBody')} />
       <ModelStatus />
-      <NavigationButton href="/(tabs)/search" label="Continue to Search" />
-      <NavigationButton href="/model" label="Review model requirements" />
+      <NavigationButton href="/(tabs)/search" label={t('setup.continueSearch')} />
+      <NavigationButton href="/model" label={t('setup.reviewModel')} />
     </Page>
   );
 }

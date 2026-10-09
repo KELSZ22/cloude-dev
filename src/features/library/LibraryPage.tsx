@@ -15,6 +15,7 @@ import {
 } from "@/shared/constants/sample-library";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 import {
   DocumentRow,
   EmptyShelf,
@@ -24,18 +25,18 @@ import {
   SectionHeader,
 } from "./components";
 
-const SHELVES = [
-  { id: "packs", label: "Packs" },
-  { id: "documents", label: "Documents" },
-  { id: "bookmarks", label: "Bookmarks" },
-  { id: "history", label: "History" },
-] as const;
-
-type ShelfId = (typeof SHELVES)[number]["id"];
+type ShelfId = "packs" | "documents" | "bookmarks" | "history";
 
 export default function LibraryPage() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const shelves = [
+    { id: "packs" as const, label: t("library.packs") },
+    { id: "documents" as const, label: t("library.documents") },
+    { id: "bookmarks" as const, label: t("library.bookmarks") },
+    { id: "history" as const, label: t("library.history") },
+  ];
   const [shelf, setShelf] = useState<ShelfId>("packs");
   const [editing, setEditing] = useState(false);
   const [packIds, setPackIds] = useState(samplePacks.map((pack) => pack.id));
@@ -62,11 +63,11 @@ export default function LibraryPage() {
             accessibilityRole="header"
             style={styles.title}
           >
-            My Library
+            {t("library.title")}
           </ThemedText>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Search your library"
+            accessibilityLabel={t("home.searchLibrary")}
             onPress={() => router.navigate("/(tabs)/search")}
             style={({ pressed }) => [styles.search, pressed && styles.pressed]}
           >
@@ -81,7 +82,7 @@ export default function LibraryPage() {
             />
           </Pressable>
         </View>
-        <FilterChips options={SHELVES} value={shelf} onChange={selectShelf} />
+        <FilterChips options={shelves} value={shelf} onChange={selectShelf} />
       </View>
 
       <ScrollView
@@ -94,7 +95,7 @@ export default function LibraryPage() {
         {shelf === "packs" ? (
           <View style={styles.section}>
             <SectionHeader
-              title="Downloaded Packs"
+              title={t("library.downloadedPacks")}
               editing={editing}
               onToggleEdit={
                 packs.length ? () => setEditing((value) => !value) : undefined
@@ -113,8 +114,8 @@ export default function LibraryPage() {
               ))
             ) : (
               <EmptyShelf
-                title="No packs on this device"
-                body="Install a Knowledge Pack to read and search it without a connection."
+                title={t("library.noPacksTitle")}
+                body={t("library.noPacksBody")}
               />
             )}
           </View>
@@ -123,7 +124,7 @@ export default function LibraryPage() {
         {shelf === "documents" ? (
           <View style={styles.section}>
             <SectionHeader
-              title="My Documents"
+              title={t("library.myDocuments")}
               editing={editing}
               onToggleEdit={
                 documents.length
@@ -146,8 +147,8 @@ export default function LibraryPage() {
               ))
             ) : (
               <EmptyShelf
-                title="No documents yet"
-                body="Import a PDF or text file to search it alongside your packs."
+                title={t("library.noDocumentsTitle")}
+                body={t("library.noDocumentsBody")}
               />
             )}
           </View>
@@ -155,7 +156,7 @@ export default function LibraryPage() {
 
         {shelf === "bookmarks" ? (
           <View style={styles.section}>
-            <SectionHeader title="Saved passages" />
+            <SectionHeader title={t("library.savedPassages")} />
             {sampleBookmarks.map((bookmark) => (
               <NoteRow
                 key={bookmark.id}
@@ -166,7 +167,7 @@ export default function LibraryPage() {
                 }}
                 accent={colors.accentGold}
                 title={bookmark.title}
-                meta={`${bookmark.source} · Saved ${formatLibraryDate(bookmark.savedAt)}`}
+                meta={`${bookmark.source} · ${t("library.savedOn", { date: formatLibraryDate(bookmark.savedAt) })}`}
               />
             ))}
           </View>
@@ -174,7 +175,7 @@ export default function LibraryPage() {
 
         {shelf === "history" ? (
           <View style={styles.section}>
-            <SectionHeader title="Recently viewed" />
+            <SectionHeader title={t("library.recentlyViewed")} />
             {sampleHistory.map((entry) => (
               <NoteRow
                 key={entry.id}
