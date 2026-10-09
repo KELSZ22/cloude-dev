@@ -7,12 +7,14 @@ import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
+import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
 import { DashboardActionCard } from "./components/DashboardActionCard";
 import { DashboardHero } from "./components/DashboardHero";
 
 export default function HomePage() {
   const colors = useTheme();
   const { t } = useTranslation();
+  const openAssistant = useAssistantSheetStore((state) => state.openAssistant);
 
   return (
     <ThemedView type="backgroundWarm" style={styles.screen}>
@@ -71,7 +73,7 @@ export default function HomePage() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={t("home.askAi")}
-            onPress={() => router.navigate("/(tabs)/assistant")}
+            onPress={() => openAssistant()}
             style={({ pressed }) => [
               styles.assistant,
               {

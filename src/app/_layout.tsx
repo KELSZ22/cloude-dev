@@ -15,6 +15,7 @@ import { useColorScheme } from "@/shared/hooks/use-color-scheme";
 import { useTranslation } from "@/shared/i18n";
 import { useInitializeTheme } from "@/shared/hooks/use-initialize-theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { AssistantSheet } from "@/features/assistant";
 import { KnowledgeProvider } from "@/shared/providers/knowledge-provider";
 import { ModelProvider } from "@/shared/providers/model-provider";
 import { useHydrateOnboardingStore } from "@/shared/stores/onboarding-store";
@@ -79,6 +80,7 @@ export default function RootLayout() {
               options={{ title: t("stack.sourcePassage") }}
             />
           </Stack>
+          <AssistantSheet />
         </ModelProvider>
       </KnowledgeProvider>
     </ThemeProvider>
