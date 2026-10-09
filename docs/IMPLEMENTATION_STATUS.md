@@ -6,6 +6,12 @@ Goal: a user asks an algebra question, Seekora retrieves a relevant passage from
 
 **Status: the first RAG milestone runs on an Android phone.** On a Redmi Note 13 (Android 15, arm64, Snapdragon 685, 8 GB RAM), in airplane mode, the development build built its local library, imported and loaded the pinned model, answered a question from the sample pack, and refused a question the pack does not cover. Not yet checked on the phone: opening a citation, search from the Search tab, and a standalone release build.
 
+### After merging the team's UI (branch `offline-rag-search`)
+
+The UI redesign from `master` (dashboard, search, library, settings, onboarding, Noto Sans, the green theme) is merged with this work. On the merged code, typecheck, lint, the 103 tests, and the Android bundle export pass. **The merged app has not been built or run on a device.** It needs a new native build, because the merge adds `@react-native-async-storage/async-storage`; the APKs built earlier predate the merge and do not contain the new UI. Everything measured below was on the pre-merge build.
+
+Still on sample data after the merge: the Home dashboard, the Library shelves and pack downloads (simulated with a timer), and the article pages. Search shows local-index passages and sample catalog entries together.
+
 ### Measured on the phone (development build, generic llama.rn library, 2 threads)
 
 | Step | Result |

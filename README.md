@@ -74,7 +74,7 @@ The selected model is `diodel/Qwen3.5-0.8B-Q4_K_M-GGUF` (529 MB, declared Apache
 
 ## Navigation and structure
 
-Five tabs: Home, Search, Library, Ask Seekora, Settings. Nested screens cover offline setup, the model, installed packs, import status, and the passage reader that citations open. Existing template modules and assets remain preserved. The Android package identifier is still `com.kelsz09.myapp`.
+Five tabs: Home, Search, Library, AI, Settings, behind a first-run onboarding flow. Nested screens cover offline setup, the model, installed packs, import status, sample articles, and the passage reader that search results and citations open. Search lists passages from the local full-text index first, followed by the sample catalog; Home and Library still show sample data. Existing template modules and assets remain preserved. The Android package identifier is still `com.kelsz09.myapp`.
 
 ## Documentation
 
