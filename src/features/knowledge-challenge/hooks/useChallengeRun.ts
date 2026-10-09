@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import type { RailSegment } from "../components";
-import { challengeQuestions } from "../data/questions";
+import type { ChallengeQuestion } from "../data/questions";
 
 export type ChallengePhase = "answering" | "revealed";
 
@@ -9,7 +9,10 @@ export type ChallengePhase = "answering" | "revealed";
  * Drives one pass through the question set. `reviewAnswers` replays a finished
  * run with every answer already revealed and the options locked.
  */
-export function useChallengeRun(reviewAnswers: number[] | null) {
+export function useChallengeRun(
+  questions: readonly ChallengeQuestion[],
+  reviewAnswers: number[] | null,
+) {
   const reviewing = reviewAnswers !== null;
   const [index, setIndex] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
@@ -21,18 +24,19 @@ export function useChallengeRun(reviewAnswers: number[] | null) {
     startedAt.current = Date.now();
   }, []);
 
-  const question = challengeQuestions[index];
-  const total = challengeQuestions.length;
-  const isLast = index === total - 1;
-  const given = reviewing ? (reviewAnswers[index] ?? -1) : picked;
+  const total = questions.length;
+  const position = Math.min(index, Math.max(total - 1, 0));
+  const question = questions[position];
+  const isLast = position === total - 1;
+  const given = reviewing ? (reviewAnswers[position] ?? -1) : picked;
   const revealed = reviewing || phase === "revealed";
 
-  const segments: RailSegment[] = challengeQuestions.map((item, position) => {
-    const answer = reviewing ? reviewAnswers[position] : answers[position];
+  const segments: RailSegment[] = questions.map((item, slot) => {
+    const answer = reviewing ? reviewAnswers[slot] : answers[slot];
     if (answer !== undefined) {
       return answer === item.answer ? "correct" : "wrong";
     }
-    return position === index && !revealed ? "current" : "upcoming";
+    return slot === position && !revealed ? "current" : "upcoming";
   });
 
   function select(option: number) {
@@ -59,7 +63,7 @@ export function useChallengeRun(reviewAnswers: number[] | null) {
 
   return {
     reviewing,
-    index,
+    index: position,
     total,
     isLast,
     question,

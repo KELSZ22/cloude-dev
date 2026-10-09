@@ -5,22 +5,12 @@ import { ModelDownloadStrip } from "@/shared/components/model-download-strip";
 import { StateFigure } from "@/shared/components/state-figure";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
+import { topicLabelKey } from "@/shared/constants/topics";
 import { useTheme } from "@/shared/hooks/use-theme";
-import { useTranslation, type MessageKey } from "@/shared/i18n";
-import { useOnboardingStore, type OnboardingTopicId } from "@/shared/stores/onboarding-store";
+import { useTranslation } from "@/shared/i18n";
+import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { ARTICLES_PER_TOPIC, useTopicPackStore } from "@/shared/stores/topic-pack-store";
 import { SetupStep } from "./SetupStep";
-
-const topicLabelKey = {
-  general: "topics.general",
-  science: "topics.science",
-  technology: "topics.technology",
-  history: "topics.history",
-  health: "topics.health",
-  business: "topics.business",
-  arts: "topics.arts",
-  environment: "topics.environment",
-} as const satisfies Record<OnboardingTopicId, MessageKey>;
 
 export function PacksStep() {
   const colors = useTheme();

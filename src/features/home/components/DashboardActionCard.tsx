@@ -1,25 +1,72 @@
 import { Image } from "expo-image";
 import { router, type Href } from "expo-router";
-import { SymbolView, type SymbolViewProps } from "expo-symbols";
+import { SymbolView } from "expo-symbols";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/shared/components/themed-text";
-import { Colors, Spacing } from "@/shared/constants/theme";
+import { Spacing } from "@/shared/constants/theme";
+import { useColorScheme } from "@/shared/hooks/use-color-scheme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
+
+export type DashboardActionCardVariant = "readLearn" | "library";
 
 type DashboardActionCardProps = {
   label: string;
   title: string;
+  subtitle: string;
   href?: Href;
-  icon: SymbolViewProps["name"];
-  accent: string;
-  useLogo?: boolean;
+  variant: DashboardActionCardVariant;
 };
 
-export function DashboardActionCard({ label, title, href, icon, accent, useLogo }: DashboardActionCardProps) {
-  const colors = useTheme();
+const logos = {
+  readLearn: require("@/assets/dashboard/read-and-learn.png"),
+  library: require("@/assets/dashboard/library.png"),
+} as const;
+
+function variantPalette(variant: DashboardActionCardVariant, scheme: "light" | "dark") {
+  if (variant === "readLearn") {
+    return scheme === "light"
+      ? {
+          halo: "rgba(16, 185, 129, 0.2)",
+          chevron: "#047857",
+          subtitle: "#5A756D",
+          shadow: "0 4px 14px rgba(15, 23, 42, 0.08)",
+        }
+      : {
+          halo: "rgba(52, 211, 153, 0.22)",
+          chevron: "#34D399",
+          subtitle: "#8FAEA4",
+          shadow: "0 4px 14px rgba(0, 0, 0, 0.35)",
+        };
+  }
+
+  return scheme === "light"
+    ? {
+        halo: "rgba(37, 99, 235, 0.16)",
+        chevron: "#1D4ED8",
+        subtitle: "#5A6D80",
+        shadow: "0 4px 14px rgba(15, 23, 42, 0.08)",
+      }
+    : {
+        halo: "rgba(96, 165, 250, 0.2)",
+        chevron: "#60A5FA",
+        subtitle: "#8FA3B8",
+        shadow: "0 4px 14px rgba(0, 0, 0, 0.35)",
+      };
+}
+
+export function DashboardActionCard({
+  label,
+  title,
+  subtitle,
+  href,
+  variant,
+}: DashboardActionCardProps) {
   const { t } = useTranslation();
+  const colors = useTheme();
+  const scheme = useColorScheme();
+  const palette = variantPalette(variant, scheme);
   const disabled = !href;
 
   return (
@@ -28,51 +75,97 @@ export function DashboardActionCard({ label, title, href, icon, accent, useLogo 
       accessibilityLabel={disabled ? `${label}, ${t("common.comingSoon")}` : label}
       accessibilityState={{ disabled }}
       disabled={disabled}
-      onPress={() => { if (href) router.navigate(href); }}
+      onPress={() => {
+        if (href) router.navigate(href);
+      }}
       style={({ pressed }) => [
         styles.card,
         {
-          borderColor: colors.dashboardBorder,
           backgroundColor: pressed ? colors.backgroundSelected : colors.backgroundElement,
+          boxShadow: palette.shadow,
         },
       ]}
     >
-      <View style={[styles.icon, { backgroundColor: accent }]}>
-        {useLogo ? (
+      <View style={styles.topRow}>
+        <View style={[styles.halo, { backgroundColor: palette.halo }]}>
           <Image
-            source={require("@/assets/logo/logo-greenbg.png")}
+            source={logos[variant]}
             contentFit="contain"
             accessible={false}
             accessibilityLabel=""
             style={styles.logo}
           />
-        ) : (
-          <SymbolView name={icon} size={23} tintColor={Colors.light.backgroundElement} />
-        )}
+        </View>
+        <View style={styles.chevronWrap}>
+          <SymbolView
+            name={{
+              ios: "chevron.right",
+              android: "chevron_right",
+              web: "chevron_right",
+            }}
+            size={20}
+            tintColor={palette.chevron}
+          />
+        </View>
       </View>
-      <ThemedText type="smallBold" style={styles.title}>{title}</ThemedText>
-      {disabled ? (
-        <ThemedText type="small" themeColor="textSecondary" style={styles.soon}>
-          {t("common.comingSoonLabel")}
+      <View style={styles.copy}>
+        <ThemedText type="smallBold" style={styles.title}>
+          {title}
         </ThemedText>
-      ) : null}
+        <ThemedText
+          type="small"
+          style={[styles.subtitle, { color: palette.subtitle }]}
+        >
+          {disabled ? t("common.comingSoonLabel") : subtitle}
+        </ThemedText>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    width: "46%",
-    minHeight: 112,
+    flex: 1,
+    minWidth: "46%",
+    minHeight: 148,
+    borderRadius: 24,
+    padding: Spacing.three,
+    gap: Spacing.two,
+  },
+  topRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+  },
+  halo: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    borderRadius: 16,
-    padding: Spacing.two,
-    gap: 6,
   },
-  icon: { width: 34, height: 34, borderRadius: 11, alignItems: "center", justifyContent: "center", overflow: "hidden" },
-  logo: { width: "100%", height: "100%" },
-  title: { textAlign: "center", fontSize: 14, lineHeight: 18 },
-  soon: { fontSize: 10, lineHeight: 12 },
+  logo: {
+    width: 48,
+    height: 48,
+  },
+  chevronWrap: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  copy: {
+    gap: 4,
+  },
+  title: {
+    fontSize: 16,
+    lineHeight: 22,
+    textAlign: "left",
+  },
+  subtitle: {
+    fontSize: 12,
+    lineHeight: 17,
+    textAlign: "left",
+  },
 });

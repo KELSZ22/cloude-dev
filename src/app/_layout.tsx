@@ -90,6 +90,10 @@ export default function RootLayout() {
                 options={{ headerShown: false }}
               />
               <Stack.Screen
+                name="read/[id]"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
                 name="saved/[id]"
                 options={{ headerShown: false }}
               />

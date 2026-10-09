@@ -14,7 +14,7 @@ import { LeafDecor } from "@/shared/components/leaf-decor";
 import { PillButton } from "@/shared/components/pill-button";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
-import { BottomTabInset, Spacing } from "@/shared/constants/theme";
+import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
 import {
@@ -24,8 +24,7 @@ import {
   type RailSegment,
   type ResultStat,
 } from "./components";
-import { challengeQuestions } from "./data/questions";
-import { useCountUp } from "./hooks";
+import { useCountUp, useDeckQuestions } from "./hooks";
 
 const tiers = [
   {
@@ -78,16 +77,17 @@ export default function QuizResultPage() {
     if (!answers?.length) router.replace("/(tabs)/challenge");
   }, [answers?.length]);
 
-  const total = challengeQuestions.length;
+  const questions = useDeckQuestions().questions;
+  const total = questions.length;
   const correct = (answers ?? []).filter(
-    (answer, index) => answer === challengeQuestions[index]?.answer,
+    (answer, index) => answer === questions[index]?.answer,
   ).length;
   const seconds = Number(params.seconds ?? 0);
   const animate = !reducedMotion;
   const shown = useCountUp(correct, animate);
   const tier = tiers.find((entry) => correct / total >= entry.floor) ?? tiers[2];
 
-  const segments: RailSegment[] = challengeQuestions.map((question, index) =>
+  const segments: RailSegment[] = questions.map((question, index) =>
     answers?.[index] === question.answer ? "correct" : "wrong",
   );
 
@@ -129,7 +129,7 @@ export default function QuizResultPage() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scroll,
-          { paddingBottom: BottomTabInset + Spacing.four },
+          { paddingBottom: insets.bottom + Spacing.four },
         ]}
       >
         <Animated.View entering={animate ? ZoomIn.duration(420) : undefined}>

@@ -1,0 +1,133 @@
+{
+  "retrieved_at": "2026-10-10T00:00:00+08:00",
+  "note": "Point-in-time titles from the English Wikipedia search API. These articles are not stored in the repository. The same morelike queries are hardcoded in src/shared/constants/topic-queries.ts. Ranking changes over time, so this is a sample, not a pack manifest.",
+  "api": "https://en.wikipedia.org/w/api.php",
+  "parameters": {
+    "generator": "search",
+    "gsrnamespace": "0",
+    "gsrlimit": "10",
+    "gsrprop": "wordcount"
+  },
+  "topics": {
+    "general": {
+      "query": "morelike:Knowledge|Education|Culture|Society",
+      "results": [
+        { "title": "Epistemology", "pageid": 9247, "words": 19966 },
+        { "title": "Philosophy of education", "pageid": 24983, "words": 14402 },
+        { "title": "Declarative knowledge", "pageid": 23369987, "words": 10444 },
+        { "title": "Constructivism (philosophy of education)", "pageid": 1040161, "words": 6543 },
+        { "title": "Paul Ernest", "pageid": 1214276, "words": 2393 },
+        { "title": "Pedagogy", "pageid": 419686, "words": 5978 },
+        { "title": "Enculturation", "pageid": 1007362, "words": 1514 },
+        { "title": "Education sciences", "pageid": 11719855, "words": 4273 },
+        { "title": "Philosophy", "pageid": 13692155, "words": 17544 },
+        { "title": "Autodidacticism", "pageid": 255591, "words": 3050 }
+      ]
+    },
+    "science": {
+      "query": "morelike:Physics|Chemistry|Biology|Astronomy|Geology",
+      "results": [
+        { "title": "Outline of physical science", "pageid": 23638, "words": 5634 },
+        { "title": "Branches of science", "pageid": 11983318, "words": 3815 },
+        { "title": "Chemical element", "pageid": 5659, "words": 14331 },
+        { "title": "Molecule", "pageid": 19555, "words": 3705 },
+        { "title": "Outline of natural science", "pageid": 33017018, "words": 10285 },
+        { "title": "History of atomic theory", "pageid": 2844, "words": 10174 },
+        { "title": "Outline of chemistry", "pageid": 6896, "words": 3734 },
+        { "title": "Matter", "pageid": 19673093, "words": 9941 },
+        { "title": "Ernest Rutherford", "pageid": 9603, "words": 6434 },
+        { "title": "Natural science", "pageid": 38890, "words": 6323 }
+      ]
+    },
+    "technology": {
+      "query": "morelike:Engineering|Computer_science|Internet|Electronics",
+      "results": [
+        { "title": "Computing", "pageid": 5213, "words": 5462 },
+        { "title": "Mechatronics", "pageid": 304604, "words": 1889 },
+        { "title": "List of IEEE publications", "pageid": 15864343, "words": 1207 },
+        { "title": "Theoretical computer science", "pageid": 323392, "words": 4819 },
+        { "title": "Computer science and engineering", "pageid": 524425, "words": 357 },
+        { "title": "Danny Cohen (computer scientist)", "pageid": 25823112, "words": 1555 },
+        { "title": "Electrical engineering", "pageid": 9531, "words": 8090 },
+        { "title": "Communication protocol", "pageid": 28030850, "words": 8263 },
+        { "title": "Electronics engineering", "pageid": 28923910, "words": 3748 },
+        { "title": "Reverse engineering", "pageid": 18935488, "words": 7423 }
+      ]
+    },
+    "history": {
+      "query": "morelike:Civilization|Archaeology|Ancient_Rome|Middle_Ages",
+      "results": [
+        { "title": "Classical antiquity", "pageid": 252905, "words": 4831 },
+        { "title": "Migration Period", "pageid": 103155, "words": 4737 },
+        { "title": "Classics", "pageid": 5178, "words": 5526 },
+        { "title": "History of Europe", "pageid": 13212, "words": 33371 },
+        { "title": "History of Western civilization before AD 500", "pageid": 38005076, "words": 4285 },
+        { "title": "Ancient technology", "pageid": 2293952, "words": 4650 },
+        { "title": "Timeline of ancient history", "pageid": 17255423, "words": 5657 },
+        { "title": "Western world", "pageid": 21208200, "words": 16440 },
+        { "title": "Barbarian kingdoms", "pageid": 51501212, "words": 6201 },
+        { "title": "List of ancient great powers", "pageid": 47634469, "words": 14256 }
+      ]
+    },
+    "health": {
+      "query": "morelike:Medicine|Disease|Anatomy|Public_health",
+      "results": [
+        { "title": "Nosology", "pageid": 70533, "words": 1445 },
+        { "title": "Glossary of medicine", "pageid": 57233472, "words": 30119 },
+        { "title": "Health", "pageid": 80381, "words": 6786 },
+        { "title": "Medical diagnosis", "pageid": 19013767, "words": 3648 },
+        { "title": "Medical doctor", "pageid": 23315, "words": 4200 },
+        { "title": "History of medicine", "pageid": 14194, "words": 24809 },
+        { "title": "Medical error", "pageid": 718324, "words": 12120 },
+        { "title": "Outline of medicine", "pageid": 14471564, "words": 2099 },
+        { "title": "Medicine in ancient Rome", "pageid": 9543979, "words": 6661 },
+        { "title": "History of medical diagnosis", "pageid": 24872654, "words": 3184 }
+      ]
+    },
+    "business": {
+      "query": "morelike:Economics|Finance|Marketing|Accounting",
+      "results": [
+        { "title": "Demographic economics", "pageid": 20226904, "words": 2584 },
+        { "title": "Peter Kenneth Newman", "pageid": 18105507, "words": 368 },
+        { "title": "Convexity in economics", "pageid": 30643278, "words": 3084 },
+        { "title": "History of macroeconomic thought", "pageid": 22785026, "words": 13253 },
+        { "title": "Non-convexity (economics)", "pageid": 30618217, "words": 4148 },
+        { "title": "Lawrence E. Blume", "pageid": 13970052, "words": 341 },
+        { "title": "Glossary of economics", "pageid": 50757843, "words": 25720 },
+        { "title": "Microeconomics", "pageid": 18819, "words": 5931 },
+        { "title": "Ross Starr", "pageid": 30549764, "words": 293 },
+        { "title": "Price", "pageid": 211295, "words": 2712 }
+      ]
+    },
+    "arts": {
+      "query": "morelike:Visual_arts|Literature|Music|Theatre",
+      "results": [
+        { "title": "Greek chorus", "pageid": 197034, "words": 3115 },
+        { "title": "Tragedy", "pageid": 57993, "words": 7559 },
+        { "title": "Aulos", "pageid": 538948, "words": 2095 },
+        { "title": "Classical music", "pageid": 6668778, "words": 10204 },
+        { "title": "Drama", "pageid": 20913753, "words": 6694 },
+        { "title": "Theatre of ancient Greece", "pageid": 528520, "words": 4070 },
+        { "title": "Performing arts", "pageid": 22938, "words": 6758 },
+        { "title": "History of theatre", "pageid": 23477542, "words": 22750 },
+        { "title": "Harp", "pageid": 13911, "words": 6409 },
+        { "title": "Phoinix (instrument)", "pageid": 83874482, "words": 471 }
+      ]
+    },
+    "environment": {
+      "query": "morelike:Ecology|Climate_change|Biodiversity|Conservation_biology",
+      "results": [
+        { "title": "Ecological crisis", "pageid": 400679, "words": 4259 },
+        { "title": "Biodiversity loss", "pageid": 52968860, "words": 16676 },
+        { "title": "Effects of climate change on plant biodiversity", "pageid": 19928041, "words": 4308 },
+        { "title": "Extinction risk from climate change", "pageid": 9068275, "words": 14135 },
+        { "title": "Environmental issues", "pageid": 23099899, "words": 6485 },
+        { "title": "Global biodiversity", "pageid": 18101105, "words": 4048 },
+        { "title": "Erika Zavaleta", "pageid": 58864455, "words": 1825 },
+        { "title": "Refugium (population biology)", "pageid": 2175118, "words": 2662 },
+        { "title": "Tropical ecology", "pageid": 19826061, "words": 3831 },
+        { "title": "Habitat destruction", "pageid": 1707053, "words": 7294 }
+      ]
+    }
+  }
+}

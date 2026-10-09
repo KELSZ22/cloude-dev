@@ -1,18 +1,30 @@
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, FlatList, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { listWikipediaFigureReferences } from "@/infrastructure/learning/wikipedia";
+
 import { ActionButton } from "@/shared/components/action-button";
+import {
+  ARTICLE_HERO_HEIGHT,
+  ArticleCallout,
+  ArticleHero,
+  ArticleIntro,
+  ArticleTopBar,
+} from "@/shared/components/article-chrome";
 import { ExternalLink } from "@/shared/components/external-link";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
+import { topicLabelKey } from "@/shared/constants/topics";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
+import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
 import { readingRepository } from "@/shared/stores/offline-reading-store";
+import { ONBOARDING_TOPIC_IDS } from "@/shared/stores/onboarding-store";
 import { useReadingHistoryStore } from "@/shared/stores/reading-history-store";
+import { useTopicPackStore } from "@/shared/stores/topic-pack-store";
 import type { DisplayFigure, OpenedReading, ReadingSection } from "@/shared/types/offline-reading";
 
 import { ArticleFigure } from "./components/ArticleFigure";
@@ -23,10 +35,11 @@ export default function ReaderPage() {
 }
 
 function LocalReader({ id }: { id: string }) {
-  const { t, locale } = useTranslation();
+  const { t } = useTranslation();
   const colors = useTheme();
   const insets = useSafeAreaInsets();
   const [article, setArticle] = useState<OpenedReading | null>(null);
+  const [overPhoto, setOverPhoto] = useState(true);
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
@@ -67,11 +80,15 @@ function LocalReader({ id }: { id: string }) {
   }, [article]);
 
   const figures = article?.figures.length ? article.figures : references;
+  const hero = figures[0] ?? null;
+  const bodyFigures = hero ? figures.slice(1) : figures;
+  const articleIds = useTopicPackStore((state) => state.articleIds);
+  const openAssistant = useAssistantSheetStore((state) => state.openAssistant);
   const { rows, sectionStarts } = useMemo(
     () => article
-      ? articleRows(article.sections, figures, t("reading.introduction"))
+      ? articleRows(article.sections, bodyFigures, t("reading.introduction"))
       : { rows: [] as ReaderRow[], sectionStarts: [] as number[] },
-    [article, figures, t],
+    [article, bodyFigures, t],
   );
 
   if (loading || !article) {
@@ -96,6 +113,22 @@ function LocalReader({ id }: { id: string }) {
     listRef.current?.scrollToIndex({ index: row, viewPosition: 0 });
   }
 
+  const reading = article;
+  const topicId = ONBOARDING_TOPIC_IDS.find((topic) =>
+    (articleIds[topic] ?? []).includes(reading.id),
+  );
+  const source = topicId ? t(topicLabelKey[topicId]) : "Wikipedia";
+  const lead = splitLead(reading.summary);
+
+  function ask() {
+    openAssistant({
+      articleTitle: reading.title,
+      pageText: reading.sections
+        .map((section) => [section.title, ...section.paragraphs].filter(Boolean).join("\n"))
+        .join("\n\n"),
+    });
+  }
+
   return (
     <ThemedView style={[styles.screen, { backgroundColor: colors.backgroundWarm }]}>
       <FlatList ref={listRef} data={rows}
@@ -104,19 +137,26 @@ function LocalReader({ id }: { id: string }) {
           listRef.current?.scrollToOffset({ offset: info.averageItemLength * info.index, animated: false });
           setTimeout(() => listRef.current?.scrollToIndex({ index: info.index, viewPosition: 0 }), 80);
         }}
-        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + Spacing.four }]}
+        contentContainerStyle={{ paddingBottom: insets.bottom + Spacing.five, width: "100%", maxWidth: 680, alignSelf: "center" }}
+        scrollEventThrottle={32}
+        onScroll={(event) => {
+          const next = event.nativeEvent.contentOffset.y < ARTICLE_HERO_HEIGHT - 72;
+          setOverPhoto((current) => (current === next ? current : next));
+        }}
         ListHeaderComponent={
-          <View style={styles.header}>
-            <ThemedText type="smallBold" themeColor="tint">
-              {article.figures.length ? t("reading.availableIllustrated") : t("reading.available")}
-            </ThemedText>
-            <ThemedText type="title" accessibilityRole="header">{article.title}</ThemedText>
-            <ThemedText type="small" themeColor="textSecondary">
-              Wikipedia · {article.language === "en" ? "English" : "Tagalog"} · {t("reading.minutes", { count: article.readMinutes })}
-            </ThemedText>
-            <ThemedText type="small" themeColor="textSecondary">{t("reading.downloadedOn", {
-              date: new Date(article.downloadedAt).toLocaleDateString(locale === "fil" ? "fil-PH" : "en-US"),
-            })}</ThemedText>
+          <View>
+            <ArticleHero image={hero ? { uri: hero.uri } : null} fit="contain" />
+            <View style={styles.intro}>
+            <ArticleIntro title={article.title} source={source} minutes={article.readMinutes} />
+            {lead.overview ? (
+              <>
+                <ThemedText type="subtitle" accessibilityRole="header" style={[styles.sectionTitle, { color: colors.brand }]}>
+                  {t("article.overview")}
+                </ThemedText>
+                <ThemedText selectable style={styles.lead}>{lead.overview}</ThemedText>
+              </>
+            ) : null}
+            <ArticleCallout text={lead.callout} />
             <View style={styles.toolbar}>
               <Pressable accessibilityRole="button" accessibilityState={{ expanded: contentsOpen }}
                 onPress={() => setContentsOpen((value) => !value)} style={styles.tool}>
@@ -139,10 +179,17 @@ function LocalReader({ id }: { id: string }) {
                 ))}
               </View>
             ) : null}
+            </View>
           </View>
         }
         renderItem={({ item }) => {
-          if (item.kind === "figure") return <ArticleFigure figure={item.figure} />;
+          if (item.kind === "figure") {
+            return (
+              <View style={styles.figure}>
+                <ArticleFigure figure={item.figure} />
+              </View>
+            );
+          }
           if (item.kind === "heading") {
             return (
               <ThemedText
@@ -172,6 +219,11 @@ function LocalReader({ id }: { id: string }) {
             </View>
           </View>
         } />
+      <ArticleTopBar
+        onBack={() => router.back()}
+        onAsk={ask}
+        onPhoto={hero !== null && overPhoto}
+      />
     </ThemedView>
   );
 }
@@ -179,17 +231,19 @@ function LocalReader({ id }: { id: string }) {
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   missing: { flex: 1, justifyContent: "center", padding: Spacing.four, gap: Spacing.three },
-  content: { padding: Spacing.four, width: "100%", maxWidth: 680, alignSelf: "center" },
-  header: { gap: Spacing.two, marginBottom: Spacing.four },
+  intro: { paddingHorizontal: Spacing.four, paddingTop: Spacing.four, gap: Spacing.two },
+  sectionTitle: { fontSize: 22, lineHeight: 28 },
+  lead: { fontSize: 16, lineHeight: 26, marginBottom: Spacing.two },
   toolbar: { flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between", gap: Spacing.two },
   tool: { minHeight: 48, justifyContent: "center", paddingHorizontal: Spacing.two },
   contents: { borderRadius: 16, paddingVertical: Spacing.two },
   chapter: { minHeight: 44, justifyContent: "center", paddingVertical: Spacing.two, paddingRight: Spacing.three },
-  heading: { marginTop: Spacing.three, marginBottom: Spacing.two },
-  nestedHeading: { marginTop: Spacing.two },
-  paragraph: { fontSize: 18, lineHeight: 30, marginBottom: Spacing.three },
+  heading: { marginTop: Spacing.three, marginBottom: Spacing.two, marginHorizontal: Spacing.four, fontSize: 22, lineHeight: 28 },
+  nestedHeading: { marginTop: Spacing.two, fontSize: 18, lineHeight: 24 },
+  paragraph: { fontSize: 16, lineHeight: 26, marginBottom: Spacing.three, marginHorizontal: Spacing.four },
+  figure: { marginHorizontal: Spacing.four },
   largeParagraph: { fontSize: 22, lineHeight: 36 },
-  footer: { gap: Spacing.three, marginTop: Spacing.three },
+  footer: { gap: Spacing.three, marginTop: Spacing.three, marginHorizontal: Spacing.four },
   attribution: { borderTopWidth: 1, paddingTop: Spacing.four, gap: Spacing.two, marginTop: Spacing.three },
 });
 
@@ -197,6 +251,18 @@ type ReaderRow =
   | { kind: "heading"; key: string; title: string; level: number }
   | { kind: "text"; key: string; text: string }
   | { kind: "figure"; key: string; figure: DisplayFigure };
+
+function splitLead(summary: string) {
+  const text = summary.trim();
+  const match = text.match(/^(.+?[.!?])\s+([\s\S]+)$/);
+  if (!match) return { callout: "", overview: text };
+  const rest = match[2];
+  // A follow-on sentence that starts with a pronoun belongs with the overview.
+  if (/^(it|this|these|those|they|that|he|she|there)\b/i.test(rest)) {
+    return { callout: "", overview: text };
+  }
+  return { callout: match[1], overview: rest };
+}
 
 function articleRows(sections: ReadingSection[], figures: DisplayFigure[], introduction: string) {
   const slots = sections.map(() => [] as DisplayFigure[]);

@@ -5,7 +5,13 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 
-export function HintStrip({ pack }: { pack: string }) {
+export function HintStrip({
+  pack,
+  fromArticle = false,
+}: {
+  pack: string;
+  fromArticle?: boolean;
+}) {
   const colors = useTheme();
   const { t } = useTranslation();
 
@@ -21,7 +27,9 @@ export function HintStrip({ pack }: { pack: string }) {
         tintColor={colors.accentGold}
       />
       <ThemedText type="small" themeColor="textSecondary" style={styles.text}>
-        {t("challenge.fromPack", { pack })}
+        {fromArticle
+          ? t("challenge.fromArticle", { title: pack })
+          : t("challenge.fromPack", { pack })}
       </ThemedText>
     </View>
   );
