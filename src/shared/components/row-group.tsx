@@ -3,7 +3,8 @@ import { StyleSheet, View } from "react-native";
 
 import { useTheme } from "@/shared/hooks/use-theme";
 
-export function SettingsGroup({ children }: PropsWithChildren) {
+/** Holds rows as one block, so a hairline is enough to separate them. */
+export function RowGroup({ children }: PropsWithChildren) {
   const colors = useTheme();
 
   return (

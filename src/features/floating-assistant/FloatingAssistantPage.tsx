@@ -1,13 +1,14 @@
-import { Image } from "expo-image";
 import { router } from "expo-router";
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { useEffect, useState } from "react";
 import { AppState, PermissionsAndroid, Platform, StyleSheet, View } from "react-native";
 
-import { ActionButton } from "@/shared/components/action-button";
-import { Page } from "@/shared/components/page";
+import { ActionRow } from "@/shared/components/action-row";
+import { InfoRow } from "@/shared/components/info-row";
 import { PillButton } from "@/shared/components/pill-button";
-import { StatusCard } from "@/shared/components/status-card";
+import { RowGroup } from "@/shared/components/row-group";
+import { StackPage } from "@/shared/components/stack-page";
+import { StateFigure } from "@/shared/components/state-figure";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
@@ -20,10 +21,6 @@ const INTRO_POINTS: { icon: SymbolViewProps["name"]; text: MessageKey }[] = [
   { icon: { ios: "mic", android: "mic", web: "mic" }, text: "floating.featureVoice" },
   { icon: { ios: "viewfinder", android: "crop_free", web: "crop_free" }, text: "floating.featureAnalyze" },
   { icon: { ios: "wifi.slash", android: "wifi_off", web: "wifi_off" }, text: "floating.featureOffline" },
-];
-
-const SUCCESS_POINTS: MessageKey[] = [
-  "floating.successBubble", "floating.successDrag", "floating.successModel", "floating.successScreen",
 ];
 
 /** Android 13 and later only show the assistant's status notification if the user allows notifications. */
@@ -56,7 +53,6 @@ export default function FloatingAssistantPage() {
   // Set while the user is away in Android's permission screen, so their return can be checked.
   const [awaitingPermission, setAwaitingPermission] = useState(false);
   const [denied, setDenied] = useState(false);
-  const [justEnabled, setJustEnabled] = useState(false);
 
   useEffect(() => {
     if (!awaitingPermission) return;
@@ -70,7 +66,6 @@ export default function FloatingAssistantPage() {
       void askForMicrophone().then(() => {
         if (assistant.enable()) {
           setDenied(false);
-          setJustEnabled(true);
           void askForNotifications();
         } else {
           setDenied(true);
@@ -89,7 +84,6 @@ export default function FloatingAssistantPage() {
     }
     void askForMicrophone().then(() => {
       if (assistant.enable()) {
-        setJustEnabled(true);
         void askForNotifications();
       } else {
         setDenied(true);
@@ -99,91 +93,123 @@ export default function FloatingAssistantPage() {
 
   if (!assistant.available) {
     return (
-      <Page nested title={t("stack.floatingAssistant")}>
-        <StatusCard title={t("floating.unavailableTitle")} description={t("floating.unavailableBody")} />
-      </Page>
+      <StackPage title={t("stack.floatingAssistant")}>
+        <StateFigure
+          label={t("floating.stateUnavailable")}
+          value={t("floating.off")}
+          caption={t("floating.unavailableBody")}
+          tone="cost"
+          progress={null}
+        />
+      </StackPage>
     );
   }
 
-  if (justEnabled && assistant.enabled) {
-    return (
-      <Page nested title={t("floating.successTitle")} description={t("floating.successBody")}>
-        <View style={[styles.badge, { backgroundColor: colors.backgroundSelected }]}>
-          <SymbolView name={{ ios: "checkmark", android: "check", web: "check" }} size={44} tintColor={colors.tint} />
-        </View>
-        <View style={styles.points}>
-          {SUCCESS_POINTS.map((point) => (
-            <View key={point} style={styles.point}>
-              <SymbolView name={{ ios: "checkmark.circle.fill", android: "check_circle", web: "check_circle" }} size={20} tintColor={colors.tint} />
-              <ThemedText style={styles.pointText}>{t(point)}</ThemedText>
-            </View>
-          ))}
-        </View>
-        <PillButton label={t("floating.getStarted")} onPress={() => setJustEnabled(false)} />
-      </Page>
-    );
-  }
+  const on = assistant.enabled;
 
-  if (!assistant.enabled) {
-    return (
-      <Page nested title={t("floating.introTitle")} description={t("floating.introBody")}>
-        <View style={[styles.badge, { backgroundColor: colors.backgroundSelected }]}>
-          <Image source={require("@/assets/logo/logo-greenbg.png")} style={styles.logo} contentFit="cover" accessibilityLabel="" />
-        </View>
-        <View style={styles.points}>
+  return (
+    <StackPage title={t("stack.floatingAssistant")}>
+      <StateFigure
+        // Only the running state needs a label; "Off" above "Off" would say it twice.
+        label={on ? t("floating.stateOn") : undefined}
+        value={on ? t("floating.on") : t("floating.off")}
+        caption={on ? t("floating.statusOn") : t("floating.introBody")}
+        tone={on ? "done" : "cost"}
+        progress={null}
+      />
+
+      {denied ? (
+        <ThemedText type="small" themeColor="error" accessibilityRole="alert">
+          {t("floating.permissionDenied")}
+        </ThemedText>
+      ) : null}
+
+      {on ? (
+        <RowGroup>
+          <InfoRow
+            first
+            icon={{ ios: "rectangle.on.rectangle", android: "layers", web: "layers" }}
+            label={t("floating.permissionTitle")}
+            value={
+              assistant.permissionGranted
+                ? t("floating.permissionGranted")
+                : t("floating.permissionMissing")
+            }
+          />
+          <InfoRow
+            icon={{ ios: "bell", android: "notifications_none", web: "notifications_none" }}
+            label={t("floating.rowNotifications")}
+            value={assistant.notificationsEnabled ? t("settings.on") : t("settings.off")}
+          />
+          <InfoRow
+            icon={{ ios: "viewfinder", android: "crop_free", web: "crop_free" }}
+            label={t("floating.rowScreenText")}
+            value={
+              assistant.hasScreenContext ? t("floating.rowScreenKept") : t("floating.rowScreenNone")
+            }
+          />
+        </RowGroup>
+      ) : (
+        <View style={[styles.points, { borderColor: colors.border }]}>
           {INTRO_POINTS.map((point) => (
             <View key={point.text} style={styles.point}>
               <SymbolView name={point.icon} size={20} tintColor={colors.tint} />
-              <ThemedText style={styles.pointText}>{t(point.text)}</ThemedText>
+              <ThemedText type="small" style={styles.pointText}>
+                {t(point.text)}
+              </ThemedText>
             </View>
           ))}
         </View>
-        {!assistant.permissionGranted && (
-          <ThemedText type="small" themeColor="textSecondary">{t("floating.permissionNote")}</ThemedText>
-        )}
-        {denied && <ThemedText themeColor="error" accessibilityRole="alert">{t("floating.permissionDenied")}</ThemedText>}
-        <PillButton label={t("floating.enable")} onPress={start} />
-        <PillButton label={t("floating.notNow")} variant="outline" onPress={() => router.back()} />
-        <StatusCard title={t("floating.screenTitle")} description={t("floating.screenBody")} />
-      </Page>
-    );
-  }
-
-  return (
-    <Page nested title={t("stack.floatingAssistant")} description={t("floating.statusOn")}>
-      <StatusCard
-        title={t("floating.permissionTitle")}
-        description={assistant.permissionGranted ? t("floating.permissionGranted") : t("floating.permissionMissing")}
-      >
-        <ActionButton label={t("floating.openPermission")} onPress={assistant.openPermissionSettings} />
-      </StatusCard>
-      {!assistant.notificationsEnabled && (
-        <ThemedText type="small" themeColor="textSecondary">{t("floating.notificationsOff")}</ThemedText>
       )}
-      <StatusCard title={t("floating.screenTitle")} description={t("floating.screenBody")}>
-        <ThemedText type="small" themeColor="textSecondary">
-          {assistant.hasScreenContext ? t("floating.contextKept") : t("floating.contextNone")}
+
+      {on ? (
+        <RowGroup>
+          <ActionRow
+            first
+            icon={{ ios: "lock.shield", android: "shield", web: "shield" }}
+            label={t("floating.openPermission")}
+            onPress={assistant.openPermissionSettings}
+          />
+          <ActionRow
+            icon={{ ios: "arrow.counterclockwise", android: "refresh", web: "refresh" }}
+            label={t("floating.resetBubble")}
+            onPress={assistant.resetBubblePosition}
+          />
+          <ActionRow
+            icon={{ ios: "eraser", android: "delete_sweep", web: "delete_sweep" }}
+            label={t("floating.clearContext")}
+            onPress={assistant.clearScreenContext}
+            disabled={!assistant.hasScreenContext}
+          />
+          <ActionRow
+            icon={{ ios: "xmark.circle", android: "cancel", web: "cancel" }}
+            label={t("floating.turnOff")}
+            destructive
+            onPress={assistant.disable}
+          />
+        </RowGroup>
+      ) : (
+        <>
+          <PillButton label={t("floating.enable")} onPress={start} />
+          <PillButton label={t("floating.notNow")} variant="outline" onPress={() => router.back()} />
+        </>
+      )}
+
+      {!assistant.permissionGranted && !on ? (
+        <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
+          {t("floating.permissionNote")}
         </ThemedText>
-        <ActionButton label={t("floating.clearContext")} disabled={!assistant.hasScreenContext} onPress={assistant.clearScreenContext} />
-      </StatusCard>
-      <StatusCard variant="ai" title={t("floating.modelTitle")} description={t("floating.modelBody")} />
-      <ActionButton label={t("floating.resetBubble")} onPress={assistant.resetBubblePosition} />
-      <ActionButton label={t("floating.turnOff")} destructive onPress={assistant.disable} />
-    </Page>
+      ) : null}
+      <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
+        {t("floating.screenBody")}
+      </ThemedText>
+    </StackPage>
   );
 }
 
 const styles = StyleSheet.create({
-  badge: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logo: { width: 72, height: 72, borderRadius: 18 },
-  points: { gap: Spacing.two },
+  points: { borderWidth: 1, borderRadius: 16, padding: Spacing.three, gap: Spacing.two },
   point: { flexDirection: "row", alignItems: "center", gap: Spacing.two },
   pointText: { flex: 1 },
+  note: { fontSize: 12, lineHeight: 17, paddingHorizontal: Spacing.one },
 });

@@ -2,13 +2,13 @@ import { SymbolView } from "expo-symbols";
 import { useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
+import { StateFigure } from "@/shared/components/state-figure";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 import { useKnowledge } from "@/shared/providers/knowledge-provider";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
-import { SetupFigure } from "./SetupFigure";
 import { SetupStep } from "./SetupStep";
 
 export function PacksStep() {
@@ -63,7 +63,7 @@ export function PacksStep() {
       primaryDisabled={knowledge.installing || library.status === "opening"}
     >
       <View style={styles.figure}>
-        <SetupFigure
+        <StateFigure
           tone={passages > 0 ? "active" : "cost"}
           value={passages.toString()}
           unit={t("onboarding.passages")}

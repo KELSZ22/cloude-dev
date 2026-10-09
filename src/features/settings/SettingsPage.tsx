@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { ActionRow } from "@/shared/components/action-row";
 import { LeafDecor } from "@/shared/components/leaf-decor";
+import { RowGroup } from "@/shared/components/row-group";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import {
@@ -23,12 +25,7 @@ import {
   useOnboardingStore,
 } from "@/shared/stores/onboarding-store";
 import { useThemeStore, type ThemeMode } from "@/shared/stores/theme-store";
-import {
-  OptionSheet,
-  ProfileCard,
-  SettingsGroup,
-  SettingsRow,
-} from "./components";
+import { OptionSheet, ProfileCard } from "./components";
 
 const APPEARANCE_IDS = ["system", "light", "dark"] as const satisfies readonly ThemeMode[];
 
@@ -69,7 +66,7 @@ export default function SettingsPage() {
       : t("settings.installed");
 
   return (
-    <ThemedView type="backgroundElement" style={styles.screen}>
+    <ThemedView type="backgroundWarm" style={styles.screen}>
       <LeafDecor width={130} />
       <View style={[styles.header, { paddingTop: insets.top + Spacing.two }]}>
         <ThemedText type="title" accessibilityRole="header" style={styles.title}>
@@ -89,21 +86,21 @@ export default function SettingsPage() {
           detail={t("settings.profileDetail")}
         />
 
-        <SettingsGroup>
-          <SettingsRow
+        <RowGroup>
+          <ActionRow
             first
             icon={{ ios: "sun.max", android: "light_mode", web: "light_mode" }}
             label={t("settings.appearance")}
             value={appearanceLabel}
             onPress={() => setSheet("appearance")}
           />
-          <SettingsRow
+          <ActionRow
             icon={{ ios: "globe", android: "language", web: "language" }}
             label={t("settings.language")}
             value={LOCALE_NAMES[language]}
             onPress={() => setSheet("language")}
           />
-          <SettingsRow
+          <ActionRow
             icon={{
               ios: "cpu",
               android: "memory",
@@ -113,13 +110,13 @@ export default function SettingsPage() {
             value={modelLabel}
             onPress={() => router.navigate("/model")}
           />
-          <SettingsRow
+          <ActionRow
             icon={{ ios: "bubble.left", android: "chat_bubble", web: "chat_bubble" }}
             label={t("settings.floatingAssistant")}
             value={floatingEnabled ? t("settings.on") : t("settings.off")}
             onPress={() => router.navigate("/floating-assistant")}
           />
-          <SettingsRow
+          <ActionRow
             icon={{
               ios: "internaldrive",
               android: "storage",
@@ -135,7 +132,7 @@ export default function SettingsPage() {
               ? router.navigate("/packs")
               : router.navigate({ pathname: "/(tabs)/library", params: { shelf: "reading" } })}
           />
-          <SettingsRow
+          <ActionRow
             icon={{
               ios: "bell",
               android: "notifications_none",
@@ -143,7 +140,7 @@ export default function SettingsPage() {
             }}
             label={t("settings.notifications")}
           />
-          <SettingsRow
+          <ActionRow
             icon={{
               ios: "lock.shield",
               android: "shield",
@@ -152,7 +149,7 @@ export default function SettingsPage() {
             label={t("settings.privacy")}
             onPress={() => router.navigate("/setup")}
           />
-          <SettingsRow
+          <ActionRow
             icon={{
               ios: "questionmark.circle",
               android: "help_outline",
@@ -160,16 +157,16 @@ export default function SettingsPage() {
             }}
             label={t("settings.help")}
           />
-        </SettingsGroup>
+        </RowGroup>
 
-        <SettingsGroup>
-          <SettingsRow
+        <RowGroup>
+          <ActionRow
             first
             icon={{ ios: "sparkles", android: "auto_awesome", web: "auto_awesome" }}
             label={t("settings.replayTour")}
             onPress={resetTour}
           />
-        </SettingsGroup>
+        </RowGroup>
 
         <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
           {t("settings.replayNote")}
