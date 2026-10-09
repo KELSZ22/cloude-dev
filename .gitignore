@@ -45,7 +45,7 @@ example
 # third-party source material; not licensed for redistribution or AI ingestion
 /resources/raw/
 
-# optional model packed into the APK at build time (529 MB); see bundled-model/README.md
+# local model reference for testing; never packed into the APK
 /bundled-model/*.gguf
 
 # Downloaded source corpus (metadata is kept in content/openstax)

@@ -1,9 +1,11 @@
-import { Platform } from 'react-native';
 import { Directory, File, FileMode, Paths } from 'expo-file-system';
+import { Platform } from 'react-native';
 
 import { localModel } from '@/shared/constants/local-model';
 import type { ModelManifest } from './contracts';
 import type { ModelStorage } from './model-storage';
+import { adaptModelDownloadTask, downloadAndInstallModel } from './download-model';
+import { tryVerifyNativeModel } from './native-model-verifier';
 import { verifyModelStream } from './verify-model';
 
 const REQUIRED_FREE_BYTES = localModel.sizeBytes + 16 * 1024 * 1024;
@@ -14,10 +16,10 @@ export function createModelStorage(): ModelStorage {
   const metadataFile = () => new File(directory, 'manifest.json');
   const stagingFile = () => new File(directory, 'model.gguf.part');
   const stagingMetadata = () => new File(directory, 'manifest.json.part');
-  /** Present only in builds made with the model in bundled-model/ (see plugins/with-bundled-model.js). */
-  const bundledFile = () => new File(`asset:///models/${localModel.filename}`);
 
   const readInstalled = async (): Promise<ModelManifest | null> => {
+    // Provider startup/load operations are serialized; reclaim interrupted transfer/manifest files.
+    cleanupStaging();
     const metadata = metadataFile();
     if (!metadata.exists) {
       if (modelFile().exists) throw new Error('An incomplete installation exists. Remove it before importing again.');
@@ -46,10 +48,25 @@ export function createModelStorage(): ModelStorage {
   const prepareDirectory = () => {
     directory.create({ intermediates: true, idempotent: true });
     if (modelFile().exists || metadataFile().exists) throw new Error('Remove the installed model before replacing it.');
+    cleanupStaging();
     if (Paths.availableDiskSpace < REQUIRED_FREE_BYTES) throw new Error('Not enough free storage. Free at least 550 MB first.');
-    const staged = stagingFile();
-    if (staged.exists) staged.delete();
-    return staged;
+    return stagingFile();
+  };
+
+  const cleanupStaging = () => {
+    for (const file of [stagingFile(), stagingMetadata()]) {
+      if (file.exists) file.delete();
+    }
+  };
+
+  const verifyStaged = async (staged: File, signal: AbortSignal, onProgress: (fraction: number) => void) => {
+    if (signal.aborted) throw new Error('Model verification cancelled.');
+    if (await tryVerifyNativeModel(staged.uri, localModel, signal, onProgress)) return;
+    // Older native builds and iOS keep the bounded streaming verifier as a compatibility fallback.
+    const input = staged.open(FileMode.ReadOnly);
+    try {
+      await verifyModelStream({ expected: localModel, read: (length) => input.readBytes(length), signal, onProgress });
+    } finally { input.close(); }
   };
 
   /** Promotes a verified staging file to the installed model and records it. */
@@ -64,53 +81,57 @@ export function createModelStorage(): ModelStorage {
       saveManifest(manifest);
       return manifest;
     } catch (error) {
-      if (modelFile().exists) modelFile().delete();
+      for (const file of [modelFile(), metadataFile(), stagingMetadata()]) {
+        if (file.exists) file.delete();
+      }
       throw error;
     }
   };
 
   return {
     readInstalled,
-    hasBundledModel() {
-      try { return Platform.OS === 'android' && bundledFile().exists; }
-      catch { return false; }
-    },
-    async installBundled(signal, onProgress) {
-      const staged = prepareDirectory();
-      try {
-        await bundledFile().copy(staged);
-        if (signal.aborted) throw new Error('Model setup cancelled.');
-        // The build refused to pack anything but the pinned SHA-256, and the APK signature covers the packed file.
-        // Only the copy needs checking here, which the platform's MD5 does in seconds.
-        if (staged.size !== localModel.sizeBytes || staged.md5 !== localModel.md5) {
-          throw new Error('The built-in model did not copy correctly. Free some storage and open the app again.');
-        }
-        onProgress(1);
-      } catch (error) {
-        if (staged.exists) staged.delete();
-        throw error;
-      }
-      return finishInstall(staged, localModel.md5);
+    async downloadModel(signal, onProgress) {
+      let staged = stagingFile();
+      return downloadAndInstallModel({
+        prepare() { staged = prepareDirectory(); },
+        createTask(_taskSignal, onBytes) {
+          // The workflow owns abort handling: Expo's automatic signal handler calls the unsafe
+          // Android cancel path instead of our pause-and-discard adapter.
+          let adapted: ReturnType<typeof adaptModelDownloadTask> | null = null;
+          const task = File.createDownloadTask(localModel.downloadUrl, staged, {
+            sessionType: 'foreground',
+            onProgress: ({ bytesWritten }) => {
+              adapted?.onProgress();
+              onBytes(bytesWritten);
+            },
+          });
+          adapted = adaptModelDownloadTask(task, Platform.OS === 'android');
+          return adapted;
+        },
+        size: () => staged.size,
+        verify: (taskSignal, update) => verifyStaged(staged, taskSignal, update),
+        install: () => finishInstall(staged, staged.md5 ?? undefined),
+        cleanup: cleanupStaging,
+      }, { sizeBytes: localModel.sizeBytes, signal, onProgress });
     },
     async importFile(sourceUri, signal, onProgress) {
+      if (signal.aborted) throw new Error('Model import cancelled.');
       if (!sourceUri.startsWith('file://') && !sourceUri.startsWith('content://')) throw new Error('Choose a local file on your device.');
       const staged = prepareDirectory();
       const source = new File(sourceUri);
-      if (source.size !== localModel.sizeBytes) throw new Error('Select the 529,297,312-byte Qwen3.5 GGUF file.');
       try {
+        if (source.size !== localModel.sizeBytes) throw new Error('Select the 529,297,312-byte Qwen3.5 GGUF file.');
         // Do not read a picked file through a handle: on Android its descriptor can be closed partway
         // through a long read ("Bad file descriptor"). The platform copies it; the app-owned copy is verified.
         await source.copy(staged);
         if (signal.aborted) throw new Error('Model verification cancelled.');
-        const input = staged.open(FileMode.ReadOnly);
-        try {
-          await verifyModelStream({ expected: localModel, read: (length) => input.readBytes(length), signal, onProgress });
-        } finally { input.close(); }
+        await verifyStaged(staged, signal, onProgress);
+        if (signal.aborted) throw new Error('Model import cancelled.');
+        return finishInstall(staged, staged.md5 ?? undefined);
       } catch (error) {
-        if (staged.exists) staged.delete();
+        cleanupStaging();
         throw error;
       }
-      return finishInstall(staged, staged.md5 ?? undefined);
     },
     async verifyInstalled(manifest, signal, onProgress) {
       const current = await readInstalled();

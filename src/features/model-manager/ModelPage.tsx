@@ -14,7 +14,8 @@ import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 import { useModel } from "@/shared/providers/model-provider";
 
-const megabytes = Math.round(localModel.sizeBytes / (1024 * 1024)).toString();
+const size = Math.round(localModel.sizeBytes / 1_000_000);
+const megabytes = size.toString();
 
 export default function ModelPage() {
   const colors = useTheme();
@@ -22,15 +23,18 @@ export default function ModelPage() {
   const model = useModel();
 
   const busy = model.operation !== null;
-  const copying = model.operation === "preparing" || model.operation === "importing";
+  const copying = model.operation === "downloading" || model.operation === "importing" || model.operation === "verifying";
+  const percent = Math.round(Math.min(1, Math.max(0, model.progress)) * 100);
   const ready = model.state.status === "ready" || model.state.status === "generating";
   const installed = model.installed !== null;
 
   const working =
-    model.operation === "importing" || model.operation === "verifying"
-      ? t("model.checking", { percent: Math.round(model.progress * 100) })
-      : model.operation === "preparing"
-        ? t("model.preparing")
+    model.operation === "downloading"
+      ? t("model.downloading", { percent })
+      : model.operation === "importing" || model.operation === "verifying"
+        ? t("model.checking", { percent })
+        : model.operation === "restoring"
+          ? t("model.restoring")
         : model.operation === "testing"
           ? t("model.testing")
           : model.operation === "answering"
@@ -44,8 +48,8 @@ export default function ModelPage() {
   // The figure answers one question: is the assistant ready, and what is it costing in storage?
   const figure = !model.native
     ? { label: t("model.stateUnavailable"), value: megabytes, unit: t("onboarding.megabytes"), caption: t("model.webBody"), tone: "cost" as const }
-    : copying
-      ? { label: t("model.stateSettingUp"), value: `${Math.round(model.progress * 100)}`, unit: "%", caption: working, tone: "active" as const }
+    : busy
+      ? { label: t("model.stateSettingUp"), value: copying ? `${percent}` : megabytes, unit: copying ? "%" : t("onboarding.megabytes"), caption: working, tone: "active" as const }
       : ready
         ? { label: t("model.stateReady"), value: megabytes, unit: t("onboarding.megabytes"), caption: t("model.stateReadyBody"), tone: "done" as const }
         : installed
@@ -67,16 +71,13 @@ export default function ModelPage() {
 
   function primary() {
     if (!installed) {
-      if (model.hasBundled) return void model.setupBundledModel();
-      return void model.importModel();
+      return void model.downloadModel();
     }
     void model.loadModel();
   }
 
   const primaryLabel = !installed
-    ? model.hasBundled
-      ? t("onboarding.modelSetUp")
-      : t("onboarding.modelChooseFile")
+    ? t(model.error ? "model.retryDownload" : "model.download", { size })
     : t("model.loadIntoMemory");
 
   return (
@@ -89,6 +90,12 @@ export default function ModelPage() {
         tone={figure.tone}
         progress={copying ? model.progress : null}
       />
+
+      {!installed && model.native ? (
+        <ThemedText type="small" themeColor="textSecondary">
+          {t("model.cardBody", { size, license: localModel.license })}
+        </ThemedText>
+      ) : null}
 
       {model.error ? (
         <ThemedText type="small" themeColor="error" accessibilityRole="alert">
@@ -112,7 +119,6 @@ export default function ModelPage() {
           }}
           disabled={
             model.operation === "restoring" ||
-            model.operation === "preparing" ||
             model.operation === "removing" ||
             model.operation === "unloading"
           }
@@ -139,8 +145,17 @@ export default function ModelPage() {
       </RowGroup>
 
       <RowGroup>
+        {!installed ? (
+          <ActionRow
+            first
+            icon={{ ios: "arrow.down.doc", android: "file_download", web: "file_download" }}
+            label={t("model.importGguf")}
+            onPress={() => { void model.importModel(); }}
+            disabled={busy || !model.native}
+          />
+        ) : null}
         <ActionRow
-          first
+          first={installed}
           icon={{ ios: "play.circle", android: "play_circle", web: "play_circle" }}
           label={t("model.rowTest")}
           onPress={() => {
@@ -161,7 +176,7 @@ export default function ModelPage() {
           label={t("model.rowRemove")}
           destructive
           onPress={confirmRemove}
-          disabled={busy || !model.native || !installed}
+          disabled={busy || !model.native || (!installed && !model.error)}
         />
       </RowGroup>
 
@@ -174,11 +189,11 @@ export default function ModelPage() {
         </View>
       ) : null}
 
-      {!installed && !model.hasBundled && model.native ? (
+      {!busy && model.native ? (
         <Pressable
           accessibilityRole="link"
           onPress={() => {
-            void Linking.openURL(localModel.downloadUrl);
+            void Linking.openURL(localModel.sourceUrl);
           }}
           style={styles.link}
         >
@@ -188,7 +203,7 @@ export default function ModelPage() {
             tintColor={colors.tint}
           />
           <ThemedText type="smallBold" themeColor="tint">
-            {t("model.openDownload")}
+            {t("model.source")}
           </ThemedText>
         </Pressable>
       ) : null}

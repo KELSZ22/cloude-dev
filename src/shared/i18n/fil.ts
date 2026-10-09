@@ -159,14 +159,13 @@ export const fil = {
     passages: "mga sipi",
     modelTitle: "I-set up ang offline mong assistant",
     modelBody:
-      "Sa teleponong ito sumusulat ng sagot ang assistant. Minsan lang kokopyahin ang modelo sa Seekora, at gagana ito kahit walang signal.",
+      "I-download ang Qwen nang isang beses gamit ang internet, pagkatapos ay makakuha ng sagot ng AI sa teleponong ito kahit offline. Panatilihing bukas ang Seekora hanggang matapos ang setup.",
     modelLicense: "Lisensyadong {{license}}",
-    modelOnce: "isang beses na setup",
-    modelCopying: "Kinokopya ang modelo sa Seekora",
-    modelSetUp: "I-set up ang modelo",
-    modelChooseFile: "Pumili ng file ng modelo",
-    modelReady: "Handa na",
-    modelReadyBody: "Makakasulat na ng sagot ang assistant sa teleponong ito",
+    modelOnce: "isang download · kailangan ang internet nang isang beses",
+    modelImport: "May modelo ka na? I-import ang GGUF file nito",
+    modelLater: "Maaari itong i-download mamaya sa Settings → Modelong AI. Gumagana ang pagbabasa at paghahanap kahit wala ito.",
+    modelReady: "Naka-save",
+    modelReadyBody: "Naka-save sa teleponong ito. Maglo-load ang modelo sa una mong tanong.",
     modelFactOffline: "Sumasagot kahit saan, kahit walang signal",
     modelFactPrivate: "Hindi lumalabas sa telepono ang mga tanong mo",
     modelFactRemovable: "Maaaring alisin anumang oras sa Settings",
@@ -427,13 +426,25 @@ export const fil = {
   },
   model: {
     description:
-      "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
+      "I-download ang Qwen nang isang beses gamit ang internet para sa mga sagot ng AI kahit offline.",
+    cardBody:
+      "Mga {{size}} MB · {{license}}. Ida-download at ibe-verify ng Seekora ang modelo, pagkatapos ay ise-save ito nang pribado sa telepono. Panatilihing bukas ang app habang nagse-setup. Pagkatapos, gagana ang mga sagot kahit walang internet at mananatili sa device na ito ang mga tanong mo.",
+    download: "I-download ang Qwen ({{size}} MB)",
+    retryDownload: "Ulitin ang download ng Qwen ({{size}} MB)",
+    downloading: "Dina-download ang Qwen · {{percent}}%",
+    restoring: "Tinitingnan kung may modelong naka-save sa device na ito…",
+    source: "Pinagmulan at lisensya ng modelo (online)",
+    importOptional: "May eksaktong modelong ito ka na? Maaari mong i-import ang GGUF file nito.",
+    importGguf: "Mag-import ng lokal na GGUF",
+    verifyLoad: "I-verify at i-load ang modelo",
+    unload: "I-unload ang modelo",
+    removeFiles: "Alisin ang mga file ng modelo",
     stateReady: "Handa na",
     stateReadyBody: "Sumasagot sa mga tanong mo sa teleponong ito",
     stateResting: "Naka-set up",
     stateRestingBody: "Nasa teleponong ito, naghihintay na i-load",
     stateMissing: "Hindi pa naka-set up",
-    stateMissingBody: "Kasama sa app, hindi pa nabubuksan",
+    stateMissingBody: "I-download ang Qwen nang isang beses para sa offline na AI",
     stateSettingUp: "Ini-set up",
     stateUnavailable: "Hindi available dito",
     loadIntoMemory: "I-load ang modelo",
@@ -445,15 +456,11 @@ export const fil = {
     rowRemove: "Alisin ang modelo",
     privacyNote:
       "Nananatili sa teleponong ito ang mga tanong at sagot mo. Walang ina-upload, may koneksyon man o wala.",
-    setUpBundled: "I-set up ang modelong kasama sa app na ito",
-    openDownload: "I-download ang file ng modelo (529 MB · kailangan ng koneksyon)",
     removeTitle: "Alisin ang lokal na modelo?",
     removeBody:
-      "Buburahin nito ang kopya ng modelong pag-aari ng app at magpapalaya ng storage. Mananatili ang orihinal mong file.",
-    working: "Ginagawa nang lokal",
+      "Buburahin nito ang kopya ng modelo ng Seekora at magpapalaya ng storage. Maaari mo itong i-download muli gamit ang internet. Mananatili ang anumang orihinal na file na in-import mo.",
+    working: "Isinasagawa ang operasyon ng modelo",
     checking: "Tinitingnan ang integridad ng modelo · {{percent}}%",
-    preparing:
-      "Inihahanda ang built-in na modelo. Sandali lang ito sa unang pagkakataon.",
     testing: "Gumagawa ng maikling runtime test…",
     answering: "Sinusagot ang tanong sa Ask Seekora…",
     loading: "Nilo-load ang modelo sa memory…",
@@ -471,14 +478,12 @@ export const fil = {
     installedNotLoaded: "Naka-install ang modelo · hindi naka-load",
     notInstalled: "Hindi naka-install ang modelo",
     webBody: "Kailangan ng assistant ang Android o iOS na app",
-    preparingBody:
-      "Inihahanda ang built-in na Qwen3.5 0.8B. Sandali lang ito sa unang pagkakataon.",
     runningBody:
       "Tumatakbo sa device na ito ang Qwen3.5 0.8B. Ang mga sagot ay mula sa iyong offline na aklatan.",
     installedBody:
       "Naka-imbak sa device na ito ang Qwen3.5 0.8B. I-load ito para makakuha ng paliwanag mula sa iyong offline na aklatan.",
     missingBody:
-      "I-import ang napiling Qwen3.5 GGUF mula sa iyong device. Walang modelong awtomatikong dina-download.",
+      "I-download ang Qwen3.5 0.8B kapag may internet, o i-import ang eksaktong GGUF file. Magsisimula lang ang setup kapag pinili mo ito. Maaari ka pa ring magbasa at maghanap nang walang modelo.",
   },
   floating: {
     introTitle: "I-enable ang Lumulutang na Assistant",

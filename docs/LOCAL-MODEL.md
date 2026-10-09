@@ -40,17 +40,21 @@ export ORG_GRADLE_PROJECT_rnllamaVariants=rnllama,rnllama_v8,rnllama_v8_2,rnllam
 
 Use the full list for anything shared with testers; the two-variant list only saves build time. A phone without the `dotprod` and `i8mm` CPU features runs the generic library from the two-variant build. For an x86_64 emulator, add `rnllama_x86_64`.
 
-## Building an APK with the model inside (optional)
+## Building an APK without model weights
 
-By default the model is not in the APK and each user imports it. To ship it inside the app instead:
+Model weights are downloaded after installation. The config plugin [`plugins/with-model-download.js`](../plugins/with-model-download.js) removes the old generated Qwen asset and excludes all GGUF assets from Android packaging. A developer's original file in `bundled-model/` is preserved and no longer affects the build.
 
-1. Put the pinned file at `bundled-model/qwen3.5-0.8b-Q4_K_M.gguf`. It is git-ignored.
-2. Run `bunx expo prebuild --platform android --no-install`. The config plugin [`plugins/with-bundled-model.js`](../plugins/with-bundled-model.js) checks the file's size and SHA-256 against the values in `app.json`, stops if they differ, and packs the file into the app's assets, stored uncompressed.
-3. Build as usual.
+Run `bunx expo prebuild --platform android --no-install --no-clean` before invoking Gradle directly on an existing generated project. `bun run android` applies this automatically. SDK 57's installed CLI cleans native directories by default; `--no-clean` applies the plugin to the existing project and keeps build caches. Generate fresh projects normally when changing SDKs or removing native dependencies.
 
-On first launch the app sees the built-in model, copies it into its own storage, and checks the copy's size and MD5 (`localModel.md5`). The user then only taps "Load the on-device model". No picker and no 18-minute JavaScript checksum are involved: the pinned SHA-256 was enforced at build time and the APK signature covers the packed file.
+The APK includes llama.rn and Seekora's native file verifier. It starts without an installed model on a new device. Existing verified model installations are restored after app upgrades, so those users do not need to download again. If the pinned artifact changes, update `src/shared/constants/local-model.ts` and repeat download/integrity/device validation.
 
-Costs: the APK grows to about 600 MB, and the device needs a further 529 MB for the working copy, because llama.cpp must open a regular file. If you change the pinned model, update the values in both `src/shared/constants/local-model.ts` and the plugin entry in `app.json`. The model is Apache-2.0; include its licence notice when you distribute an APK that contains it.
+## In-app model setup
+
+Onboarding's **Set up your offline assistant** step offers **Download Qwen (529 MB)**. Users can skip it and return through **Settings → AI Model**. The app downloads the exact pinned Hugging Face revision directly into app-owned staging storage using SDK 57's native File download task. Transfer progress, verification progress, cancellation, retry, and errors are shown in setup and the model manager.
+
+Before installation, Seekora checks available disk space, exact byte size, GGUF version 3, and the pinned SHA-256. Android computes the checksum in a bounded native stream on an IO dispatcher; other supported native platforms use the bounded JavaScript stream fallback. Only verified bytes are promoted to the final model file and persistent manifest. Failed or cancelled setup removes partial files, preserves any existing installed model, and can be retried. An existing local GGUF can still be imported through the file picker.
+
+Allow at least 550 MB free for the installed file; downloading does not retain a second external copy. Internet is needed for this one-time transfer. Keep Seekora open during setup; leaving the foreground cancels provisioning and removes its partial file. The model source and declared Apache-2.0 license are displayed. After installation, model loading and inference run offline.
 
 ## Desktop development with Ollama (optional)
 
@@ -70,10 +74,10 @@ Verified with Ollama 0.40.1 on Windows: it reports architecture `qwen35`, 752.39
 ## Provision and run
 
 1. Install dependencies with `bun install --frozen-lockfile`. `llama.rn` is trusted so Bun runs the documented artifact installer; it verifies downloaded Android/iOS archives. If artifacts are missing, run `node node_modules/llama.rn/install/download-native-artifacts.js`.
-2. Connect a compatible 64-bit Android device or supported emulator. Build with `bunx expo run:android`. Expo Go and web cannot run this native runtime. For CNG config updates, use `bunx expo prebuild --platform android --no-install`; never hand-edit native files.
-3. Download the [pinned GGUF](https://huggingface.co/diodel/Qwen3.5-0.8B-Q4_K_M-GGUF/resolve/dfdaeea1fdbef1d8900313cf5bed689abff3feec/qwen3.5-0.8b-Q4_K_M.gguf) using your browser, or use the explicitly online download link on the Model screen. Keep the file in device-accessible local storage. No download occurs on app startup.
-4. Open Settings → On-device model status → Import local GGUF. The picker accepts local files; bytes are copied into an app-owned staging file and verified in 256 KiB chunks. Other models, altered bytes, incorrect versions, and partial files are rejected. Allow at least 550 MB free for the app copy, in addition to your original file.
-5. Tap Verify and load model. The saved manifest is rechecked, and the file's MD5 is compared with the one recorded when its SHA-256 was verified at import. This quick check replaced a full SHA-256 pass before every load, which took about 18 minutes on a phone. No automatic loading happens on restart. Existing app-managed content survives unloading/restarting.
+2. Connect a compatible 64-bit Android device or supported emulator. Build with `bun run android`. Expo Go and web cannot run this native runtime. For CNG config updates, use `bunx expo prebuild --platform android --no-install --no-clean`; never hand-edit native files.
+3. During onboarding, tap **Download Qwen (529 MB)** and keep the app open while transfer and verification finish. Alternatively, open **Settings → AI Model** later and download there. No download occurs without user action.
+4. For manual import, download the [pinned GGUF](https://huggingface.co/diodel/Qwen3.5-0.8B-Q4_K_M-GGUF/resolve/dfdaeea1fdbef1d8900313cf5bed689abff3feec/qwen3.5-0.8b-Q4_K_M.gguf) separately, then choose **Import local GGUF**. Bytes are copied into an app-owned staging file and verified without changing the original. Allow at least 550 MB free for the app copy, in addition to the external original.
+5. Tap **Verify and load model**. The saved manifest and file MD5 are rechecked before loading. No automatic loading happens on restart. Existing app-managed content survives unloading/restarting.
 6. Tap Run local test. The fixed instruction requests `READY` from the real model and streams its actual output. A model may fail to follow the instruction; inspect the output. This diagnostic is not a research response and has no citations.
 7. Cancel, unload, or remove when needed. Removal asks for confirmation, deletes only fixed app-owned paths, and retains the original picked file. Backgrounding cancels ongoing work and unloads the context; return to the Model screen to load it again.
 
@@ -83,12 +87,17 @@ Verified with Ollama 0.40.1 on Windows: it reports architecture `qwen35`, 752.39
 - The engine formats the model's chat template, disables thinking, tokenizes the formatted prompt, and checks the full input/output budget before generation. Output is capped at 256 tokens; the diagnostic requests only 32.
 - Load, generate, and release operations preserve one-context ownership. Unload waits for initialization or cancellation to settle before release.
 - Model import uses modern Expo File/Directory/Paths APIs. It does not read the whole model into JS memory or modify the external original.
-- The model file is bundled in the APK only when it is present in `bundled-model/` at build time. No vision/audio projector or embeddings are provisioned.
+- SDK 57's Android DownloadTask has a cancellation branch that can leave its promise pending. Seekora stops it through the supported pause path, retries the pause across native startup races, waits for the writer to settle, then deletes staging. It never offers the paused transfer for resume. Recheck this workaround when upgrading expo-file-system.
+- Model weights are excluded from the APK and provisioned only by explicit in-app download or manual import. No vision/audio projector or embeddings are provisioned.
 - Research Q&A is still disabled: SQLite search, retrieval, and validated citations are the next implementation. Do not wire general model answers into the source-grounded assistant until those exist.
 
 ## Required Android validation
 
+Desktop/build checks on 2026-10-10: typecheck passed; lint passed with one existing LibraryPage hook warning; Bun tests passed (197 passed, 2 live-API tests skipped). The ARM64 standalone release build passed with its release lint checks enabled. `android/app/build/outputs/apk/release/app-release.apk` was 103,461,112 bytes (103.5 MB); ZIP inspection confirmed zero GGUF entries, an embedded JavaScript bundle, llama.rn libraries, and the native model verifier. The original local GGUF was preserved. A JPEG incorrectly named `dashboard.png` was renamed to `.jpg` with identical image bytes to fix Android resource compilation.
+
 With a device, verify import, load, actual token streaming, cancellation, background release, unload/reload, restart recovery, corrupted-file rejection, and low-memory errors. Repeat using a release build with an embedded JS bundle in airplane mode. Record RAM, ABI, model revision, load duration, generation timings, and failures. Unit tests exercise orchestration using injected native contexts; they do not execute llama.cpp.
+
+For the download flow, also check a fresh installation without a model, network failure followed by retry, Cancel immediately after tapping Download and during transfer/verification, background interruption, force-closing midway through transfer, and insufficient storage. Confirm partial files are reclaimed, an installed model survives app upgrades, skipped onboarding can download from Settings, and inference works in airplane mode after setup. These physical-device checks remain pending; desktop tests and native compilation cannot establish phone performance or Android lifecycle behavior.
 
 ## Documentation
 

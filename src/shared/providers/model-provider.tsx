@@ -6,7 +6,7 @@ import type { GenerationRequest, ModelManifest, ModelState } from '@/infrastruct
 import { createEngine } from '@/infrastructure/llm/create-engine';
 import { createModelStorage } from '@/infrastructure/llm/model-storage';
 
-type Operation = 'restoring' | 'preparing' | 'choosing' | 'importing' | 'verifying' | 'loading' | 'testing' | 'answering' | 'unloading' | 'removing' | null;
+type Operation = 'restoring' | 'downloading' | 'choosing' | 'importing' | 'verifying' | 'loading' | 'testing' | 'answering' | 'unloading' | 'removing' | null;
 
 export interface ModelContextValue {
   installed: ModelManifest | null;
@@ -16,10 +16,8 @@ export interface ModelContextValue {
   output: string;
   error: string | null;
   native: boolean;
-  /** True when this build carries the model, so setup is a copy rather than a download. */
-  hasBundled: boolean;
-  /** Copies the built-in model into app storage. The user asks for this; it never runs on its own. */
-  setupBundledModel(): Promise<void>;
+  /** Explicitly downloads and verifies the pinned model. Never starts on its own. */
+  downloadModel(): Promise<void>;
   importModel(): Promise<void>;
   loadModel(): Promise<void>;
   unloadModel(): Promise<void>;
@@ -59,8 +57,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     mounted.current = true;
     let disposed = false;
-    // Only reads what is already set up. Copying the bundled model is half a gigabyte, so it waits
-    // until the user asks for it in onboarding or on the model screen.
+    // Startup discovers existing installations; model downloads require an explicit user action.
     void storage.readInstalled().then((manifest) => {
       if (!disposed) setInstalled(manifest);
     }).catch((failure: unknown) => {
@@ -70,7 +67,8 @@ export function ModelProvider({ children }: PropsWithChildren) {
     });
     const subscription = AppState.addEventListener('change', (next) => {
       // The system picker backgrounds Android while selection is open; no model is loaded then.
-      if (next !== 'active' && phase.current !== 'choosing' && !backgroundHold.current) {
+      const provisioning = phase.current === 'downloading' || phase.current === 'importing';
+      if (next !== 'active' && phase.current !== 'choosing' && (provisioning || !backgroundHold.current)) {
         active.current?.abort();
         void engine.unload().then(() => {
           if (!disposed) setState(engine.getState());
@@ -101,11 +99,15 @@ export function ModelProvider({ children }: PropsWithChildren) {
     }
   }
 
-  async function setupBundledModel() {
-    await run('preparing', async (signal) => {
-      if (!storage.hasBundledModel()) throw new Error('This build does not carry the model.');
+  async function downloadModel() {
+    await run('downloading', async (signal) => {
+      if (!native) throw new Error('Model download is available on Android and iOS.');
       if (installed) return;
-      const manifest = await storage.installBundled(signal, setProgress);
+      const manifest = await storage.downloadModel(signal, (update) => {
+        if (!mounted.current || signal.aborted) return;
+        updateOperation(update.stage === 'downloading' ? 'downloading' : 'importing');
+        setProgress(update.fraction);
+      });
       if (mounted.current) setInstalled(manifest);
     });
   }
@@ -125,7 +127,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
 
   async function loadModel() {
     await run('verifying', async (signal) => {
-      if (!installed) throw new Error('Import the selected GGUF model first.');
+      if (!installed) throw new Error('Download or import the selected Qwen model first.');
       await storage.verifyInstalled(installed, signal, setProgress);
       if (signal.aborted) throw new Error('Loading cancelled.');
       updateOperation('loading');
@@ -194,8 +196,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
   }
 
   return <ModelContext.Provider value={{ installed, state, operation, progress, output, error, native,
-    hasBundled: storage.hasBundledModel(), setupBundledModel,
-    importModel, loadModel, unloadModel, testModel, generate, ensureLoaded, setBackgroundHold, cancel, removeModel }}>{children}</ModelContext.Provider>;
+    downloadModel, importModel, loadModel, unloadModel, testModel, generate, ensureLoaded, setBackgroundHold, cancel, removeModel }}>{children}</ModelContext.Provider>;
 }
 
 export function useModel() {

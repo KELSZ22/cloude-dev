@@ -8,8 +8,8 @@
 - The model sometimes writes a formula in LaTeX, which is shown as raw text.
 - A partial-coverage question costs a second, short model call for the yes/no check. Its effect on answer time on a phone has not been measured.
 - Retrieval is keyword-based and English-only. Synonyms that appear in no passage find nothing.
-- An APK built with the model inside is about 600 MB and uses a further 529 MB on the device for its working copy. It shows no licence notice for the model yet.
-- Importing the model by hand is slow. The pinned SHA-256 is computed in JavaScript, which ran at about 0.5 MB/s in a development build on a Snapdragon 685 phone: roughly 18 minutes for the 529 MB file. The app must stay open with the screen on for the whole import. A small native hashing module would cut this to seconds.
+- The APK excludes model weights. New installations need a one-time 529 MB Qwen download or a manual GGUF import before using the assistant, plus at least 550 MB free storage. Downloaded models remain installed across restarts and app upgrades.
+- Model provisioning must finish with the app open. Cancellation, interruption, or a failed integrity check removes partial files; retry starts a new download rather than resuming. Android uses native SHA-256 verification; its timing on a phone still needs measurement. Other native platforms fall back to the slower bounded JavaScript checksum.
 - The model unloads whenever the app leaves the foreground, so every session starts with a load. The exception is while the floating assistant is turned on, when it stays loaded so questions can be answered over other apps.
 - The floating assistant works only while Seekora is still running in the background. It does not start after a reboot, and phones that close background apps aggressively remove the bubble until Seekora is opened again.
 - Screen analysis reads words only, through on-device text recognition for Latin script. Pictures, video, charts, handwriting and other scripts are not understood, and screens that block capture come back empty. A screen that is mostly an image gives the model only button labels to work with.
@@ -21,7 +21,7 @@
 - Bundled packs are compiled into the JavaScript bundle. Importing packs from files, removing packs in the UI, document import, bookmarks, history, and collections are pending.
 - Search results are a plain list of at most 20 passages; virtualized lists are needed before result sets grow.
 - Onboarding is an optional checklist; first-run persistence is pending.
-- No PDF parsing, in-app download manager, remote search, analytics, or cloud inference is installed. The model download link opens the pinned source only on user action.
+- Model setup downloads the pinned Qwen file only on user action and verifies it before installation. Offline model inference does not call a cloud endpoint. PDF parsing, analytics, and cloud inference are not implemented.
 - llama.rn is pinned to a release candidate.
 - Existing Expo starter assets and `/explore` are preserved. The app icon and splash are still the starter images.
 - Native builds, device navigation, offline behavior, accessibility, and performance require Android verification.

@@ -14,7 +14,7 @@ What works today:
 
 - **Local search.** SQLite FTS5 over a bundled sample knowledge pack, with ranked passages.
 - **Ask Seekora.** Retrieves supporting passages, writes an answer with the on-device Qwen3.5 model, and links each citation to the stored passage. When the library has no support for a question, it says so and cites nothing.
-- **On-device model.** Local GGUF import with SHA-256 verification, load/unload, streaming, and cancellation through llama.rn.
+- **On-device model.** Download Qwen during offline-assistant setup or import an existing GGUF, with SHA-256 verification, load/unload, streaming, and cancellation through llama.rn.
 
 Not built yet: document import, bookmarks and history, pack import from files, and the floating Seekora Companion. Search, answers, and model loading are covered by desktop tests but still need validation on an Android device; see [implementation status](docs/IMPLEMENTATION_STATUS.md).
 
@@ -25,7 +25,7 @@ bun install --frozen-lockfile
 bun run android
 ```
 
-`bun run android` compiles and installs a development build on a connected 64-bit Android device or emulator. Expo Go cannot run llama.rn, so on-device answers need this development build. After the first installation, use `bunx expo start --dev-client` for daily work. Rebuild after adding or changing native dependencies or config plugins. Web is a shell preview: the library and the model are unavailable there.
+`bun run android` applies the Android config plugins, then compiles and installs a development build on a connected 64-bit Android device or emulator. Expo Go cannot run llama.rn, so on-device answers need this development build. After the first installation, use `bunx expo start --dev-client` for daily work. Rebuild after adding or changing native dependencies or config plugins. Web is a shell preview: the library and the model are unavailable there.
 
 If Android reports `No development build (com.kelsz09.myapp) ... is installed`, stop Metro with Ctrl+C and run `bun run android` with the device connected.
 
@@ -45,9 +45,9 @@ After adding a route file, run `bunx expo customize tsconfig.json` (or start the
 - **Android SDK** with Platform 36, Build-Tools 36.0.0, NDK 27.1.12297006, and CMake 3.22.1. With the SDK license accepted, Gradle installs missing ones on the first build.
 - `JAVA_HOME` and `ANDROID_HOME` set, and `adb devices` listing the target.
 
-The `android/` directory is generated and git-ignored. Do not edit it by hand; change `app.json` or a config plugin and run `bunx expo prebuild --platform android --no-install`. iOS builds require macOS or EAS.
+The `android/` directory is generated and git-ignored. Do not edit it by hand; change `app.json` or a config plugin and run `bunx expo prebuild --platform android --no-install --no-clean`. iOS builds require macOS or EAS.
 
-Run that prebuild command again after pulling a change to the `plugins` list in `app.json`. `expo run:android` reuses an existing `android/` folder as it is, so a plugin added by a teammate is not applied until then. The symptom is a feature that never asks for its permission: voice input, for example, needs the `RECORD_AUDIO` entry that the `expo-speech-recognition` plugin writes into the manifest.
+`bun run android` runs prebuild automatically. Before invoking Gradle directly, run prebuild from the project root after pulling native/config changes. This also removes the legacy embedded Qwen asset and excludes GGUF files from APK packaging.
 
 The first build compiles native code for every library and takes a long time. To build one ABI and limit memory use:
 
@@ -65,11 +65,11 @@ On Windows, open a new terminal after installing Bun or setting `JAVA_HOME`, so 
 
 ### Standalone APK (no PC needed)
 
-A development build loads its JavaScript from Metro on the PC. For an APK that runs by itself, build the release variant:
+A development build loads its JavaScript from Metro on the PC. For an APK that runs by itself, first run `bunx expo prebuild --platform android --no-install --no-clean` from the project root, then build the release variant:
 
 ```powershell
 # Windows PowerShell, from android\
-.\gradlew.bat :app:assembleRelease -PreactNativeArchitectures=arm64-v8a -PrnllamaVariants=rnllama,rnllama_v8_2_dotprod_i8mm "-Dorg.gradle.jvmargs=-Xmx3g -XX:MaxMetaspaceSize=1g"
+.\gradlew.bat :app:assembleRelease -PreactNativeArchitectures=arm64-v8a "-PrnllamaVariants=rnllama,rnllama_v8_2_dotprod_i8mm" "-Dorg.gradle.jvmargs=-Xmx3g -XX:MaxMetaspaceSize=1g"
 ```
 
 The result is `android/app/build/outputs/apk/release/app-release.apk`. It is signed with the template's debug keystore: fine for teammates and demos, not for a store. If the final `lintVitalAnalyzeRelease` step still fails with `Metaspace`, add `-x lintVitalAnalyzeRelease -x lintVitalReportRelease -x lintVitalRelease`.
@@ -78,7 +78,7 @@ When a phone reaches the dev server over USB, run `adb reverse tcp:8081 tcp:8081
 
 ## On-device model
 
-The selected model is `diodel/Qwen3.5-0.8B-Q4_K_M-GGUF` (529 MB, declared Apache-2.0). `llama.rn 0.13.0-rc.7` is pinned, its Expo plugin is configured, Bun lifecycle scripts are trusted, and Android build targets are limited to its 64-bit ABIs. No model is downloaded automatically, and none is in git. By default users import the model; to build an APK that carries it, place the pinned file in `bundled-model/` before prebuild. Follow [local model provisioning](docs/LOCAL-MODEL.md) for the pinned file, checksum, import, bundling, and runtime test.
+The selected model is `diodel/Qwen3.5-0.8B-Q4_K_M-GGUF` (529 MB, declared Apache-2.0). `llama.rn 0.13.0-rc.7` is pinned, its Expo plugin is configured, Bun lifecycle scripts are trusted, and Android build targets are limited to its 64-bit ABIs. The APK contains the runtime without model weights. During **Set up your offline assistant**, users tap **Download Qwen (529 MB)** to download the pinned file, verify its size/GGUF version/SHA-256, and install it in app-owned storage. Internet is needed once; keep Seekora open until setup finishes, then use the assistant offline. Setup can be skipped and completed later in **Settings → AI Model**; importing an existing local GGUF remains available. Follow [local model provisioning](docs/LOCAL-MODEL.md) for checksums, packaging, and runtime validation.
 
 ## Navigation and structure
 

@@ -22,6 +22,7 @@ export function SetupStep({
   primaryLabel,
   onPrimary,
   primaryDisabled,
+  backDisabled = false,
   secondaryLabel,
   onSecondary,
 }: {
@@ -32,6 +33,7 @@ export function SetupStep({
   primaryLabel: string;
   onPrimary: () => void;
   primaryDisabled?: boolean;
+  backDisabled?: boolean;
   secondaryLabel?: string;
   onSecondary?: () => void;
 }) {
@@ -48,8 +50,10 @@ export function SetupStep({
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t("common.back")}
+          accessibilityState={{ disabled: backDisabled }}
+          disabled={backDisabled}
           onPress={back}
-          style={styles.back}
+          style={[styles.back, backDisabled && styles.disabled]}
         >
           <SymbolView
             name={{ ios: "chevron.left", android: "arrow_back", web: "arrow_back" }}
@@ -74,6 +78,7 @@ export function SetupStep({
         {secondaryLabel && onSecondary ? (
           <Pressable
             accessibilityRole="button"
+            accessibilityLabel={secondaryLabel}
             onPress={onSecondary}
             style={styles.secondary}
           >
@@ -103,4 +108,5 @@ const styles = StyleSheet.create({
   },
   secondary: { minHeight: 44, alignItems: "center", justifyContent: "center" },
   dots: { alignItems: "center", paddingTop: Spacing.one, paddingBottom: Spacing.two },
+  disabled: { opacity: 0.45 },
 });
