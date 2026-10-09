@@ -14,6 +14,8 @@ export function ModelStatus() {
   const description = state.status === 'unsupported' ? state.reason
     : state.status === 'error' ? state.message
     : !native ? t('model.webBody')
+    : operation === 'preparing' ? t('model.preparingBody')
+    : state.status === 'ready' || state.status === 'generating' ? t('model.runningBody')
     : installed ? t('model.installedBody')
     : t('model.missingBody');
   return <StatusCard variant="ai" title={title} description={description} />;

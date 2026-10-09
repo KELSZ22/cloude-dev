@@ -1,11 +1,22 @@
 # Known limitations
 
-- This milestone is app structure and a mobile shell, not the complete offline MVP.
-- SQLite, FTS5, persistence, search results, reader, saves, histories, collections, imports, and packs are pending.
-- Local-model provisioning/lifecycle code is implemented, but actual Qwen3.5 loading, native streaming, memory handling, and performance require device validation. llama.rn is pinned to a release candidate.
-- Source-grounded retrieval and citation validation are pending. The fixed local test is a diagnostic, not a research assistant answer.
+- This is a proof of concept for local search and grounded answers, not the complete offline MVP.
+- Nothing has been run on an Android device yet. Search, pack install, migrations, and the answer pipeline are verified by desktop tests on Bun's SQLite, and real model output was checked on the desktop through Ollama. The debug APK builds, but the expo-sqlite driver, the screens, model loading, and model output on a phone still need device validation.
+- The only content is a 32-passage sample pack. Answers are limited to what those passages say.
+- Two checks decide whether to answer: shared words between the question and a passage, and, when a passage misses part of the question, a yes/no judgement by the 0.8B model. Both can be wrong. Expect occasional wrong or unsupported sentences; always open the cited passage.
+- The model does not always add source numbers, and sometimes attaches a number to a sentence that came from a different supplied passage. Listed sources are always real stored passages that were in the prompt; which sentence came from which is not verified.
+- The model sometimes writes a formula in LaTeX, which is shown as raw text.
+- A partial-coverage question costs a second, short model call for the yes/no check. Its effect on answer time on a phone has not been measured.
+- Retrieval is keyword-based and English-only. Synonyms that appear in no passage find nothing.
+- An APK built with the model inside is about 600 MB and uses a further 529 MB on the device for its working copy. It shows no licence notice for the model yet.
+- Importing the model by hand is slow. The pinned SHA-256 is computed in JavaScript, which ran at about 0.5 MB/s in a development build on a Snapdragon 685 phone: roughly 18 minutes for the 529 MB file. The app must stay open with the screen on for the whole import. A small native hashing module would cut this to seconds.
+- The model unloads whenever the app leaves the foreground, so every session starts with a load.
+- Do not read a picked file through an `expo-file-system` file handle on Android. In 57.0.7 the handle does not keep the system's file descriptor alive, and a long read fails with "Bad file descriptor". Copy the picked file into app storage with `File.copy()` first.
+- Answers are one paragraph, capped at 192 output tokens inside a 2048-token context.
+- Bundled packs are compiled into the JavaScript bundle. Importing packs from files, removing packs in the UI, document import, bookmarks, history, and collections are pending.
+- Search results are a plain list of at most 20 passages; virtualized lists are needed before result sets grow.
 - Onboarding is an optional checklist; first-run persistence is pending.
-- Model readiness follows installed metadata and native-engine state; search/import readiness still shows unconfigured services.
 - No PDF parsing, in-app download manager, remote search, analytics, or cloud inference is installed. The model download link opens the pinned source only on user action.
-- Existing Expo starter assets and `/explore` are preserved.
+- llama.rn is pinned to a release candidate.
+- Existing Expo starter assets and `/explore` are preserved. The app icon and splash are still the starter images.
 - Native builds, device navigation, offline behavior, accessibility, and performance require Android verification.

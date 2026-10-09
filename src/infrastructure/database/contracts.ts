@@ -1,3 +1,4 @@
+import type { KnowledgePackFile } from '@/infrastructure/knowledge/pack-format';
 import type { DocumentChunk, DocumentKind, KnowledgeDocument, KnowledgePack } from '@/shared/types/knowledge';
 
 export interface SearchRequest {
@@ -11,19 +12,33 @@ export interface SearchRequest {
 export interface SearchHit {
   document: KnowledgeDocument;
   chunkId: string;
+  chunk: DocumentChunk;
   excerpt: string;
   packName: string | null;
   /** SQLite bm25: lower values rank first. */
   rank: number;
+  /** How many of the query's content terms this chunk contains, after stemming. */
+  matchedTerms: number;
+  queryTerms: number;
 }
 
 /** Local-only port. Implementations own SQL, parameterization, and cancellation. */
 export interface KnowledgeRepository {
+  /** Hits that contain more of the query's terms come first; ties are ordered by bm25. */
   search(request: SearchRequest): Promise<readonly SearchHit[]>;
   getDocument(id: string): Promise<KnowledgeDocument | null>;
   getChunk(id: string): Promise<DocumentChunk | null>;
   getDocumentChunks(documentId: string, limit: number, offset: number): Promise<readonly DocumentChunk[]>;
   listPacks(): Promise<readonly KnowledgePack[]>;
+  countChunks(): Promise<number>;
+}
+
+export type PackInstallResult = { status: 'installed' | 'updated' | 'unchanged'; packId: string; chunks: number };
+
+/** Installs replace any earlier version of the same pack in one transaction. */
+export interface KnowledgePackStore {
+  installPack(pack: KnowledgePackFile): Promise<PackInstallResult>;
+  removePack(packId: string): Promise<void>;
 }
 
 export interface SavedItem {

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "my-app",
+    "name": "Seekora",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -52,6 +52,20 @@
               "x86_64"
             ]
           }
+        }
+      ],
+      [
+        "expo-sqlite",
+        {
+          "enableFTS": true
+        }
+      ],
+      [
+        "./plugins/with-bundled-model",
+        {
+          "file": "bundled-model/qwen3.5-0.8b-Q4_K_M.gguf",
+          "sha256": "fb89581c3863314f6e6e1810f11b0bbb30a07315e7b1229a5c7db10fb0100ca6",
+          "sizeBytes": 529297312
         }
       ],
       "expo-font",

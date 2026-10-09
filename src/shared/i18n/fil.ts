@@ -28,6 +28,7 @@ export const fil = {
     importDocument: "Mag-import ng dokumento",
     onDeviceModel: "On-device na modelo",
     knowledgePacks: "Mga Knowledge Pack",
+    sourcePassage: "Sipi ng pinagmulan",
   },
   settings: {
     title: "Mga Setting",
@@ -178,14 +179,20 @@ export const fil = {
     tryAgain: "Subukan muli",
   },
   assistant: {
-    title: "AI Assistant",
+    title: "Magtanong sa Seekora",
     description:
-      "Mga sagot na batay sa iyong offline na aklatan, na may mga source na maaari mong suriin.",
-    pendingTitle: "Hindi pa handa ang offline na pananaliksik",
-    pendingBody:
-      "Hindi pa konektado ang lokal na paghahanap at pagkuha ng citation. Available ang pagsubok ng modelo sa setup; ang mga sagot sa pananaliksik ay mangangailangan ng aktwal na lokal na ebidensya.",
-    viewModel: "Tingnan ang setup ng modelo",
-    goToSearch: "Pumunta sa Paghahanap",
+      "Ang mga sagot ay mula sa mga sipi sa iyong offline na aklatan, na may mga source na maaari mong buksan.",
+    questionLabel: "Iyong tanong",
+    questionPlaceholder:
+      "Halimbawa: Paano ko lulutasin ang quadratic equation sa pamamagitan ng factoring?",
+    ask: "Magtanong sa Seekora",
+    findPassages: "Hanapin ang mga sumusuportang sipi",
+    writing: "Sumusulat ng sagot sa device na ito…",
+    searching: "Hinahanap sa iyong aklatan…",
+    staysOnDevice: "Walang lumalabas sa device na ito.",
+    stop: "Itigil",
+    loadModel: "I-load ang on-device na modelo",
+    setupModel: "I-set up ang on-device na modelo",
   },
   setup: {
     title: "Maghanda para sa offline",
@@ -208,14 +215,18 @@ export const fil = {
   },
   packs: {
     description: "Mga koleksyong mapapalawak para sa iyong offline na aklatan.",
-    emptyTitle: "Walang naka-install na pack",
-    emptyBody:
-      "Wala pang starter pack at installer. Kailangan ng attribution, lisensya sa muling pamamahagi, at beripikadong checksum bago mag-install.",
+    versionLine: "Bersyon {{version}} · {{language}}",
+    author: "May-akda: {{author}}",
+    origin: "Pinagmulan: {{source}}",
+    license: "Lisensya: {{license}}",
+    moreTitle: "Pagdaragdag ng iba pang pack",
+    moreBody:
+      "Ang naka-bundle na sample pack lang ang available sa build na ito. Kailangan ng attribution, lisensya sa muling pamamahagi, at beripikadong checksum bago mag-install.",
   },
   model: {
     description: "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
     cardBody:
-      "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito.",
+      "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito. Binubuksan ng import ang file picker ng telepono; kung Google Drive o Recent ang lumabas, buksan ang menu nito at piliin ang Downloads. Walang ina-upload.",
     openDownload: "Buksan ang download ng modelo (529 MB · online)",
     importGguf: "Mag-import ng lokal na GGUF",
     verifyLoad: "I-verify at i-load ang modelo",
@@ -226,7 +237,10 @@ export const fil = {
       "Buburahin nito ang kopya ng modelong pag-aari ng app at magpapalaya ng storage. Mananatili ang orihinal mong file.",
     working: "Ginagawa nang lokal",
     checking: "Tinitingnan ang integridad ng modelo · {{percent}}%",
+    preparing:
+      "Inihahanda ang built-in na modelo. Sandali lang ito sa unang pagkakataon.",
     testing: "Gumagawa ng maikling runtime test…",
+    answering: "Sinusagot ang tanong sa Ask Seekora…",
     loading: "Nilo-load ang modelo sa memory…",
     choosing: "Piliin ang GGUF file sa iyong device.",
     updating: "Ina-update ang estado ng modelo…",
@@ -245,8 +259,12 @@ export const fil = {
     installedNotLoaded: "Naka-install ang modelo · hindi naka-load",
     notInstalled: "Hindi naka-install ang modelo",
     webBody: "Gumamit ng Android development build para sa lokal na inference.",
+    preparingBody:
+      "Inihahanda ang built-in na Qwen3.5 0.8B. Sandali lang ito sa unang pagkakataon.",
+    runningBody:
+      "Tumatakbo sa device na ito ang Qwen3.5 0.8B. Ang mga sagot ay mula sa iyong offline na aklatan.",
     installedBody:
-      "Naka-imbak sa device na ito ang Qwen3.5 0.8B. Kailangan din ng lokal na search index ang offline na pananaliksik.",
+      "Naka-imbak sa device na ito ang Qwen3.5 0.8B. I-load ito para makakuha ng paliwanag mula sa iyong offline na aklatan.",
     missingBody:
       "I-import ang napiling Qwen3.5 GGUF mula sa iyong device. Walang modelong awtomatikong dina-download.",
   },

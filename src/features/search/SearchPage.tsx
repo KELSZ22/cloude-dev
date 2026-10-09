@@ -11,8 +11,10 @@ import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 
 import { articles, type SearchKind } from "./catalog";
+import { PassageResultCard } from "./components/PassageResultCard";
 import { ResultCard } from "./components/ResultCard";
 import { SearchBrandHeader } from "./components/SearchBrandHeader";
+import { useLocalSearch } from "./hooks/useLocalSearch";
 
 type FilterId = "all" | "article" | "document" | "pack";
 
@@ -29,6 +31,11 @@ export default function SearchPage() {
   const [query, setQuery] = useState("renewable energy");
   const [filter, setFilter] = useState<FilterId>("all");
 
+  // Passages from the installed knowledge packs, searched in the local full-text index.
+  const library = useLocalSearch(query);
+  const passages = filter === "all" || filter === "article" ? library.hits : [];
+
+  // Sample catalog entries, shown until every pack is served from local storage.
   const results = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return articles.filter((article) => {
@@ -39,6 +46,8 @@ export default function SearchPage() {
       return haystack.includes(needle);
     });
   }, [filter, query]);
+
+  const total = passages.length + results.length;
 
   return (
     <ThemedView style={styles.screen}>
@@ -88,18 +97,27 @@ export default function SearchPage() {
         </View>
         <FilterChips options={filters} value={filter} onChange={setFilter} />
         <ThemedText type="smallBold" style={[styles.count, { color: colors.tint }]}>
-          {results.length === 1
+          {total === 1
             ? t("search.oneResult")
-            : t("search.manyResults", { count: results.length })}
+            : t("search.manyResults", { count: total })}
         </ThemedText>
+        {library.error ? (
+          <ThemedText themeColor="error" accessibilityRole="alert" style={styles.empty}>
+            {library.error}
+          </ThemedText>
+        ) : null}
         <View style={styles.list}>
-          {results.length === 0 ? (
+          {total === 0 && !library.pending ? (
             <ThemedText themeColor="textSecondary" style={styles.empty}>
               {t("search.empty")}
             </ThemedText>
-          ) : (
-            results.map((article) => <ResultCard key={article.id} article={article} />)
-          )}
+          ) : null}
+          {passages.map((hit) => (
+            <PassageResultCard key={hit.chunkId} hit={hit} />
+          ))}
+          {results.map((article) => (
+            <ResultCard key={article.id} article={article} />
+          ))}
         </View>
       </ScrollView>
     </ThemedView>

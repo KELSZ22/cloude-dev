@@ -26,6 +26,7 @@ export const en = {
     importDocument: "Import a document",
     onDeviceModel: "On-device model",
     knowledgePacks: "Knowledge Packs",
+    sourcePassage: "Source passage",
   },
   settings: {
     title: "Settings",
@@ -175,14 +176,20 @@ export const en = {
     tryAgain: "Try again",
   },
   assistant: {
-    title: "AI Assistant",
+    title: "Ask Seekora",
     description:
-      "Answers grounded in your offline library, with sources you can inspect.",
-    pendingTitle: "Offline research setup pending",
-    pendingBody:
-      "Local search and citation retrieval are not connected yet. Model testing is available in setup; research answers will require actual local evidence.",
-    viewModel: "View model setup",
-    goToSearch: "Go to Search",
+      "Answers are written from passages in your offline library, with sources you can open.",
+    questionLabel: "Your question",
+    questionPlaceholder:
+      "For example: How do I solve a quadratic equation by factoring?",
+    ask: "Ask Seekora",
+    findPassages: "Find supporting passages",
+    writing: "Writing an answer on this device…",
+    searching: "Searching your library…",
+    staysOnDevice: "Nothing leaves this device.",
+    stop: "Stop",
+    loadModel: "Load the on-device model",
+    setupModel: "Set up the on-device model",
   },
   setup: {
     title: "Prepare for offline use",
@@ -205,14 +212,18 @@ export const en = {
   },
   packs: {
     description: "Expandable collections for your offline library.",
-    emptyTitle: "No packs installed",
-    emptyBody:
-      "The starter pack and pack installer are not included yet. Packs must have attribution, a redistribution license, and verified content checksums before installation.",
+    versionLine: "Version {{version}} · {{language}}",
+    author: "Author: {{author}}",
+    origin: "Origin: {{source}}",
+    license: "License: {{license}}",
+    moreTitle: "Adding more packs",
+    moreBody:
+      "Only the bundled sample pack is available in this build. Packs must have attribution, a redistribution license, and verified content checksums before installation.",
   },
   model: {
     description: "A compatible local model is required for AI answers.",
     cardBody:
-      "529 MB · Apache 2.0 · text inference. Select the exact GGUF from the chosen Hugging Face repository. Import and loading verify its SHA-256.",
+      "529 MB · Apache 2.0 · text inference. Select the exact GGUF from the chosen Hugging Face repository. Import and loading verify its SHA-256. Import opens your phone's file picker; if it shows Google Drive or Recent, open its menu and choose Downloads. Nothing is uploaded.",
     openDownload: "Open model download (529 MB · online)",
     importGguf: "Import local GGUF",
     verifyLoad: "Verify and load model",
@@ -223,7 +234,9 @@ export const en = {
       "This deletes the app-owned model copy and frees storage. Your original file is kept.",
     working: "Working locally",
     checking: "Checking model integrity · {{percent}}%",
+    preparing: "Setting up the built-in model. This takes a moment the first time.",
     testing: "Generating a short runtime test…",
+    answering: "Answering a question in Ask Seekora…",
     loading: "Loading model into memory…",
     choosing: "Choose the GGUF file on your device.",
     updating: "Updating model state…",
@@ -242,8 +255,12 @@ export const en = {
     installedNotLoaded: "Model installed · not loaded",
     notInstalled: "Model not installed",
     webBody: "Use an Android development build for local inference.",
+    preparingBody:
+      "Setting up the built-in Qwen3.5 0.8B model. This takes a moment the first time.",
+    runningBody:
+      "Qwen3.5 0.8B is running on this device. Answers are written from your offline library.",
     installedBody:
-      "Qwen3.5 0.8B is stored on this device. Offline research also requires a local search index.",
+      "Qwen3.5 0.8B is stored on this device. Load it to get explanations written from your offline library.",
     missingBody:
       "Import the selected Qwen3.5 GGUF from your device. No model is downloaded automatically.",
   },
