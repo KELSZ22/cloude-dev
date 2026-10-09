@@ -9,8 +9,13 @@ import { Spacing } from "@/shared/constants/theme";
 import { useTranslation } from "@/shared/i18n";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { IntroStep } from "./components/IntroStep";
+import { ModelStep } from "./components/ModelStep";
+import { PacksStep } from "./components/PacksStep";
 import { PreferencesStep } from "./components/PreferencesStep";
 import { WelcomeStep } from "./components/WelcomeStep";
+
+/** Steps that lay out their own chrome from the top edge down. */
+const PADDED_STEPS = new Set(["preferences", "model", "packs"]);
 
 export default function OnboardingPage() {
   const insets = useSafeAreaInsets();
@@ -28,13 +33,13 @@ export default function OnboardingPage() {
         style={[
           styles.frame,
           {
-            paddingTop: step === "preferences" ? insets.top + Spacing.two : 0,
+            paddingTop: PADDED_STEPS.has(step) ? insets.top + Spacing.two : 0,
             paddingBottom: step === "splash" ? 0 : insets.bottom + Spacing.two,
           },
         ]}
       >
         {step !== "splash" ? (
-          <LeafDecor showRight={step === "preferences"} />
+          <LeafDecor showRight={PADDED_STEPS.has(step)} />
         ) : null}
         {step === "splash" ? <WelcomeStep /> : null}
         {step === "intro1" ? (
@@ -54,6 +59,8 @@ export default function OnboardingPage() {
           />
         ) : null}
         {step === "preferences" ? <PreferencesStep /> : null}
+        {step === "model" ? <ModelStep /> : null}
+        {step === "packs" ? <PacksStep /> : null}
       </View>
     </ThemedView>
   );
