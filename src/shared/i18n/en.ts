@@ -275,6 +275,7 @@ export const en = {
     resourcesFailed: "Open resources could not be searched. Try again.",
     resourcesPartial: "Some sources did not respond.",
     resourcesMore: "Load more resources",
+    loadMore: "Load more",
     resourcesOpen: "Open source",
     resourcesPdf: "Open PDF",
     resourcesDownloadPdf: "Save PDF",
@@ -302,6 +303,12 @@ export const en = {
     offlineMeta: "{{kind}} · {{minutes}} min read · Available offline",
     overview: "Overview",
     askAi: "Ask AI about this article",
+    studyEdition: "Offline study edition",
+    studyCredit:
+      "The study sections are original Seekora passages saved on this device. They are not the OpenStax textbook.",
+    savedLocally: "Saved on this device",
+    savedCitationOnly:
+      "This saved record includes the title, authors, and source. The provider did not include an abstract.",
   },
   challenge: {
     title: "Knowledge Challenge",
@@ -381,6 +388,8 @@ export const en = {
       "The passages found in your offline library do not answer this question.",
     passagesBody:
       "These passages match your question. Load the on-device model for an explanation.",
+    scannedPage:
+      "Seekora read the article on this page. Load the on-device model for an explanation.",
   },
   setup: {
     title: "Prepare for offline use",

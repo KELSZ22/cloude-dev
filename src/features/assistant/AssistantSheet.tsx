@@ -51,6 +51,7 @@ export function AssistantSheet() {
   const open = useAssistantSheetStore((state) => state.open);
   const requestId = useAssistantSheetStore((state) => state.requestId);
   const articleTitle = useAssistantSheetStore((state) => state.articleTitle);
+  const pageText = useAssistantSheetStore((state) => state.pageText);
   const closeAssistant = useAssistantSheetStore((state) => state.closeAssistant);
   const colors = useTheme();
   const insets = useSafeAreaInsets();
@@ -77,6 +78,7 @@ export function AssistantSheet() {
   const submitRef = useRef<(text: string) => Promise<void>>(async () => {});
   const tRef = useRef(t);
   const openRef = useRef(open);
+  const pageRef = useRef<{ title: string; text: string } | null>(null);
 
   useEffect(() => {
     draftRef.current = draft;
@@ -99,6 +101,10 @@ export function AssistantSheet() {
   useEffect(() => {
     tRef.current = t;
   }, [t]);
+
+  useEffect(() => {
+    pageRef.current = articleTitle && pageText ? { title: articleTitle, text: pageText } : null;
+  }, [articleTitle, pageText]);
 
   useEffect(() => {
     travel.value = width;
@@ -135,17 +141,20 @@ export function AssistantSheet() {
     let outcome: AskOutcome | null = null;
     try {
       const library = knowledge.state;
-      outcome = libraryReady
-        ? await ask(question)
-        : {
-            status: "notice",
-            message:
-              library.status === "unavailable"
-                ? library.reason
-                : library.status === "error"
-                  ? library.message
-                  : tRef.current("assistant.libraryPending"),
-          };
+      const page = pageRef.current;
+      outcome = page
+        ? await ask(question, page)
+        : libraryReady
+          ? await ask(question)
+          : {
+              status: "notice",
+              message:
+                library.status === "unavailable"
+                  ? library.reason
+                  : library.status === "error"
+                    ? library.message
+                    : tRef.current("assistant.libraryPending"),
+            };
     } finally {
       sending.current = false;
       setMessages((current) =>
@@ -175,6 +184,7 @@ export function AssistantSheet() {
   }, [messages, streamed, presented]);
 
   function openSource(citation: SourceCitation) {
+    if (citation.chunkId.startsWith("page:")) return;
     closeAssistant();
     router.push({ pathname: "/passage/[chunkId]", params: { chunkId: citation.chunkId } });
   }

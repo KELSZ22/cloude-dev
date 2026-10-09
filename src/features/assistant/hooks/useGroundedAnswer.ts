@@ -3,10 +3,12 @@ import { useRef, useState } from 'react';
 import { useKnowledge } from '@/shared/providers/knowledge-provider';
 import { useModel } from '@/shared/providers/model-provider';
 import {
-  answerQuestion, resolveCitations, retrieveEvidence, type InsufficientReason,
+  answerFromPage, answerQuestion, resolveCitations, retrieveEvidence, type InsufficientReason,
 } from '@/shared/services/rag/answer-question';
-import { buildRagPrompt } from '@/shared/services/rag/context-builder';
+import { buildPagePrompt, buildRagPrompt } from '@/shared/services/rag/context-builder';
 import type { SourceCitation } from '@/shared/types/knowledge';
+
+export type PageScan = { title: string; text: string };
 
 export type AskResult =
   | { status: 'answered'; text: string; citations: SourceCitation[]; citedByModel: boolean }
@@ -31,15 +33,39 @@ export function useGroundedAnswer() {
 
   const modelReady = model.state.status === 'ready' && model.operation === null;
 
-  async function ask(question: string): Promise<AskOutcome | null> {
-    if (!repository || busy) return null;
+  async function ask(question: string, page?: PageScan): Promise<AskOutcome | null> {
+    if (busy || (!page && !repository)) return null;
     const controller = new AbortController();
     active.current = controller;
     setBusy(true); setStreamed(''); setResult(null); setError(null);
     let written = '';
     let outcome: AskOutcome;
     try {
-      if (modelReady) {
+      if (page && modelReady) {
+        const answer = await answerFromPage(model.generate, {
+          question, title: page.title, pageText: page.text, signal: controller.signal, onToken: (token) => {
+            written += token;
+            setStreamed(written);
+          },
+        });
+        outcome = answer.status === 'answered' ? answer : { status: 'insufficient-evidence', reason: answer.reason };
+        setResult(outcome);
+      } else if (page) {
+        const { sources } = buildPagePrompt(question, page.title, page.text);
+        outcome = sources.length
+          ? {
+              status: 'passages-only',
+              citations: sources.map((source) => ({
+                sourceId: String(source.label),
+                documentId: source.documentId,
+                chunkId: source.chunkId,
+                title: source.title,
+                pageNumber: null,
+              })),
+            }
+          : { status: 'insufficient-evidence', reason: 'no-match' };
+        setResult(outcome);
+      } else if (modelReady && repository) {
         const answer = await answerQuestion({ repository, generate: model.generate }, {
           question, signal: controller.signal, onToken: (token) => {
             written += token;
@@ -48,7 +74,7 @@ export function useGroundedAnswer() {
         });
         outcome = answer.status === 'answered' ? answer : { status: 'insufficient-evidence', reason: answer.reason };
         setResult(outcome);
-      } else {
+      } else if (repository) {
         const evidence = await retrieveEvidence(repository, question, controller.signal);
         if (!evidence.sufficient) outcome = { status: 'insufficient-evidence', reason: evidence.reason };
         else {
@@ -57,6 +83,8 @@ export function useGroundedAnswer() {
           outcome = { status: 'passages-only', citations: await resolveCitations(repository, sources) };
         }
         setResult(outcome);
+      } else {
+        return null;
       }
     } catch (failure) {
       if (controller.signal.aborted) outcome = { status: 'stopped', text: written };

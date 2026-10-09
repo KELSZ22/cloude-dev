@@ -59,3 +59,41 @@ export function buildRagPrompt(question: string, hits: readonly SearchHit[], max
   }
   return { prompt: render(asked, sources, ANSWER_TASK), checkPrompt: render(asked, sources, CHECK_TASK), sources };
 }
+
+/**
+ * Turns the open article into the same numbered sources the model already reads.
+ * Text is taken from the start of the page until the prompt budget is full.
+ */
+export function buildPagePrompt(question: string, title: string, pageText: string): RagPrompt {
+  const asked = question.trim().replace(/\s+/g, ' ').slice(0, RAG_LIMITS.questionChars);
+  const pieces = pageText.split(/\n+/).map((line) => line.trim()).filter(Boolean);
+  const packed: string[] = [];
+  let current = '';
+  for (const piece of pieces) {
+    const next = current ? `${current}\n${piece}` : piece;
+    if (current && next.length > RAG_LIMITS.passageChars) {
+      packed.push(current);
+      current = piece;
+    } else {
+      current = next;
+    }
+  }
+  if (current) packed.push(current);
+
+  const sources: RagSource[] = [];
+  for (const text of packed) {
+    if (sources.length >= RAG_LIMITS.maxSources) break;
+    const next: RagSource = {
+      label: sources.length + 1,
+      chunkId: `page:${sources.length + 1}`,
+      documentId: 'open-article',
+      title,
+      chapter: null,
+      section: null,
+      text: clip(text, RAG_LIMITS.passageChars),
+    };
+    if (sources.length && render(asked, [...sources, next], ANSWER_TASK).length > RAG_LIMITS.promptChars) break;
+    sources.push(next);
+  }
+  return { prompt: render(asked, sources, ANSWER_TASK), checkPrompt: render(asked, sources, CHECK_TASK), sources };
+}
