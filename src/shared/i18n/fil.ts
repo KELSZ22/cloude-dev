@@ -279,6 +279,7 @@ export const fil = {
     resourcesFailed: "Hindi nahanap ang mga bukas na sanggunian. Subukan muli.",
     resourcesPartial: "May ilang pinagmulan na hindi tumugon.",
     resourcesMore: "Magpakita pa ng sanggunian",
+    loadMore: "Magpakita pa",
     resourcesOpen: "Buksan ang pinagmulan",
     resourcesPdf: "Buksan ang PDF",
     resourcesDownloadPdf: "I-save ang PDF",
@@ -306,6 +307,12 @@ export const fil = {
     offlineMeta: "{{kind}} · {{minutes}} min na babasahin · Available offline",
     overview: "Pangkalahatang-ideya",
     askAi: "Itanong sa AI ang tungkol sa artikulong ito",
+    studyEdition: "Edisyong pag-aaral offline",
+    studyCredit:
+      "Ang mga seksyon ng pag-aaral ay orihinal na sipi ng Seekora na naka-save sa device. Hindi ito ang textbook ng OpenStax.",
+    savedLocally: "Naka-save sa device na ito",
+    savedCitationOnly:
+      "Kasama sa naka-save na record ang pamagat, mga may-akda, at pinagmulan. Walang abstract ang ibinigay ng provider.",
   },
   challenge: {
     title: "Knowledge Challenge",
@@ -387,6 +394,8 @@ export const fil = {
       "Hindi sinasagot ng mga sipi sa iyong offline na aklatan ang tanong na ito.",
     passagesBody:
       "Tumutugma ang mga siping ito sa tanong mo. I-load ang on-device na modelo para sa paliwanag.",
+    scannedPage:
+      "Binasa ng Seekora ang artikulo sa pahinang ito. I-load ang on-device na modelo para sa paliwanag.",
   },
   setup: {
     title: "Maghanda para sa offline",

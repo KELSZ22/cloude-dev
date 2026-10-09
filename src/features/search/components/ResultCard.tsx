@@ -31,6 +31,9 @@ export type SearchResult = {
     busy: boolean;
     error?: string | null;
     onPress: () => void;
+    idleLabel?: string;
+    savedLabel?: string;
+    busyLabel?: string;
   };
 };
 
@@ -64,7 +67,7 @@ export function ResultCard({ result }: { result: SearchResult }) {
       <View style={styles.top}>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`${result.title}. ${source}. ${meta}`}
+        accessibilityLabel={[result.title, source, meta].filter(Boolean).join(". ")}
         onPress={result.onPress}
         style={({ pressed }) => [
           styles.main,
@@ -91,9 +94,11 @@ export function ResultCard({ result }: { result: SearchResult }) {
           <ThemedText type="smallBold" numberOfLines={2} style={styles.title}>
             {result.title}
           </ThemedText>
-          <ThemedText type="small" style={[styles.pack, { color: colors.tint }]} numberOfLines={1}>
-            {source}
-          </ThemedText>
+          {source ? (
+            <ThemedText type="small" style={[styles.pack, { color: colors.tint }]} numberOfLines={1}>
+              {source}
+            </ThemedText>
+          ) : null}
           {result.summary ? (
             <ThemedText
               type="small"
@@ -116,27 +121,12 @@ export function ResultCard({ result }: { result: SearchResult }) {
           </View>
         </View>
       </Pressable>
-      {result.download ? null : (
-        <Pressable
-          disabled
-          accessibilityRole="button"
-          accessibilityLabel={t("library.moreOptions", { name: result.title })}
-          accessibilityState={{ disabled: true }}
-          style={styles.more}
-        >
-          <SymbolView
-            name={{ ios: "ellipsis", android: "more_vert", web: "more_vert" }}
-            size={18}
-            tintColor={colors.textSecondary}
-          />
-        </Pressable>
-      )}
       </View>
       {result.download ? (
         <View style={[styles.downloadWrap, { borderTopColor: colors.dashboardBorder }]}>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel={`${result.download.saved ? t("search.resourcesReadPdf") : t("search.resourcesDownloadPdf")}: ${result.title}`}
+            accessibilityLabel={`${downloadActionLabel(result, t)}: ${result.title}`}
             disabled={result.download.busy}
             onPress={result.download.onPress}
             style={({ pressed }) => [styles.download, pressed && styles.downloadPressed]}
@@ -155,11 +145,7 @@ export function ResultCard({ result }: { result: SearchResult }) {
               />
             )}
             <ThemedText type="smallBold" style={{ color: colors.tint }}>
-              {result.download.busy
-                ? t("search.resourcesDownloadingPdf")
-                : result.download.saved
-                  ? t("search.resourcesReadPdf")
-                  : t("search.resourcesDownloadPdf")}
+              {downloadActionLabel(result, t)}
             </ThemedText>
           </Pressable>
           {result.download.error ? (
@@ -171,6 +157,17 @@ export function ResultCard({ result }: { result: SearchResult }) {
       ) : null}
     </View>
   );
+}
+
+function downloadActionLabel(
+  result: SearchResult,
+  t: (key: MessageKey, vars?: Record<string, string | number>) => string,
+) {
+  const action = result.download;
+  if (!action) return "";
+  if (action.busy) return action.busyLabel ?? t("search.resourcesDownloadingPdf");
+  if (action.saved) return action.savedLabel ?? t("search.resourcesReadPdf");
+  return action.idleLabel ?? t("search.resourcesDownloadPdf");
 }
 
 const styles = StyleSheet.create({
@@ -186,7 +183,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
     padding: 12,
-    paddingRight: 4,
   },
   downloadWrap: {
     borderTopWidth: StyleSheet.hairlineWidth,
@@ -211,12 +207,4 @@ const styles = StyleSheet.create({
   summary: { fontSize: 13, lineHeight: 18 },
   metaRow: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 4 },
   meta: { fontSize: 12, lineHeight: 16 },
-  more: {
-    width: 36,
-    height: 44,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 6,
-    marginRight: 4,
-  },
 });

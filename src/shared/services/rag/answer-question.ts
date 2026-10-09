@@ -2,7 +2,7 @@ import type { KnowledgeRepository, SearchHit } from '@/infrastructure/database';
 import type { GenerationRequest } from '@/infrastructure/llm';
 import type { SourceCitation } from '@/shared/types/knowledge';
 import { checkCitations } from './citations';
-import { buildRagPrompt, RAG_LIMITS, type RagSource } from './context-builder';
+import { buildPagePrompt, buildRagPrompt, RAG_LIMITS, type RagSource } from './context-builder';
 
 /** Room for a four-sentence paragraph. The engine allows at most 256. */
 export const ANSWER_MAX_TOKENS = 192;
@@ -154,4 +154,37 @@ export async function answerQuestion(
   const citations = await resolveCitations(deps.repository, citedByModel ? checked.cited : sources);
   if (!citations.length) return { status: 'insufficient-evidence', reason: 'no-match', citations: [] };
   return { status: 'answered', text: checked.text, citations, citedByModel };
+}
+
+/** Answers from the article on screen. The page is the only source, so nothing is retrieved. */
+export async function answerFromPage(
+  generate: Generate,
+  request: { question: string; title: string; pageText: string; onToken?: (token: string) => void; signal?: AbortSignal },
+): Promise<GroundedAnswer> {
+  const question = request.question.trim();
+  if (!question) throw new Error('Type a question first.');
+  const built = buildPagePrompt(question, request.title, request.pageText);
+  if (!built.sources.length) return { status: 'insufficient-evidence', reason: 'no-match', citations: [] };
+  const raw = await generateParagraph(generate, {
+    prompt: built.prompt,
+    maxTokens: ANSWER_MAX_TOKENS,
+    onToken: request.onToken,
+    signal: request.signal,
+  });
+  const checked = checkCitations(raw, built.sources);
+  if (!checked.text) return { status: 'insufficient-evidence', reason: 'model-declined', citations: [] };
+  const citedByModel = checked.cited.length > 0;
+  const used = citedByModel ? checked.cited : built.sources;
+  return {
+    status: 'answered',
+    text: checked.text,
+    citedByModel,
+    citations: used.map((source) => ({
+      sourceId: String(source.label),
+      documentId: source.documentId,
+      chunkId: source.chunkId,
+      title: source.title,
+      pageNumber: null,
+    })),
+  };
 }

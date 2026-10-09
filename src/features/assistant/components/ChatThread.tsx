@@ -174,7 +174,11 @@ export function ChatThread({
           outcome?.status === "insufficient-evidence"
             ? t(reasonKey[outcome.reason] ?? "assistant.noMatch")
             : outcome?.status === "passages-only"
-              ? t("assistant.passagesBody")
+              ? t(
+                  outcome.citations.some((citation) => citation.chunkId.startsWith("page:"))
+                    ? "assistant.scannedPage"
+                    : "assistant.passagesBody",
+                )
               : outcome?.status === "error" || outcome?.status === "notice"
                 ? outcome.message
                 : outcome?.status === "stopped" && !outcome.text

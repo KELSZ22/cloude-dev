@@ -1,4 +1,6 @@
+import algebraStarter from "@/assets/knowledge-packs/algebra-starter-sample.json";
 import type { ImageSource } from "expo-image";
+import { parsePack } from "@/infrastructure/knowledge/pack-format";
 
 import {
   openStaxBooks,
@@ -125,6 +127,38 @@ export function articleMatchesTopic(
 
 export function articleById(id: string) {
   return articles.find((article) => article.id === id);
+}
+
+export type CatalogSection = {
+  title: string;
+  level: number;
+  paragraphs: string[];
+};
+
+const algebraStudy = parsePack(algebraStarter);
+
+export function catalogSections(article: CatalogArticle): CatalogSection[] {
+  const overview = article.overview.trim();
+  const sections: CatalogSection[] = [{
+    title: "",
+    level: 1,
+    paragraphs: overview ? [overview] : [],
+  }];
+  if (article.id !== "openstax:algebra-1") return sections.filter(hasSectionText);
+  for (const chapter of algebraStudy.chapters) {
+    for (const section of chapter.sections) {
+      sections.push({
+        title: `${chapter.title} · ${section.number} ${section.title}`,
+        level: 2,
+        paragraphs: section.passages.map((passage) => passage.text),
+      });
+    }
+  }
+  return sections.filter(hasSectionText);
+}
+
+function hasSectionText(section: CatalogSection) {
+  return Boolean(section.title || section.paragraphs.length);
 }
 
 export function articlesForPack(packId: string) {

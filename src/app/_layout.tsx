@@ -90,6 +90,10 @@ export default function RootLayout() {
                 options={{ headerShown: false }}
               />
               <Stack.Screen
+                name="saved/[id]"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
                 name="passage/[chunkId]"
                 options={{ title: t("stack.sourcePassage") }}
               />

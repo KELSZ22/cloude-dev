@@ -69,7 +69,7 @@ function imageMime(bytes: Uint8Array): ReadingImageMime | null {
   return null;
 }
 
-async function queryWikipedia(
+async function queryWikipediaResponse(
   language: WikipediaLanguage,
   params: Record<string, string>,
   signal?: AbortSignal,
@@ -95,7 +95,7 @@ async function queryWikipedia(
     if (data.error) throw new ReadingError("unavailable");
     // Never mark a truncated/failed extract as a complete download.
     if (object(data.warnings).extracts) throw new ReadingError("unavailable");
-    return object(data.query);
+    return data;
   } catch (error) {
     if (signal?.aborted) throw new ReadingError("cancelled");
     if (error instanceof ReadingError) throw error;
@@ -104,6 +104,16 @@ async function queryWikipedia(
     clearTimeout(timeout);
     signal?.removeEventListener("abort", cancel);
   }
+}
+
+async function queryWikipedia(
+  language: WikipediaLanguage,
+  params: Record<string, string>,
+  signal?: AbortSignal,
+  fetcher?: typeof fetch,
+) {
+  const data = await queryWikipediaResponse(language, params, signal, fetcher);
+  return object(data.query);
 }
 
 async function fetchImageBytes(url: string, signal: AbortSignal | undefined, fetcher: typeof fetch) {
@@ -132,21 +142,9 @@ async function fetchImageBytes(url: string, signal: AbortSignal | undefined, fet
   }
 }
 
-export async function searchWikipedia(
-  query: string,
-  language: WikipediaLanguage,
-  signal?: AbortSignal,
-  fetcher?: typeof fetch,
-): Promise<WikipediaResult[]> {
-  const needle = query.trim();
-  if (!needle) return [];
-  const result = await queryWikipedia(language, {
-    generator: "search", gsrsearch: needle.slice(0, 200), gsrnamespace: "0",
-    gsrlimit: "12", gsrprop: "wordcount", prop: "pageimages", piprop: "thumbnail",
-    pithumbsize: "160",
-  }, signal, fetcher);
-  if (!Array.isArray(result.pages)) throw new ReadingError("unavailable");
-  return [...result.pages].map(object).sort((a, b) =>
+function wikipediaResults(language: WikipediaLanguage, pages: unknown): WikipediaResult[] {
+  if (!Array.isArray(pages)) throw new ReadingError("unavailable");
+  return [...pages].map(object).sort((a, b) =>
     (positiveInteger(a.index) ? a.index : 999) - (positiveInteger(b.index) ? b.index : 999)
   ).flatMap((page) => {
     if (!positiveInteger(page.pageid) || typeof page.title !== "string") return [];
@@ -158,6 +156,64 @@ export async function searchWikipedia(
       ...(allowedWikimediaMediaUrl(thumb) ? { thumbnailUrl: thumb } : {}),
     }];
   });
+}
+
+export async function searchWikipedia(
+  query: string,
+  language: WikipediaLanguage,
+  signal?: AbortSignal,
+  fetcher?: typeof fetch,
+  limit = 12,
+): Promise<WikipediaResult[]> {
+  const page = await searchWikipediaPage(query, language, signal, fetcher, limit, 0);
+  return page.items;
+}
+
+export type WikipediaSearchPage = {
+  items: WikipediaResult[];
+  /** Present when another page of the same search can be loaded. */
+  nextOffset: number | null;
+};
+
+/** One page of search results. `offset` continues a previous page. */
+export async function searchWikipediaPage(
+  query: string,
+  language: WikipediaLanguage,
+  signal?: AbortSignal,
+  fetcher?: typeof fetch,
+  limit = 12,
+  offset = 0,
+): Promise<WikipediaSearchPage> {
+  const needle = query.trim();
+  if (!needle) return { items: [], nextOffset: null };
+  const size = Math.min(50, Math.max(1, Math.trunc(limit)));
+  const start = Math.max(0, Math.trunc(offset));
+  const data = await queryWikipediaResponse(language, {
+    generator: "search", gsrsearch: needle.slice(0, 300), gsrnamespace: "0",
+    gsrlimit: String(size), gsroffset: String(start), gsrprop: "wordcount",
+    prop: "pageimages", piprop: "thumbnail", pithumbsize: "160",
+  }, signal, fetcher);
+  const items = wikipediaResults(language, object(data.query).pages);
+  const next = object(data.continue).gsroffset;
+  const nextOffset = typeof next === "number" && Number.isSafeInteger(next) && next > start
+    ? next
+    : typeof next === "string" && /^\d+$/.test(next) && Number(next) > start
+      ? Number(next)
+      : null;
+  return { items, nextOffset: items.length ? nextOffset : null };
+}
+
+/** Main-namespace articles for the search tab before the user types a query. */
+export async function randomWikipedia(
+  language: WikipediaLanguage,
+  signal?: AbortSignal,
+  fetcher?: typeof fetch,
+): Promise<WikipediaResult[]> {
+  const result = await queryWikipedia(language, {
+    generator: "random", grnnamespace: "0", grnlimit: "20",
+    prop: "pageimages", piprop: "thumbnail", pithumbsize: "320",
+  }, signal, fetcher);
+  return wikipediaResults(language, result.pages);
 }
 
 export function extractSections(text: string): ReadingSection[] {

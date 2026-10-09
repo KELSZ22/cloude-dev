@@ -9,7 +9,6 @@ import {
   View,
 } from "react-native";
 
-import { ResourceSearchResults } from "@/features/resources/components/ResourceSearchResults";
 import { searchWikipedia } from "@/infrastructure/learning/wikipedia";
 import { ActionButton } from "@/shared/components/action-button";
 import { FilterChips } from "@/shared/components/filter-chips";
@@ -197,9 +196,6 @@ export default function LearnPage({ inTab = false }: { inTab?: boolean }) {
             <ActionButton label={t("common.cancel")} onPress={cancel} />
           ) : null}
         </View>
-      ) : null}
-      {searchRequest ? (
-        <ResourceSearchResults query={searchRequest.query} immediate />
       ) : null}
       {searched && !results.length ? (
         <ThemedText>{t("reading.noResults")}</ThemedText>
