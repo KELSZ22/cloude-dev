@@ -32,6 +32,8 @@ export default function ModelPage() {
     <Page nested title={t('stack.onDeviceModel')} description={t('model.description')}>
       <ModelStatus />
       <StatusCard title={localModel.name} description={t('model.cardBody')}>
+        {model.hasBundled && <ActionButton label={t('model.setUpBundled')} disabled={busy || !!model.installed}
+          onPress={() => { void model.setupBundledModel(); }} />}
         <NavigationButton href={localModel.downloadUrl} label={t('model.openDownload')} />
         <ActionButton label={t('model.importGguf')} disabled={!model.native || busy || !!model.installed}
           onPress={() => { void model.importModel(); }} />

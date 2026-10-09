@@ -15,6 +15,7 @@ import {
   useOnboardingStore,
 } from "@/shared/stores/onboarding-store";
 import { OnboardingButton } from "./OnboardingButton";
+import { ONBOARDING_DOTS, StepDots } from "./StepDots";
 
 const topicLabelKey = {
   general: "topics.general",
@@ -49,7 +50,7 @@ export function PreferencesStep() {
   const language = useOnboardingStore((state) => state.language);
   const topics = useOnboardingStore((state) => state.topics);
   const back = useOnboardingStore((state) => state.back);
-  const complete = useOnboardingStore((state) => state.complete);
+  const next = useOnboardingStore((state) => state.next);
   const setLanguage = useOnboardingStore((state) => state.setLanguage);
   const toggleTopic = useOnboardingStore((state) => state.toggleTopic);
 
@@ -152,7 +153,10 @@ export function PreferencesStep() {
         </View>
 
         <View style={styles.footer}>
-          <OnboardingButton label={t("common.continue")} onPress={complete} />
+          <OnboardingButton label={t("common.continue")} onPress={next} />
+          <View style={styles.dots}>
+            <StepDots total={ONBOARDING_DOTS} index={2} />
+          </View>
         </View>
       </ScrollView>
 
@@ -219,7 +223,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: Spacing.two,
   },
-  footer: { marginTop: "auto", paddingVertical: Spacing.four },
+  footer: { marginTop: "auto", paddingVertical: Spacing.four, gap: Spacing.three },
+  dots: { alignItems: "center" },
   overlay: {
     flex: 1,
     backgroundColor: "rgba(13, 27, 42, 0.35)",

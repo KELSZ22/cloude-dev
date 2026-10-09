@@ -13,7 +13,7 @@ import { useTranslation } from "@/shared/i18n";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { MascotScene } from "./MascotScene";
 import { OnboardingNextButton } from "./OnboardingButton";
-import { StepDots } from "./StepDots";
+import { ONBOARDING_DOTS, StepDots } from "./StepDots";
 
 export function IntroStep({
   scene,
@@ -76,7 +76,7 @@ export function IntroStep({
       </ScrollView>
       <View style={[styles.footer, compact && styles.compactFooter]}>
         <View style={styles.dots}>
-          <StepDots total={3} index={dotIndex} />
+          <StepDots total={ONBOARDING_DOTS} index={dotIndex} />
         </View>
         <View style={styles.next}>
           <OnboardingNextButton onPress={next} />
