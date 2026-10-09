@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useRef, useState } from "react";
 import {
+  AppState,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -14,7 +15,6 @@ import {
 } from "react-native";
 import Animated, {
   Easing,
-  runOnJS,
   useAnimatedStyle,
   useReducedMotion,
   useSharedValue,
@@ -66,7 +66,6 @@ export function AssistantSheet() {
   const handledRequest = useRef(0);
   const submitRef = useRef<(text: string) => Promise<void>>(async () => {});
   const tRef = useRef(t);
-  const openRef = useRef(open);
 
   useEffect(() => {
     draftRef.current = draft;
@@ -95,17 +94,30 @@ export function AssistantSheet() {
   }, [travel, width]);
 
   useEffect(() => {
-    openRef.current = open;
     if (!presented) return;
     const duration = reducedMotion ? 0 : open ? 320 : 240;
-    progress.value = withTiming(
-      open ? 1 : 0,
-      { duration, easing: open ? Easing.out(Easing.cubic) : Easing.in(Easing.cubic) },
-      (finished) => {
-        if (finished && !openRef.current) runOnJS(setPresented)(false);
-      },
-    );
+    progress.value = withTiming(open ? 1 : 0, {
+      duration,
+      easing: open ? Easing.out(Easing.cubic) : Easing.in(Easing.cubic),
+    });
+    if (open) return;
+    // The modal is transparent and covers the screen, so it must always be removed once the sheet has
+    // slid away. A timer does that even if the animation is interrupted; reopening cancels it.
+    const timer = setTimeout(() => setPresented(false), duration + 60);
+    return () => clearTimeout(timer);
   }, [open, presented, progress, reducedMotion]);
+
+  // A system dialog (the microphone permission prompt, for one) pauses the app. On return Android can
+  // show the sheet at its starting, off-screen position, leaving an empty window that blocks every tap.
+  // Moving the value again puts the open sheet back on screen.
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (next) => {
+      if (next !== "active" || !useAssistantSheetStore.getState().open) return;
+      progress.value = 0.98;
+      progress.value = withTiming(1, { duration: 120 });
+    });
+    return () => subscription.remove();
+  }, [progress]);
 
   const slide = useAnimatedStyle(() => ({
     transform: [{ translateX: (1 - progress.value) * travel.value }],
