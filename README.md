@@ -1,19 +1,29 @@
-# AralSearch AI
+# Seekora
 
-Knowledge for Everyone. Anytime. Offline.
+Explore more. Understand better. Anywhere.
 
-Android-first React Native using Expo SDK 57, Expo Router, Bun, and strict TypeScript. The shell now includes native local-model import, SHA-256 verification, persistent model metadata, load/unload, cancellation, and a real inference diagnostic. SQLite search, content persistence, document imports, packs, and grounded research are still pending. Actual GGUF loading/generation requires device validation.
+Seekora is an offline-first Android knowledge search and AI assistant, first developed as AralSearch AI. It is built with React Native on Expo SDK 57, Expo Router, Bun, and strict TypeScript.
 
-## Run the foundation
+What works today:
+
+- **Local search.** SQLite FTS5 over a bundled sample knowledge pack, with ranked passages.
+- **Ask Seekora.** Retrieves supporting passages, writes an answer with the on-device Qwen3.5 model, and links each citation to the stored passage. When the library has no support for a question, it says so and cites nothing.
+- **On-device model.** Local GGUF import with SHA-256 verification, load/unload, streaming, and cancellation through llama.rn.
+
+Not built yet: document import, bookmarks and history, pack import from files, and the floating Seekora Companion. Search, answers, and model loading are covered by desktop tests but still need validation on an Android device; see [implementation status](docs/IMPLEMENTATION_STATUS.md).
+
+## Run the app
 
 ```bash
 bun install --frozen-lockfile
 bun run android
 ```
 
-Use `bunx expo run:android` with a compatible connected device/emulator for inference. Start an installed development build with `bunx expo start --dev-client`. Web is a shell preview with model actions unavailable. Expo Go cannot run llama.rn.
+`bun run android` compiles and installs a development build on a connected 64-bit Android device or emulator. Expo Go cannot run llama.rn, so on-device answers need this development build. After the first installation, use `bunx expo start --dev-client` for daily work. Rebuild after adding or changing native dependencies or config plugins. Web is a shell preview: the library and the model are unavailable there.
 
-If opening Android reports `No development build (com.kelsz09.myapp) ... is installed`, stop Metro with Ctrl+C and run `bun run android` with the target device connected. This compiles and installs the development build before launching it. `expo start` only serves JavaScript; it cannot install the missing native app. After the first successful installation, use `bunx expo start --dev-client` for daily development. Rebuild after adding or changing native dependencies or config plugins.
+If Android reports `No development build (com.kelsz09.myapp) ... is installed`, stop Metro with Ctrl+C and run `bun run android` with the device connected.
+
+## Checks
 
 ```bash
 bunx expo lint
@@ -21,24 +31,56 @@ bunx tsc --noEmit
 bun test tests
 ```
 
-Equivalent scripts: `bun run lint` and `bun run typecheck`.
+After adding a route file, run `bunx expo customize tsconfig.json` (or start the dev server) so the typed-route declarations in `.expo/types` include it; otherwise `tsc` rejects links to the new route.
 
-## Native development
+## Native build requirements
 
-Use JDK 17 and the Android SDK, set `JAVA_HOME` and `ANDROID_HOME`, connect a phone or start an emulator, confirm `adb devices` lists it, then run `bunx expo run:android`. An `android/` directory already exists locally; do not hand-edit generated native files. Use Expo config plugins for native changes. iOS builds require macOS or EAS.
+- **JDK 17.** Newer JDKs can fail native configuration; Android Studio's bundled JDK 25 is one of them.
+- **Android SDK** with Platform 36, Build-Tools 36.0.0, NDK 27.1.12297006, and CMake 3.22.1. With the SDK license accepted, Gradle installs missing ones on the first build.
+- `JAVA_HOME` and `ANDROID_HOME` set, and `adb devices` listing the target.
 
-On this Linux workstation, use the installed JDK 17 and limit build parallelism to fit available memory:
+The `android/` directory is generated and git-ignored. Do not edit it by hand; change `app.json` or a config plugin and run `bunx expo prebuild --platform android --no-install`. iOS builds require macOS or EAS.
+
+The first build compiles native code for every library and takes a long time. To build one ABI and limit memory use:
 
 ```bash
-JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 CMAKE_BUILD_PARALLEL_LEVEL=2 GRADLE_OPTS='-Dorg.gradle.workers.max=2' bun run android
+# Linux / macOS
+JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 GRADLE_OPTS='-Dorg.gradle.workers.max=2' bun run android
 ```
 
-Java 25 can fail native configuration with `WARNING: A restricted method in java.lang.System has been called`; use JDK 17 if this occurs.
+```powershell
+# Windows PowerShell, from android\
+.\gradlew.bat :app:assembleDebug -PreactNativeArchitectures=arm64-v8a --max-workers=2
+```
 
-The selected model is `diodel/Qwen3.5-0.8B-Q4_K_M-GGUF` (529 MB, declared Apache-2.0). `llama.rn 0.13.0-rc.7` is pinned, its Expo plugin is configured, Bun lifecycle scripts are trusted, and Android build targets are limited to its 64-bit ABIs. No model is bundled or automatically downloaded. Follow [local model provisioning](docs/LOCAL-MODEL.md) for the pinned file, checksum, import, and runtime test.
+On Windows, open a new terminal after installing Bun or setting `JAVA_HOME`, so the updated environment is picked up.
+
+### Standalone APK (no PC needed)
+
+A development build loads its JavaScript from Metro on the PC. For an APK that runs by itself, build the release variant:
+
+```powershell
+# Windows PowerShell, from android\
+.\gradlew.bat :app:assembleRelease -PreactNativeArchitectures=arm64-v8a -PrnllamaVariants=rnllama,rnllama_v8_2_dotprod_i8mm "-Dorg.gradle.jvmargs=-Xmx3g -XX:MaxMetaspaceSize=1g"
+```
+
+The result is `android/app/build/outputs/apk/release/app-release.apk`. It is signed with the template's debug keystore: fine for teammates and demos, not for a store. If the final `lintVitalAnalyzeRelease` step still fails with `Metaspace`, add `-x lintVitalAnalyzeRelease -x lintVitalReportRelease -x lintVitalRelease`.
+
+When a phone reaches the dev server over USB, run `adb reverse tcp:8081 tcp:8081` again whenever the cable or USB mode changes; the forward is lost each time and the app then reports that it cannot connect to `localhost:8081`.
+
+## On-device model
+
+The selected model is `diodel/Qwen3.5-0.8B-Q4_K_M-GGUF` (529 MB, declared Apache-2.0). `llama.rn 0.13.0-rc.7` is pinned, its Expo plugin is configured, Bun lifecycle scripts are trusted, and Android build targets are limited to its 64-bit ABIs. No model is downloaded automatically, and none is in git. By default users import the model; to build an APK that carries it, place the pinned file in `bundled-model/` before prebuild. Follow [local model provisioning](docs/LOCAL-MODEL.md) for the pinned file, checksum, import, bundling, and runtime test.
 
 ## Navigation and structure
 
-Five tabs: Home, Search, Library, Assistant, Settings. Nested screens cover optional offline setup, model requirements, pack status, and import status. Every displayed navigation action has a destination. Existing template modules and assets remain preserved.
+Five tabs: Home, Search, Library, Ask Seekora, Settings. Nested screens cover offline setup, the model, installed packs, import status, and the passage reader that citations open. Existing template modules and assets remain preserved. The Android package identifier is still `com.kelsz09.myapp`.
 
-See [architecture](docs/ARCHITECTURE.md) for ownership and next milestones, [implementation status](docs/IMPLEMENTATION_STATUS.md) for verified commands, [limitations](docs/KNOWN-LIMITATIONS.md), and [offline verification](docs/OFFLINE-TEST.md) for device acceptance steps. The [master document](ARALSEARCH_AI_MASTER_BUILD_PROMPT.md) describes the complete product; it does not mean that MVP is delivered.
+## Documentation
+
+- [Architecture](docs/ARCHITECTURE.md): ownership, layers, and next milestones.
+- [Knowledge packs and grounded answers](docs/KNOWLEDGE-PACKS.md): pack format, storage, ranking, evidence and citation rules.
+- [Implementation status](docs/IMPLEMENTATION_STATUS.md): what has been verified, and how.
+- [Known limitations](docs/KNOWN-LIMITATIONS.md) and [offline verification](docs/OFFLINE-TEST.md) for device acceptance steps.
+- [Content and model licenses](docs/CONTENT-LICENSES.md).
+- The [master document](ARALSEARCH_AI_MASTER_BUILD_PROMPT.md) describes the complete product under its earlier name; it does not mean that MVP is delivered.
