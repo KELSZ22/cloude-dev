@@ -15,7 +15,13 @@ const kindKey: Record<SearchKind, MessageKey> = {
   pack: "search.pack",
 };
 
-export function ResultCard({ article }: { article: CatalogArticle }) {
+export function ResultCard({
+  article,
+  onPackPress,
+}: {
+  article: CatalogArticle;
+  onPackPress?: (article: CatalogArticle) => void;
+}) {
   const colors = useTheme();
   const { t } = useTranslation();
   const meta =
@@ -32,7 +38,8 @@ export function ResultCard({ article }: { article: CatalogArticle }) {
       accessibilityLabel={`${article.title}. ${article.pack}. ${meta}`}
       onPress={() => {
         if (article.kind === "pack") {
-          router.navigate("/(tabs)/library");
+          if (onPackPress) onPackPress(article);
+          else router.navigate("/(tabs)/library");
           return;
         }
         router.push(`/article/${article.id}`);

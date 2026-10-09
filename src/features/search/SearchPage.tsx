@@ -4,16 +4,20 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SymbolView } from "expo-symbols";
 
 import { FilterChips } from "@/shared/components/filter-chips";
+import { LeafDecor } from "@/shared/components/leaf-decor";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 
-import { articles, type SearchKind } from "./catalog";
+import { articles, type CatalogArticle, type SearchKind } from "./catalog";
+import { DownloadFailed } from "./components/DownloadFailed";
+import { EmptyResults } from "./components/EmptyResults";
 import { PassageResultCard } from "./components/PassageResultCard";
 import { ResultCard } from "./components/ResultCard";
 import { SearchBrandHeader } from "./components/SearchBrandHeader";
+import { downloadSearchPack } from "./download-pack";
 import { useLocalSearch } from "./hooks/useLocalSearch";
 
 type FilterId = "all" | "article" | "document" | "pack";
@@ -30,6 +34,7 @@ export default function SearchPage() {
   ];
   const [query, setQuery] = useState("renewable energy");
   const [filter, setFilter] = useState<FilterId>("all");
+  const [failedPackId, setFailedPackId] = useState<string | null>(null);
 
   // Passages from the installed knowledge packs, searched in the local full-text index.
   const library = useLocalSearch(query);
@@ -48,9 +53,31 @@ export default function SearchPage() {
   }, [filter, query]);
 
   const total = passages.length + results.length;
+  const noResults =
+    query.trim().length > 0 &&
+    total === 0 &&
+    (!library.pending || library.error !== null || !library.ready);
+
+  function attemptDownload(article: CatalogArticle) {
+    const result = downloadSearchPack(article.id);
+    setFailedPackId(result.ok ? null : article.id);
+  }
+
+  if (failedPackId) {
+    return (
+      <DownloadFailed
+        onBack={() => setFailedPackId(null)}
+        onCancel={() => setFailedPackId(null)}
+        onRetry={() => {
+          if (downloadSearchPack(failedPackId).ok) setFailedPackId(null);
+        }}
+      />
+    );
+  }
 
   return (
     <ThemedView style={styles.screen}>
+      {noResults ? <LeafDecor width={130} /> : null}
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -59,10 +86,26 @@ export default function SearchPage() {
           { paddingTop: insets.top + Spacing.two, paddingBottom: BottomTabInset + Spacing.four },
         ]}
       >
-        <SearchBrandHeader />
+        {noResults ? null : <SearchBrandHeader />}
+        <View style={noResults ? styles.fieldRow : undefined}>
+          {noResults ? (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t("common.goBack")}
+              onPress={() => setQuery("")}
+              style={styles.back}
+            >
+              <SymbolView
+                name={{ ios: "chevron.left", android: "arrow_back", web: "arrow_back" }}
+                size={22}
+                tintColor={colors.text}
+              />
+            </Pressable>
+          ) : null}
         <View
           style={[
             styles.field,
+            noResults ? styles.fieldInRow : null,
             { backgroundColor: colors.backgroundElement, borderColor: colors.dashboardBorder },
           ]}
         >
@@ -95,28 +138,29 @@ export default function SearchPage() {
             </Pressable>
           ) : null}
         </View>
-        <FilterChips options={filters} value={filter} onChange={setFilter} />
-        <ThemedText type="smallBold" style={[styles.count, { color: colors.tint }]}>
-          {total === 1
-            ? t("search.oneResult")
-            : t("search.manyResults", { count: total })}
-        </ThemedText>
-        {library.error ? (
+        </View>
+        {noResults ? null : (
+          <>
+            <FilterChips options={filters} value={filter} onChange={setFilter} />
+            <ThemedText type="smallBold" style={[styles.count, { color: colors.tint }]}>
+              {total === 1
+                ? t("search.oneResult")
+                : t("search.manyResults", { count: total })}
+            </ThemedText>
+          </>
+        )}
+        {library.error && !noResults ? (
           <ThemedText themeColor="error" accessibilityRole="alert" style={styles.empty}>
             {library.error}
           </ThemedText>
         ) : null}
         <View style={styles.list}>
-          {total === 0 && !library.pending ? (
-            <ThemedText themeColor="textSecondary" style={styles.empty}>
-              {t("search.empty")}
-            </ThemedText>
-          ) : null}
+          {noResults ? <EmptyResults query={query.trim()} /> : null}
           {passages.map((hit) => (
             <PassageResultCard key={hit.chunkId} hit={hit} />
           ))}
           {results.map((article) => (
-            <ResultCard key={article.id} article={article} />
+            <ResultCard key={article.id} article={article} onPackPress={attemptDownload} />
           ))}
         </View>
       </ScrollView>
@@ -127,6 +171,18 @@ export default function SearchPage() {
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   scroll: { width: "100%", maxWidth: 600, alignSelf: "center", gap: Spacing.three },
+  fieldRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: Spacing.three,
+    gap: 4,
+  },
+  back: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   field: {
     flexDirection: "row",
     alignItems: "center",
@@ -137,6 +193,7 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     borderWidth: 1,
   },
+  fieldInRow: { flex: 1, marginLeft: 0, marginRight: 0 },
   input: { flex: 1, fontSize: 16, minHeight: 48 },
   clear: { width: 32, height: 32, alignItems: "center", justifyContent: "center" },
   count: { paddingHorizontal: Spacing.three },
