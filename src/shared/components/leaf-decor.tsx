@@ -1,7 +1,13 @@
 import { Image } from "expo-image";
 import { StyleSheet, View } from "react-native";
 
-export function LeafDecor({ showRight = true }: { showRight?: boolean }) {
+export function LeafDecor({
+  showRight = true,
+  width = 120,
+}: {
+  showRight?: boolean;
+  width?: number;
+}) {
   return (
     <View pointerEvents="none" style={StyleSheet.absoluteFill}>
       <Image
@@ -9,7 +15,7 @@ export function LeafDecor({ showRight = true }: { showRight?: boolean }) {
         accessible={false}
         accessibilityLabel=""
         contentFit="contain"
-        style={styles.bottomLeft}
+        style={[styles.bottomLeft, { width }]}
       />
       {showRight ? (
         <Image
@@ -17,7 +23,7 @@ export function LeafDecor({ showRight = true }: { showRight?: boolean }) {
           accessible={false}
           accessibilityLabel=""
           contentFit="contain"
-          style={styles.bottomRight}
+          style={[styles.bottomRight, { width }]}
         />
       ) : null}
     </View>
@@ -29,14 +35,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     left: 0,
-    width: 120,
     aspectRatio: 704 / 434,
   },
   bottomRight: {
     position: "absolute",
     bottom: 0,
     right: 0,
-    width: 120,
     aspectRatio: 638 / 422,
   },
 });
