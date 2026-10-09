@@ -33,6 +33,16 @@ internal class AssistantStrings(private val values: Map<String, String> = emptyM
     "Seekora will take one picture of the screen, read its text on this device, and discard the picture. " +
       "Nothing is uploaded. Android will ask you to confirm."
   )
+  val voiceStart get() = text("voiceStart", "Ask by voice")
+  val voiceStop get() = text("voiceStop", "Stop listening")
+  val voiceListening get() = text("voiceListening", "Listening...")
+  val voiceDenied get() = text("voiceDenied", "Microphone access is off. Turn it on for Seekora, then turn the assistant off and on again.")
+  val voiceUnavailable get() = text("voiceUnavailable", "This device has no on-device speech recognition, so voice input is unavailable.")
+  val voiceOffline get() = text("voiceOffline", "Voice input needs the offline language pack. Install it from Seekora, then try again.")
+  val voiceNoMatch get() = text("voiceNoMatch", "Nothing was heard. Tap the microphone and try again.")
+  val voiceFailed get() = text("voiceFailed", "Voice input stopped unexpectedly. Tap the microphone to try again.")
+  /** BCP-47 tag for recognition, such as "en-US". Set from the app's language, not translated. */
+  val voiceLang get() = text("voiceLang", "en-US")
   val captureContinue get() = text("captureContinue", "Continue")
   val captureCancel get() = text("captureCancel", "Cancel")
   val capturing get() = text("capturing", "Reading the screen...")

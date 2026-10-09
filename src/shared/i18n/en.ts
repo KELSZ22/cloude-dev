@@ -212,6 +212,12 @@ export const en = {
     setupModel: "Set up the on-device model",
     chatTitle: "Ask Seekora AI",
     avatar: "Seekora assistant",
+    greeting: "Hi! I'm Seekora.\nWhat can I help you understand?",
+    statusReady: "Offline model ready",
+    statusLoading: "Loading model...",
+    statusBusy: "Thinking...",
+    statusNotLoaded: "Model loads on your first question",
+    statusMissing: "Model not set up · passages only",
     followUp: "Ask a follow-up question...",
     askFirst: "Ask a question...",
     send: "Send",
@@ -219,7 +225,9 @@ export const en = {
     startVoice: "Start voice input",
     stopVoice: "Stop voice input",
     voiceDenied: "Allow microphone and speech recognition in Settings to use voice input.",
-    voiceUnavailable: "Speech recognition is not available on this device.",
+    voiceUnavailable: "On-device speech recognition is not available on this device.",
+    voiceOffline:
+      "Voice input needs the offline language pack. Android will offer to download it, then try again.",
     you: "You",
     sources: "Sources ({{count}})",
     openSource: "Open source: {{title}}",
@@ -311,8 +319,9 @@ export const en = {
     introTitle: "Enable Floating Assistant",
     introBody:
       "Allow Seekora to display a floating assistant over other apps so you can access your offline AI companion while using your phone.",
-    featureBubble: "Floating bubble with the Seekora logo",
+    featureBubble: "Floating bubble with the Seekora assistant",
     featureAsk: "Ask questions on any app",
+    featureVoice: "Ask by typing or by voice, recognized on your device",
     featureAnalyze: "Analyze screen content, only when you ask",
     featureOffline: "Works offline using the same AI model",
     enable: "Enable Floating Assistant",
@@ -373,6 +382,17 @@ export const en = {
     appClosed:
       "Seekora is not running, so the assistant cannot answer. Open Seekora, then come back.",
     openApp: "Open Seekora",
+    voiceStart: "Ask by voice",
+    voiceStop: "Stop listening",
+    voiceListening: "Listening...",
+    voiceDenied:
+      "Microphone access is off. Turn it on for Seekora, then turn the assistant off and on again.",
+    voiceUnavailable:
+      "This device has no on-device speech recognition, so voice input is unavailable.",
+    voiceOffline:
+      "Voice input needs the offline language pack. Open Seekora and use the microphone there once to install it.",
+    voiceNoMatch: "Nothing was heard. Tap the microphone and try again.",
+    voiceFailed: "Voice input stopped unexpectedly. Tap the microphone to try again.",
     captureTitle: "Analyze this screen?",
     captureBody:
       "Seekora will take one picture of the screen, read its words on this device, and discard the picture. Only words are read, not pictures or video. Nothing is uploaded. Android will ask you to confirm.",

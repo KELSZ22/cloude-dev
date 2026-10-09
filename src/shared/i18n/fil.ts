@@ -215,6 +215,12 @@ export const fil = {
     setupModel: "I-set up ang on-device na modelo",
     chatTitle: "Tanungin ang Seekora AI",
     avatar: "Assistant ng Seekora",
+    greeting: "Kumusta! Ako si Seekora.\nAno ang maitutulong ko para maintindihan mo?",
+    statusReady: "Handa na ang offline na modelo",
+    statusLoading: "Nilo-load ang modelo...",
+    statusBusy: "Nag-iisip...",
+    statusNotLoaded: "Maglo-load ang modelo sa una mong tanong",
+    statusMissing: "Hindi pa naka-set up ang modelo · mga sipi lamang",
     followUp: "Magtanong ng kasunod...",
     askFirst: "Magtanong...",
     send: "Ipadala",
@@ -222,7 +228,9 @@ export const fil = {
     startVoice: "Simulan ang voice input",
     stopVoice: "Itigil ang voice input",
     voiceDenied: "Payagan ang mikropono at speech recognition sa Settings para sa voice input.",
-    voiceUnavailable: "Hindi available ang speech recognition sa device na ito.",
+    voiceUnavailable: "Hindi available ang on-device na speech recognition sa device na ito.",
+    voiceOffline:
+      "Kailangan ng voice input ang offline na language pack. Mag-aalok ang Android na i-download ito, pagkatapos subukan muli.",
     you: "Ikaw",
     sources: "Mga source ({{count}})",
     openSource: "Buksan ang source: {{title}}",
@@ -315,8 +323,9 @@ export const fil = {
     introTitle: "I-enable ang Lumulutang na Assistant",
     introBody:
       "Payagan ang Seekora na magpakita ng lumulutang na assistant sa ibabaw ng ibang app para magamit mo ang iyong offline na AI companion habang ginagamit ang iyong telepono.",
-    featureBubble: "Lumulutang na bubble na may logo ng Seekora",
+    featureBubble: "Lumulutang na bubble na may Seekora assistant",
     featureAsk: "Magtanong habang nasa kahit anong app",
+    featureVoice: "Magtanong sa pag-type o sa boses, kinikilala sa iyong device",
     featureAnalyze: "Suriin ang nasa screen, kapag hiniling mo lang",
     featureOffline: "Gumagana offline gamit ang parehong modelong AI",
     enable: "I-enable ang Lumulutang na Assistant",
@@ -378,6 +387,17 @@ export const fil = {
     appClosed:
       "Hindi tumatakbo ang Seekora, kaya hindi makakasagot ang assistant. Buksan ang Seekora, pagkatapos ay bumalik.",
     openApp: "Buksan ang Seekora",
+    voiceStart: "Magtanong sa pamamagitan ng boses",
+    voiceStop: "Itigil ang pakikinig",
+    voiceListening: "Nakikinig...",
+    voiceDenied:
+      "Naka-off ang mikropono. I-on ito para sa Seekora, pagkatapos ay i-off at i-on muli ang assistant.",
+    voiceUnavailable:
+      "Walang on-device na speech recognition ang device na ito, kaya hindi available ang voice input.",
+    voiceOffline:
+      "Kailangan ng voice input ang offline na language pack. Buksan ang Seekora at gamitin ang mikropono doon nang isang beses para ma-install ito.",
+    voiceNoMatch: "Walang narinig. I-tap ang mikropono at subukan muli.",
+    voiceFailed: "Biglang huminto ang voice input. I-tap ang mikropono para subukan muli.",
     captureTitle: "Suriin ang screen na ito?",
     captureBody:
       "Kukuha ang Seekora ng isang larawan ng screen, babasahin ang mga salita nito sa device na ito, at itatapon ang larawan. Mga salita lang ang binabasa, hindi ang mga larawan o video. Walang ina-upload. Hihingin ng Android ang iyong kumpirmasyon.",

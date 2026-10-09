@@ -8,7 +8,7 @@ import { createModelStorage } from '@/infrastructure/llm/model-storage';
 
 type Operation = 'restoring' | 'preparing' | 'choosing' | 'importing' | 'verifying' | 'loading' | 'testing' | 'answering' | 'unloading' | 'removing' | null;
 
-interface ModelContextValue {
+export interface ModelContextValue {
   installed: ModelManifest | null;
   state: ModelState;
   operation: Operation;

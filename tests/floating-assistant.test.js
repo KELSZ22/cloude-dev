@@ -432,11 +432,19 @@ describe('floating assistant native module', () => {
   const sources = readdirSync(sourceDir).map((file) => readFileSync(join(sourceDir, file), 'utf8')).join('\n');
   const permissions = [...manifest.matchAll(/<uses-permission android:name="android\.permission\.([A-Z_]+)"/g)].map((match) => match[1]);
 
-  test('asks for the overlay, foreground-service and notification permissions and nothing else', () => {
+  test('asks for the overlay, foreground-service, notification and microphone permissions and nothing else', () => {
     expect(permissions.sort()).toEqual([
-      'FOREGROUND_SERVICE', 'FOREGROUND_SERVICE_MEDIA_PROJECTION', 'FOREGROUND_SERVICE_SPECIAL_USE',
-      'POST_NOTIFICATIONS', 'SYSTEM_ALERT_WINDOW',
+      'FOREGROUND_SERVICE', 'FOREGROUND_SERVICE_MEDIA_PROJECTION', 'FOREGROUND_SERVICE_MICROPHONE',
+      'FOREGROUND_SERVICE_SPECIAL_USE', 'POST_NOTIFICATIONS', 'RECORD_AUDIO', 'SYSTEM_ALERT_WINDOW',
     ]);
+  });
+
+  test('recognises speech on the device and never over the network', () => {
+    const voice = readFileSync(join(sourceDir, 'VoiceInput.kt'), 'utf8');
+    expect(voice).toContain('createOnDeviceSpeechRecognizer');
+    expect(voice).toContain('RecognizerIntent.EXTRA_PREFER_OFFLINE');
+    // A plain recogniser may stream the audio to a server, so the module must never build one.
+    expect(sources).not.toContain('createSpeechRecognizer');
   });
 
   test('declares no accessibility service and exports no component', () => {
