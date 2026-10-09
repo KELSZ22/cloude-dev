@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
+import { ModelDownloadStrip } from "@/shared/components/model-download-strip";
 import { StateFigure } from "@/shared/components/state-figure";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
@@ -71,6 +72,7 @@ export function PacksStep() {
       primaryDisabled={downloading}
     >
       <View style={styles.loading}>
+        <ModelDownloadStrip />
         {downloading ? (
           <ActivityIndicator color={colors.tint} accessibilityLabel={t("onboarding.packsDownloading")} />
         ) : null}

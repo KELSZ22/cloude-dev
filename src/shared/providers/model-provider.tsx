@@ -50,6 +50,8 @@ export function ModelProvider({ children }: PropsWithChildren) {
   const phase = useRef<Operation>('restoring');
   const mounted = useRef(true);
   const backgroundHold = useRef(false);
+  /** True for the whole download-and-verify run, including the verifying stage. */
+  const downloading = useRef(false);
   const native = Platform.OS === 'android' || Platform.OS === 'ios';
 
   const updateOperation = (next: Operation) => { phase.current = next; setOperation(next); };
@@ -69,7 +71,9 @@ export function ModelProvider({ children }: PropsWithChildren) {
       // The system picker backgrounds Android while selection is open; no model is loaded then.
       const provisioning = phase.current === 'downloading' || phase.current === 'importing';
       if (next !== 'active' && phase.current !== 'choosing' && (provisioning || !backgroundHold.current)) {
-        active.current?.abort();
+        // A download manages its own background behaviour (iOS keeps transferring, Android pauses
+        // and resumes), so leaving the app must not throw away hundreds of megabytes.
+        if (!downloading.current) active.current?.abort();
         void engine.unload().then(() => {
           if (!disposed) setState(engine.getState());
         }).catch((failure: unknown) => {
@@ -103,12 +107,15 @@ export function ModelProvider({ children }: PropsWithChildren) {
     await run('downloading', async (signal) => {
       if (!native) throw new Error('Model download is available on Android and iOS.');
       if (installed) return;
-      const manifest = await storage.downloadModel(signal, (update) => {
-        if (!mounted.current || signal.aborted) return;
-        updateOperation(update.stage === 'downloading' ? 'downloading' : 'importing');
-        setProgress(update.fraction);
-      });
-      if (mounted.current) setInstalled(manifest);
+      downloading.current = true;
+      try {
+        const manifest = await storage.downloadModel(signal, (update) => {
+          if (!mounted.current || signal.aborted) return;
+          updateOperation(update.stage === 'downloading' ? 'downloading' : 'importing');
+          setProgress(update.fraction);
+        });
+        if (mounted.current) setInstalled(manifest);
+      } finally { downloading.current = false; }
     });
   }
 

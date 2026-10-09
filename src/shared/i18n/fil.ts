@@ -164,6 +164,7 @@ export const fil = {
     modelOnce: "isang download · kailangan ang internet nang isang beses",
     modelImport: "May modelo ka na? I-import ang GGUF file nito",
     modelLater: "Maaari itong i-download mamaya sa Settings → Modelong AI. Gumagana ang pagbabasa at paghahanap kahit wala ito.",
+    modelBackground: "Patuloy itong magda-download habang tinatapos mo ang setup. Kapag umalis ka sa app, itutuloy nito kung saan ito huminto.",
     modelReady: "Naka-save",
     modelReadyBody: "Naka-save sa teleponong ito. Maglo-load ang modelo sa una mong tanong.",
     modelFactOffline: "Sumasagot kahit saan, kahit walang signal",

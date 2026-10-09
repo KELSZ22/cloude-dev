@@ -7,11 +7,24 @@ export type ModelState =
   | { status: 'unsupported'; reason: string }
   | { status: 'error'; message: string };
 
+/** An earlier turn of a conversation, passed to the model with its real chat role. */
+export interface ChatTurn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 export interface GenerationRequest {
+  /** The latest user message. It is always the last message the model reads. */
   prompt: string;
   maxTokens: number;
   onToken?: (token: string) => void;
   signal?: AbortSignal;
+  /** Replaces the engine's default system instruction. */
+  system?: string;
+  /** Earlier turns, oldest first, placed between the system instruction and `prompt`. */
+  history?: readonly ChatTurn[];
+  /** Penalises recently generated tokens (1 = off). Omitted requests keep the engine's default sampling. */
+  repeatPenalty?: number;
 }
 
 /** One injected instance owns the context; serialize load/generate/unload operations. */

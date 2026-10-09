@@ -1,5 +1,6 @@
 import {
-  assessScreenText, buildChatPrompt, buildScreenPrompt, cleanScreenText, type ScreenQuality, type Turn,
+  assessScreenText, buildAssistantRequest, cleanScreenText, repeatsEarlierAnswer,
+  type AssistantRequest, type ScreenQuality, type Turn,
 } from './prompts';
 
 /** Text from one user-approved capture. It lives in memory only and is gone when discarded or the app closes. */
@@ -47,15 +48,20 @@ export class AssistantSession {
     this.screen = null;
   }
 
-  /** Uses the captured screen only while one is attached; otherwise this is an ordinary question. */
-  buildPrompt(question: string): { prompt: string; usesScreen: boolean } {
-    return this.screen
-      ? { prompt: buildScreenPrompt(question, this.screen.text, this.turns), usesScreen: true }
-      : { prompt: buildChatPrompt(question, this.turns), usesScreen: false };
+  /**
+   * The latest question is what the model answers. The attached screen, if any, is reference
+   * material for it; earlier turns only help with follow-ups.
+   */
+  buildRequest(question: string, options: { askedAgain?: boolean } = {}): AssistantRequest {
+    const screen = this.screen ? { id: this.screen.captureId, text: this.screen.text } : null;
+    return buildAssistantRequest(question, this.turns, screen, options);
   }
 
+  /** True when a reply only repeats something this conversation already answered. */
+  repeatsEarlierAnswer(reply: string): boolean { return repeatsEarlierAnswer(reply, this.turns); }
+
   record(question: string, answer: string): void {
-    this.turns.push({ question, answer });
+    this.turns.push({ question, answer, screenId: this.screen?.captureId ?? null });
     // Only the most recent turns are ever sent to the model, so older ones need not be kept.
     if (this.turns.length > 12) this.turns = this.turns.slice(-12);
   }

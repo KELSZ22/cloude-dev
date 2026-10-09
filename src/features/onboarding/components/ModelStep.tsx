@@ -41,9 +41,13 @@ export function ModelStep() {
     : busy ? t("model.setupInProgress")
     : ready ? t("onboarding.modelReadyBody") : t("onboarding.modelOnce");
 
+  // A download runs in the background, so setup can move on while it continues. Checking the
+  // finished file is short and still holds the step.
+  const canContinue = downloading && model.operation === "downloading";
+
   function primary() {
+    if (canContinue || ready) return next();
     if (busy) return;
-    if (ready) return next();
     void model.downloadModel();
   }
 
@@ -53,13 +57,14 @@ export function ModelStep() {
       title={t("onboarding.modelTitle")}
       body={t("onboarding.modelBody")}
       primaryLabel={
-        busy ? t("model.setupInProgress") : ready
+        canContinue || ready
           ? t("common.continue")
+          : busy ? t("model.setupInProgress")
           : t(model.error ? "model.retryDownload" : "model.download", { size: megabytes })
       }
       onPrimary={primary}
-      primaryDisabled={busy || (!ready && !model.native)}
-      backDisabled={busy}
+      primaryDisabled={(busy && !canContinue) || (!ready && !model.native)}
+      backDisabled={busy && !canContinue}
       secondaryLabel={canCancel ? t("model.cancelOperation") : !busy && !ready ? t("onboarding.notNow") : undefined}
       onSecondary={canCancel ? () => { void model.cancel(); } : !busy && !ready ? next : undefined}
     >
@@ -117,7 +122,7 @@ export function ModelStep() {
 
       {!ready ? (
         <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
-          {t("onboarding.modelLater")}
+          {canContinue ? t("onboarding.modelBackground") : t("onboarding.modelLater")}
         </ThemedText>
       ) : null}
       {model.native && !ready ? (

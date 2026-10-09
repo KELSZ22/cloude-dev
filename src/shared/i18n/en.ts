@@ -159,6 +159,7 @@ export const en = {
     modelOnce: "one download · internet needed once",
     modelImport: "Already have the model? Import its GGUF file",
     modelLater: "You can download it later in Settings → AI Model. Reading and search work without it.",
+    modelBackground: "It keeps downloading while you finish setup. If you leave the app, it picks up where it stopped.",
     modelReady: "Saved",
     modelReadyBody: "Saved on this phone. The model loads when you ask your first question.",
     modelFactOffline: "Answers you anywhere, with no signal",

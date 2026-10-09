@@ -1,1 +1,1 @@
-export type { GenerationRequest, LLMEngine, ModelManifest, ModelState } from './contracts';
+export type { ChatTurn, GenerationRequest, LLMEngine, ModelManifest, ModelState } from './contracts';

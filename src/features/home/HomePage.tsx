@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { HomeHero, HomeHintsSection } from '@/features/home/components';
 import { useHome } from '@/features/home/hooks';
+import { ModelDownloadStrip } from '@/shared/components/model-download-strip';
 import { ScreenHeader } from '@/shared/components/screen-header';
 import { ThemedView } from '@/shared/components/themed-view';
 import { BottomTabInset, Spacing } from '@/shared/constants/theme';
@@ -25,6 +26,7 @@ export default function HomePage() {
         ]}
         showsVerticalScrollIndicator={false}>
         <ScreenHeader title="Home" subtitle={subtitle} />
+        <ModelDownloadStrip />
         <HomeHero title={title} />
         <HomeHintsSection devMenuHint={devMenuHint} />
       </ScrollView>
