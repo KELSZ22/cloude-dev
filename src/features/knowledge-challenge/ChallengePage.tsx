@@ -18,7 +18,12 @@ import {
   type AnswerState,
 } from "./components";
 import { OPTION_LETTERS } from "./data/questions";
-import { useChallengeDeck, useChallengeRun, useModelQuestions } from "./hooks";
+import {
+  useChallengeDeck,
+  useChallengeRun,
+  useModelQuestions,
+  useQuestionImage,
+} from "./hooks";
 
 export default function ChallengePage() {
   const insets = useSafeAreaInsets();
@@ -31,6 +36,7 @@ export default function ChallengePage() {
   const deck = useChallengeDeck();
   const run = useChallengeRun(deck.questions, reviewAnswers);
   useModelQuestions(deck.starter);
+  const image = useQuestionImage(run.question.readingId, run.question.imageId);
 
   function optionState(option: number): AnswerState {
     if (!run.revealed) return run.given === option ? "selected" : "idle";
@@ -130,6 +136,7 @@ export default function ChallengePage() {
         <QuestionBanner
           icon={question.icon}
           label={t("challenge.illustration", { topic: question.source })}
+          image={image}
         />
         <ThemedText
           type="subtitle"

@@ -1,5 +1,5 @@
 import type { OnboardingTopicId } from "@/shared/stores/onboarding-store";
-import type { OpenedReading } from "@/shared/types/offline-reading";
+import type { OpenedReading, ReadingFigure } from "@/shared/types/offline-reading";
 
 /** One saved article, reduced to the sentences a question can be written from. */
 export interface ArticleMaterial {
@@ -10,6 +10,8 @@ export interface ArticleMaterial {
   lead: string;
   /** Body sentences that passed the quality filters, in reading order. */
   sentences: string[];
+  /** The article picture to illustrate its questions with, if it saved one worth showing. */
+  imageId: string | null;
 }
 
 const MIN_SENTENCE_CHARS = 40;
@@ -94,8 +96,27 @@ export function readingLead(reading: Pick<OpenedReading, "summary" | "sections">
   return usableSentence(fromBody) ? fromBody : "";
 }
 
+/** Smaller than this is a logo or an icon rather than a picture of the subject. */
+const MIN_IMAGE_EDGE = 200;
+
+/**
+ * The article's own illustration, preferring a landscape one because the question shows it in a
+ * wide banner. The lead figure wins ties, since Wikipedia puts the most telling picture first.
+ */
+export function readingImageId(figures: readonly ReadingFigure[]): string | null {
+  const usable = figures.filter(
+    (figure) => figure.width >= MIN_IMAGE_EDGE && figure.height >= MIN_IMAGE_EDGE,
+  );
+  return (usable.find((figure) => figure.width >= figure.height) ?? usable[0])?.id ?? null;
+}
+
+type MaterialReading = Pick<
+  OpenedReading,
+  "id" | "title" | "summary" | "sections" | "figures"
+>;
+
 export function toMaterial(
-  reading: Pick<OpenedReading, "id" | "title" | "summary" | "sections">,
+  reading: MaterialReading,
   topic: OnboardingTopicId | null,
 ): ArticleMaterial {
   return {
@@ -104,11 +125,12 @@ export function toMaterial(
     topic,
     lead: readingLead(reading),
     sentences: readingSentences(reading),
+    imageId: readingImageId(reading.figures),
   };
 }
 
 export interface MaterialSource {
-  get(id: string): Promise<Pick<OpenedReading, "id" | "title" | "summary" | "sections"> | null>;
+  get(id: string): Promise<MaterialReading | null>;
 }
 
 /**

@@ -30,12 +30,16 @@ type DeckState = {
   setPendingQuestion: (fingerprint: string, index: number, question: WrittenQuestion) => void;
 };
 
+/**
+ * Bumped whenever the writer changes what a question holds, so a deck saved by an older build
+ * is written again instead of being shown with pieces it never had.
+ */
+const DECK_FORMAT = "2";
+
 /** Identifies the library by what is saved and which revision of it. */
 export function libraryFingerprint(items: readonly ReadingSummary[]): string {
-  return items
-    .map((item) => `${item.id}@${item.revisionId}`)
-    .sort()
-    .join("|");
+  const saved = items.map((item) => `${item.id}@${item.revisionId}`).sort();
+  return [DECK_FORMAT, ...saved].join("|");
 }
 
 function topicLookup(articleIds: Partial<Record<OnboardingTopicId, string[]>>) {

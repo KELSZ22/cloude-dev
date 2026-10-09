@@ -91,7 +91,7 @@ export function ResultCard({ result }: { result: SearchResult }) {
           </View>
         )}
         <View style={styles.copy}>
-          <ThemedText type="smallBold" numberOfLines={2} style={styles.title}>
+          <ThemedText type="smallBold" style={styles.title}>
             {result.title}
           </ThemedText>
           {source ? (
@@ -103,7 +103,6 @@ export function ResultCard({ result }: { result: SearchResult }) {
             <ThemedText
               type="small"
               themeColor="textSecondary"
-              numberOfLines={2}
               style={styles.summary}
             >
               {result.summary}
@@ -177,10 +176,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     overflow: "hidden",
   },
-  top: { flexDirection: "row", alignItems: "flex-start" },
+  top: { flexDirection: "row", alignItems: "stretch" },
   main: {
     flex: 1,
     flexDirection: "row",
+    alignItems: "stretch",
     gap: 12,
     padding: 12,
   },
@@ -199,7 +199,9 @@ const styles = StyleSheet.create({
   },
   downloadPressed: { opacity: 0.6 },
   downloadError: { fontSize: 13, lineHeight: 18 },
-  thumb: { width: 92, height: 92, borderRadius: 16 },
+  // The thumbnail follows the copy column instead of setting the row height, so a card
+  // with a one-line title stays short and a long title is never clipped.
+  thumb: { width: 92, minHeight: 72, alignSelf: "stretch", borderRadius: 16 },
   placeholder: { alignItems: "center", justifyContent: "center" },
   copy: { flex: 1, gap: 2, paddingTop: 1 },
   title: { fontSize: 16, lineHeight: 21 },

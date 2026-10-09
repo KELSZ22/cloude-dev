@@ -126,10 +126,9 @@ async function fetchImageBytes(url: string, signal: AbortSignal | undefined, fet
   const timeout = setTimeout(cancel, 25_000);
   try {
     if (controller.signal.aborted) throw new ReadingError("cancelled");
-    const response = await fetcher(url, {
-      signal: controller.signal,
-      headers: { "Api-User-Agent": "AralSearch/1.0 (offline educational reader)" },
-    });
+    // No Api-User-Agent here: that is an api.php convention, and sending it to the media host
+    // makes the request preflighted, which the host refuses. Every figure would fail on web.
+    const response = await fetcher(url, { signal: controller.signal });
     if (!response.ok) throw new ReadingError("network");
     const buffer = new Uint8Array(await response.arrayBuffer());
     if (buffer.byteLength < 32 || buffer.byteLength > MAX_FIGURE_BYTES) throw new ReadingError("tooLarge");

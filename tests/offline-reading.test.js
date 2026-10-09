@@ -158,6 +158,17 @@ describe("Wikipedia downloads", () => {
     ]);
   });
 
+  test("asks the media host for pictures without a header that would preflight the request", async () => {
+    const mediaRequests = [];
+    await downloadWikipedia(24544, "en", undefined, async (url, options) => {
+      if (!url.includes("/w/api.php")) mediaRequests.push(options ?? {});
+      return wikipediaFetcher([leafInfo])(url, options);
+    });
+    expect(mediaRequests.length).toBe(1);
+    // thumb.wikimedia.org refuses the preflight any custom header forces, so none may be sent.
+    expect(mediaRequests[0].headers).toBeUndefined();
+  });
+
   test("keeps the article if figure downloads fail", async () => {
     const saved = await downloadWikipedia(24544, "en", undefined, async (url) => {
       const parsed = new URL(url);

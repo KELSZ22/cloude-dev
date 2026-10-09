@@ -21,6 +21,11 @@ export interface WrittenQuestion {
   /** The saved article this came from, shown under the question. */
   source: string;
   readingId: string;
+  /**
+   * Id of a `ReadingFigure` in that article, shown as the question's illustration. Only the id
+   * is kept: the picture itself stays in reading storage and is read when the question is shown.
+   */
+  imageId?: string;
   icon: SymbolViewProps["name"];
   writtenBy: QuestionAuthor;
 }

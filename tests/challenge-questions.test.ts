@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 
 import {
+  readingImageId,
   readingLead,
   readingSentences,
   splitSentences,
@@ -22,12 +23,27 @@ import {
   writeQuestions,
 } from "../src/shared/services/challenge/write-questions";
 
-function article(title: string, body: string[], summary?: string) {
+function figure(id: string, width: number, height: number) {
+  return {
+    id,
+    caption: `${id} caption`,
+    credit: "",
+    license: "CC BY-SA 4.0",
+    filePageUrl: "https://commons.wikimedia.org/wiki/File:X.jpg" as const,
+    mime: "image/jpeg" as const,
+    width,
+    height,
+    uri: `file:///${id}.jpg`,
+  };
+}
+
+function article(title: string, body: string[], figures = [figure("fig-1", 800, 500)]) {
   return {
     id: `wikipedia-en-${title.length}${body.length}`,
     title,
-    summary: summary ?? body[0] ?? "",
+    summary: body[0] ?? "",
     sections: [{ title: "", level: 1, paragraphs: body }],
+    figures,
   };
 }
 
@@ -92,6 +108,26 @@ describe("sentence extraction", () => {
   });
 });
 
+describe("choosing the article picture", () => {
+  test("prefers a landscape picture for the wide banner", () => {
+    expect(readingImageId([figure("fig-1", 400, 900), figure("fig-2", 900, 400)])).toBe("fig-2");
+  });
+
+  test("falls back to the lead picture when every one is tall", () => {
+    expect(readingImageId([figure("fig-1", 400, 900), figure("fig-2", 300, 800)])).toBe("fig-1");
+  });
+
+  test("skips logos and icons, and reports nothing when an article saved no picture", () => {
+    expect(readingImageId([figure("fig-1", 64, 64)])).toBe(null);
+    expect(readingImageId([])).toBe(null);
+  });
+
+  test("every question carries the picture of the article it came from", () => {
+    const deck = writeQuestions(material(), "seed");
+    expect(deck.every((question) => question.imageId === "fig-1")).toBe(true);
+  });
+});
+
 describe("masking and figures", () => {
   test("hides the article's own name so the excerpt does not answer itself", () => {
     const masked = maskTitle("Photosynthesis takes place inside chloroplasts of green plants.", "Photosynthesis");
@@ -137,6 +173,7 @@ describe("masking and figures", () => {
       topic: "science" as const,
       lead: "",
       sentences: ["Oxygen has an atomic number of 8: each oxygen atom holds 8 protons in its nucleus."],
+      imageId: null,
     }];
     const asked = writeQuestions([...material(), ...repeats], "seed");
     expect(asked.some((q) => q.readingId === "oxygen" && q.promptKey === "challenge.askFigure")).toBe(
