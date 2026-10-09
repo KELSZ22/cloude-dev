@@ -1,14 +1,14 @@
 import { useEventListener } from "expo";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
-import { SymbolView } from "expo-symbols";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import Animated, { Easing, Keyframe, useReducedMotion } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { LanguageMenu } from "@/shared/components/language-menu";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Colors, Spacing } from "@/shared/constants/theme";
 import { useColorScheme } from "@/shared/hooks/use-color-scheme";
@@ -142,19 +142,7 @@ export function DashboardHero() {
           />
         </View>
         <View style={styles.headerActions}>
-          <Pressable
-            disabled
-            accessibilityRole="button"
-            accessibilityLabel={t("home.notificationsSoon")}
-            accessibilityState={{ disabled: true }}
-            style={[styles.iconButton, styles.unavailable]}
-          >
-            <SymbolView
-              name={{ ios: "bell", android: "notifications_none", web: "notifications_none" }}
-              size={22}
-              tintColor={headerColor}
-            />
-          </Pressable>
+          <LanguageMenu tintColor={headerColor} />
         </View>
       </View>
       <Animated.View
@@ -187,8 +175,6 @@ const styles = StyleSheet.create({
   brand: { flexDirection: "row", alignItems: "center" },
   wordmark: { width: 120, height: 40 },
   headerActions: { flexDirection: "row" },
-  iconButton: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
-  unavailable: { opacity: 0.45 },
   greeting: {
     position: "absolute",
     left: Spacing.three,
