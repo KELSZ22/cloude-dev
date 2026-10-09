@@ -315,7 +315,8 @@ export const en = {
     voiceSoon: "Voice input, coming soon",
     startVoice: "Start voice input",
     stopVoice: "Stop voice input",
-    voiceDenied: "Allow microphone and speech recognition in Settings to use voice input.",
+    voiceDenied:
+      "Allow microphone and speech recognition in Settings to use voice input.",
     voiceUnavailable: "Speech recognition is not available on this device.",
     you: "You",
     sources: "Sources ({{count}})",
@@ -327,7 +328,8 @@ export const en = {
     noMatch: "Nothing in your offline library mentions this topic.",
     weakMatch:
       "Your offline library mentions parts of this question, but no passage covers enough of it to support an answer.",
-    modelDeclined: "The passages found in your offline library do not answer this question.",
+    modelDeclined:
+      "The passages found in your offline library do not answer this question.",
     passagesBody:
       "These passages match your question. Load the on-device model for an explanation.",
   },
@@ -374,7 +376,8 @@ export const en = {
       "This deletes the app-owned model copy and frees storage. Your original file is kept.",
     working: "Working locally",
     checking: "Checking model integrity · {{percent}}%",
-    preparing: "Setting up the built-in model. This takes a moment the first time.",
+    preparing:
+      "Setting up the built-in model. This takes a moment the first time.",
     testing: "Generating a short runtime test…",
     answering: "Answering a question in Ask Seekora…",
     loading: "Loading model into memory…",
@@ -415,7 +418,7 @@ export const en = {
     enable: "Enable Floating Assistant",
     notNow: "Not Now",
     permissionNote:
-      "Android will open \"Display over other apps\". Turn it on for Seekora, then come back here.",
+      'Android will open "Display over other apps". Turn it on for Seekora, then come back here.',
     permissionDenied:
       "The permission was not granted, so the floating assistant stays off. You can keep using Seekora as usual.",
     successTitle: "Floating Assistant Enabled",
