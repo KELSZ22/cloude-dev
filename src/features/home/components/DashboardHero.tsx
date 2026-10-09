@@ -6,7 +6,7 @@ import { useVideoPlayer, VideoView } from "expo-video";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
-import { useReducedMotion } from "react-native-reanimated";
+import Animated, { Easing, Keyframe, useReducedMotion } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/shared/components/themed-text";
@@ -16,6 +16,39 @@ import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 
 const mascotWave = require("@/assets/dashboard/dashboard.mp4");
+
+/** The greeting pops out of the mascot's side, overshoots, then settles in two shrinking bounces. */
+const bubblePop = new Keyframe({
+  0: {
+    opacity: 0,
+    transform: [{ scale: 0.3 }, { translateY: 14 }],
+  },
+  40: {
+    opacity: 1,
+    transform: [{ scale: 1.16 }, { translateY: -8 }],
+    easing: Easing.out(Easing.back(2.2)),
+  },
+  60: {
+    opacity: 1,
+    transform: [{ scale: 0.92 }, { translateY: 4 }],
+    easing: Easing.inOut(Easing.quad),
+  },
+  78: {
+    opacity: 1,
+    transform: [{ scale: 1.06 }, { translateY: -3 }],
+    easing: Easing.inOut(Easing.quad),
+  },
+  92: {
+    opacity: 1,
+    transform: [{ scale: 0.98 }, { translateY: 1 }],
+    easing: Easing.inOut(Easing.quad),
+  },
+  100: {
+    opacity: 1,
+    transform: [{ scale: 1 }, { translateY: 0 }],
+    easing: Easing.out(Easing.quad),
+  },
+});
 
 export function DashboardHero() {
   const colors = useTheme();
@@ -27,6 +60,7 @@ export function DashboardHero() {
   const height = Math.max(220, Math.min(width * 0.7, 300)) + insets.top;
   const headerColor = isDark ? Colors.dark.text : Colors.light.brand;
   const [waving, setWaving] = useState(false);
+  const [bubbleKey, setBubbleKey] = useState(0);
   const player = useVideoPlayer(mascotWave, (player) => {
     player.loop = false;
     player.muted = true;
@@ -43,6 +77,7 @@ export function DashboardHero() {
   // is only revealed once this visit's playback actually starts.
   useFocusEffect(
     useCallback(() => {
+      setBubbleKey((key) => key + 1);
       if (reducedMotion) return;
       player.replay();
       player.play();
@@ -52,6 +87,8 @@ export function DashboardHero() {
       };
     }, [player, reducedMotion]),
   );
+
+  const bubbleEntering = reducedMotion ? undefined : bubblePop.delay(200).duration(560);
 
   return (
     <View style={[styles.hero, { height }]}>
@@ -120,13 +157,17 @@ export function DashboardHero() {
           </Pressable>
         </View>
       </View>
-      <View style={[styles.greeting, { backgroundColor: colors.backgroundElement }]}>
+      <Animated.View
+        key={`hero-bubble-${bubbleKey}`}
+        entering={bubbleEntering}
+        style={[styles.greeting, { backgroundColor: colors.backgroundElement }]}
+      >
         <View style={[styles.bubbleTail, { backgroundColor: colors.backgroundElement }]} />
         <ThemedText type="subtitle" style={styles.hello}>{t("home.hello")}</ThemedText>
         <ThemedText type="smallBold" style={styles.greetingText}>
           {t("home.greeting")}
         </ThemedText>
-      </View>
+      </Animated.View>
     </View>
   );
 }
@@ -157,6 +198,8 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 12,
     gap: Spacing.one,
+    // The tail sits bottom-right, so the pop reads as coming out of the mascot.
+    transformOrigin: "100% 85%",
   },
   bubbleTail: {
     position: "absolute",

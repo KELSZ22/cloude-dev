@@ -5,8 +5,9 @@ import { Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
+import { topicLabelKey } from "@/shared/constants/topics";
 import { useTheme } from "@/shared/hooks/use-theme";
-import { useTranslation, type MessageKey } from "@/shared/i18n";
+import { useTranslation } from "@/shared/i18n";
 import {
   APP_LOCALES,
   LOCALE_NAMES,
@@ -16,17 +17,6 @@ import {
 } from "@/shared/stores/onboarding-store";
 import { OnboardingButton } from "./OnboardingButton";
 import { ONBOARDING_DOTS, StepDots } from "./StepDots";
-
-const topicLabelKey = {
-  general: "topics.general",
-  science: "topics.science",
-  technology: "topics.technology",
-  history: "topics.history",
-  health: "topics.health",
-  business: "topics.business",
-  arts: "topics.arts",
-  environment: "topics.environment",
-} as const satisfies Record<OnboardingTopicId, MessageKey>;
 
 const topicIcons: Record<OnboardingTopicId, SymbolViewProps["name"]> = {
   general: { ios: "graduationcap.fill", android: "school", web: "school" },

@@ -1,11 +1,12 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { PillButton } from "@/shared/components/pill-button";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
-import { BottomTabInset, Spacing } from "@/shared/constants/theme";
+import { Spacing } from "@/shared/constants/theme";
+import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 import {
   AnswerOption,
@@ -16,17 +17,20 @@ import {
   TopicChip,
   type AnswerState,
 } from "./components";
-import { CHALLENGE_TOPIC, OPTION_LETTERS } from "./data/questions";
-import { useChallengeRun } from "./hooks";
+import { OPTION_LETTERS } from "./data/questions";
+import { useChallengeDeck, useChallengeRun, useModelQuestions } from "./hooks";
 
 export default function ChallengePage() {
   const insets = useSafeAreaInsets();
+  const colors = useTheme();
   const { t } = useTranslation();
   const params = useLocalSearchParams<{ review?: string; seconds?: string }>();
   const reviewAnswers = params.review
     ? params.review.split(",").map(Number)
     : null;
-  const run = useChallengeRun(reviewAnswers);
+  const deck = useChallengeDeck();
+  const run = useChallengeRun(deck.questions, reviewAnswers);
+  useModelQuestions(deck.starter);
 
   function optionState(option: number): AnswerState {
     if (!run.revealed) return run.given === option ? "selected" : "idle";
@@ -67,6 +71,32 @@ export default function ChallengePage() {
     });
   }
 
+  if (deck.building && !reviewAnswers) {
+    return (
+      <ThemedView type="backgroundElement" style={styles.screen}>
+        <View style={[styles.frame, { paddingTop: insets.top + Spacing.one }]}>
+          <ChallengeHeader
+            title={t("challenge.title")}
+            onBack={() =>
+              router.canGoBack() ? router.back() : router.replace("/(tabs)")
+            }
+          />
+        </View>
+        <View style={styles.waiting} accessibilityRole="progressbar">
+          <ActivityIndicator color={colors.tint} />
+          <ThemedText type="subtitle" style={styles.waitingTitle}>
+            {t("challenge.building")}
+          </ThemedText>
+          <ThemedText type="small" themeColor="textSecondary" style={styles.waitingBody}>
+            {t("challenge.buildingBody")}
+          </ThemedText>
+        </View>
+      </ThemedView>
+    );
+  }
+
+  const question = run.question;
+
   return (
     <ThemedView type="backgroundElement" style={styles.screen}>
       <View style={[styles.frame, { paddingTop: insets.top + Spacing.one }]}>
@@ -96,24 +126,35 @@ export default function ChallengePage() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scroll}
       >
-        <TopicChip label={CHALLENGE_TOPIC} />
+        <TopicChip label={question.source} icon={question.icon} />
         <QuestionBanner
-          icon={run.question.icon}
-          label={t("challenge.illustration", { topic: CHALLENGE_TOPIC })}
+          icon={question.icon}
+          label={t("challenge.illustration", { topic: question.source })}
         />
         <ThemedText
           type="subtitle"
           accessibilityRole="header"
           style={styles.prompt}
         >
-          {run.question.prompt}
+          {question.promptKey ? t(question.promptKey) : question.prompt}
         </ThemedText>
+        {question.excerpt ? (
+          <View
+            accessibilityLabel={`${t("challenge.excerptLabel")}: ${question.excerpt}`}
+            style={[
+              styles.excerpt,
+              { backgroundColor: colors.backgroundSelected, borderColor: colors.tint },
+            ]}
+          >
+            <ThemedText style={styles.excerptText}>{question.excerpt}</ThemedText>
+          </View>
+        ) : null}
         <View
           accessibilityRole="radiogroup"
           accessibilityLabel={t("challenge.choices")}
           style={styles.options}
         >
-          {run.question.options.map((option, index) => (
+          {question.options.map((option, index) => (
             <AnswerOption
               key={option}
               letter={OPTION_LETTERS[index]}
@@ -124,15 +165,23 @@ export default function ChallengePage() {
             />
           ))}
         </View>
-        <HintStrip pack={run.question.pack} />
+        {deck.starter ? (
+          <View style={styles.note}>
+            <ThemedText type="small" themeColor="textSecondary" style={styles.noteText}>
+              {t("challenge.starterNote")}
+            </ThemedText>
+            <PillButton
+              label={t("challenge.starterAction")}
+              variant="outline"
+              onPress={() => router.replace("/(tabs)")}
+            />
+          </View>
+        ) : (
+          <HintStrip pack={question.source} fromArticle />
+        )}
       </ScrollView>
 
-      <View
-        style={[
-          styles.footer,
-          { paddingBottom: BottomTabInset + Spacing.two },
-        ]}
-      >
+      <View style={[styles.footer, { paddingBottom: insets.bottom + Spacing.three }]}>
         <PillButton
           label={primaryLabel()}
           onPress={onPrimary}
@@ -152,6 +201,15 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
   },
   railWrap: { paddingHorizontal: Spacing.three },
+  waiting: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: Spacing.two,
+    paddingHorizontal: Spacing.four,
+  },
+  waitingTitle: { fontSize: 18, lineHeight: 24, textAlign: "center" },
+  waitingBody: { textAlign: "center", maxWidth: 320 },
   scroll: {
     width: "100%",
     maxWidth: 600,
@@ -162,7 +220,16 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   prompt: { fontSize: 19, lineHeight: 26, letterSpacing: -0.2 },
+  excerpt: {
+    borderLeftWidth: 3,
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+  },
+  excerptText: { fontSize: 15, lineHeight: 23 },
   options: { gap: Spacing.two },
+  note: { gap: Spacing.two },
+  noteText: { fontSize: 12, lineHeight: 17 },
   footer: {
     width: "100%",
     maxWidth: 600,

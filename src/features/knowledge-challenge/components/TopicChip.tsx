@@ -1,10 +1,22 @@
-import { SymbolView } from "expo-symbols";
+import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import { useTheme } from "@/shared/hooks/use-theme";
 
-export function TopicChip({ label }: { label: string }) {
+const GLOBE = {
+  ios: "globe.americas.fill",
+  android: "public",
+  web: "public",
+} as const;
+
+export function TopicChip({
+  label,
+  icon = GLOBE,
+}: {
+  label: string;
+  icon?: SymbolViewProps["name"];
+}) {
   const colors = useTheme();
 
   return (
@@ -12,17 +24,9 @@ export function TopicChip({ label }: { label: string }) {
       style={[styles.chip, { backgroundColor: colors.backgroundSelected }]}
     >
       <View style={[styles.badge, { backgroundColor: colors.tint }]}>
-        <SymbolView
-          name={{
-            ios: "globe.americas.fill",
-            android: "public",
-            web: "public",
-          }}
-          size={14}
-          tintColor={colors.backgroundElement}
-        />
+        <SymbolView name={icon} size={14} tintColor={colors.backgroundElement} />
       </View>
-      <ThemedText type="smallBold" style={styles.label}>
+      <ThemedText type="smallBold" style={styles.label} numberOfLines={1}>
         {label}
       </ThemedText>
     </View>
@@ -32,6 +36,7 @@ export function TopicChip({ label }: { label: string }) {
 const styles = StyleSheet.create({
   chip: {
     alignSelf: "flex-start",
+    maxWidth: "100%",
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
@@ -47,5 +52,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  label: { fontSize: 13, lineHeight: 18 },
+  label: { flexShrink: 1, fontSize: 13, lineHeight: 18 },
 });

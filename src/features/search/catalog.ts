@@ -11,21 +11,12 @@ import {
   bookArtwork,
   packArtwork,
 } from "@/shared/content/openstax/pack-presentation";
-import type { MessageKey } from "@/shared/i18n";
+import { topicLabelKey } from "@/shared/constants/topics";
 import type { OnboardingTopicId } from "@/shared/stores/onboarding-store";
 
 export type SearchKind = "article" | "document" | "pack";
 
-export const topicLabelKey = {
-  general: "topics.general",
-  science: "topics.science",
-  technology: "topics.technology",
-  history: "topics.history",
-  health: "topics.health",
-  business: "topics.business",
-  arts: "topics.arts",
-  environment: "topics.environment",
-} as const satisfies Record<OnboardingTopicId, MessageKey>;
+export { topicLabelKey };
 
 const topicPacks: Record<OnboardingTopicId, readonly string[]> = {
   general: ["college-success", "math", "matematicas"],

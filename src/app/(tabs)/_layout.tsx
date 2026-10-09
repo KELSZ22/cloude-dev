@@ -91,8 +91,11 @@ export default function TabLayout() {
           }
         />
       ))}
-      {/* Reached from a pack or the dashboard, so it keeps the tab bar but gets no tab. */}
-      <Tabs.Screen name="challenge" options={{ href: null }} />
+      {/* Reached from a pack or the dashboard, and a run holds the whole screen. */}
+      <Tabs.Screen
+        name="challenge"
+        options={{ href: null, tabBarStyle: { display: "none" } }}
+      />
     </Tabs>
   );
 }

@@ -1,101 +1,113 @@
-import type { SymbolViewProps } from "expo-symbols";
+import type { WrittenQuestion } from "@/shared/services/challenge/question";
 
-export interface ChallengeQuestion {
-  id: string;
-  prompt: string;
-  options: readonly string[];
-  /** Index into `options`. */
-  answer: number;
-  /** Which installed pack this question was drawn from. */
-  pack: string;
-  /** Illustrated stand-in until packs ship their own question artwork. */
-  icon: SymbolViewProps["name"];
-}
+export type ChallengeQuestion = WrittenQuestion;
 
-export const CHALLENGE_TOPIC = "Science & Nature";
-
-export const challengeQuestions: readonly ChallengeQuestion[] = [
+/**
+ * Played only until the library can write its own deck. Every other deck comes from the articles
+ * saved on the device, so these stay clearly marked as samples in the challenge.
+ */
+export const starterQuestions: readonly ChallengeQuestion[] = [
   {
-    id: "renewable-source",
+    id: "starter-renewable-source",
     prompt:
       "What is the primary source of energy for most renewable energy on Earth?",
     options: ["Natural gas", "The sun", "Coal", "Nuclear energy"],
     answer: 1,
-    pack: "Renewable Energy",
+    source: "Renewable Energy",
+    readingId: "starter",
     icon: { ios: "wind", android: "wind_power", web: "wind_power" },
+    writtenBy: "library",
   },
   {
-    id: "photosynthesis-gas",
+    id: "starter-photosynthesis-gas",
     prompt: "Which gas do plants take in from the air during photosynthesis?",
     options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"],
     answer: 2,
-    pack: "Plant Life",
+    source: "Plant Life",
+    readingId: "starter",
     icon: { ios: "leaf.fill", android: "eco", web: "eco" },
+    writtenBy: "library",
   },
   {
-    id: "water-uptake",
+    id: "starter-water-uptake",
     prompt: "Which part of a plant draws water and minerals from the soil?",
     options: ["Roots", "Stem", "Leaves", "Flowers"],
     answer: 0,
-    pack: "Plant Life",
+    source: "Plant Life",
+    readingId: "starter",
     icon: { ios: "leaf", android: "grass", web: "grass" },
+    writtenBy: "library",
   },
   {
-    id: "ozone-layer",
+    id: "starter-ozone-layer",
     prompt: "Which layer of the atmosphere holds most of Earth's ozone?",
     options: ["Troposphere", "Mesosphere", "Thermosphere", "Stratosphere"],
     answer: 3,
-    pack: "Atmosphere",
+    source: "Atmosphere",
+    readingId: "starter",
     icon: { ios: "cloud.fill", android: "cloud", web: "cloud" },
+    writtenBy: "library",
   },
   {
-    id: "water-cycle",
+    id: "starter-water-cycle",
     prompt: "Which process turns water vapour back into liquid inside a cloud?",
     options: ["Evaporation", "Condensation", "Transpiration", "Infiltration"],
     answer: 1,
-    pack: "Water Cycle",
+    source: "Water Cycle",
+    readingId: "starter",
     icon: { ios: "drop.fill", android: "water_drop", web: "water_drop" },
+    writtenBy: "library",
   },
   {
-    id: "ocean-share",
+    id: "starter-ocean-share",
     prompt: "About how much of Earth's surface is covered by ocean?",
     options: ["51 percent", "61 percent", "71 percent", "81 percent"],
     answer: 2,
-    pack: "Oceans",
+    source: "Oceans",
+    readingId: "starter",
     icon: { ios: "water.waves", android: "waves", web: "waves" },
+    writtenBy: "library",
   },
   {
-    id: "geothermal",
+    id: "starter-geothermal",
     prompt: "Which renewable source draws heat from inside the Earth?",
     options: ["Geothermal", "Solar", "Hydro", "Biomass"],
     answer: 0,
-    pack: "Renewable Energy",
+    source: "Renewable Energy",
+    readingId: "starter",
     icon: { ios: "flame.fill", android: "volcano", web: "volcano" },
+    writtenBy: "library",
   },
   {
-    id: "plant-eater",
+    id: "starter-plant-eater",
     prompt: "What do we call an animal that eats only plants?",
     options: ["Carnivore", "Omnivore", "Detritivore", "Herbivore"],
     answer: 3,
-    pack: "Ecosystems",
+    source: "Ecosystems",
+    readingId: "starter",
     icon: { ios: "hare.fill", android: "pets", web: "pets" },
+    writtenBy: "library",
   },
   {
-    id: "fossil-fuel-gas",
+    id: "starter-fossil-fuel-gas",
     prompt: "Which greenhouse gas is released most when fossil fuels burn?",
     options: ["Argon", "Carbon dioxide", "Ozone", "Helium"],
     answer: 1,
-    pack: "Climate Basics",
+    source: "Climate Basics",
+    readingId: "starter",
     icon: { ios: "smoke.fill", android: "factory", web: "factory" },
+    writtenBy: "library",
   },
   {
-    id: "nitrogen-fixers",
+    id: "starter-nitrogen-fixers",
     prompt:
       "Which organisms turn nitrogen from the air into a form plants can absorb?",
     options: ["Fungi", "Algae", "Bacteria", "Insects"],
     answer: 2,
-    pack: "Ecosystems",
+    source: "Ecosystems",
+    readingId: "starter",
     icon: { ios: "atom", android: "biotech", web: "biotech" },
+    writtenBy: "library",
   },
 ];
 

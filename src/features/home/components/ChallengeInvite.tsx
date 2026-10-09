@@ -8,9 +8,10 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { Colors } from "@/shared/constants/theme";
 import { useTranslation } from "@/shared/i18n";
 import { useKnowledge } from "@/shared/providers/knowledge-provider";
+import { useChallengeDeckStore } from "@/shared/stores/challenge-deck-store";
 import { useOfflineReadingStore } from "@/shared/stores/offline-reading-store";
 
-const QUESTIONS = 10;
+const STARTER_QUESTIONS = 10;
 const MINUTES = 3;
 
 /** True once a pack is on the device or a reading has been saved. */
@@ -35,7 +36,21 @@ function useStartedLearning() {
 export function ChallengeInvite() {
   const { t } = useTranslation();
   const started = useStartedLearning();
-  const message = t(started ? "home.challengeStarted" : "home.challengeNew");
+  const questions = useChallengeDeckStore((state) => state.questions.length);
+  const articles = useChallengeDeckStore((state) => state.articles);
+  const status = useChallengeDeckStore((state) => state.status);
+  const build = useChallengeDeckStore((state) => state.build);
+
+  // Writing the deck ahead of time keeps Start challenge instant.
+  useEffect(() => {
+    void build();
+  }, [build]);
+
+  const fromLibrary = status === "ready" && questions > 0;
+  const message = fromLibrary
+    ? t("home.challengeFromLibrary", { count: articles })
+    : t(started ? "home.challengeStarted" : "home.challengeNew");
+  const count = fromLibrary ? questions : STARTER_QUESTIONS;
 
   return (
     <Pressable
@@ -64,7 +79,7 @@ export function ChallengeInvite() {
           </ThemedText>
         </View>
         <ThemedText type="small" style={styles.meta}>
-          {t("home.challengeMeta", { count: QUESTIONS, minutes: MINUTES })}
+          {t("home.challengeMeta", { count, minutes: MINUTES })}
         </ThemedText>
         <ThemedText type="small" style={styles.message}>
           {message}

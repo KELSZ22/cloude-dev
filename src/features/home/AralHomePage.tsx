@@ -12,6 +12,7 @@ import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
 import { ChallengeInvite } from "./components/ChallengeInvite";
 import { DashboardActionCard } from "./components/DashboardActionCard";
 import { DashboardHero } from "./components/DashboardHero";
+import { SuggestedPacks } from "./components/SuggestedPacks";
 
 export default function HomePage() {
   const colors = useTheme();
@@ -119,23 +120,29 @@ export default function HomePage() {
             </ThemedText>
             <View style={styles.grid}>
               <DashboardActionCard
-                label={t(contentSources.openStax ? "home.explorePacks" : "reading.exploreLabel")}
-                title={t(contentSources.openStax ? "home.explorePacksTitle" : "reading.exploreTitle")}
+                variant="readLearn"
+                label={t(contentSources.openStax ? "home.explorePacks" : "home.readAndLearn")}
+                title={t(
+                  contentSources.openStax ? "home.explorePacksTitle" : "home.readAndLearnTitle",
+                )}
+                subtitle={t(
+                  contentSources.openStax
+                    ? "home.explorePacksSubtitle"
+                    : "home.readAndLearnSubtitle",
+                )}
                 href={contentSources.openStax ? "/packs" : "/(tabs)/search"}
-                icon={{ ios: "book", android: "menu_book", web: "menu_book" }}
-                accent={colors.tint}
               />
               <DashboardActionCard
+                variant="library"
                 label={t("home.viewLibrary")}
                 title={t("home.viewLibraryTitle")}
+                subtitle={t("home.viewLibrarySubtitle")}
                 href="/(tabs)/library"
-                icon={{ ios: "leaf", android: "eco", web: "eco" }}
-                accent={colors.tint}
-                useLogo
               />
             </View>
             <ChallengeInvite />
           </View>
+          <SuggestedPacks />
         </View>
       </ScrollView>
     </ThemedView>
