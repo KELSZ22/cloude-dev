@@ -31,6 +31,13 @@ import type {
 
 const PAGE_SIZE = 8;
 
+type ResourceSnapshot = {
+  query: string;
+  items: ResourceResult[];
+  page: FederatedSearchResult | null;
+  failed: boolean;
+};
+
 export function ResourceSearchResults({
   query,
   immediate = false,
@@ -40,12 +47,11 @@ export function ResourceSearchResults({
 }) {
   const colors = useTheme();
   const { t } = useTranslation();
-  const [submitted, setSubmitted] = useState(immediate ? query.trim() : "");
-  const [items, setItems] = useState<ResourceResult[]>([]);
-  const [page, setPage] = useState<FederatedSearchResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const trimmed = query.trim();
+  const [debounced, setDebounced] = useState(trimmed);
+  const submitted = immediate ? trimmed : debounced;
+  const [snapshot, setSnapshot] = useState<ResourceSnapshot | null>(null);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [failed, setFailed] = useState(false);
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [pdfBusyId, setPdfBusyId] = useState<string | null>(null);
   const [pdfError, setPdfError] = useState<{
@@ -58,29 +64,18 @@ export function ResourceSearchResults({
   }, []);
 
   useEffect(() => {
-    if (immediate) {
-      setSubmitted(query.trim());
-      return;
-    }
-    const handle = setTimeout(() => setSubmitted(query.trim()), 400);
+    if (immediate) return;
+    const handle = setTimeout(() => setDebounced(trimmed), 400);
     return () => clearTimeout(handle);
-  }, [immediate, query]);
+  }, [immediate, trimmed]);
 
   useEffect(() => {
-    if (submitted.length < 2) {
-      setItems([]);
-      setPage(null);
-      setLoading(false);
-      setFailed(false);
-      return;
-    }
+    if (submitted.length < 2) return;
     const controller = new AbortController();
-    setLoading(true);
-    setFailed(false);
-    setPage(null);
+    const request = submitted;
     void searchResources(
       {
-        query: submitted,
+        query: request,
         pageSize: PAGE_SIZE,
         signal: controller.signal,
       },
@@ -88,17 +83,21 @@ export function ResourceSearchResults({
     )
       .then((next) => {
         if (controller.signal.aborted) return;
-        setPage(next);
-        setItems(next.results);
+        setSnapshot({ query: request, items: next.results, page: next, failed: false });
       })
       .catch(() => {
-        if (!controller.signal.aborted) setFailed(true);
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
+        if (!controller.signal.aborted) {
+          setSnapshot({ query: request, items: [], page: null, failed: true });
+        }
       });
     return () => controller.abort();
   }, [submitted]);
+
+  const current = snapshot?.query === submitted ? snapshot : null;
+  const items = current?.items ?? [];
+  const page = current?.page ?? null;
+  const failed = current?.failed ?? false;
+  const loading = submitted.length >= 2 && current === null;
 
   async function loadMore() {
     if (!page?.nextCursor || loadingMore) return;
@@ -112,16 +111,20 @@ export function ResourceSearchResults({
         },
         RESEARCH_PROVIDER_IDS,
       );
-      setPage(next);
-      setItems((current) => {
-        const seen = new Set(current.map((item) => item.id));
-        return [
-          ...current,
-          ...next.results.filter((item) => !seen.has(item.id)),
-        ];
+      setSnapshot((existing) => {
+        if (!existing || existing.query !== submitted) return existing;
+        const seen = new Set(existing.items.map((item) => item.id));
+        return {
+          query: submitted,
+          page: next,
+          failed: false,
+          items: [...existing.items, ...next.results.filter((item) => !seen.has(item.id))],
+        };
       });
     } catch {
-      setFailed(true);
+      setSnapshot((existing) =>
+        existing && existing.query === submitted ? { ...existing, failed: true } : existing,
+      );
     } finally {
       setLoadingMore(false);
     }

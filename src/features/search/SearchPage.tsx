@@ -37,6 +37,13 @@ type FilterId = "all" | SearchKind;
 
 const PAGE_SIZE = 8;
 
+type SearchSnapshot = {
+  query: string;
+  items: ResourceResult[];
+  page: FederatedSearchResult | null;
+  failed: boolean;
+};
+
 const accessKey: Record<AccessStatus, MessageKey> = {
   "open-access": "search.accessOpen",
   restricted: "search.accessRestricted",
@@ -56,11 +63,8 @@ export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterId>("all");
   const [submitted, setSubmitted] = useState("");
-  const [items, setItems] = useState<ResourceResult[]>([]);
-  const [page, setPage] = useState<FederatedSearchResult | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [snapshot, setSnapshot] = useState<SearchSnapshot | null>(null);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const handle = setTimeout(() => setSubmitted(query.trim()), 400);
@@ -68,35 +72,29 @@ export default function SearchPage() {
   }, [query]);
 
   useEffect(() => {
-    if (submitted.length < 2) {
-      setItems([]);
-      setPage(null);
-      setLoading(false);
-      setFailed(false);
-      return;
-    }
+    if (submitted.length < 2) return;
     const controller = new AbortController();
-    setLoading(true);
-    setFailed(false);
-    setPage(null);
+    const request = submitted;
     void searchResources(
-      { query: submitted, pageSize: PAGE_SIZE, signal: controller.signal },
+      { query: request, pageSize: PAGE_SIZE, signal: controller.signal },
       RESEARCH_PROVIDER_IDS,
     )
       .then((next) => {
         if (controller.signal.aborted) return;
-        setPage(next);
-        setItems(next.results);
-        setFailed(false);
+        setSnapshot({ query: request, items: next.results, page: next, failed: false });
       })
       .catch(() => {
-        if (!controller.signal.aborted) setFailed(true);
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
+        if (!controller.signal.aborted) {
+          setSnapshot({ query: request, items: [], page: null, failed: true });
+        }
       });
     return () => controller.abort();
   }, [submitted]);
+
+  const current = snapshot?.query === submitted ? snapshot : null;
+  const page = current?.page ?? null;
+  const failed = current?.failed ?? false;
+  const loading = submitted.length >= 2 && current === null;
 
   async function loadMore() {
     if (!page?.nextCursor || loadingMore) return;
@@ -106,28 +104,29 @@ export default function SearchPage() {
         { query: submitted, pageSize: PAGE_SIZE, cursor: page.nextCursor },
         RESEARCH_PROVIDER_IDS,
       );
-      setPage(next);
-      setItems((current) => {
-        const seen = new Set(current.map((item) => item.id));
-        return [
-          ...current,
-          ...next.results.filter((item) => !seen.has(item.id)),
-        ];
+      setSnapshot((existing) => {
+        if (!existing || existing.query !== submitted) return existing;
+        const seen = new Set(existing.items.map((item) => item.id));
+        return {
+          query: submitted,
+          page: next,
+          failed: false,
+          items: [...existing.items, ...next.results.filter((item) => !seen.has(item.id))],
+        };
       });
     } catch {
-      setFailed(true);
+      setSnapshot((existing) =>
+        existing && existing.query === submitted ? { ...existing, failed: true } : existing,
+      );
     } finally {
       setLoadingMore(false);
     }
   }
 
-  const results = useMemo(
-    () =>
-      items
-        .filter((item) => matchesFilter(item, filter))
-        .map((item) => toCard(item, t)),
-    [filter, items, t],
-  );
+  const results = useMemo(() => {
+    const items = snapshot?.query === submitted ? snapshot.items : [];
+    return items.filter((item) => matchesFilter(item, filter)).map((item) => toCard(item, t));
+  }, [filter, snapshot, submitted, t]);
 
   const searched = submitted.length >= 2;
   const offline = page?.networkUnavailable ?? false;
