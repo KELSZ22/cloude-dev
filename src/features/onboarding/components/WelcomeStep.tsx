@@ -6,7 +6,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Colors, Spacing } from "@/shared/constants/theme";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
-import { BrandMark } from "./BrandMark";
 
 export function WelcomeStep() {
   const insets = useSafeAreaInsets();
@@ -31,11 +30,25 @@ export function WelcomeStep() {
         contentFit="cover"
         style={StyleSheet.absoluteFill}
       />
-      <View style={[styles.brand, { paddingTop: insets.top + Spacing.five }]}>
-        <BrandMark size={64} />
-        <ThemedText type="title" accessibilityRole="header" style={styles.title}>
-          ARALSEARCH
-        </ThemedText>
+      <View
+        accessible
+        accessibilityLabel="Seekora"
+        style={[styles.brand, { paddingTop: insets.top + Spacing.five }]}
+      >
+        <Image
+          source={require("@/assets/logo/logo-greenbg.png")}
+          contentFit="contain"
+          accessible={false}
+          accessibilityLabel=""
+          style={styles.logo}
+        />
+        <Image
+          source={require("@/assets/logo/Seekora-textlogo-light.png")}
+          contentFit="contain"
+          accessible={false}
+          accessibilityLabel=""
+          style={styles.wordmark}
+        />
         <ThemedText style={styles.tagline}>
           {"Discover. Learn. Grow.\nAnywhere."}
         </ThemedText>
@@ -53,12 +66,14 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
     paddingHorizontal: Spacing.four,
   },
-  title: {
-    textAlign: "center",
-    color: Colors.light.brand,
-    textShadowColor: Colors.light.backgroundElement,
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 8,
+  logo: {
+    width: 72,
+    height: 72,
+    borderRadius: 20,
+  },
+  wordmark: {
+    width: 220,
+    height: 56,
   },
   tagline: {
     textAlign: "center",
