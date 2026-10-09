@@ -69,11 +69,22 @@ export class AssistantConversation {
         overlay.endReply(replyId, say('stopped'), true);
         return;
       }
-      const { prompt, usesScreen } = session.buildPrompt(text);
-      const reply = (await generateParagraph((request) => this.deps.model().generate(request), {
-        prompt, maxTokens: ASSISTANT_LIMITS.replyTokens, signal: controller.signal,
-        onToken: (token) => overlay.appendReply(replyId, token),
-      })).trim();
+      const ask = async (askedAgain: boolean, stream: boolean) => {
+        const { system, history, prompt, usesScreen } = session.buildRequest(text, { askedAgain });
+        const reply = (await generateParagraph((request) => this.deps.model().generate(request), {
+          system, history, prompt, maxTokens: ASSISTANT_LIMITS.replyTokens, repeatPenalty: ASSISTANT_LIMITS.repeatPenalty,
+          signal: controller.signal,
+          onToken: stream ? (token) => overlay.appendReply(replyId, token) : undefined,
+        })).trim();
+        return { reply, usesScreen };
+      };
+      let { reply, usesScreen } = await ask(false, true);
+      // A small model often copies its last reply when the user rephrases. One retry, without earlier
+      // replies to copy; endReply then replaces the streamed repeat with the new answer.
+      if (reply && session.repeatsEarlierAnswer(reply) && !controller.signal.aborted) {
+        const retry = await ask(true, false);
+        if (retry.reply) ({ reply, usesScreen } = retry);
+      }
       if (!reply) {
         overlay.endReply(replyId, say('noAnswer'), true);
         return;

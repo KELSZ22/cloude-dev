@@ -54,6 +54,111 @@ export function adaptModelDownloadTask(
   };
 }
 
+/** Serializable pause state; shaped like Expo's `DownloadPauseState` so it can be passed straight through. */
+export interface SavedTransfer {
+  url: string;
+  fileUri: string;
+  isDirectory: boolean;
+  headers?: Record<string, string>;
+  resumeData?: string;
+}
+
+/** One continuous native transfer. A resumed model download is a chain of these. */
+export interface TransferSegment {
+  readonly state: string;
+  /** Resolves with the file when finished, or null when the segment was paused. */
+  run(): Promise<unknown>;
+  pause(): void;
+  cancel(): void;
+  release(): void;
+  savable(): SavedTransfer;
+}
+
+export interface ResumableTransferPorts {
+  /** Creates the next segment; `saved` is null for a fresh transfer. */
+  start(saved: SavedTransfer | null): TransferSegment;
+  save(state: SavedTransfer): void;
+  clear(): void;
+  isActive(): boolean;
+  /** Reports whether the app is in the foreground. Returns an unsubscribe function. */
+  onVisibility(listener: (active: boolean) => void): () => void;
+  /** Android stops a transfer when it leaves the foreground, so a process kill can never lose resume data. */
+  pauseInBackground: boolean;
+}
+
+/**
+ * Runs the model transfer as pause/resume segments. Leaving the foreground pauses and persists the
+ * resume state (when the platform needs it); coming back continues from the same byte. Cancelling
+ * stops the current segment and rejects, leaving cleanup to the caller.
+ */
+export function createResumableTask(
+  ports: ResumableTransferPorts, initial: SavedTransfer | null,
+): ModelDownloadTask {
+  let cancelled = false;
+  let current: TransferSegment | null = null;
+  let wake: (() => void) | null = null;
+  let retry: ReturnType<typeof setTimeout> | null = null;
+  const clearRetry = () => {
+    if (retry !== null) clearTimeout(retry);
+    retry = null;
+  };
+  const requestPause = () => {
+    retry = null;
+    if (!ports.pauseInBackground || ports.isActive() || cancelled) return;
+    if (!current || current.state !== 'active') return;
+    try { current.pause(); }
+    catch { /* Native startup can race this call; retry while the writer is still active. */ }
+    retry = setTimeout(requestPause, 150);
+  };
+  const waitForeground = () => new Promise<void>((resolve) => {
+    if (cancelled || ports.isActive()) return resolve();
+    wake = () => { wake = null; resolve(); };
+  });
+  const guard = () => { if (cancelled) throw new Error('Model download cancelled.'); };
+
+  return {
+    async downloadAsync() {
+      let saved = initial;
+      const unsubscribe = ports.onVisibility((active) => {
+        if (active) wake?.();
+        else if (retry === null) requestPause();
+      });
+      try {
+        for (;;) {
+          guard();
+          if (ports.pauseInBackground) await waitForeground();
+          guard();
+          const segment = ports.start(saved);
+          current = segment;
+          let result: unknown;
+          try { result = await segment.run(); }
+          finally { clearRetry(); }
+          if (result) { ports.clear(); return result; }
+          guard();
+          saved = segment.savable();
+          ports.save(saved);
+          segment.release();
+          current = null;
+          await waitForeground();
+        }
+      } finally {
+        unsubscribe(); clearRetry();
+      }
+    },
+    cancel() {
+      cancelled = true;
+      clearRetry();
+      wake?.();
+      current?.cancel();
+    },
+    release() {
+      clearRetry();
+      current?.release();
+      current = null;
+    },
+  };
+}
+
 export interface ModelDownloadPorts {
   prepare(): void;
   createTask(signal: AbortSignal, onBytes: (bytesWritten: number) => void): ModelDownloadTask;
@@ -83,6 +188,7 @@ export async function downloadAndInstallModel(
   ports.prepare();
   let task: ModelDownloadTask | null = null;
   let lastPercent = -1;
+  let highest = 0; // A resumed transfer can report from zero again; progress never moves backwards.
   const onAbort = () => task?.cancel();
   try {
     checkCancelled(signal);
@@ -90,7 +196,8 @@ export async function downloadAndInstallModel(
     task = ports.createTask(signal, (bytesWritten) => {
       if (signal.aborted || !Number.isFinite(bytesWritten)) return;
       // The pinned size is known even when a redirect/CDN omits Content-Length.
-      const fraction = Math.max(0, Math.min(1, bytesWritten / request.sizeBytes));
+      highest = Math.max(highest, bytesWritten);
+      const fraction = Math.max(0, Math.min(1, highest / request.sizeBytes));
       const percent = Math.floor(fraction * 100);
       if (percent !== lastPercent) {
         lastPercent = percent;

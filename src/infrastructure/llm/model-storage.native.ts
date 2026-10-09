@@ -1,10 +1,13 @@
-import { Directory, File, FileMode, Paths } from 'expo-file-system';
-import { Platform } from 'react-native';
+import { Directory, DownloadTask, File, FileMode, Paths } from 'expo-file-system';
+import { AppState, Platform } from 'react-native';
 
 import { localModel } from '@/shared/constants/local-model';
 import type { ModelManifest } from './contracts';
 import type { ModelStorage } from './model-storage';
-import { adaptModelDownloadTask, downloadAndInstallModel } from './download-model';
+import {
+  adaptModelDownloadTask, createResumableTask, downloadAndInstallModel,
+  type SavedTransfer, type TransferSegment,
+} from './download-model';
 import { tryVerifyNativeModel } from './native-model-verifier';
 import { verifyModelStream } from './verify-model';
 
@@ -16,10 +19,28 @@ export function createModelStorage(): ModelStorage {
   const metadataFile = () => new File(directory, 'manifest.json');
   const stagingFile = () => new File(directory, 'model.gguf.part');
   const stagingMetadata = () => new File(directory, 'manifest.json.part');
+  /** Pause state of an interrupted download; only meaningful next to its matching staging file. */
+  const resumeFile = () => new File(directory, 'download.resume.json');
+
+  /** Returns the saved transfer only if it still describes the exact partial file on disk. */
+  const loadResume = (): SavedTransfer | null => {
+    try {
+      const record = resumeFile();
+      const staged = stagingFile();
+      if (!record.exists || !staged.exists) return null;
+      const value = JSON.parse(record.textSync()) as Partial<SavedTransfer>;
+      if (value.url !== localModel.downloadUrl || value.fileUri !== staged.uri
+        || typeof value.resumeData !== 'string' || value.resumeData.length === 0
+        || staged.size <= 0 || staged.size >= localModel.sizeBytes) return null;
+      return value as SavedTransfer;
+    } catch { return null; }
+  };
 
   const readInstalled = async (): Promise<ModelManifest | null> => {
-    // Provider startup/load operations are serialized; reclaim interrupted transfer/manifest files.
-    cleanupStaging();
+    // Provider startup/load operations are serialized; reclaim interrupted transfer/manifest files,
+    // but keep a partial download that can still be resumed.
+    if (loadResume()) { if (stagingMetadata().exists) stagingMetadata().delete(); }
+    else cleanupStaging();
     const metadata = metadataFile();
     if (!metadata.exists) {
       if (modelFile().exists) throw new Error('An incomplete installation exists. Remove it before importing again.');
@@ -45,16 +66,26 @@ export function createModelStorage(): ModelStorage {
     temporary.moveSync(metadataFile(), { overwrite: true });
   };
 
-  const prepareDirectory = () => {
+  const prepareDirectory = (allowResume = false) => {
     directory.create({ intermediates: true, idempotent: true });
     if (modelFile().exists || metadataFile().exists) throw new Error('Remove the installed model before replacing it.');
-    cleanupStaging();
-    if (Paths.availableDiskSpace < REQUIRED_FREE_BYTES) throw new Error('Not enough free storage. Free at least 550 MB first.');
-    return stagingFile();
+    const resume = allowResume ? loadResume() : null;
+    if (resume) { if (stagingMetadata().exists) stagingMetadata().delete(); }
+    else cleanupStaging();
+    // A resumed download only needs room for the bytes it still has to fetch.
+    const needed = resume ? REQUIRED_FREE_BYTES - stagingFile().size : REQUIRED_FREE_BYTES;
+    if (Paths.availableDiskSpace < needed) throw new Error('Not enough free storage. Free at least 550 MB first.');
+    return { staged: stagingFile(), resume };
+  };
+
+  const saveResume = (state: SavedTransfer) => {
+    const record = resumeFile();
+    record.create({ overwrite: true });
+    record.write(JSON.stringify(state));
   };
 
   const cleanupStaging = () => {
-    for (const file of [stagingFile(), stagingMetadata()]) {
+    for (const file of [stagingFile(), stagingMetadata(), resumeFile()]) {
       if (file.exists) file.delete();
     }
   };
@@ -92,21 +123,56 @@ export function createModelStorage(): ModelStorage {
     readInstalled,
     async downloadModel(signal, onProgress) {
       let staged = stagingFile();
+      let resume: SavedTransfer | null = null;
+      const android = Platform.OS === 'android';
       return downloadAndInstallModel({
-        prepare() { staged = prepareDirectory(); },
+        prepare() { ({ staged, resume } = prepareDirectory(true)); },
         createTask(_taskSignal, onBytes) {
           // The workflow owns abort handling: Expo's automatic signal handler calls the unsafe
           // Android cancel path instead of our pause-and-discard adapter.
-          let adapted: ReturnType<typeof adaptModelDownloadTask> | null = null;
-          const task = File.createDownloadTask(localModel.downloadUrl, staged, {
-            sessionType: 'foreground',
-            onProgress: ({ bytesWritten }) => {
-              adapted?.onProgress();
-              onBytes(bytesWritten);
+          const start = (saved: SavedTransfer | null): TransferSegment => {
+            let adapted: ReturnType<typeof adaptModelDownloadTask> | null = null;
+            const options = {
+              // iOS keeps the transfer going after the app is suspended; Android ignores the option
+              // and is paused/resumed by the resumable task instead.
+              sessionType: android ? 'foreground' as const : 'background' as const,
+              onProgress: ({ bytesWritten }: { bytesWritten: number }) => {
+                adapted?.onProgress();
+                onBytes(bytesWritten);
+              },
+            };
+            const task = saved
+              ? DownloadTask.fromSavable(saved, options)
+              : File.createDownloadTask(localModel.downloadUrl, staged, options);
+            // A restored task continues with resumeAsync; a new one starts with downloadAsync.
+            adapted = adaptModelDownloadTask({
+              get state() { return task.state; },
+              downloadAsync: () => (saved ? task.resumeAsync() : task.downloadAsync()),
+              pause: () => task.pause(),
+              cancel: () => task.cancel(),
+              release: () => task.release(),
+            }, android);
+            const segment = adapted;
+            return {
+              get state() { return task.state; },
+              run: () => segment.downloadAsync(),
+              pause: () => task.pause(),
+              cancel: () => segment.cancel(),
+              release: () => segment.release(),
+              savable: () => task.savable(),
+            };
+          };
+          return createResumableTask({
+            start,
+            save: saveResume,
+            clear: () => { if (resumeFile().exists) resumeFile().delete(); },
+            isActive: () => AppState.currentState === 'active',
+            onVisibility: (listener) => {
+              const subscription = AppState.addEventListener('change', (next) => listener(next === 'active'));
+              return () => subscription.remove();
             },
-          });
-          adapted = adaptModelDownloadTask(task, Platform.OS === 'android');
-          return adapted;
+            pauseInBackground: android,
+          }, resume);
         },
         size: () => staged.size,
         verify: (taskSignal, update) => verifyStaged(staged, taskSignal, update),
@@ -117,7 +183,7 @@ export function createModelStorage(): ModelStorage {
     async importFile(sourceUri, signal, onProgress) {
       if (signal.aborted) throw new Error('Model import cancelled.');
       if (!sourceUri.startsWith('file://') && !sourceUri.startsWith('content://')) throw new Error('Choose a local file on your device.');
-      const staged = prepareDirectory();
+      const { staged } = prepareDirectory();
       const source = new File(sourceUri);
       try {
         if (source.size !== localModel.sizeBytes) throw new Error('Select the 529,297,312-byte Qwen3.5 GGUF file.');
@@ -147,7 +213,7 @@ export function createModelStorage(): ModelStorage {
     },
     async remove() {
       // Only fixed app-owned paths. Never follow a manifest URI or delete the external source.
-      for (const file of [metadataFile(), modelFile(), stagingFile(), stagingMetadata()]) {
+      for (const file of [metadataFile(), modelFile(), stagingFile(), stagingMetadata(), resumeFile()]) {
         if (file.exists) file.delete();
       }
     },

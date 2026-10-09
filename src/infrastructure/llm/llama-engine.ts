@@ -16,6 +16,23 @@ export type ContextFactory = (params: ContextParams) => Promise<NativeContext>;
 
 export class UnsupportedRuntimeError extends Error {}
 
+const DEFAULT_SYSTEM = 'Follow the user instruction. Be brief. Do not invent citations.';
+
+/** Every character the model will read, so a long history cannot slip past the prompt limit. */
+function requestChars(request: GenerationRequest): number {
+  return request.prompt.length + (request.system?.length ?? 0)
+    + (request.history ?? []).reduce((total, turn) => total + turn.content.length, 0);
+}
+
+/** System instruction, then earlier turns with their real roles, then the latest user message last. */
+export function chatMessages(request: GenerationRequest): RNLlamaOAICompatibleMessage[] {
+  return [
+    { role: 'system', content: request.system ?? DEFAULT_SYSTEM },
+    ...(request.history ?? []).map((turn) => ({ role: turn.role, content: turn.content })),
+    { role: 'user', content: request.prompt },
+  ];
+}
+
 /** Native calls are injected so lifecycle logic can be tested without loading RN. */
 export class LlamaRnEngine implements LLMEngine {
   private state: ModelState = { status: 'not-installed' };
@@ -69,7 +86,7 @@ export class LlamaRnEngine implements LLMEngine {
     if (!this.context || this.state.status !== 'ready' || this.releasing || this.generation) {
       return Promise.reject(new Error('Load the model before generating.'));
     }
-    if (!request.prompt.trim() || request.prompt.length > 4000 || !Number.isInteger(request.maxTokens)
+    if (!request.prompt.trim() || requestChars(request) > 4000 || !Number.isInteger(request.maxTokens)
       || request.maxTokens < 1 || request.maxTokens > 256) {
       return Promise.reject(new Error('Use a prompt of 1–4000 characters and 1–256 output tokens.'));
     }
@@ -86,10 +103,7 @@ export class LlamaRnEngine implements LLMEngine {
     const onAbort = () => { void this.cancel().catch(() => undefined); };
     request.signal?.addEventListener('abort', onAbort, { once: true });
     try {
-      const messages = [
-        { role: 'system', content: 'Follow the user instruction. Be brief. Do not invent citations.' },
-        { role: 'user', content: request.prompt },
-      ];
+      const messages = chatMessages(request);
       const formatted = await context.getFormattedChat(messages, undefined, {
         jinja: true, enable_thinking: false, chat_template_kwargs: { enable_thinking: false },
       });
@@ -103,6 +117,7 @@ export class LlamaRnEngine implements LLMEngine {
         chat_template_kwargs: { enable_thinking: false },
         n_predict: request.maxTokens,
         temperature: 0,
+        ...(request.repeatPenalty ? { penalty_repeat: request.repeatPenalty, penalty_last_n: 64 } : {}),
         stop: ['<|im_end|>', '<|endoftext|>'],
       }, (data) => {
         if (!this.cancelled && !request.signal?.aborted) request.onToken?.(data.token);

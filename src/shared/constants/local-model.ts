@@ -10,5 +10,6 @@ export const localModel = {
   md5: 'f1c74709ebde32840d23454e38eafda5',
   license: 'Apache-2.0',
   sourceUrl: 'https://huggingface.co/diodel/Qwen3.5-0.8B-Q4_K_M-GGUF',
-  downloadUrl: 'https://huggingface.co/diodel/Qwen3.5-0.8B-Q4_K_M-GGUF/resolve/dfdaeea1fdbef1d8900313cf5bed689abff3feec/qwen3.5-0.8b-Q4_K_M.gguf',
+  /** Team mirror (Cloudflare R2 public dev URL); same bytes as the pinned Hugging Face revision. */
+  downloadUrl: 'https://pub-6fe7720fb0974858a0a09acfd37e866e.r2.dev/models/qwen3.5-0.8b-Q4_K_M.gguf',
 } as const;
