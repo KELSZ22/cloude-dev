@@ -1,5 +1,4 @@
 import { Image } from "expo-image";
-import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -63,18 +62,6 @@ export function DashboardHero() {
               tintColor={headerColor}
             />
           </Pressable>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={t("home.openSettings")}
-            onPress={() => router.navigate("/(tabs)/settings")}
-            style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
-          >
-            <SymbolView
-              name={{ ios: "gearshape", android: "settings", web: "settings" }}
-              size={22}
-              tintColor={headerColor}
-            />
-          </Pressable>
         </View>
       </View>
       <View style={[styles.greeting, { backgroundColor: colors.backgroundElement }]}>
@@ -102,7 +89,6 @@ const styles = StyleSheet.create({
   headerActions: { flexDirection: "row" },
   iconButton: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
   unavailable: { opacity: 0.45 },
-  pressed: { opacity: 0.6 },
   greeting: {
     position: "absolute",
     left: Spacing.three,

@@ -1,6 +1,7 @@
 import { SymbolView } from "expo-symbols";
 import { StyleSheet, View } from "react-native";
 
+import { StateFigure } from "@/shared/components/state-figure";
 import { ThemedText } from "@/shared/components/themed-text";
 import { localModel } from "@/shared/constants/local-model";
 import { Spacing } from "@/shared/constants/theme";
@@ -8,7 +9,6 @@ import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
 import { useModel } from "@/shared/providers/model-provider";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
-import { SetupFigure } from "./SetupFigure";
 import { SetupStep } from "./SetupStep";
 
 const FACTS: MessageKey[] = [
@@ -54,7 +54,7 @@ export function ModelStep() {
       onSecondary={ready || working ? undefined : next}
     >
       <View style={styles.figure}>
-        <SetupFigure
+        <StateFigure
           tone={tone}
           value={
             ready

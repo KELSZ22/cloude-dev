@@ -208,7 +208,6 @@ export const en = {
     hello: "Hello!",
     greeting: "What would you like to explore today?",
     notificationsSoon: "Notifications, coming soon",
-    openSettings: "Open settings",
   },
   library: {
     title: "My Library",
@@ -384,12 +383,18 @@ export const en = {
   },
   setup: {
     title: "Prepare for offline use",
-    description: "You can explore the app while setup is pending.",
-    searchTitle: "Search setup pending",
-    searchBody:
-      "Browse OpenStax textbooks and resources indexed from content/openstax. Full-text PDF search still needs a local index.",
-    continueSearch: "Continue to Search",
-    reviewModel: "Review model requirements",
+    stateReady: "Ready offline",
+    stateReadyBody: "Passages you can read and search with no connection",
+    stateEmpty: "Nothing offline yet",
+    stateEmptyBody: "Add a knowledge pack to read and search with no connection",
+    rowPacks: "Knowledge packs",
+    packCount: "{{count}} installed",
+    rowModel: "AI model",
+    rowReadings: "Saved readings",
+    readingCount: "{{count}} saved",
+    rowSearch: "Search your library",
+    rowUnavailable: "Not available here",
+    note: "Everything listed here is stored on this phone. Searching it never needs a connection.",
   },
   import: {
     title: "Import local knowledge",
@@ -414,14 +419,25 @@ export const en = {
   },
   model: {
     description: "A compatible local model is required for AI answers.",
-    cardBody:
-      "529 MB · Apache 2.0 · text inference. Select the exact GGUF from the chosen Hugging Face repository. Import and loading verify its SHA-256. Import opens your phone's file picker; if it shows Google Drive or Recent, open its menu and choose Downloads. Nothing is uploaded.",
+    stateReady: "Ready",
+    stateReadyBody: "Answering your questions on this phone",
+    stateResting: "Set up",
+    stateRestingBody: "On this phone, waiting to be loaded",
+    stateMissing: "Not set up",
+    stateMissingBody: "Included with the app, not unpacked yet",
+    stateSettingUp: "Setting up",
+    stateUnavailable: "Not available here",
+    loadIntoMemory: "Load the model",
+    rowModel: "Model",
+    rowStorage: "Storage",
+    rowLicence: "Licence",
+    rowTest: "Test the assistant",
+    rowUnload: "Unload from memory",
+    rowRemove: "Remove the model",
+    privacyNote:
+      "Your questions and the answers stay on this phone. Nothing is uploaded, with or without a connection.",
     setUpBundled: "Set up the model included with this app",
-    openDownload: "Open model download (529 MB · online)",
-    importGguf: "Import local GGUF",
-    verifyLoad: "Verify and load model",
-    unload: "Unload model",
-    removeFiles: "Remove model files",
+    openDownload: "Download the model file (529 MB · needs a connection)",
     removeTitle: "Remove local model?",
     removeBody:
       "This deletes the app-owned model copy and frees storage. Your original file is kept.",
@@ -435,10 +451,7 @@ export const en = {
     choosing: "Choose the GGUF file on your device.",
     updating: "Updating model state…",
     cancelOperation: "Cancel operation",
-    testTitle: "Test local inference",
-    testBody:
-      "This sends a fixed instruction to your on-device model. It is a runtime check, not a source-grounded research answer.",
-    runTest: "Run local test",
+    testTitle: "Test result",
     devBuildTitle: "Development build required",
     devBuildBody:
       "Expo Go cannot run llama.rn. Loading uses a bounded CPU context. Actual model performance and memory requirements still need device validation. The model unloads when the app backgrounds.",
@@ -448,7 +461,7 @@ export const en = {
     generating: "Local model generating",
     installedNotLoaded: "Model installed · not loaded",
     notInstalled: "Model not installed",
-    webBody: "Use an Android development build for local inference.",
+    webBody: "The assistant needs the Android or iOS app",
     preparingBody:
       "Setting up the built-in Qwen3.5 0.8B model. This takes a moment the first time.",
     runningBody:
@@ -460,8 +473,7 @@ export const en = {
   },
   floating: {
     introTitle: "Enable Floating Assistant",
-    introBody:
-      "Allow Seekora to display a floating assistant over other apps so you can access your offline AI companion while using your phone.",
+    introBody: "Turn it on to reach Seekora from inside your other apps",
     featureBubble: "Floating bubble with the Seekora assistant",
     featureAsk: "Ask questions on any app",
     featureVoice: "Ask by typing or by voice, recognized on your device",
@@ -481,10 +493,19 @@ export const en = {
     successModel: "Works with your offline AI model",
     successScreen: "Screen analysis available, with your permission each time",
     getStarted: "Get Started",
+    stateOn: "Running",
+    stateOff: "Off",
+    stateUnavailable: "Not available here",
+    on: "On",
+    off: "Off",
+    rowNotifications: "Status notification",
+    rowScreenText: "Screen text",
+    rowScreenKept: "Kept in memory",
+    rowScreenNone: "None kept",
     unavailableTitle: "Not available here",
     unavailableBody:
-      "The floating assistant needs the Android app. It is not available in the web preview, or in a build made before this feature was added.",
-    statusOn: "On. The bubble stays on screen over other apps.",
+      "The floating assistant needs the Android app. It is not available in the web preview.",
+    statusOn: "The bubble stays on screen over your other apps",
     statusOff: "Off",
     turnOn: "Turn on floating assistant",
     turnOff: "Turn off floating assistant",
@@ -494,12 +515,12 @@ export const en = {
     openPermission: "Open Android permission settings",
     screenTitle: "About screen analysis",
     screenBody:
-      "Seekora reads your screen only when you tap Analyze and approve Android's capture request. It takes one picture, reads the text on this device, and discards the picture. Nothing is uploaded or saved. Apps that block capture, such as password and payment screens, cannot be read. Only text is understood, not pictures or charts.",
+      "Seekora reads your screen only when you tap Analyze and approve Android's request. It takes one picture, reads the text on this phone, then discards the picture. Password and payment screens block capture and cannot be read.",
     modelTitle: "Same model, same phone",
     modelBody:
       "The assistant uses the on-device model you already set up and needs Seekora running in the background. If Seekora is closed, the bubble asks you to reopen it.",
     resetBubble: "Reset bubble position",
-    clearContext: "Clear temporary screen context",
+    clearContext: "Forget the screen text",
     contextKept: "Text from your last screen capture is being kept in memory.",
     contextNone: "No screen text is being kept.",
     notificationsOff:

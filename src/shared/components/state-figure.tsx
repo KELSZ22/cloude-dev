@@ -14,17 +14,20 @@ import { Fonts, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 
 /**
- * The one number these screens are really about: what this choice puts on the phone. It keeps its
- * place and its size as the meaning changes, so the figure the user weighed becomes the figure
- * they watch, and then the confirmation that it is theirs.
+ * The one fact a setup screen is really about: what this choice puts on the phone, or what is
+ * already there. It keeps its place and its size as the meaning changes, so the figure the user
+ * weighed in onboarding is the figure that greets them later in Settings.
  */
-export function SetupFigure({
+export function StateFigure({
+  label,
   value,
   unit,
   caption,
   progress,
   tone,
 }: {
+  /** Short state word shown above the figure. Replaces the completion badge when given. */
+  label?: string;
   value: string;
   unit?: string;
   caption: string;
@@ -44,12 +47,32 @@ export function SetupFigure({
   }, [fill, progress, reducedMotion]);
 
   const fillStyle = useAnimatedStyle(() => ({ width: `${fill.value * 100}%` }));
-  const figureColor = tone === "cost" ? colors.text : colors.tint;
+  const live = tone !== "cost";
+  const figureColor = live ? colors.tint : colors.text;
 
   return (
     <View style={styles.figure}>
+      {label ? (
+        <View style={styles.state}>
+          <SymbolView
+            name={
+              tone === "done"
+                ? { ios: "leaf.fill", android: "eco", web: "eco" }
+                : { ios: "leaf", android: "energy_savings_leaf", web: "energy_savings_leaf" }
+            }
+            size={15}
+            tintColor={live ? colors.tint : colors.textSecondary}
+          />
+          <ThemedText
+            type="smallBold"
+            style={[styles.stateText, { color: live ? colors.tint : colors.textSecondary }]}
+          >
+            {label}
+          </ThemedText>
+        </View>
+      ) : null}
       <View style={styles.line}>
-        {tone === "done" ? (
+        {tone === "done" && !label ? (
           // Sits on the row's centre line, since an icon has no baseline to share with the text.
           <View style={styles.badge}>
             <SymbolView
@@ -82,6 +105,8 @@ export function SetupFigure({
 
 const styles = StyleSheet.create({
   figure: { gap: Spacing.one },
+  state: { flexDirection: "row", alignItems: "center", gap: Spacing.one },
+  stateText: { fontSize: 13, lineHeight: 18, letterSpacing: 0.2 },
   line: { flexDirection: "row", alignItems: "baseline", gap: Spacing.two },
   badge: { alignSelf: "center" },
   value: {
