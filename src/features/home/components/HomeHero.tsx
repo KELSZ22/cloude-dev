@@ -11,24 +11,28 @@ type HomeHeroProps = {
 
 export function HomeHero({ title }: HomeHeroProps) {
   return (
-    <ThemedView style={styles.heroSection}>
+    <ThemedView type="backgroundElement" style={styles.card}>
       <AnimatedIcon />
-      <ThemedText type="title" style={styles.title}>
-        {title}
-      </ThemedText>
+      <ThemedView type="backgroundElement" style={styles.copy}>
+        <ThemedText type="subtitle">{title}</ThemedText>
+        <ThemedText type="small" themeColor="textSecondary">
+          Built with React Native. Preview in the browser, then run on a device.
+        </ThemedText>
+      </ThemedView>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  heroSection: {
+  card: {
+    marginHorizontal: Spacing.four,
+    borderRadius: 16,
+    padding: Spacing.four,
     alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    gap: Spacing.three,
   },
-  title: {
-    textAlign: 'center',
+  copy: {
+    alignItems: 'center',
+    gap: Spacing.one,
   },
 });

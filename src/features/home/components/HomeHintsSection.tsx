@@ -12,26 +12,38 @@ type HomeHintsSectionProps = {
 
 export function HomeHintsSection({ devMenuHint }: HomeHintsSectionProps) {
   return (
-    <ThemedView type="backgroundElement" style={styles.stepContainer}>
-      <HintRow
-        title="Try editing"
-        hint={<ThemedText type="code">src/features/home/HomePage.tsx</ThemedText>}
-      />
-      <HintRow title="Dev tools" hint={devMenuHint} />
-      <HintRow
-        title="Fresh start"
-        hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-      />
+    <ThemedView style={styles.section}>
+      <ThemedText type="smallBold" themeColor="textSecondary" style={styles.label}>
+        Get started
+      </ThemedText>
+      <ThemedView type="backgroundElement" style={styles.group}>
+        <HintRow
+          title="Try editing"
+          hint={<ThemedText type="code">src/features/home/HomePage.tsx</ThemedText>}
+        />
+        <HintRow title="Dev tools" hint={devMenuHint} last={false} />
+        <HintRow
+          title="Fresh start"
+          hint={<ThemedText type="code">bun run reset-project</ThemedText>}
+          last
+        />
+      </ThemedView>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  section: {
+    gap: Spacing.two,
+  },
+  label: {
+    marginHorizontal: Spacing.four,
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+  },
+  group: {
+    marginHorizontal: Spacing.four,
+    borderRadius: 12,
+    overflow: 'hidden',
   },
 });
