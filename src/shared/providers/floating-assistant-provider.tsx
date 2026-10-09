@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useRef, useState, type PropsWithChildren } from 'react';
 import { AppState } from 'react-native';
 
-import { floatingAssistantNative as native, type AssistantModelStatus } from '@/infrastructure/floating-assistant/native';
+import { floatingAssistantNative as native } from '@/infrastructure/floating-assistant/native';
 import { useTranslation } from '@/shared/i18n';
+import { assistantModelStatus } from '@/shared/lib/assistant-status';
+import { recognitionLang } from '@/shared/lib/speech';
 import { useModel } from '@/shared/providers/model-provider';
 import { AssistantConversation } from '@/shared/services/floating-assistant/conversation';
 import { AssistantSession } from '@/shared/services/floating-assistant/session';
@@ -37,6 +39,9 @@ const OVERLAY_STRINGS = {
   statusReady: 'floating.statusReady', statusLoading: 'floating.statusLoading', statusBusy: 'floating.statusBusy',
   statusNotLoaded: 'floating.statusNotLoaded', statusMissing: 'floating.statusMissing',
   statusUnavailable: 'floating.statusUnavailable', appClosed: 'floating.appClosed', openApp: 'floating.openApp',
+  voiceStart: 'floating.voiceStart', voiceStop: 'floating.voiceStop', voiceListening: 'floating.voiceListening',
+  voiceDenied: 'floating.voiceDenied', voiceUnavailable: 'floating.voiceUnavailable',
+  voiceOffline: 'floating.voiceOffline', voiceNoMatch: 'floating.voiceNoMatch', voiceFailed: 'floating.voiceFailed',
   captureTitle: 'floating.captureTitle', captureBody: 'floating.captureBody', captureContinue: 'floating.captureContinue',
   captureCancel: 'floating.captureCancel', screenAttached: 'floating.screenAttached', discard: 'floating.discard',
   menuOpen: 'floating.menuOpen', menuMoveLeft: 'floating.menuMoveLeft', menuMoveRight: 'floating.menuMoveRight',
@@ -80,6 +85,8 @@ export function FloatingAssistantProvider({ children }: PropsWithChildren) {
     }
     const strings: Record<string, string> = {};
     for (const [key, message] of Object.entries(OVERLAY_STRINGS)) strings[key] = live.current.t(message);
+    // Not a translation: the tag the on-device recogniser needs for the language the app is in.
+    strings.voiceLang = recognitionLang(locale);
     // Without the permission nothing may be drawn, so the setting falls back to off.
     if (!native.start(strings)) useFloatingAssistantStore.getState().setEnabled(false);
   }, [enabled, hasHydrated, locale]);
@@ -87,10 +94,7 @@ export function FloatingAssistantProvider({ children }: PropsWithChildren) {
   // The assistant is used while another app is in front, so the model must survive backgrounding.
   useEffect(() => { model.setBackgroundHold(enabled && running); });
 
-  const status: AssistantModelStatus = !model.installed ? 'missing'
-    : model.operation === 'verifying' || model.operation === 'loading' ? 'loading'
-    : model.state.status === 'generating' || model.operation === 'answering' ? 'busy'
-    : model.state.status === 'ready' ? 'ready' : 'notLoaded';
+  const status = assistantModelStatus(model);
   useEffect(() => { if (running) native?.setModelStatus(status); }, [running, status]);
 
   useEffect(() => {

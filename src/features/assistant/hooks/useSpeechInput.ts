@@ -3,12 +3,25 @@ import {
   useSpeechRecognitionEvent,
 } from "expo-speech-recognition";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Platform } from "react-native";
 
 import type { MessageKey } from "@/shared/i18n";
+import { recognitionLang } from "@/shared/lib/speech";
 import type { AppLocale } from "@/shared/stores/onboarding-store";
 
-function recognitionLang(locale: AppLocale) {
-  return locale === "fil" ? "fil-PH" : "en-US";
+/**
+ * Android can fetch the offline voice model on demand, through its own dialog. Recognition stays
+ * on this device, so without that model there is no answer we are willing to get another way.
+ */
+async function offerOfflineModel(locale: AppLocale) {
+  if (Platform.OS !== "android") return;
+  try {
+    await ExpoSpeechRecognitionModule.androidTriggerOfflineModelDownload({
+      locale: recognitionLang(locale),
+    });
+  } catch {
+    // Nothing more to offer; the notice has already told the user voice is unavailable.
+  }
 }
 
 export function useSpeechInput({
@@ -41,9 +54,10 @@ export function useSpeechInput({
   useSpeechRecognitionEvent("error", (event) => {
     setListening(false);
     if (event.error === "not-allowed") onError("assistant.voiceDenied");
-    else if (event.error === "service-not-allowed" || event.error === "language-not-supported") {
-      onError("assistant.voiceUnavailable");
-    }
+    else if (event.error === "language-not-supported") {
+      onError("assistant.voiceOffline");
+      void offerOfflineModel(locale);
+    } else if (event.error === "service-not-allowed") onError("assistant.voiceUnavailable");
   });
 
   useEffect(() => {
@@ -59,7 +73,10 @@ export function useSpeechInput({
       ExpoSpeechRecognitionModule.stop();
       return;
     }
-    if (!ExpoSpeechRecognitionModule.isRecognitionAvailable()) {
+    if (
+      !ExpoSpeechRecognitionModule.isRecognitionAvailable() ||
+      !ExpoSpeechRecognitionModule.supportsOnDeviceRecognition()
+    ) {
       onError("assistant.voiceUnavailable");
       return;
     }
@@ -74,6 +91,9 @@ export function useSpeechInput({
       interimResults: true,
       continuous: false,
       addsPunctuation: true,
+      // Speech is turned into text here, like everything else the assistant does.
+      requiresOnDeviceRecognition: true,
+      androidIntentOptions: { EXTRA_PREFER_OFFLINE: true },
     });
   }, [disabled, getPrefix, listening, locale, onError]);
 

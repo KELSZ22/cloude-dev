@@ -17,6 +17,7 @@ import { useFloatingAssistant } from "@/shared/providers/floating-assistant-prov
 const INTRO_POINTS: { icon: SymbolViewProps["name"]; text: MessageKey }[] = [
   { icon: { ios: "bubble.left", android: "chat_bubble", web: "chat_bubble" }, text: "floating.featureBubble" },
   { icon: { ios: "questionmark.circle", android: "help_outline", web: "help_outline" }, text: "floating.featureAsk" },
+  { icon: { ios: "mic", android: "mic", web: "mic" }, text: "floating.featureVoice" },
   { icon: { ios: "viewfinder", android: "crop_free", web: "crop_free" }, text: "floating.featureAnalyze" },
   { icon: { ios: "wifi.slash", android: "wifi_off", web: "wifi_off" }, text: "floating.featureOffline" },
 ];
@@ -35,6 +36,19 @@ async function askForNotifications() {
   }
 }
 
+/**
+ * Asked before the overlay starts, because Android decides then whether that service may use the
+ * microphone at all. Voice input is optional; the bubble works either way.
+ */
+async function askForMicrophone() {
+  if (Platform.OS !== "android") return;
+  try {
+    await PermissionsAndroid.request("android.permission.RECORD_AUDIO");
+  } catch {
+    // Declined or unavailable: the user can still type.
+  }
+}
+
 export default function FloatingAssistantPage() {
   const colors = useTheme();
   const { t } = useTranslation();
@@ -49,26 +63,38 @@ export default function FloatingAssistantPage() {
     const subscription = AppState.addEventListener("change", (next) => {
       if (next !== "active") return;
       setAwaitingPermission(false);
-      if (assistant.refreshPermission() && assistant.enable()) {
-        setDenied(false);
-        setJustEnabled(true);
-        void askForNotifications();
-      } else {
+      if (!assistant.refreshPermission()) {
         setDenied(true);
+        return;
       }
+      void askForMicrophone().then(() => {
+        if (assistant.enable()) {
+          setDenied(false);
+          setJustEnabled(true);
+          void askForNotifications();
+        } else {
+          setDenied(true);
+        }
+      });
     });
     return () => subscription.remove();
   }, [assistant, awaitingPermission]);
 
   function start() {
     setDenied(false);
-    if (assistant.enable()) {
-      setJustEnabled(true);
-      void askForNotifications();
+    if (!assistant.refreshPermission()) {
+      setAwaitingPermission(true);
+      assistant.openPermissionSettings();
       return;
     }
-    setAwaitingPermission(true);
-    assistant.openPermissionSettings();
+    void askForMicrophone().then(() => {
+      if (assistant.enable()) {
+        setJustEnabled(true);
+        void askForNotifications();
+      } else {
+        setDenied(true);
+      }
+    });
   }
 
   if (!assistant.available) {

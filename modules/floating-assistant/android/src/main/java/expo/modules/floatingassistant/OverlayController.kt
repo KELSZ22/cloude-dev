@@ -94,9 +94,22 @@ internal class OverlayController(
   private var scroll: ScrollView? = null
   private var input: EditText? = null
   private var sendButton: ImageView? = null
+  private var micButton: ImageView? = null
   private var contextRow: LinearLayout? = null
   private var contextLabel: TextView? = null
   private var confirmCard: View? = null
+
+  /** Whatever was already typed when the microphone was tapped; speech is added after it. */
+  private var voicePrefix = ""
+  private val voice by lazy {
+    VoiceInput(
+      context = service,
+      onPartial = ::showHeard,
+      onFinal = ::showHeard,
+      onListening = ::updateMicButton,
+      onProblem = ::showNotice
+    )
+  }
 
   // ---------------------------------------------------------------- lifecycle
 
@@ -105,6 +118,7 @@ internal class OverlayController(
   fun destroy() {
     main.removeCallbacksAndMessages(null)
     snapAnimator?.cancel()
+    voice.destroy()
     dismissMenu()
     removeWindow(panel)
     removeWindow(bubble)
@@ -116,6 +130,7 @@ internal class OverlayController(
   fun onConfigurationChanged() {
     val wasOpen = panelOpen
     snapAnimator?.cancel()
+    voice.cancel()
     dismissMenu()
     removeWindow(panel)
     removeWindow(bubble)
@@ -223,7 +238,7 @@ internal class OverlayController(
     val saved = BubblePosition.load(service)
     val range = bubbleYRange(area)
     val image = ImageView(ui).apply {
-      setImageResource(R.drawable.seekora_logo)
+      setImageResource(R.drawable.seekora_assistant)
       scaleType = ImageView.ScaleType.CENTER_CROP
       contentDescription = strings.bubbleLabel
       outlineProvider = object : ViewOutlineProvider() {
@@ -437,11 +452,12 @@ internal class OverlayController(
   /** Minimise: back to the bubble. The conversation is kept. */
   private fun closePanel() {
     hideKeyboard()
+    voice.cancel()
     removeWindow(panel)
     panel = null
     panelOpen = false
     statusView = null; messagesColumn = null; scroll = null; input = null
-    sendButton = null; contextRow = null; contextLabel = null; confirmCard = null
+    sendButton = null; micButton = null; contextRow = null; contextLabel = null; confirmCard = null
     messageViews.clear()
     addBubble()
   }
@@ -461,7 +477,7 @@ internal class OverlayController(
       setPadding(dp(14), dp(6), dp(4), dp(6))
     }
     header.addView(ImageView(ui).apply {
-      setImageResource(R.drawable.seekora_logo)
+      setImageResource(R.drawable.seekora_assistant)
       scaleType = ImageView.ScaleType.CENTER_CROP
       outlineProvider = object : ViewOutlineProvider() {
         override fun getOutline(view: View, outline: Outline) =
@@ -520,7 +536,7 @@ internal class OverlayController(
     column.addView(context)
     column.addView(divider())
 
-    // Input row: text, analyse screen, send or stop.
+    // Input row: text, speak, analyse screen, send or stop.
     val row = LinearLayout(ui).apply {
       orientation = LinearLayout.HORIZONTAL
       gravity = Gravity.CENTER_VERTICAL
@@ -548,6 +564,9 @@ internal class OverlayController(
     }
     input = field
     row.addView(field)
+    micButton = iconButton(R.drawable.seekora_ic_mic, strings.voiceStart, palette.tint) { toggleVoice() }
+      .also { row.addView(it) }
+    updateMicButton(voice.isListening)
     row.addView(iconButton(R.drawable.seekora_ic_scan, strings.actionAnalyze, palette.tint) { explainCapture("") })
     sendButton = iconButton(R.drawable.seekora_ic_send, strings.send, palette.tint) {
       if (generatingId != null) AssistantBus.toJs("onCancelRequested") else submitTyped()
@@ -673,6 +692,19 @@ internal class OverlayController(
     button.contentDescription = if (generating) strings.stop else strings.send
   }
 
+  private fun updateMicButton(listening: Boolean) {
+    micButton?.setColorFilter(if (listening) palette.error else palette.tint)
+    micButton?.contentDescription = if (listening) strings.voiceStop else strings.voiceStart
+    input?.hint = if (listening) strings.voiceListening else strings.placeholder
+  }
+
+  /** Speech lands in the input field, as if it had been typed; the user still decides to send. */
+  private fun showHeard(text: String) {
+    val field = input ?: return
+    field.setText(if (voicePrefix.isEmpty()) text else "$voicePrefix $text")
+    field.setSelection(field.text.length)
+  }
+
   private fun updateContextRow() {
     contextRow?.visibility = if (screenAttached) View.VISIBLE else View.GONE
     contextLabel?.text = listOfNotNull(strings.screenAttached, screenSummary).joinToString(" · ")
@@ -680,10 +712,21 @@ internal class OverlayController(
 
   // ---------------------------------------------------------------- user actions
 
+  private fun toggleVoice() {
+    if (generatingId != null) return
+    if (!voice.isListening) {
+      hideKeyboard()
+      voicePrefix = input?.text?.toString()?.trim().orEmpty()
+    }
+    voice.toggle(strings.voiceLang)
+  }
+
   private fun submitTyped() {
     val field = input ?: return
     val text = field.text.toString().trim()
     if (text.isEmpty() || generatingId != null) return
+    voice.cancel()
+    voicePrefix = ""
     field.setText("")
     send(text, "chat")
   }
@@ -761,10 +804,11 @@ internal class OverlayController(
     hiddenForCapture = true
     panelOpen = true
     hideKeyboard()
+    voice.cancel()
     removeWindow(panel)
     panel = null
     statusView = null; messagesColumn = null; scroll = null; input = null
-    sendButton = null; contextRow = null; contextLabel = null
+    sendButton = null; micButton = null; contextRow = null; contextLabel = null
     messageViews.clear()
     AssistantBus.pendingCaptureAction = action.ifEmpty { null }
     try {
