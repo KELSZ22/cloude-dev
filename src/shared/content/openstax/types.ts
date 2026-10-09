@@ -1,4 +1,5 @@
-export type OpenStaxPackCategory = "science" | "history" | "technology" | "culture";
+export type OpenStaxPackCategory =
+  "science" | "history" | "technology" | "culture";
 
 export type OpenStaxPackRecord = {
   id: string;
@@ -32,6 +33,8 @@ export type OpenStaxBookRecord = {
   sourcePage: string | null;
   licenseName: string;
   licenseUrl: string | null;
+  /** Direct textbook PDF from the OpenStax download manifest, when one was retrieved. */
+  pdfUrl: string | null;
   updatedAt: string;
   tags: string;
   readMinutes: number;

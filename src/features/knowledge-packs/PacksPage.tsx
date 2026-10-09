@@ -3,11 +3,9 @@ import { Page } from "@/shared/components/page";
 import { StatusCard } from "@/shared/components/status-card";
 import { ThemedText } from "@/shared/components/themed-text";
 import { contentSources } from "@/shared/constants/content-sources";
-import { Spacing } from "@/shared/constants/theme";
 import { useTranslation } from "@/shared/i18n";
 import { useKnowledge } from "@/shared/providers/knowledge-provider";
 import { Redirect } from "expo-router";
-import { Pressable, View } from "react-native";
 
 export default function PacksPage() {
   return contentSources.openStax ? (
@@ -58,36 +56,3 @@ function OpenStaxPacksPage() {
     </Page>
   );
 }
-
-function PressableError({
-  message,
-  onDismiss,
-}: {
-  message: string;
-  onDismiss: () => void;
-}) {
-  return (
-    <View style={styles.error}>
-      <ThemedText type="small" themeColor="textSecondary">
-        {message}
-      </ThemedText>
-      <Pressable accessibilityRole="button" onPress={onDismiss}>
-        <ThemedText type="smallBold" style={styles.dismiss}>
-          Dismiss
-        </ThemedText>
-      </Pressable>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  summary: { gap: Spacing.one, marginBottom: Spacing.two },
-  list: { gap: Spacing.two, paddingBottom: Spacing.four },
-  error: {
-    gap: Spacing.one,
-    marginBottom: Spacing.two,
-    padding: Spacing.two,
-    borderRadius: 12,
-  },
-  dismiss: { alignSelf: "flex-start" },
-});

@@ -2,7 +2,7 @@
  * Builds a slim app index from content/openstax metadata (catalog + manifest).
  * Run after refreshing OpenStax downloads: `bun run content:openstax`
  */
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -17,7 +17,7 @@ const CATEGORY_BY_SUBJECT = {
   Ciencia: "science",
   Nursing: "science",
   Math: "culture",
-  "Matemáticas": "culture",
+  Matemáticas: "culture",
   "Social Sciences": "history",
   Humanities: "history",
   Business: "technology",
@@ -38,12 +38,14 @@ function stripHtml(value) {
 
 function slugSubject(name) {
   const value = name ? String(name) : "Other";
-  return value
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "") || "other";
+  return (
+    value
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "") || "other"
+  );
 }
 
 function estimateReadMinutes(text) {
@@ -60,7 +62,26 @@ const manifest = readJson("manifest.json");
 const verification = readJson("verification.json");
 
 const catalogById = new Map(catalog.map((book) => [book.id, book]));
-const assetByPath = new Map(manifest.assets.map((asset) => [asset.path, asset]));
+const assetByPath = new Map(
+  manifest.assets.map((asset) => [asset.path, asset]),
+);
+const pdfBySlug = new Map();
+for (const ref of manifest.references) {
+  if (
+    ref.kind !== "book" ||
+    ref.status !== "downloaded" ||
+    !ref.url ||
+    !ref.book_slug
+  )
+    continue;
+  if (ref.label === "pdf_url") pdfBySlug.set(ref.book_slug, ref.url);
+  else if (
+    ref.label === "high_resolution_pdf_url" &&
+    !pdfBySlug.has(ref.book_slug)
+  ) {
+    pdfBySlug.set(ref.book_slug, ref.url);
+  }
+}
 
 const books = [];
 const packStats = new Map();
@@ -125,7 +146,11 @@ for (const book of catalog) {
     sourcePage: book.meta?.html_url ?? null,
     licenseName: book.license_name ?? "Creative Commons",
     licenseUrl: book.license_url ?? null,
-    updatedAt: (book.updated ?? book.created ?? manifest.retrieved_at).slice(0, 10),
+    pdfUrl: pdfBySlug.get(slug) ?? null,
+    updatedAt: (book.updated ?? book.created ?? manifest.retrieved_at).slice(
+      0,
+      10,
+    ),
     tags,
     readMinutes: estimateReadMinutes(plainDescription || summary),
   });
@@ -162,13 +187,19 @@ const packAssetMap = {};
 
 for (const asset of manifest.assets) {
   if (!asset.url) continue;
-  if (asset.status !== "downloaded" && asset.status !== "pending" && asset.status !== "failed") {
+  if (
+    asset.status !== "downloaded" &&
+    asset.status !== "pending" &&
+    asset.status !== "failed"
+  ) {
     continue;
   }
   const refs = asset.references
     .map((index) => manifest.references[index])
     .filter(Boolean);
-  const ref = refs.find((entry) => entry.status === "downloaded" || entry.status === "pending");
+  const ref = refs.find(
+    (entry) => entry.status === "downloaded" || entry.status === "pending",
+  );
   if (!ref) continue;
 
   const packId = slugSubject((ref.subjects || ["Other"])[0]);
@@ -191,7 +222,9 @@ const packDownloads = Object.fromEntries(
       packId,
       {
         totalBytes: entry.totalBytes,
-        assets: [...entry.assets.values()].sort((a, b) => a.path.localeCompare(b.path)),
+        assets: [...entry.assets.values()].sort((a, b) =>
+          a.path.localeCompare(b.path),
+        ),
       },
     ])
     .sort(([a], [b]) => a.localeCompare(b)),
@@ -218,8 +251,15 @@ mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(OUT_FILE, JSON.stringify(payload, null, 2) + "\n", "utf8");
 writeFileSync(
   OUT_ASSETS,
-  JSON.stringify({ schemaVersion: 1, generatedAt: payload.generatedAt, packs: packDownloads }, null, 2) +
-    "\n",
+  JSON.stringify(
+    {
+      schemaVersion: 1,
+      generatedAt: payload.generatedAt,
+      packs: packDownloads,
+    },
+    null,
+    2,
+  ) + "\n",
   "utf8",
 );
 
@@ -228,4 +268,6 @@ const assetsKb = Math.round(readFileSync(OUT_ASSETS, "utf8").length / 1024);
 console.log(
   `Wrote ${OUT_FILE} (${kb} KB, ${packs.length} packs, ${books.length} books)`,
 );
-console.log(`Wrote ${OUT_ASSETS} (${assetsKb} KB, ${Object.keys(packDownloads).length} pack manifests)`);
+console.log(
+  `Wrote ${OUT_ASSETS} (${assetsKb} KB, ${Object.keys(packDownloads).length} pack manifests)`,
+);

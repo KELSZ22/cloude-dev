@@ -1,6 +1,6 @@
 import { Image, type ImageSource } from "expo-image";
 import { SymbolView } from "expo-symbols";
-import { Pressable, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
@@ -26,6 +26,12 @@ export type SearchResult = {
   sourceLabel?: string;
   metaLabel?: string;
   onPress: () => void;
+  download?: {
+    saved: boolean;
+    busy: boolean;
+    error?: string | null;
+    onPress: () => void;
+  };
 };
 
 export function ResultCard({ result }: { result: SearchResult }) {
@@ -55,6 +61,7 @@ export function ResultCard({ result }: { result: SearchResult }) {
         },
       ]}
     >
+      <View style={styles.top}>
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={`${result.title}. ${source}. ${meta}`}
@@ -109,32 +116,71 @@ export function ResultCard({ result }: { result: SearchResult }) {
           </View>
         </View>
       </Pressable>
-      <Pressable
-        disabled
-        accessibilityRole="button"
-        accessibilityLabel={t("library.moreOptions", { name: result.title })}
-        accessibilityState={{ disabled: true }}
-        style={styles.more}
-      >
-        <SymbolView
-          name={{ ios: "ellipsis", android: "more_vert", web: "more_vert" }}
-          size={18}
-          tintColor={colors.textSecondary}
-        />
-      </Pressable>
+      {result.download ? null : (
+        <Pressable
+          disabled
+          accessibilityRole="button"
+          accessibilityLabel={t("library.moreOptions", { name: result.title })}
+          accessibilityState={{ disabled: true }}
+          style={styles.more}
+        >
+          <SymbolView
+            name={{ ios: "ellipsis", android: "more_vert", web: "more_vert" }}
+            size={18}
+            tintColor={colors.textSecondary}
+          />
+        </Pressable>
+      )}
+      </View>
+      {result.download ? (
+        <View style={[styles.downloadWrap, { borderTopColor: colors.dashboardBorder }]}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={`${result.download.saved ? t("search.resourcesReadPdf") : t("search.resourcesDownloadPdf")}: ${result.title}`}
+            disabled={result.download.busy}
+            onPress={result.download.onPress}
+            style={({ pressed }) => [styles.download, pressed && styles.downloadPressed]}
+          >
+            {result.download.busy ? (
+              <ActivityIndicator color={colors.tint} size="small" />
+            ) : (
+              <SymbolView
+                name={{
+                  ios: result.download.saved ? "book.fill" : "arrow.down.circle.fill",
+                  android: result.download.saved ? "menu_book" : "download",
+                  web: result.download.saved ? "menu_book" : "download",
+                }}
+                size={18}
+                tintColor={colors.tint}
+              />
+            )}
+            <ThemedText type="smallBold" style={{ color: colors.tint }}>
+              {result.download.busy
+                ? t("search.resourcesDownloadingPdf")
+                : result.download.saved
+                  ? t("search.resourcesReadPdf")
+                  : t("search.resourcesDownloadPdf")}
+            </ThemedText>
+          </Pressable>
+          {result.download.error ? (
+            <ThemedText accessibilityRole="alert" style={[styles.downloadError, { color: colors.error }]}>
+              {result.download.error}
+            </ThemedText>
+          ) : null}
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: "row",
-    alignItems: "flex-start",
     marginHorizontal: Spacing.three,
     borderRadius: 22,
     borderWidth: 1,
     overflow: "hidden",
   },
+  top: { flexDirection: "row", alignItems: "flex-start" },
   main: {
     flex: 1,
     flexDirection: "row",
@@ -142,6 +188,21 @@ const styles = StyleSheet.create({
     padding: 12,
     paddingRight: 4,
   },
+  downloadWrap: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingHorizontal: 12,
+    paddingBottom: 10,
+    gap: 4,
+  },
+  download: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    gap: 8,
+    minHeight: 36,
+  },
+  downloadPressed: { opacity: 0.6 },
+  downloadError: { fontSize: 13, lineHeight: 18 },
   thumb: { width: 92, height: 92, borderRadius: 16 },
   placeholder: { alignItems: "center", justifyContent: "center" },
   copy: { flex: 1, gap: 2, paddingTop: 1 },

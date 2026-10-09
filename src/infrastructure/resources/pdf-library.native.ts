@@ -5,6 +5,7 @@ import {
   pdfStorageKey,
   type PdfLibrary,
   type SavedPdfRecord,
+  type SavedPdfSummary,
 } from "./pdf-record";
 
 function root() {
@@ -27,6 +28,26 @@ export const pdfLibrary: PdfLibrary = {
       .list()
       .filter((entry) => entry instanceof File && entry.name.endsWith(".pdf"))
       .map((entry) => entry.name.slice(0, -4));
+  },
+  async listSummaries() {
+    const directory = root();
+    if (!directory.exists) return [];
+    const summaries: SavedPdfSummary[] = [];
+    for (const entry of directory.list()) {
+      if (!(entry instanceof File) || !entry.name.endsWith(".json")) continue;
+      try {
+        const parsed = JSON.parse(await entry.text()) as Partial<SavedPdfSummary>;
+        if (!parsed.id || !parsed.title) continue;
+        summaries.push({
+          id: parsed.id,
+          title: parsed.title,
+          savedAt: parsed.savedAt ?? "",
+        });
+      } catch {
+        continue;
+      }
+    }
+    return summaries.sort((left, right) => right.savedAt.localeCompare(left.savedAt));
   },
   async read(id) {
     const file = pdfFile(id);

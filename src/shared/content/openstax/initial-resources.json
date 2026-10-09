@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-09T14:11:29.617Z",
+  "generatedAt": "2026-10-09T17:30:48.370Z",
   "source": {
     "name": "OpenStax",
     "catalogRetrievedAt": "2026-10-09T12:21:11.055124+00:00",
@@ -211,6 +211,7 @@
       "sourcePage": "https://openstax.org/details/books/additive-manufacturing-essentials",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Additive_Manufacturing_Essentials_-_WEB.pdf",
       "updatedAt": "2025-02-18",
       "tags": "science business technologies additive manufacturing essentials additive manufacturing essentials",
       "readMinutes": 3
@@ -233,6 +234,7 @@
       "sourcePage": "https://openstax.org/details/books/algebra-1",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/algebra-1_-_WEB.pdf",
       "updatedAt": "2025-09-18",
       "tags": "math secondary math algebra 1",
       "readMinutes": 3
@@ -255,6 +257,7 @@
       "sourcePage": "https://openstax.org/details/books/algebra-and-trigonometry-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/algebra-and-trigonometry-2e_-_WEB.pdf",
       "updatedAt": "2026-09-09",
       "tags": "math algebra and trigonometry algebra and trigonometry 2e",
       "readMinutes": 3
@@ -277,6 +280,7 @@
       "sourcePage": "https://openstax.org/details/books/american-government-4e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/American_Government_4e_-_WEB_eM2Tuqh.pdf",
       "updatedAt": "2026-09-14",
       "tags": "social sciences american government american government 4e",
       "readMinutes": 3
@@ -299,6 +303,7 @@
       "sourcePage": "https://openstax.org/details/books/anatomy-and-physiology-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/anatomy-and-physiology-2e_-_WEB.pdf",
       "updatedAt": "2026-09-14",
       "tags": "science anatomy and physiology anatomy and physiology 2e",
       "readMinutes": 3
@@ -321,6 +326,7 @@
       "sourcePage": "https://openstax.org/details/books/astronomy-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/astronomy-2e_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "science astronomy astronomy 2e",
       "readMinutes": 3
@@ -343,6 +349,7 @@
       "sourcePage": "https://openstax.org/details/books/biology-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Biology-2e_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "science biology biology 2e",
       "readMinutes": 3
@@ -365,6 +372,7 @@
       "sourcePage": "https://openstax.org/details/books/biology-ap-courses",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Biology-AP-Courses_-_WEB.pdf",
       "updatedAt": "2026-08-26",
       "tags": "science biology biology for ap® courses",
       "readMinutes": 3
@@ -387,6 +395,7 @@
       "sourcePage": "https://openstax.org/details/books/business-ethics",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/business-ethics_-_WEB.pdf",
       "updatedAt": "2025-12-04",
       "tags": "business business law and ethics business ethics",
       "readMinutes": 3
@@ -409,6 +418,7 @@
       "sourcePage": "https://openstax.org/details/books/business-law-i-essentials-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Business_Law_I_Essentials_2e_-_WEB.pdf",
       "updatedAt": "2026-06-10",
       "tags": "business business law and ethics business law i essentials 2e",
       "readMinutes": 3
@@ -431,6 +441,7 @@
       "sourcePage": "https://openstax.org/details/books/cálculo-volumen-1",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculo_volumen_1_-_WEB_vGHB4xK.pdf",
       "updatedAt": "2022-03-02",
       "tags": "matemáticas cálculo cálculo volumen 1",
       "readMinutes": 3
@@ -453,6 +464,7 @@
       "sourcePage": "https://openstax.org/details/books/cálculo-volumen-2",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculo_volumen_2_-_WEB_8JoonWk.pdf",
       "updatedAt": "2022-03-02",
       "tags": "matemáticas cálculo cálculo volumen 2",
       "readMinutes": 3
@@ -475,6 +487,7 @@
       "sourcePage": "https://openstax.org/details/books/cálculo-volumen-3",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculo_volumen_3_-_WEB_lnXeWrT.pdf",
       "updatedAt": "2022-03-02",
       "tags": "matemáticas cálculo cálculo volumen 3",
       "readMinutes": 3
@@ -497,6 +510,7 @@
       "sourcePage": "https://openstax.org/details/books/calculus-volume-1",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/calculus-volume-1_-_WEB.pdf",
       "updatedAt": "2026-09-08",
       "tags": "math calculus calculus volume 1",
       "readMinutes": 3
@@ -519,6 +533,7 @@
       "sourcePage": "https://openstax.org/details/books/calculus-volume-2",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/calculus-volume-2_-_WEB.pdf",
       "updatedAt": "2026-07-15",
       "tags": "math calculus calculus volume 2",
       "readMinutes": 3
@@ -541,6 +556,7 @@
       "sourcePage": "https://openstax.org/details/books/calculus-volume-3",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/calculus-volume-3_-_WEB.pdf",
       "updatedAt": "2026-09-21",
       "tags": "math calculus calculus volume 3",
       "readMinutes": 3
@@ -563,6 +579,7 @@
       "sourcePage": "https://openstax.org/details/books/chemistry-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/chemistry-2e_-_WEB.pdf",
       "updatedAt": "2026-09-24",
       "tags": "science chemistry chemistry 2e",
       "readMinutes": 3
@@ -585,6 +602,7 @@
       "sourcePage": "https://openstax.org/details/books/chemistry-atoms-first-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/chemistry-atoms-first-2e_-_WEB.pdf",
       "updatedAt": "2026-09-24",
       "tags": "science chemistry chemistry: atoms first 2e",
       "readMinutes": 3
@@ -607,6 +625,7 @@
       "sourcePage": "https://openstax.org/details/books/clinical-nursing-skills",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Clinical-Nursing-Skills-WEB.pdf",
       "updatedAt": "2026-01-12",
       "tags": "nursing fundamentals and skills clinical nursing skills",
       "readMinutes": 3
@@ -629,6 +648,7 @@
       "sourcePage": "https://openstax.org/details/books/college-algebra-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/college-algebra-2e_-_WEB.pdf",
       "updatedAt": "2026-09-09",
       "tags": "math college algebra college algebra 2e",
       "readMinutes": 3
@@ -651,6 +671,7 @@
       "sourcePage": "https://openstax.org/details/books/college-algebra-corequisite-support-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/college-algebra-corequisite-support-2e_-_WEB.pdf",
       "updatedAt": "2026-09-09",
       "tags": "math college algebra college algebra 2e with corequisite support",
       "readMinutes": 3
@@ -673,6 +694,7 @@
       "sourcePage": "https://openstax.org/details/books/college-physics-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/college-physics-2e_-_WEB.pdf",
       "updatedAt": "2026-10-02",
       "tags": "science physics college physics 2e",
       "readMinutes": 3
@@ -695,6 +717,7 @@
       "sourcePage": "https://openstax.org/details/books/college-physics-ap-courses-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/college-physics-ap-courses-2e_-_WEB.pdf",
       "updatedAt": "2026-07-09",
       "tags": "science physics college physics for ap® courses 2e",
       "readMinutes": 3
@@ -717,6 +740,7 @@
       "sourcePage": "https://openstax.org/details/books/college-success",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/college-success_-_WEB.pdf",
       "updatedAt": "2026-09-21",
       "tags": "college success college success college success",
       "readMinutes": 3
@@ -739,6 +763,7 @@
       "sourcePage": "https://openstax.org/details/books/college-success-concise",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/college-success-concise_-_WEB.pdf",
       "updatedAt": "2026-09-03",
       "tags": "college success college success college success concise",
       "readMinutes": 3
@@ -761,6 +786,7 @@
       "sourcePage": "https://openstax.org/details/books/concepts-biology",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Concepts-Biology_-_WEB.pdf",
       "updatedAt": "2026-09-29",
       "tags": "science biology concepts of biology",
       "readMinutes": 3
@@ -783,6 +809,7 @@
       "sourcePage": "https://openstax.org/details/books/contemporary-mathematics",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/contemporary-mathematics_-_WEB.pdf",
       "updatedAt": "2026-07-20",
       "tags": "math contemporary math contemporary mathematics",
       "readMinutes": 3
@@ -805,6 +832,7 @@
       "sourcePage": "https://openstax.org/details/books/elementary-algebra-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/elementary-algebra-2e_-_WEB.pdf",
       "updatedAt": "2026-09-16",
       "tags": "math developmental math elementary algebra 2e",
       "readMinutes": 3
@@ -827,6 +855,7 @@
       "sourcePage": "https://openstax.org/details/books/entrepreneurship",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Entrepreneurship-WEB.pdf",
       "updatedAt": "2026-06-17",
       "tags": "business management and marketing entrepreneurship",
       "readMinutes": 3
@@ -849,6 +878,7 @@
       "sourcePage": "https://openstax.org/details/books/física-universitaria-volumen-1",
       "licenseName": "Creative Commons Attribution License",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/FisicaUniversitariaVolumen1-WEB_JDl3rTk.pdf",
       "updatedAt": "2025-05-12",
       "tags": "ciencia física física universitaria volumen 1",
       "readMinutes": 3
@@ -871,6 +901,7 @@
       "sourcePage": "https://openstax.org/details/books/física-universitaria-volumen-2",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/FisicaUniversitariaVolumen2-WEB.pdf",
       "updatedAt": "2022-04-05",
       "tags": "ciencia física física universitaria volumen 2",
       "readMinutes": 3
@@ -893,6 +924,7 @@
       "sourcePage": "https://openstax.org/details/books/física-universitaria-volumen-3",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/FisicaUniversitariaVolumen3WEB_UGpB6A5.pdf",
       "updatedAt": "2021-11-05",
       "tags": "ciencia física física universitaria volumen 3",
       "readMinutes": 3
@@ -915,6 +947,7 @@
       "sourcePage": "https://openstax.org/details/books/foundations-information-systems",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Foundations_of_Information_Systems_-_WEB_oNlbGYl.pdf",
       "updatedAt": "2025-07-30",
       "tags": "computer science information systems foundations of information systems",
       "readMinutes": 3
@@ -937,6 +970,7 @@
       "sourcePage": "https://openstax.org/details/books/fundamentals-nursing",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Fundamentals_of_Nursing_-_WEB.pdf",
       "updatedAt": "2026-09-08",
       "tags": "nursing fundamentals and skills fundamentals of nursing",
       "readMinutes": 3
@@ -959,6 +993,7 @@
       "sourcePage": "https://openstax.org/details/books/intermediate-algebra-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/intermediate-algebra-2e_-_WEB.pdf",
       "updatedAt": "2026-06-29",
       "tags": "math developmental math intermediate algebra 2e",
       "readMinutes": 3
@@ -981,6 +1016,7 @@
       "sourcePage": "https://openstax.org/details/books/introducción-estadística",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduccion_al_la_estadistica_-_WEB.pdf",
       "updatedAt": "2022-02-14",
       "tags": "matemáticas estadísticas introducción a la estadística",
       "readMinutes": 3
@@ -1003,6 +1039,7 @@
       "sourcePage": "https://openstax.org/details/books/introducción-estadística-empresarial",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduccion_al_la_estadistica_empresarial_-_WEB.pdf",
       "updatedAt": "2022-02-14",
       "tags": "matemáticas estadísticas introducción a la estadística empresarial",
       "readMinutes": 3
@@ -1025,6 +1062,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-anthropology",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/IntroductiontoAnthropology-WEB.pdf",
       "updatedAt": "2026-09-16",
       "tags": "social sciences anthropology introduction to anthropology",
       "readMinutes": 3
@@ -1047,6 +1085,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-behavioral-neuroscience",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction-Behavioral-Neuroscience_-_WEB.pdf",
       "updatedAt": "2025-01-22",
       "tags": "social sciences biology psychology introduction to behavioral neuroscience",
       "readMinutes": 3
@@ -1069,6 +1108,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-business-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Business_2e_-_WEB.pdf",
       "updatedAt": "2026-10-07",
       "tags": "business introduction to business introduction to business 2e",
       "readMinutes": 3
@@ -1091,6 +1131,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-computer-science",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_To_Computer_Science_-_WEB.pdf",
       "updatedAt": "2025-09-22",
       "tags": "computer science foundations of computer science introduction to computer science",
       "readMinutes": 3
@@ -1113,6 +1154,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-intellectual-property",
       "licenseName": "Creative Commons Attribution License",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/introduction-intellectual-property_-_WEB.pdf",
       "updatedAt": "2022-07-27",
       "tags": "business business law and ethics introduction to intellectual property",
       "readMinutes": 3
@@ -1135,6 +1177,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-philosophy",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Philosophy-WEB.pdf",
       "updatedAt": "2026-05-21",
       "tags": "humanities philosophy introduction to philosophy",
       "readMinutes": 3
@@ -1157,6 +1200,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-political-science",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Political_Science_-_WEB.pdf",
       "updatedAt": "2026-05-27",
       "tags": "social sciences political science introduction to political science",
       "readMinutes": 3
@@ -1179,6 +1223,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-python-programming",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Python_Programming-WEB.pdf",
       "updatedAt": "2026-08-03",
       "tags": "computer science python programming introduction to python programming",
       "readMinutes": 3
@@ -1201,6 +1246,7 @@
       "sourcePage": "https://openstax.org/details/books/introduction-sociology-3e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/introduction-sociology-3e_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "social sciences sociology introduction to sociology 3e",
       "readMinutes": 3
@@ -1223,6 +1269,7 @@
       "sourcePage": "https://openstax.org/details/books/introductory-business-statistics-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/introductory-business-statistics-2e_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "business statistics business statistics introductory business statistics 2e",
       "readMinutes": 3
@@ -1245,6 +1292,7 @@
       "sourcePage": "https://openstax.org/details/books/introductory-statistics-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/introductory-statistics-2e_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "math statistics introductory statistics 2e",
       "readMinutes": 3
@@ -1267,6 +1315,7 @@
       "sourcePage": "https://openstax.org/details/books/lifespan-development",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Lifespan_Development_-_WEB.pdf",
       "updatedAt": "2026-09-22",
       "tags": "social sciences lifespan development lifespan development",
       "readMinutes": 3
@@ -1289,6 +1338,7 @@
       "sourcePage": "https://openstax.org/details/books/maternal-newborn-nursing",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Maternal-Newborn_Nursing-WEB.pdf",
       "updatedAt": "2026-09-16",
       "tags": "nursing maternal-newborn nursing maternal-newborn nursing",
       "readMinutes": 3
@@ -1311,6 +1361,7 @@
       "sourcePage": "https://openstax.org/details/books/medical-surgical-nursing",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Medical-Surgical_Nursing-WEB.pdf",
       "updatedAt": "2026-02-27",
       "tags": "nursing medical-surgical nursing medical-surgical nursing",
       "readMinutes": 3
@@ -1333,6 +1384,7 @@
       "sourcePage": "https://openstax.org/details/books/microbiology",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/microbiology_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "science biology microbiology",
       "readMinutes": 3
@@ -1355,6 +1407,7 @@
       "sourcePage": "https://openstax.org/details/books/nutrition",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Nutrition_for_Nurses-WEB.pdf",
       "updatedAt": "2024-09-20",
       "tags": "nursing nutrition and pharmacology nutrition for nurses",
       "readMinutes": 3
@@ -1377,6 +1430,7 @@
       "sourcePage": "https://openstax.org/details/books/organic-chemistry",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/organic-chemistry_-_WEB.pdf",
       "updatedAt": "2026-10-02",
       "tags": "science chemistry organic chemistry: a tenth edition",
       "readMinutes": 3
@@ -1399,6 +1453,7 @@
       "sourcePage": "https://openstax.org/details/books/organizational-behavior",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/organizational-behavior_-_WEB.pdf",
       "updatedAt": "2025-09-15",
       "tags": "business management and marketing organizational behavior",
       "readMinutes": 3
@@ -1421,6 +1476,7 @@
       "sourcePage": "https://openstax.org/details/books/pharmacology",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Pharmacology-WEB.pdf",
       "updatedAt": "2024-02-20",
       "tags": "nursing nutrition and pharmacology pharmacology for nurses",
       "readMinutes": 3
@@ -1443,6 +1499,7 @@
       "sourcePage": "https://openstax.org/details/books/physics",
       "licenseName": "Creative Commons Attribution License",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Physics_-_WEB.pdf",
       "updatedAt": "2026-08-20",
       "tags": "science physics physics",
       "readMinutes": 3
@@ -1465,6 +1522,7 @@
       "sourcePage": "https://openstax.org/details/books/population-health",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Population_Health_for_Nurses_-_WEB.pdf",
       "updatedAt": "2024-02-20",
       "tags": "nursing population and community health population health for nurses",
       "readMinutes": 3
@@ -1487,6 +1545,7 @@
       "sourcePage": "https://openstax.org/details/books/prealgebra-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/prealgebra-2e_-_WEB.pdf",
       "updatedAt": "2026-07-27",
       "tags": "math developmental math prealgebra 2e",
       "readMinutes": 3
@@ -1509,6 +1568,7 @@
       "sourcePage": "https://openstax.org/details/books/precálculo-2ed",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Precalculo_2ed-WEB_R2h7jtX.pdf",
       "updatedAt": "2022-05-02",
       "tags": "matemáticas precálculo precálculo 2ed",
       "readMinutes": 3
@@ -1531,6 +1591,7 @@
       "sourcePage": "https://openstax.org/details/books/precalculus-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/precalculus-2e_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "math precalculus precalculus 2e",
       "readMinutes": 3
@@ -1553,6 +1614,7 @@
       "sourcePage": "https://openstax.org/details/books/preparing-for-college-success",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/preparing-for-college-success_-_WEB.pdf",
       "updatedAt": "2023-06-27",
       "tags": "college success college success preparing for college success",
       "readMinutes": 3
@@ -1575,6 +1637,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-financial-accounting",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-financial-accounting_-_WEB.pdf",
       "updatedAt": "2026-09-14",
       "tags": "business accounting and finance principles of accounting, volume 1: financial accounting",
       "readMinutes": 3
@@ -1597,6 +1660,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-managerial-accounting",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-managerial-accounting_-_WEB.pdf",
       "updatedAt": "2024-07-29",
       "tags": "business accounting and finance principles of accounting, volume 2: managerial accounting",
       "readMinutes": 3
@@ -1619,6 +1683,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-data-science",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles-of-Data-Science-WEB.pdf",
       "updatedAt": "2025-03-20",
       "tags": "computer science principles of data science business statistics principles of data science principles of data science",
       "readMinutes": 3
@@ -1641,6 +1706,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-economics-3e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-economics-3e_-_WEB.pdf",
       "updatedAt": "2026-07-09",
       "tags": "social sciences economics economics principles of economics 3e",
       "readMinutes": 3
@@ -1663,6 +1729,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-finance-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles_of_Finance_2e_-_WEB_.pdf",
       "updatedAt": "2026-06-10",
       "tags": "business accounting and finance principles of finance 2e",
       "readMinutes": 3
@@ -1685,6 +1752,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-macroeconomics-3e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-macroeconomics-3e_-_WEB.pdf",
       "updatedAt": "2026-07-09",
       "tags": "social sciences economics economics principles of macroeconomics 3e",
       "readMinutes": 3
@@ -1707,6 +1775,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-management",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-management_-_WEB.pdf",
       "updatedAt": "2026-09-16",
       "tags": "business management and marketing principles of management",
       "readMinutes": 3
@@ -1729,6 +1798,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-marketing",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-marketing_-_WEB.pdf",
       "updatedAt": "2026-08-18",
       "tags": "business management and marketing principles of marketing",
       "readMinutes": 3
@@ -1751,6 +1821,7 @@
       "sourcePage": "https://openstax.org/details/books/principles-microeconomics-3e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-microeconomics-3e_-_WEB.pdf",
       "updatedAt": "2026-07-13",
       "tags": "social sciences economics economics principles of microeconomics 3e",
       "readMinutes": 3
@@ -1773,6 +1844,7 @@
       "sourcePage": "https://openstax.org/details/books/psychiatric-mental-health",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychiatric-Mental_Health_Nursing-WEB.pdf",
       "updatedAt": "2026-06-03",
       "tags": "nursing psychiatric-mental health nursing psychiatric-mental health nursing",
       "readMinutes": 3
@@ -1795,6 +1867,7 @@
       "sourcePage": "https://openstax.org/details/books/psychology-2e",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychology2e_WEB.pdf",
       "updatedAt": "2026-09-21",
       "tags": "social sciences psychology psychology 2e",
       "readMinutes": 3
@@ -1817,6 +1890,7 @@
       "sourcePage": "https://openstax.org/details/books/química-2ed",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Quimica-2ed-WEB.pdf",
       "updatedAt": "2022-05-20",
       "tags": "ciencia química química 2ed",
       "readMinutes": 3
@@ -1839,6 +1913,7 @@
       "sourcePage": "https://openstax.org/details/books/química-comenzando-átomos-2ed",
       "licenseName": "Creative Commons",
       "licenseUrl": null,
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Quimica-comenzando-atomos-2ed-WEB_oNc32Lp.pdf",
       "updatedAt": "2022-05-20",
       "tags": "ciencia química química: comenzando con los átomos 2ed",
       "readMinutes": 3
@@ -1861,6 +1936,7 @@
       "sourcePage": "https://openstax.org/details/books/statistics",
       "licenseName": "Creative Commons Attribution License",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/high-school-statistics_-_WEB.pdf",
       "updatedAt": "2025-12-02",
       "tags": "math secondary math statistics",
       "readMinutes": 3
@@ -1883,6 +1959,7 @@
       "sourcePage": "https://openstax.org/details/books/us-history",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/US_History_-_WEB.pdf",
       "updatedAt": "2026-09-22",
       "tags": "humanities u.s. history u.s. history",
       "readMinutes": 3
@@ -1905,6 +1982,7 @@
       "sourcePage": "https://openstax.org/details/books/university-physics-volume-1",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-1_-_WEB.pdf",
       "updatedAt": "2026-09-30",
       "tags": "science physics university physics volume 1",
       "readMinutes": 3
@@ -1927,6 +2005,7 @@
       "sourcePage": "https://openstax.org/details/books/university-physics-volume-2",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-2_-_WEB.pdf",
       "updatedAt": "2026-09-08",
       "tags": "science physics university physics volume 2",
       "readMinutes": 3
@@ -1949,6 +2028,7 @@
       "sourcePage": "https://openstax.org/details/books/university-physics-volume-3",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-3_-_WEB.pdf",
       "updatedAt": "2026-09-08",
       "tags": "science physics university physics volume 3",
       "readMinutes": 3
@@ -1971,6 +2051,7 @@
       "sourcePage": "https://openstax.org/details/books/workplace-software-skills",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/Workplace_Software_and_Skills_-_WEB_IlfJtcP.pdf",
       "updatedAt": "2024-04-23",
       "tags": "business business technologies business technologies workplace software and skills",
       "readMinutes": 3
@@ -1993,6 +2074,7 @@
       "sourcePage": "https://openstax.org/details/books/world-history-volume-1",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/World_History_Volume_1-WEB.pdf",
       "updatedAt": "2026-05-27",
       "tags": "humanities world history world history, volume 1: to 1500",
       "readMinutes": 3
@@ -2015,6 +2097,7 @@
       "sourcePage": "https://openstax.org/details/books/world-history-volume-2",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/World_History_Volume_2-WEB.pdf",
       "updatedAt": "2023-12-13",
       "tags": "humanities world history world history, volume 2: from 1400",
       "readMinutes": 3
@@ -2037,6 +2120,7 @@
       "sourcePage": "https://openstax.org/details/books/writing-guide",
       "licenseName": "Creative Commons Attribution-NonCommercial-ShareAlike License",
       "licenseUrl": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+      "pdfUrl": "https://assets.openstax.org/oscms-prodcms/media/documents/WritingGuide-WEB.pdf",
       "updatedAt": "2026-01-27",
       "tags": "humanities writing guide with handbook writing guide with handbook",
       "readMinutes": 3

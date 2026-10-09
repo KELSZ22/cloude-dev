@@ -6,6 +6,7 @@ const unsupported = async (): Promise<never> => {
 
 export const pdfLibrary: PdfLibrary = {
   listIds: unsupported,
+  listSummaries: async () => [],
   read: async () => null,
   save: unsupported,
 };

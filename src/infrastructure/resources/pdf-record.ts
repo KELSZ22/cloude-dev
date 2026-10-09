@@ -9,8 +9,15 @@ export interface SavedPdfRecord {
   localUri?: string;
 }
 
+export interface SavedPdfSummary {
+  id: string;
+  title: string;
+  savedAt: string;
+}
+
 export interface PdfLibrary {
   listIds(): Promise<string[]>;
+  listSummaries(): Promise<SavedPdfSummary[]>;
   read(id: string): Promise<SavedPdfRecord | null>;
   save(record: SavedPdfRecord): Promise<void>;
 }

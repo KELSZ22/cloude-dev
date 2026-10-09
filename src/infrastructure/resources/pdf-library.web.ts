@@ -23,6 +23,12 @@ function openDatabase(): Promise<IDBDatabase> {
   });
 }
 
+function listRecords(): Promise<SavedPdfRecord[]> {
+  return withStore<SavedPdfRecord[]>("readonly", (store) => store.getAll()).then(
+    (records) => records ?? [],
+  );
+}
+
 function withStore<T>(
   mode: IDBTransactionMode,
   run: (store: IDBObjectStore) => IDBRequest<T>,
@@ -41,10 +47,16 @@ function withStore<T>(
 
 export const pdfLibrary: PdfLibrary = {
   async listIds() {
-    const records = await withStore<SavedPdfRecord[]>("readonly", (store) =>
-      store.getAll(),
-    );
-    return (records ?? []).map((record) => record.id);
+    const records = await listRecords();
+    return records.map((record) => record.id);
+  },
+  async listSummaries() {
+    const records = await listRecords();
+    return records.map((record) => ({
+      id: record.id,
+      title: record.title,
+      savedAt: record.savedAt,
+    }));
   },
   async read(id) {
     const key = pdfStorageKey(id);

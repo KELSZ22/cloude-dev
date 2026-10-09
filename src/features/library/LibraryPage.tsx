@@ -1,10 +1,12 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ReadingShelf } from "@/features/offline-reading/components/ReadingShelf";
+import { pdfLibrary } from "@/infrastructure/resources/pdf-library";
+import type { SavedPdfSummary } from "@/infrastructure/resources/pdf-record";
 import { FilterChips } from "@/shared/components/filter-chips";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
@@ -58,6 +60,16 @@ export default function LibraryPage() {
   const [documentIds, setDocumentIds] = useState(
     sampleDocuments.map((document) => document.id),
   );
+  const [savedPdfs, setSavedPdfs] = useState<SavedPdfSummary[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      void pdfLibrary
+        .listSummaries()
+        .then(setSavedPdfs)
+        .catch(() => setSavedPdfs([]));
+    }, []),
+  );
 
   const needle = query.trim().toLowerCase();
 
@@ -74,6 +86,10 @@ export default function LibraryPage() {
         .filter((document) => documentIds.includes(document.id))
         .filter((document) => matchesQuery(document.name, needle)),
     [documentIds, needle],
+  );
+  const localPdfs = useMemo(
+    () => savedPdfs.filter((pdf) => matchesQuery(pdf.title, needle)),
+    [needle, savedPdfs],
   );
   const bookmarks = useMemo(
     () =>
@@ -112,7 +128,7 @@ export default function LibraryPage() {
   const shelfEmpty =
     needle.length > 0 &&
     ((shelf === "packs" && packs.length === 0) ||
-      (shelf === "documents" && documents.length === 0) ||
+      (shelf === "documents" && documents.length === 0 && localPdfs.length === 0) ||
       (shelf === "bookmarks" && bookmarks.length === 0) ||
       (shelf === "history" && history.length === 0));
 
@@ -256,7 +272,27 @@ export default function LibraryPage() {
                   : undefined
               }
             />
-            {documents.length ? (
+            {localPdfs.map((pdf) => (
+              <DocumentRow
+                key={pdf.id}
+                document={{
+                  id: pdf.id,
+                  name: pdf.title,
+                  sizeMb: 0,
+                  addedAt: pdf.savedAt,
+                  kind: "pdf",
+                }}
+                editing={false}
+                onRemove={() => undefined}
+                meta={t("library.savedOn", {
+                  date: formatLibraryDate(pdf.savedAt),
+                })}
+                onPress={() =>
+                  router.push({ pathname: "/pdf/[id]", params: { id: pdf.id } })
+                }
+              />
+            ))}
+            {documents.length || localPdfs.length ? (
               documents.map((document) => (
                 <DocumentRow
                   key={document.id}
