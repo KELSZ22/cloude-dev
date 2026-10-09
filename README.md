@@ -80,6 +80,7 @@ Five tabs: Home, Search, Library, AI, Settings, behind a first-run onboarding fl
 
 - [Architecture](docs/ARCHITECTURE.md): ownership, layers, and next milestones.
 - [Knowledge packs and grounded answers](docs/KNOWLEDGE-PACKS.md): pack format, storage, ranking, evidence and citation rules.
+- [Floating AI assistant](docs/FLOATING-ASSISTANT.md): the bubble over other apps, screen analysis, permissions, privacy, and device test steps.
 - [Implementation status](docs/IMPLEMENTATION_STATUS.md): what has been verified, and how.
 - [Known limitations](docs/KNOWN-LIMITATIONS.md) and [offline verification](docs/OFFLINE-TEST.md) for device acceptance steps.
 - [Content and model licenses](docs/CONTENT-LICENSES.md).

@@ -10,7 +10,12 @@
 - Retrieval is keyword-based and English-only. Synonyms that appear in no passage find nothing.
 - An APK built with the model inside is about 600 MB and uses a further 529 MB on the device for its working copy. It shows no licence notice for the model yet.
 - Importing the model by hand is slow. The pinned SHA-256 is computed in JavaScript, which ran at about 0.5 MB/s in a development build on a Snapdragon 685 phone: roughly 18 minutes for the 529 MB file. The app must stay open with the screen on for the whole import. A small native hashing module would cut this to seconds.
-- The model unloads whenever the app leaves the foreground, so every session starts with a load.
+- The model unloads whenever the app leaves the foreground, so every session starts with a load. The exception is while the floating assistant is turned on, when it stays loaded so questions can be answered over other apps.
+- The floating assistant works only while Seekora is still running in the background. It does not start after a reboot, and phones that close background apps aggressively remove the bubble until Seekora is opened again.
+- Screen analysis reads words only, through on-device text recognition for Latin script. Pictures, video, charts, handwriting and other scripts are not understood, and screens that block capture come back empty. A screen that is mostly an image gives the model only button labels to work with.
+- Answers about a screen come from a 0.8B model reading recognised text. It can misread a page, and text on the page can still mislead it despite the prompt's separation of screen text from instructions.
+- The floating assistant has been run on an Android 17 emulator only; see [Floating AI assistant](FLOATING-ASSISTANT.md) for what was and was not exercised. Publishing to Google Play would need declarations for the overlay permission and the special-use foreground service.
+- In a development build, the first model load fetches llama.rn's JavaScript from the dev server. With a slow or stale dev server this can take over a minute, during which the Model screen and the floating chat both show "loading".
 - Do not read a picked file through an `expo-file-system` file handle on Android. In 57.0.7 the handle does not keep the system's file descriptor alive, and a long read fails with "Bad file descriptor". Copy the picked file into app storage with `File.copy()` first.
 - Answers are one paragraph, capped at 192 output tokens inside a 2048-token context.
 - Bundled packs are compiled into the JavaScript bundle. Importing packs from files, removing packs in the UI, document import, bookmarks, history, and collections are pending.

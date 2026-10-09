@@ -27,6 +27,7 @@ export const en = {
     onDeviceModel: "On-device model",
     knowledgePacks: "Knowledge Packs",
     sourcePassage: "Source passage",
+    floatingAssistant: "Floating AI Assistant",
   },
   settings: {
     title: "Settings",
@@ -47,6 +48,9 @@ export const en = {
     notInstalled: "Not installed",
     ready: "Ready",
     installed: "Installed",
+    floatingAssistant: "Floating AI Assistant",
+    on: "On",
+    off: "Off",
   },
   onboarding: {
     companionTitle: "Your Knowledge Companion",
@@ -302,6 +306,115 @@ export const en = {
       "Qwen3.5 0.8B is stored on this device. Load it to get explanations written from your offline library.",
     missingBody:
       "Import the selected Qwen3.5 GGUF from your device. No model is downloaded automatically.",
+  },
+  floating: {
+    introTitle: "Enable Floating Assistant",
+    introBody:
+      "Allow Seekora to display a floating assistant over other apps so you can access your offline AI companion while using your phone.",
+    featureBubble: "Floating bubble with the Seekora logo",
+    featureAsk: "Ask questions on any app",
+    featureAnalyze: "Analyze screen content, only when you ask",
+    featureOffline: "Works offline using the same AI model",
+    enable: "Enable Floating Assistant",
+    notNow: "Not Now",
+    permissionNote:
+      "Android will open \"Display over other apps\". Turn it on for Seekora, then come back here.",
+    permissionDenied:
+      "The permission was not granted, so the floating assistant stays off. You can keep using Seekora as usual.",
+    successTitle: "Floating Assistant Enabled",
+    successBody:
+      "You can now access Seekora on any app using the floating bubble.",
+    successBubble: "Floating bubble ready",
+    successDrag: "Draggable, and it remembers where you put it",
+    successModel: "Works with your offline AI model",
+    successScreen: "Screen analysis available, with your permission each time",
+    getStarted: "Get Started",
+    unavailableTitle: "Not available here",
+    unavailableBody:
+      "The floating assistant needs the Android app. It is not available in the web preview, or in a build made before this feature was added.",
+    statusOn: "On. The bubble stays on screen over other apps.",
+    statusOff: "Off",
+    turnOn: "Turn on floating assistant",
+    turnOff: "Turn off floating assistant",
+    permissionTitle: "Display over other apps",
+    permissionGranted: "Allowed",
+    permissionMissing: "Not allowed",
+    openPermission: "Open Android permission settings",
+    screenTitle: "About screen analysis",
+    screenBody:
+      "Seekora reads your screen only when you tap Analyze and approve Android's capture request. It takes one picture, reads the text on this device, and discards the picture. Nothing is uploaded or saved. Apps that block capture, such as password and payment screens, cannot be read. Only text is understood, not pictures or charts.",
+    modelTitle: "Same model, same phone",
+    modelBody:
+      "The assistant uses the on-device model you already set up and needs Seekora running in the background. If Seekora is closed, the bubble asks you to reopen it.",
+    resetBubble: "Reset bubble position",
+    clearContext: "Clear temporary screen context",
+    contextKept: "Text from your last screen capture is being kept in memory.",
+    contextNone: "No screen text is being kept.",
+    notificationsOff:
+      "Notifications are off for Seekora, so Android will not show the assistant's status notification. The bubble still works.",
+    overlayTitle: "Seekora AI",
+    bubbleLabel: "Open Seekora assistant",
+    greeting: "Hi! I'm Seekora.\nWhat can I help you understand?",
+    placeholder: "Ask anything...",
+    send: "Send",
+    stop: "Stop",
+    minimize: "Minimize",
+    close: "Turn off floating assistant",
+    actionAsk: "Ask a question",
+    actionAnalyze: "Analyze current screen",
+    actionExplain: "Explain this page",
+    actionSummarize: "Summarize content",
+    statusReady: "Offline model ready",
+    statusLoading: "Loading model...",
+    statusBusy: "Thinking...",
+    statusNotLoaded: "Model loads on your first question",
+    statusMissing: "Model not set up",
+    statusUnavailable: "Seekora is closed",
+    appClosed:
+      "Seekora is not running, so the assistant cannot answer. Open Seekora, then come back.",
+    openApp: "Open Seekora",
+    captureTitle: "Analyze this screen?",
+    captureBody:
+      "Seekora will take one picture of the screen, read its words on this device, and discard the picture. Only words are read, not pictures or video. Nothing is uploaded. Android will ask you to confirm.",
+    captureContinue: "Continue",
+    captureCancel: "Cancel",
+    screenAttached: "Screen text attached",
+    discard: "Discard",
+    menuOpen: "Open Seekora AI",
+    menuMoveLeft: "Move to left",
+    menuMoveRight: "Move to right",
+    menuClose: "Turn off",
+    notificationChannel: "Floating assistant",
+    notificationTitle: "Seekora floating assistant is on",
+    notificationText:
+      "Tap the bubble to ask a question. It never reads your screen unless you ask.",
+    notificationStop: "Turn off",
+    captureNotificationTitle: "Seekora is reading this screen",
+    captureNotificationText: "One capture, processed on this device.",
+    linesRead: "{{count}} lines",
+    captureReady:
+      "I read the words on your screen. I cannot see pictures or video. What would you like to know about the text?",
+    screenLimit:
+      "I can only read the words on the screen, not pictures, video or charts. For a general question, tap Discard and ask again.",
+    captureDenied: "Screen capture was cancelled, so nothing was read.",
+    captureFailed: "The screen could not be captured. Please try again.",
+    captureEmpty:
+      "I could not find readable text on that screen. It may be mostly pictures, or the app may block screen capture to protect its content.",
+    captureSparse:
+      "Only a little text was found. Pictures, charts and diagrams cannot be read, so my answer may miss things.",
+    screenDiscarded: "Screen text discarded.",
+    askExplain: "Explain what this screen says in simple terms.",
+    askSummarize: "Summarize the main points of this screen.",
+    modelMissing:
+      "The AI model is not set up yet. Open Seekora and set up the on-device model first.",
+    modelBusy:
+      "The model is busy or could not load. Please try again in a moment.",
+    busy: "I'm still answering the previous question.",
+    noAnswer: "I could not produce an answer. Please try rephrasing.",
+    stopped: "Stopped.",
+    failed: "Something went wrong while answering.",
+    memoryUnloaded:
+      "The model was unloaded to free memory. It loads again on your next question.",
   },
 } as const;
 

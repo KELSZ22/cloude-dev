@@ -84,7 +84,7 @@ export function tidyAnswer(raw: string): string {
  * Asks for one paragraph and stops the model when it starts a second. A small model often repeats
  * itself after finishing, and on a phone every extra token costs time and battery.
  */
-async function generateParagraph(generate: Generate, request: GenerationRequest): Promise<string> {
+export async function generateParagraph(generate: Generate, request: GenerationRequest): Promise<string> {
   const controller = new AbortController();
   const forward = () => controller.abort();
   if (request.signal?.aborted) controller.abort();

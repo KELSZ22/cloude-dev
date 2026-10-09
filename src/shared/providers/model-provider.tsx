@@ -22,6 +22,13 @@ interface ModelContextValue {
   testModel(): Promise<void>;
   /** Runs one generation on the loaded model. Rejects if the model is busy, not loaded, or cancelled. */
   generate(request: GenerationRequest): Promise<string>;
+  /** Loads the installed model if it is not loaded yet. Resolves false when there is no model or it cannot load now. */
+  ensureLoaded(): Promise<boolean>;
+  /**
+   * While held, leaving the foreground neither cancels work nor unloads the model. The floating
+   * assistant holds it, because it is used while another app is in front.
+   */
+  setBackgroundHold(hold: boolean): void;
   cancel(): Promise<void>;
   removeModel(): Promise<void>;
 }
@@ -40,6 +47,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
   const active = useRef<AbortController | null>(null);
   const phase = useRef<Operation>('restoring');
   const mounted = useRef(true);
+  const backgroundHold = useRef(false);
   const native = Platform.OS === 'android' || Platform.OS === 'ios';
 
   const updateOperation = (next: Operation) => { phase.current = next; setOperation(next); };
@@ -64,7 +72,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
     });
     const subscription = AppState.addEventListener('change', (next) => {
       // The system picker backgrounds Android while selection is open; no model is loaded then.
-      if (next !== 'active' && phase.current !== 'choosing') {
+      if (next !== 'active' && phase.current !== 'choosing' && !backgroundHold.current) {
         active.current?.abort();
         void engine.unload().then(() => {
           if (!disposed) setState(engine.getState());
@@ -153,6 +161,16 @@ export function ModelProvider({ children }: PropsWithChildren) {
     }
   }
 
+  async function ensureLoaded() {
+    const status = engine.getState().status;
+    if (status === 'ready' || status === 'generating') return true;
+    if (!installed || phase.current) return false;
+    await loadModel();
+    return engine.getState().status === 'ready';
+  }
+
+  function setBackgroundHold(hold: boolean) { backgroundHold.current = hold; }
+
   async function cancel() {
     active.current?.abort();
     try { await engine.cancel(); }
@@ -169,7 +187,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
   }
 
   return <ModelContext.Provider value={{ installed, state, operation, progress, output, error, native,
-    importModel, loadModel, unloadModel, testModel, generate, cancel, removeModel }}>{children}</ModelContext.Provider>;
+    importModel, loadModel, unloadModel, testModel, generate, ensureLoaded, setBackgroundHold, cancel, removeModel }}>{children}</ModelContext.Provider>;
 }
 
 export function useModel() {

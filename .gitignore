@@ -52,3 +52,10 @@ example
 /content/openstax/files/
 *.part
 __pycache__/
+
+
+# Android generated build files
+**/android/build/
+**/android/.gradle/
+**/build/
+**/.gradle/
