@@ -31,7 +31,7 @@ export default function ModelPage() {
           onPress={() => { void model.unloadModel(); }} />
         <ActionButton label="Remove model files" destructive disabled={!model.native || busy} onPress={confirmRemove} />
       </StatusCard>
-      {busy && <StatusCard title="Working locally" description={
+      {busy && <StatusCard variant="ai" title="Working locally" description={
         model.operation === 'importing' || model.operation === 'verifying'
           ? `Checking model integrity · ${Math.round(model.progress * 100)}%`
           : model.operation === 'preparing' ? 'Setting up the built-in model. This takes a moment the first time.'
@@ -44,7 +44,7 @@ export default function ModelPage() {
           onPress={() => { void model.cancel(); }} />
       </StatusCard>}
       {model.error && <ThemedText themeColor="error" accessibilityRole="alert">{model.error}</ThemedText>}
-      <StatusCard title="Test local inference" description="This sends a fixed instruction to your on-device model. It is a runtime check, not a source-grounded research answer.">
+      <StatusCard variant="ai" title="Test local inference" description="This sends a fixed instruction to your on-device model. It is a runtime check, not a source-grounded research answer.">
         <ActionButton label="Run local test" disabled={busy || model.state.status !== 'ready'} onPress={() => { void model.testModel(); }} />
         {model.output !== '' && <ThemedText selectable>{model.output}</ThemedText>}
       </StatusCard>

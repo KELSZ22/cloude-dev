@@ -6,10 +6,15 @@ import { useTheme } from '@/shared/hooks/use-theme';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
 
-export function StatusCard({ title, description, children }: PropsWithChildren<{ title: string; description: string }>) {
+export function StatusCard({ title, description, children, variant = 'default' }: PropsWithChildren<{
+  title: string;
+  description: string;
+  variant?: 'default' | 'ai';
+}>) {
   const colors = useTheme();
+  const type = variant === 'ai' ? 'backgroundSelected' : 'backgroundElement';
   return (
-    <ThemedView type="backgroundElement" style={[styles.card, { borderColor: colors.separator }]}>
+    <ThemedView type={type} style={[styles.card, { borderColor: colors.border }]}>
       <ThemedText type="subtitle">{title}</ThemedText>
       <ThemedText themeColor="textSecondary">{description}</ThemedText>
       {children}

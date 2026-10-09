@@ -16,5 +16,5 @@ export function ModelStatus() {
     : state.status === 'ready' || state.status === 'generating' ? 'Qwen3.5 0.8B is running on this device. Answers are written from your offline library.'
     : installed ? 'Qwen3.5 0.8B is stored on this device. Load it to get explanations written from your offline library.'
     : 'Import the selected Qwen3.5 GGUF from your device. No model is downloaded automatically.';
-  return <StatusCard title={title} description={description} />;
+  return <StatusCard variant="ai" title={title} description={description} />;
 }

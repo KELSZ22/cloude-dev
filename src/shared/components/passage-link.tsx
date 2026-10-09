@@ -16,7 +16,7 @@ export function PassageLink({ chunkId, title, detail, excerpt, marker }: {
       <Pressable accessibilityRole="link" accessibilityLabel={`Open source passage: ${title}`}>
         {({ pressed }) => (
           // The look lives on an inner view: on Android, Link's asChild drops a style function set on the Pressable.
-          <View style={[styles.card, { borderColor: colors.separator, backgroundColor: colors.backgroundElement, opacity: pressed ? 0.65 : 1 }]}>
+          <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.backgroundElement, opacity: pressed ? 0.65 : 1 }]}>
             <ThemedText type="smallBold" themeColor="tint">{heading}</ThemedText>
             {detail ? <ThemedText type="small" themeColor="textSecondary">{detail}</ThemedText> : null}
             {excerpt ? <ThemedText type="small" numberOfLines={3}>{excerpt}</ThemedText> : null}

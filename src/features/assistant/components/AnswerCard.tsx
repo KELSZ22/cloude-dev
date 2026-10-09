@@ -18,7 +18,7 @@ export function AnswerCard({ result }: { result: AskResult }) {
   return (
     <>
       {result.status === 'answered'
-        ? <StatusCard title="Answer" description="Generated on this device from the sources below. Check the passages for the exact wording.">
+        ? <StatusCard variant="ai" title="Answer" description="Generated on this device from the sources below. Check the passages for the exact wording.">
             <ThemedText selectable>{result.text}</ThemedText>
           </StatusCard>
         : <StatusCard title="Model not loaded" description="These passages match your question. Load the on-device model to get an explanation written from them." />}

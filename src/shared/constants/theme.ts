@@ -3,59 +3,97 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-import { Platform } from 'react-native';
+import { Platform, type TextStyle } from "react-native";
 
 export const Colors = {
   light: {
-    text: '#111827',
-    background: '#F8FAFC',
-    backgroundElement: '#ffffff',
-    backgroundSelected: '#EFF6FF',
-    textSecondary: '#64748B',
-    tint: '#1D4ED8',
-    separator: '#E2E8F0',
-    brand: '#0D1B2A',
-    error: '#DC2626',
+    text: "#111827",
+    /** Light teal tint — secondary / page backgrounds */
+    background: "#E5F8F4",
+    backgroundSecondary: "#E5F8F4",
+    /** White surface — cards, sheets and input backgrounds */
+    backgroundElement: "#FFFFFF",
+    /** Warm canvas and colored accents for the illustrated dashboard. */
+    backgroundWarm: "#FFFCF5",
+    dashboardBorder: "#BEDDDD",
+    accentBlue: "#009AAF",
+    accentGold: "#E9A008",
+    /** Light green tint — selected cards and AI panels */
+    backgroundSelected: "#E4F5EE",
+    /** Captions, metadata and hints */
+    textSecondary: "#64748B",
+    tint: "#047857",
+    /** Primary pressed — pressed buttons */
+    tintPressed: "#087A55",
+    /** Input fields, dividers and cards */
+    border: "#E2E8F0",
+    /** Disabled controls */
+    disabled: "#CBD5E1",
+    brand: "#0D1B2A",
+    error: "#DC2626",
   },
   dark: {
-    text: '#ffffff',
-    background: '#0D1B2A',
-    backgroundElement: '#162638',
-    backgroundSelected: '#17325C',
-    textSecondary: '#A7B5C6',
-    tint: '#7DB4FF',
-    separator: '#304257',
-    brand: '#F8FAFC',
-    error: '#F87171',
+    text: "#ffffff",
+    background: "#0D1B2A",
+    backgroundSecondary: "#122A28",
+    backgroundElement: "#162638",
+    backgroundWarm: "#0D1B2A",
+    dashboardBorder: "#365653",
+    accentBlue: "#007F94",
+    accentGold: "#B77905",
+    backgroundSelected: "#193C35",
+    textSecondary: "#A7B5C6",
+    tint: "#34D399",
+    tintPressed: "#087A55",
+    border: "#304257",
+    disabled: "#475569",
+    brand: "#F8FAFC",
+    error: "#F87171",
   },
 } as const;
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
+/**
+ * Noto Sans ships one file per weight, and SDK 57 registers each file as its
+ * own family, so a weight selects a family name instead of a `fontWeight`.
+ * Keep this in sync with the faces loaded in `src/app/_layout.tsx`.
+ */
+export const NotoSans = {
+  400: "NotoSans_400Regular",
+  500: "NotoSans_500Medium",
+  600: "NotoSans_600SemiBold",
+  700: "NotoSans_700Bold",
+} as const;
+
+export const Fonts = {
+  sans: NotoSans[400],
+  medium: NotoSans[500],
+  semibold: NotoSans[600],
+  bold: NotoSans[700],
+  mono: Platform.select({
+    ios: "ui-monospace",
+    web: "ui-monospace, SFMono-Regular, Menlo, monospace",
+    default: "monospace",
+  }),
+} as const;
+
+const WEIGHTS = [400, 500, 600, 700] as const;
+
+/** Maps any React Native `fontWeight` onto the closest Noto Sans face. */
+export function fontFamilyForWeight(weight: TextStyle["fontWeight"]) {
+  const requested =
+    weight === undefined || weight === "normal"
+      ? 400
+      : weight === "bold"
+        ? 700
+        : Number(weight);
+  if (!Number.isFinite(requested)) return NotoSans[400];
+  const nearest = WEIGHTS.reduce((closest, step) =>
+    Math.abs(step - requested) < Math.abs(closest - requested) ? step : closest,
+  );
+  return NotoSans[nearest];
+}
 
 export const Spacing = {
   half: 2,
@@ -67,4 +105,9 @@ export const Spacing = {
   six: 64,
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80, web: 72, default: 56 });
+export const BottomTabInset = Platform.select({
+  ios: 50,
+  android: 80,
+  web: 72,
+  default: 56,
+});

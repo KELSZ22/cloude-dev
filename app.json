@@ -67,7 +67,8 @@
           "sha256": "fb89581c3863314f6e6e1810f11b0bbb30a07315e7b1229a5c7db10fb0100ca6",
           "sizeBytes": 529297312
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,

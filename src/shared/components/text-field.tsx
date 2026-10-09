@@ -8,7 +8,7 @@ export function TextField({ label, style, multiline, ...rest }: TextInputProps &
   return (
     <TextInput accessibilityLabel={label} multiline={multiline} placeholderTextColor={colors.textSecondary}
       style={[styles.field, multiline && styles.multiline,
-        { color: colors.text, borderColor: colors.separator, backgroundColor: colors.backgroundElement }, style]}
+        { color: colors.text, borderColor: colors.border, backgroundColor: colors.backgroundElement }, style]}
       {...rest} />
   );
 }
