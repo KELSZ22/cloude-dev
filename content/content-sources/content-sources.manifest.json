@@ -1,0 +1,698 @@
+{
+  "manifestVersion": "1.0.0",
+  "manifestType": "aralsearch-ai/content-source-registry",
+  "app": "AralSearch AI",
+  "createdOn": "2026-10-09",
+  "purpose": "Discover legally downloadable reference materials and build offline knowledge packs; this is a source registry, not a pre-downloaded book list.",
+  "defaults": {
+    "language": "en",
+    "countryContext": "PH",
+    "preferredFormats": [
+      "application/pdf",
+      "text/html",
+      "application/epub+zip",
+      "text/plain",
+      "application/xml"
+    ],
+    "preferredContent": "native_pdf",
+    "minimumFreeStorageBytes": 268435456,
+    "maxSingleFileBytes": 104857600,
+    "maxConcurrentDownloads": 2,
+    "retryCount": 3,
+    "retryBackoffMs": [
+      1500,
+      4000,
+      10000
+    ],
+    "networkPolicy": "wifi_preferred",
+    "verifyHttpStatus": true,
+    "validateActualMimeType": true,
+    "rejectHtmlErrorPagesSavedAsPdf": true,
+    "checksumIfAvailable": [
+      "sha256",
+      "sha1",
+      "md5"
+    ],
+    "storageRoot": "knowledge-packs/",
+    "storageFilePattern": "{categoryId}/{sourceId}/{sourceDocumentId}/{safeFilename}",
+    "indexTextForOfflineSearch": true,
+    "attributionRequired": true,
+    "neverAssumeFreelyReadableEqualsFreelyRedistributable": true,
+    "embeddingIntoDistributedApkRequiresRightsReview": true,
+    "allowUserInitiatedDownloads": true,
+    "autoMirrorToAppOwnedServer": false
+  },
+  "contentRecordFields": {
+    "required": [
+      "id",
+      "sourceId",
+      "categoryId",
+      "title",
+      "sourcePageUrl",
+      "mediaType",
+      "rightsStatus"
+    ],
+    "optional": [
+      "authors",
+      "description",
+      "language",
+      "publishedAt",
+      "updatedAt",
+      "directDownloadUrl",
+      "fileSizeBytes",
+      "checksum",
+      "licenseName",
+      "licenseUrl",
+      "attribution",
+      "isOpenAccess",
+      "canRedistribute",
+      "localUri",
+      "downloadedAt",
+      "originalRevisionId",
+      "contentHash"
+    ],
+    "rightsStatusEnum": [
+      "verified_redistributable",
+      "personal_download_only",
+      "review_required",
+      "not_downloadable"
+    ],
+    "syncStatusEnum": [
+      "discovered",
+      "metadata_verified",
+      "ready_to_download",
+      "downloading",
+      "downloaded",
+      "indexed",
+      "failed"
+    ]
+  },
+  "sources": [
+    {
+      "id": "wikipedia",
+      "name": "Wikipedia (MediaWiki APIs)",
+      "type": "encyclopedia",
+      "officialDocs": "https://www.mediawiki.org/wiki/API:REST_API/Reference",
+      "discovery": {
+        "method": "GET",
+        "endpoint": "https://en.wikipedia.org/w/api.php",
+        "queryTemplate": {
+          "action": "query",
+          "list": "categorymembers",
+          "cmtitle": "Category:{wikiCategory}",
+          "cmtype": "page",
+          "cmlimit": "50",
+          "format": "json",
+          "formatversion": "2"
+        },
+        "itemsPath": "query.categorymembers",
+        "pageTitleField": "title",
+        "nextCursorPath": "continue.cmcontinue",
+        "nextCursorParam": "cmcontinue",
+        "categoryNamesAreSearchSeedsNotGuaranteedTaxonomyMatches": true
+      },
+      "item": {
+        "method": "GET",
+        "endpointTemplate": "https://en.wikipedia.org/w/rest.php/v1/page/{encodeURIComponent(pageTitle)}/with_html",
+        "htmlPath": "html",
+        "titlePath": "title",
+        "licensePath": "license",
+        "revisionPath": "latest.id"
+      },
+      "download": {
+        "nativePdf": false,
+        "formats": [
+          "text/html"
+        ],
+        "strategy": "cache_html_for_offline_reading",
+        "pdfFallback": "convert_html_to_pdf_in_app_or_backend_only_if_license_compliant"
+      },
+      "rights": {
+        "default": "review_required",
+        "note": "Wikipedia article text is usually CC BY-SA; verify per page and preserve author/source attribution and share-alike conditions."
+      },
+      "client": {
+        "recommendedHeaderName": "Api-User-Agent",
+        "recommendedHeaderValueTemplate": "AralSearchAI/1.0 (YOUR_PUBLIC_CONTACT_URL_OR_EMAIL)"
+      }
+    },
+    {
+      "id": "internet_archive",
+      "name": "Internet Archive",
+      "type": "book_and_document_repository",
+      "officialDocs": "https://archive.org/developers/metadata.html",
+      "discovery": {
+        "method": "GET",
+        "endpoint": "https://archive.org/advancedsearch.php",
+        "queryTemplate": {
+          "q": "mediatype:texts AND ({archiveQuery})",
+          "fl[]": [
+            "identifier",
+            "title",
+            "creator",
+            "date",
+            "year",
+            "language",
+            "rights",
+            "licenseurl",
+            "subject"
+          ],
+          "rows": "25",
+          "page": "1",
+          "output": "json"
+        },
+        "itemsPath": "response.docs",
+        "identifierPath": "identifier",
+        "pageParam": "page"
+      },
+      "item": {
+        "method": "GET",
+        "endpointTemplate": "https://archive.org/metadata/{encodeURIComponent(identifier)}",
+        "filesPath": "files",
+        "rightsPaths": [
+          "metadata.licenseurl",
+          "metadata.rights"
+        ],
+        "titlePath": "metadata.title"
+      },
+      "download": {
+        "nativePdf": true,
+        "formats": [
+          "application/pdf"
+        ],
+        "fileSelection": {
+          "filenameRegex": "(?i)\\.pdf$",
+          "formatLabels": [
+            "Text PDF",
+            "PDF",
+            "Additional Text PDF"
+          ],
+          "skipFilesWhenPrivateOrUnavailable": true
+        },
+        "urlTemplate": "https://archive.org/download/{encodeURIComponent(identifier)}/{encodePathSegments(file.name)}",
+        "verifyResponseContentType": "application/pdf",
+        "verifyPdfSignature": "%PDF-"
+      },
+      "rights": {
+        "default": "review_required",
+        "note": "Archive holdings have different copyright, lending, and access conditions. Only download files exposed for public download; verify license for redistribution."
+      }
+    },
+    {
+      "id": "openalex",
+      "name": "OpenAlex",
+      "type": "academic_discovery",
+      "officialDocs": "https://help.openalex.org/api/",
+      "discovery": {
+        "method": "GET",
+        "endpoint": "https://api.openalex.org/works",
+        "queryTemplate": {
+          "search": "{query}",
+          "filter": "is_oa:true",
+          "per_page": "25",
+          "page": "1"
+        },
+        "itemsPath": "results",
+        "nextPageParam": "page"
+      },
+      "item": {
+        "workIdPath": "id",
+        "titlePath": "title",
+        "authorsPath": "authorships",
+        "pdfUrlCandidatePaths": [
+          "best_oa_location.pdf_url",
+          "primary_location.pdf_url"
+        ],
+        "licenseCandidatePaths": [
+          "best_oa_location.license",
+          "primary_location.license"
+        ],
+        "landingPageUrlPath": "best_oa_location.landing_page_url"
+      },
+      "download": {
+        "nativePdf": "only_when_work_has_pdf_url",
+        "formats": [
+          "application/pdf"
+        ],
+        "strategy": "use_only_actual_pdf_url_from_work_metadata",
+        "neverFabricatePdfFromDoi": true
+      },
+      "authentication": {
+        "production": "free API key recommended; store in backend or secure service, not in distributed APK",
+        "freeAnonymousDemoRequests": "limited"
+      },
+      "rights": {
+        "default": "review_required",
+        "note": "Open access is not automatically permission to redistribute or bundle. Check the license on the selected hosting location."
+      }
+    },
+    {
+      "id": "arxiv",
+      "name": "arXiv",
+      "type": "preprint_repository",
+      "officialDocs": "https://info.arxiv.org/help/api/user-manual.html",
+      "discovery": {
+        "method": "GET",
+        "endpoint": "https://export.arxiv.org/api/query",
+        "queryTemplate": {
+          "search_query": "{arxivQuery}",
+          "start": "0",
+          "max_results": "25"
+        },
+        "responseType": "application/atom+xml",
+        "itemsPath": "feed.entry",
+        "pdfLinkSelection": "entry.link with type=application/pdf or title=pdf"
+      },
+      "download": {
+        "nativePdf": true,
+        "formats": [
+          "application/pdf"
+        ],
+        "strategy": "use_pdf_link_in_atom_entry",
+        "fallbackUrlTemplate": "https://arxiv.org/pdf/{arxivId}"
+      },
+      "rateLimits": {
+        "minimumMsBetweenApiRequests": 3000,
+        "maxConcurrentApiRequests": 1
+      },
+      "rights": {
+        "default": "personal_download_only",
+        "note": "Users may access papers for their own reading/research. arXiv generally does NOT authorize apps to mirror and redistribute PDFs; confirm each paper license."
+      }
+    },
+    {
+      "id": "gutendex",
+      "name": "Gutendex / Project Gutenberg",
+      "type": "public_domain_ebook_catalog",
+      "officialDocs": "https://github.com/garethbjohnson/gutendex",
+      "discovery": {
+        "method": "GET",
+        "endpoint": "https://gutendex.com/books/",
+        "queryTemplate": {
+          "topic": "{gutendexTopic}",
+          "languages": "en",
+          "copyright": "false"
+        },
+        "itemsPath": "results",
+        "nextCursorPath": "next",
+        "pagination": "follow_next_url"
+      },
+      "item": {
+        "titlePath": "title",
+        "authorsPath": "authors",
+        "formatsPath": "formats",
+        "rightsField": "copyright"
+      },
+      "download": {
+        "nativePdf": "only_if_formats_contains_application/pdf",
+        "preferredFormatMimeKeys": [
+          "application/pdf",
+          "text/html",
+          "application/epub+zip",
+          "text/plain; charset=utf-8"
+        ],
+        "strategy": "select_available_url_from_formats_object",
+        "pdfFallback": "convert_available_html_or_epub_to_pdf_if_user_needs_pdf_and_rights_allow"
+      },
+      "rights": {
+        "default": "review_required",
+        "note": "copyright=false is a U.S. public-domain signal, not a guarantee for all countries. Project Gutenberg attribution/trademark conditions may also apply."
+      },
+      "deploymentNote": "For production, consider self-hosting Gutendex or caching catalog metadata rather than relying exclusively on the demo host."
+    },
+    {
+      "id": "europe_pmc",
+      "name": "Europe PMC",
+      "type": "health_and_life_science_articles",
+      "officialDocs": "https://europepmc.org/RestfulWebService",
+      "discovery": {
+        "method": "GET",
+        "endpoint": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+        "queryTemplate": {
+          "query": "({query}) AND OPEN_ACCESS:y",
+          "format": "json",
+          "resultType": "core",
+          "pageSize": "25"
+        },
+        "itemsPath": "resultList.result",
+        "nextCursorPath": "nextCursorMark",
+        "nextCursorParam": "cursorMark"
+      },
+      "item": {
+        "openAccessFlagPath": "isOpenAccess",
+        "pmcidPath": "pmcid",
+        "fullTextXmlEndpointTemplate": "https://www.ebi.ac.uk/europepmc/webservices/rest/{pmcid}/fullTextXML"
+      },
+      "download": {
+        "nativePdf": "not_directly_via_this_search_endpoint",
+        "formats": [
+          "application/xml",
+          "application/pdf"
+        ],
+        "strategy": "for_xml_use_fullTextXML; for publisher PDFs use confirmed links from core metadata or Europe PMC OA bulk PDF collection, verify rights and URL",
+        "neverInferPdfUrlFromPmcid": true
+      },
+      "rights": {
+        "default": "review_required",
+        "note": "Each article in the OA subset has its own reuse license; check the license before distribution."
+      }
+    },
+    {
+      "id": "openstax",
+      "name": "OpenStax",
+      "type": "curated_open_textbooks_non_api",
+      "officialDocs": "https://openstax.org/subjects",
+      "discovery": {
+        "method": "manual_catalog",
+        "url": "https://openstax.org/subjects",
+        "note": "Not presented as an unrestricted public search/download API. Curate book records and official download links from book detail pages."
+      },
+      "download": {
+        "nativePdf": true,
+        "formats": [
+          "application/pdf"
+        ],
+        "strategy": "curate_pdf_link_for_each_title_from_official_book_page"
+      },
+      "rights": {
+        "default": "review_required",
+        "note": "Review the exact edition and current OpenStax license, including any noncommercial limits, before app distribution."
+      }
+    }
+  ],
+  "categories": [
+    {
+      "id": "general-knowledge",
+      "name": "General Knowledge",
+      "description": "Broad reference topics, societies and everyday learning.",
+      "topics": [
+        "geography",
+        "language",
+        "civics",
+        "mathematics",
+        "everyday facts"
+      ],
+      "providers": [
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "Geography"
+        },
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:encyclopedias"
+        },
+        {
+          "sourceId": "gutendex",
+          "gutendexTopic": "reference"
+        },
+        {
+          "sourceId": "openstax",
+          "catalogTopics": [
+            "College Success",
+            "Philosophy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "science",
+      "name": "Science",
+      "description": "Physics, chemistry, biology, astronomy and scientific methods.",
+      "topics": [
+        "physics",
+        "biology",
+        "chemistry",
+        "astronomy",
+        "mathematics"
+      ],
+      "providers": [
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:science"
+        },
+        {
+          "sourceId": "openstax",
+          "catalogTopics": [
+            "Physics",
+            "Biology",
+            "Chemistry"
+          ]
+        },
+        {
+          "sourceId": "arxiv",
+          "arxivQuery": "cat:physics.gen-ph"
+        },
+        {
+          "sourceId": "openalex",
+          "query": "natural sciences open access textbook"
+        },
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "Science"
+        }
+      ]
+    },
+    {
+      "id": "technology",
+      "name": "Technology",
+      "description": "Computing, programming, AI, engineering and digital systems.",
+      "topics": [
+        "computer science",
+        "artificial intelligence",
+        "programming",
+        "engineering",
+        "cybersecurity"
+      ],
+      "providers": [
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:computers"
+        },
+        {
+          "sourceId": "arxiv",
+          "arxivQuery": "cat:cs.AI"
+        },
+        {
+          "sourceId": "openalex",
+          "query": "computer science artificial intelligence"
+        },
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "Technology"
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "name": "History",
+      "description": "Past civilizations, timelines, national and world events.",
+      "topics": [
+        "world history",
+        "Philippine history",
+        "civilizations",
+        "historical documents"
+      ],
+      "providers": [
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:history"
+        },
+        {
+          "sourceId": "gutendex",
+          "gutendexTopic": "history"
+        },
+        {
+          "sourceId": "openstax",
+          "catalogTopics": [
+            "World History",
+            "U.S. History"
+          ]
+        },
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "History"
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Health",
+      "description": "Human biology, public health, nutrition and wellbeing.",
+      "topics": [
+        "anatomy",
+        "public health",
+        "nutrition",
+        "epidemiology"
+      ],
+      "providers": [
+        {
+          "sourceId": "europe_pmc",
+          "query": "public health OR nutrition"
+        },
+        {
+          "sourceId": "openstax",
+          "catalogTopics": [
+            "Anatomy and Physiology",
+            "Microbiology"
+          ]
+        },
+        {
+          "sourceId": "openalex",
+          "query": "public health nutrition epidemiology"
+        },
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:health"
+        },
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "Health"
+        }
+      ],
+      "safetyNote": "Educational information only; do not generate medical diagnoses or recommendations from an unsupervised offline corpus."
+    },
+    {
+      "id": "business",
+      "name": "Business",
+      "description": "Economics, management, entrepreneurship and finance.",
+      "topics": [
+        "economics",
+        "marketing",
+        "finance",
+        "management",
+        "entrepreneurship"
+      ],
+      "providers": [
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:business"
+        },
+        {
+          "sourceId": "openstax",
+          "catalogTopics": [
+            "Principles of Economics",
+            "Principles of Management"
+          ]
+        },
+        {
+          "sourceId": "gutendex",
+          "gutendexTopic": "economics"
+        },
+        {
+          "sourceId": "openalex",
+          "query": "business entrepreneurship finance"
+        },
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "Business"
+        }
+      ]
+    },
+    {
+      "id": "arts-and-culture",
+      "name": "Arts and Culture",
+      "description": "Literature, music, visual arts, cultural practices and creativity.",
+      "topics": [
+        "art history",
+        "literature",
+        "music",
+        "film",
+        "traditions"
+      ],
+      "providers": [
+        {
+          "sourceId": "gutendex",
+          "gutendexTopic": "literature"
+        },
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:art"
+        },
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "Culture"
+        },
+        {
+          "sourceId": "openalex",
+          "query": "arts culture visual arts"
+        }
+      ]
+    },
+    {
+      "id": "environment",
+      "name": "Environment",
+      "description": "Ecology, climate change, conservation and sustainability.",
+      "topics": [
+        "ecology",
+        "climate change",
+        "conservation",
+        "biodiversity"
+      ],
+      "providers": [
+        {
+          "sourceId": "internet_archive",
+          "archiveQuery": "subject:environment"
+        },
+        {
+          "sourceId": "openalex",
+          "query": "climate change ecology conservation"
+        },
+        {
+          "sourceId": "europe_pmc",
+          "query": "environmental health OR ecology"
+        },
+        {
+          "sourceId": "wikipedia",
+          "wikiCategory": "Environment"
+        },
+        {
+          "sourceId": "openstax",
+          "catalogTopics": [
+            "Environmental Science"
+          ]
+        }
+      ]
+    }
+  ],
+  "downloadFlow": [
+    "Load manifest and choose category.",
+    "Call each selected providers discovery endpoint using URL-encoded category query fields. Never interpolate untrusted values without encoding.",
+    "Normalize metadata into content records; de-duplicate by DOI, ISBN, or canonical URL.",
+    "Fetch item details where necessary and resolve the actual downloadable PDF URL. A search result or webpage alone is not a PDF.",
+    "Show citation, original link and license status; permit user download only when allowed and exposed by the provider.",
+    "Download to app-private persistent storage with cancellation, resumable transfer when supported, size and MIME/PDF signature checks, and checksum verification.",
+    "Extract text locally for offline keyword and vector indexing; preserve page numbers where extraction supports them.",
+    "Store the file path, content metadata, source URL, license, attribution, checksum and revision for offline reading.",
+    "On update, re-fetch metadata online and ask before replacing large downloaded assets."
+  ],
+  "recommendedKnowledgePackFormat": {
+    "manifestFilename": "pack.json",
+    "filesDirectory": "documents/",
+    "indexDirectory": "index/",
+    "fields": [
+      "packId",
+      "categoryId",
+      "packVersion",
+      "createdAt",
+      "documents",
+      "totalBytes",
+      "attributions"
+    ],
+    "suggestedDocumentFields": [
+      "id",
+      "title",
+      "sourceId",
+      "sourcePageUrl",
+      "localPath",
+      "format",
+      "sizeBytes",
+      "sha256",
+      "licenseName",
+      "licenseUrl",
+      "attribution",
+      "language"
+    ]
+  },
+  "sourcesLastDocumentationReview": "2026-10-09",
+  "disclaimer": "Sample searches are starter filters; verify relevance and API responses at runtime. No actual downloadable items or PDF rights have been prevalidated by this manifest."
+}
