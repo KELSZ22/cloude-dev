@@ -26,7 +26,8 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Fonts, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
-import { useTranslation } from "@/shared/i18n";
+import { useTranslation, type MessageKey } from "@/shared/i18n";
+import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { useKnowledge } from "@/shared/providers/knowledge-provider";
 import { useModel } from "@/shared/providers/model-provider";
 import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
@@ -34,6 +35,7 @@ import type { SourceCitation } from "@/shared/types/knowledge";
 
 import { ChatThread, type ChatMessage } from "./components/ChatThread";
 import { useGroundedAnswer, type AskOutcome } from "./hooks/useGroundedAnswer";
+import { useSpeechInput } from "./hooks/useSpeechInput";
 
 export function AssistantSheet() {
   const open = useAssistantSheetStore((state) => state.open);
@@ -45,6 +47,7 @@ export function AssistantSheet() {
   const { width } = useWindowDimensions();
   const reducedMotion = useReducedMotion();
   const { t } = useTranslation();
+  const appLocale = useOnboardingStore((state) => state.language);
   const model = useModel();
   const knowledge = useKnowledge();
   const { ask, stop, busy, streamed, libraryReady } = useGroundedAnswer();
@@ -53,6 +56,8 @@ export function AssistantSheet() {
   const [draft, setDraft] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [pageById, setPageById] = useState<Record<string, number>>({});
+  const [voiceNotice, setVoiceNotice] = useState<string | null>(null);
+  const draftRef = useRef("");
   const progress = useSharedValue(0);
   const travel = useSharedValue(width);
   const scrollRef = useRef<ScrollView>(null);
@@ -62,6 +67,22 @@ export function AssistantSheet() {
   const submitRef = useRef<(text: string) => Promise<void>>(async () => {});
   const tRef = useRef(t);
   const openRef = useRef(open);
+
+  useEffect(() => {
+    draftRef.current = draft;
+  }, [draft]);
+
+  const { listening, toggle: toggleVoice } = useSpeechInput({
+    locale: appLocale,
+    active: open && presented,
+    disabled: busy,
+    getPrefix: () => draftRef.current,
+    onTranscript: (text) => {
+      setVoiceNotice(null);
+      setDraft(text.slice(0, 400));
+    },
+    onError: (key: MessageKey) => setVoiceNotice(t(key)),
+  });
 
   if (open && !presented) setPresented(true);
 
@@ -220,6 +241,16 @@ export function AssistantSheet() {
               )}
             </ScrollView>
 
+            {voiceNotice ? (
+              <ThemedText
+                themeColor="textSecondary"
+                accessibilityRole="alert"
+                style={styles.voiceNotice}
+              >
+                {voiceNotice}
+              </ThemedText>
+            ) : null}
+
             <View
               style={[
                 styles.composer,
@@ -229,17 +260,36 @@ export function AssistantSheet() {
                 },
               ]}
             >
-              <View
-                accessibilityLabel={t("assistant.voiceSoon")}
-                accessibilityState={{ disabled: true }}
-                style={[styles.mic, { borderColor: colors.dashboardBorder, backgroundColor: colors.backgroundElement }]}
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={
+                  listening ? t("assistant.stopVoice") : t("assistant.startVoice")
+                }
+                accessibilityState={{ disabled: busy, selected: listening }}
+                disabled={busy}
+                onPress={() => {
+                  void toggleVoice();
+                }}
+                style={[
+                  styles.mic,
+                  {
+                    borderColor: listening ? colors.tint : colors.dashboardBorder,
+                    backgroundColor: listening
+                      ? colors.backgroundSelected
+                      : colors.backgroundElement,
+                  },
+                ]}
               >
                 <SymbolView
-                  name={{ ios: "mic", android: "mic", web: "mic" }}
+                  name={
+                    listening
+                      ? { ios: "mic.fill", android: "mic", web: "mic" }
+                      : { ios: "mic", android: "mic", web: "mic" }
+                  }
                   size={20}
-                  tintColor={colors.text}
+                  tintColor={listening ? colors.tint : colors.text}
                 />
-              </View>
+              </Pressable>
               <TextInput
                 value={draft}
                 onChangeText={setDraft}
@@ -306,6 +356,12 @@ const styles = StyleSheet.create({
   back: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
   title: { fontSize: 18, lineHeight: 24 },
   scroll: { flexGrow: 1, paddingBottom: Spacing.four },
+  voiceNotice: {
+    fontSize: 13,
+    lineHeight: 18,
+    paddingHorizontal: Spacing.three,
+    paddingBottom: Spacing.one,
+  },
   empty: { paddingHorizontal: Spacing.four, paddingTop: Spacing.five, fontSize: 15, lineHeight: 22 },
   composer: {
     flexDirection: "row",
