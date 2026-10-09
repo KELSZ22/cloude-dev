@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -11,6 +11,8 @@ import {
   installedSizeMb,
 } from "@/shared/constants/sample-library";
 import { usePackDownloadStore } from "@/shared/stores/pack-download-store";
+import { contentSources } from "@/shared/constants/content-sources";
+import { useOfflineReadingStore } from "@/shared/stores/offline-reading-store";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTranslation } from "@/shared/i18n";
 import { useModel } from "@/shared/providers/model-provider";
@@ -45,6 +47,10 @@ export default function SettingsPage() {
   const resetTour = useOnboardingStore((state) => state.resetTour);
   const { installed, state } = useModel();
   const installedPacks = usePackDownloadStore((store) => store.installed);
+  const readings = useOfflineReadingStore((store) => store.items);
+  const hydrateReading = useOfflineReadingStore((store) => store.hydrate);
+  useEffect(() => { void hydrateReading(); }, [hydrateReading]);
+  const readingBytes = readings.reduce((total, item) => total + item.sizeBytes, 0);
 
   const appearanceOptions = [
     { id: APPEARANCE_IDS[0], label: t("settings.matchDevice") },
@@ -113,9 +119,13 @@ export default function SettingsPage() {
             }}
             label={t("settings.manageStorage")}
             value={t("settings.storageUsed", {
-              size: formatMegabytes(installedSizeMb(installedPacks)),
+              size: contentSources.openStax
+                ? formatMegabytes(installedSizeMb(installedPacks))
+                : `${Math.ceil(readingBytes / 1024)} KB`,
             })}
-            onPress={() => router.navigate("/packs")}
+            onPress={() => contentSources.openStax
+              ? router.navigate("/packs")
+              : router.navigate({ pathname: "/(tabs)/library", params: { shelf: "reading" } })}
           />
           <SettingsRow
             icon={{

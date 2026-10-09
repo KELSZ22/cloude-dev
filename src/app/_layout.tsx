@@ -63,17 +63,32 @@ export default function RootLayout() {
             name="onboarding"
             options={{ headerShown: false, animation: "fade" }}
           />
-          <Stack.Screen name="setup" options={{ title: t("stack.offlineSetup") }} />
+          <Stack.Screen
+            name="setup"
+            options={{ title: t("stack.offlineSetup") }}
+          />
           <Stack.Screen
             name="import"
             options={{ title: t("stack.importDocument") }}
           />
-          <Stack.Screen name="model" options={{ title: t("stack.onDeviceModel") }} />
+          <Stack.Screen
+            name="model"
+            options={{ title: t("stack.onDeviceModel") }}
+          />
           <Stack.Screen
             name="packs/index"
             options={{ title: t("stack.knowledgePacks") }}
           />
           <Stack.Screen name="article/[id]" options={{ headerShown: false }} />
+          <Stack.Screen name="learn" options={{ title: t("reading.title") }} />
+          <Stack.Screen
+            name="read/[id]"
+            options={{ title: t("reading.reader") }}
+          />
+          <Stack.Screen
+            name="pdf/[id]"
+            options={{ title: t("search.pdfReader") }}
+          />
         </Stack>
       </ModelProvider>
     </ThemeProvider>

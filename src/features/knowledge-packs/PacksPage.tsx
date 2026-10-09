@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 import { knowledgePackById, knowledgePacks } from "@/features/library/catalog";
@@ -6,8 +6,10 @@ import { DownloadComplete } from "@/features/library/components/DownloadComplete
 import { DownloadView } from "@/features/library/components/DownloadView";
 import { PackCard } from "@/shared/components/pack-card";
 import { Page } from "@/shared/components/page";
+import { ActionButton } from "@/shared/components/action-button";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
+import { contentSources } from "@/shared/constants/content-sources";
 import { openStaxInitialResources } from "@/shared/content/openstax/initial-resources";
 import { useTranslation } from "@/shared/i18n";
 import { usePackDownloadStore } from "@/shared/stores/pack-download-store";
@@ -23,6 +25,10 @@ function formatMegabytesFromBytes(bytes: number) {
 }
 
 export default function PacksPage() {
+  return contentSources.openStax ? <OpenStaxPacksPage /> : <Redirect href="/learn" />;
+}
+
+function OpenStaxPacksPage() {
   const { t } = useTranslation();
   const {
     packId,
@@ -101,6 +107,7 @@ export default function PacksPage() {
         </ThemedText>
       </View>
       {error ? <PressableError message={error} onDismiss={clearError} /> : null}
+      <ActionButton label={t("reading.browse")} onPress={() => router.push("/learn")} />
       <ScrollView
         contentContainerStyle={styles.list}
         showsVerticalScrollIndicator={false}

@@ -1,6 +1,90 @@
 import type { DeepString, Dict } from "./en";
 
 export const fil = {
+  reading: {
+    onlineTitle: "Maghanap online",
+    onlineDescription:
+      "Tumuklas ng mga artikulo sa Wikipedia at i-download ang gusto mong itabi.",
+    onlineResults: "Available online · {{count}} artikulo",
+    downloaded: "Na-download sa iyong Aklatan",
+    exploreLabel: "Tuklasin ang kaalaman",
+    exploreTitle: "Magbasa at matuto",
+    setupTitle: "Basahin ang mga download kahit offline",
+    setupBody:
+      "Mag-download ng artikulo sa Wikipedia habang may internet. Buksan ito sa Aklatan → Babasahin kahit offline. Lokal na mahahanap ang mga na-save na pamagat at buod.",
+    noBookmarks: "Wala pang na-save na bookmark.",
+    noHistory: "Wala pang kasaysayan ng pagbabasa.",
+    title: "Bukas na kaalaman",
+    reader: "Offline na mambabasa",
+    shelf: "Babasahin",
+    savedTitle: "Na-save para sa offline na pagbabasa",
+    browse: "Maghanap ng kaalaman sa Wikipedia",
+    description:
+      "Mag-download ng mga artikulo habang may internet. Basahin dito anumang oras, kahit offline.",
+    textEdition:
+      "Bersyong teksto: kasama ang teksto at mga pamagat ng seksyon. Sine-save ang mga larawan ng Wikipedia kapag available; maaaring wala pa ring talahanayan at ilang formula.",
+    illustratedEdition:
+      "May larawan: teksto ng artikulo at mga figure ng Wikipedia na naka-save sa device. Maaaring wala pa ring talahanayan at ilang formula.",
+    browserNote:
+      "Sa web, nasa browser na ito ang mga download. Buksan ang app bago mag-offline; hindi pa suportado ang offline na pag-reload. Mawawala ang mga download kapag binura ang site data.",
+    placeholder: "Maghanap ng paksa, hal. potosintesis",
+    search: "Maghanap sa Wikipedia",
+    searching: "Naghahanap sa Wikipedia…",
+    connectionHint:
+      "Kailangan ng internet para maghanap at mag-download. Nasa device na ito ang mga na-save na babasahin.",
+    download: "I-download para mabasa offline",
+    downloading: "Dina-download ang artikulo…",
+    saving: "Sine-save sa device na ito…",
+    available: "Mababasa offline · bersyong teksto",
+    availableIllustrated: "Mababasa offline · may larawan",
+    figure: "Larawan sa artikulo",
+    figureSource: "Pinagmulan at lisensya ng larawan",
+    figures: "{{count}} larawan",
+    read: "Basahin offline",
+    readTitle: "Basahin ang {{title}} offline",
+    minutes: "{{count}} minutong pagbabasa",
+    openLibrary: "Buksan ang aking mga babasahin",
+    openStax: "Tingnan ang mga textbook pack ng OpenStax",
+    empty:
+      "Wala ka pang na-save na babasahin. Maghanap sa Wikipedia at mag-download ng artikulo para simulan ang iyong offline na aklatan.",
+    noResults: "Walang nahanap na artikulo. Subukan ang ibang paksa o wika.",
+    noSavedMatches: "Walang na-save na artikulong tugma sa paghahanap.",
+    loading: "Binubuksan ang lokal na mga babasahin…",
+    retry: "Subukan muli",
+    remove: "Alisin ang download",
+    removeTitle: "Alisin ang download ng {{title}}",
+    removePrompt:
+      "Alisin ang artikulong ito sa device? Kailangan ng internet para i-download itong muli.",
+    missing:
+      "Hindi naka-save sa device na ito ang artikulo. I-download muna ito mula sa Bukas na kaalaman.",
+    introduction: "Panimula",
+    contents: "Mga nilalaman",
+    largeText: "Mas malaking teksto",
+    normalText: "Normal na teksto",
+    sectionProgress: "Seksyon {{current}} sa {{total}}",
+    next: "Susunod na seksyon →",
+    previous: "← Nakaraang seksyon",
+    downloadedOn: "Na-download noong {{date}}",
+    sourceTitle: "Pinagmulan at lisensya",
+    credit:
+      "Teksto ng mga kontribyutor ng Wikipedia sa ilalim ng Creative Commons Attribution-ShareAlike 4.0. Na-save na kopya ito at hindi awtomatikong nag-a-update.",
+    original: "Tingnan ang pinagmulang rebisyon",
+    contributors: "Kasaysayan ng mga kontribyutor",
+    sourceOnline:
+      "Kailangan ng internet para buksan ang mga link ng pinagmulan at lisensya.",
+    errors: {
+      network:
+        "Hindi makakonekta sa Wikipedia. Suriin ang koneksyon at subukan muli. Nasa Aklatan pa rin ang mga na-save na artikulo.",
+      unavailable:
+        "Hindi makapagbigay ang Wikipedia ng nababasang teksto para sa artikulo o paghahanap. Subukan ang ibang paksa.",
+      tooLarge:
+        "Masyadong malaki ang artikulong ito para i-download bilang teksto. Pumili ng mas maikling artikulo.",
+      storage:
+        "Hindi ma-access ang lokal na imbakan. Suriin ang bakanteng espasyo at pahintulot sa storage, at subukan muli.",
+      cancelled:
+        "Kinansela ang download. Maaari mong subukan muli anumang oras.",
+    },
+  },
   common: {
     close: "Isara",
     back: "Bumalik",
@@ -128,8 +212,10 @@ export const fil = {
     documents: "Mga Dokumento",
     packs: "Mga Pack",
     clear: "Burahin ang hinahanap",
-    oneResult: "1 resulta (offline)",
-    manyResults: "{{count}} resulta (offline)",
+    oneResult: "Mga 1 resulta (offline)",
+    manyResults: "Mga {{count}} resulta (offline)",
+    aboutOne: "Mga 1 resulta",
+    aboutResults: "Mga {{count}} resulta",
     empty: "Walang tumutugma sa iyong offline na aklatan.",
     packReady: "Pack · handa nang i-download",
     readMeta: "{{kind}} · {{minutes}} min na babasahin",
@@ -137,6 +223,19 @@ export const fil = {
     article: "Artikulo",
     document: "Dokumento",
     pack: "Pack",
+    resourcesTitle: "Bukas na sanggunian",
+    resourcesSearching: "Hinahanap ang mga bukas na sanggunian…",
+    resourcesCount: "{{count}} bukas na sanggunian",
+    resourcesEmpty: "Walang bukas na sanggunian na tumugma.",
+    resourcesOffline: "Kailangan ng internet para sa mga bukas na sanggunian.",
+    resourcesFailed: "Hindi nahanap ang mga bukas na sanggunian. Subukan muli.",
+    resourcesPartial: "May ilang pinagmulan na hindi tumugon.",
+    resourcesMore: "Magpakita pa ng sanggunian",
+    resourcesOpen: "Buksan ang pinagmulan",
+    resourcesPdf: "Buksan ang PDF",
+    accessOpen: "Bukas na access",
+    accessRestricted: "Limitado",
+    accessUnknown: "Hindi kumpirmado ang access",
   },
   article: {
     notFound: "Hindi nahanap ang artikulo",

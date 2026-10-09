@@ -1,9 +1,10 @@
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { ReadingShelf } from "@/features/offline-reading/components/ReadingShelf";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import {
@@ -14,6 +15,7 @@ import {
   sampleHistory,
 } from "@/shared/constants/sample-library";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
+import { contentSources } from "@/shared/constants/content-sources";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 import { usePackDownloadStore } from "@/shared/stores/pack-download-store";
@@ -26,34 +28,36 @@ import {
   SectionHeader,
 } from "./components";
 
-type ShelfId = "packs" | "documents" | "bookmarks" | "history";
+type ShelfId = "reading" | "packs" | "documents" | "bookmarks" | "history";
 
 export default function LibraryPage() {
   const colors = useTheme();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { shelf: requestedShelf } = useLocalSearchParams<{ shelf?: string }>();
   const shelves = [
-    { id: "packs" as const, label: t("library.packs") },
+    { id: "reading" as const, label: t("reading.shelf") },
+    ...(contentSources.openStax ? [{ id: "packs" as const, label: t("library.packs") }] : []),
     { id: "documents" as const, label: t("library.documents") },
     { id: "bookmarks" as const, label: t("library.bookmarks") },
     { id: "history" as const, label: t("library.history") },
   ];
-  const [shelf, setShelf] = useState<ShelfId>("packs");
+  const shelf = shelves.find((item) => item.id === requestedShelf)?.id ?? "reading";
   const [editing, setEditing] = useState(false);
   const installed = usePackDownloadStore((state) => state.installed);
-  const catalogPacks = libraryPacksForInstalled(installed);
+  const catalogPacks = contentSources.openStax ? libraryPacksForInstalled(installed) : [];
   const [hiddenPackIds, setHiddenPackIds] = useState<string[]>([]);
   const [documentIds, setDocumentIds] = useState(
     sampleDocuments.map((document) => document.id),
   );
 
   const packs = catalogPacks.filter((pack) => !hiddenPackIds.includes(pack.id));
-  const documents = sampleDocuments.filter((document) =>
+  const documents = (contentSources.openStax ? sampleDocuments : []).filter((document) =>
     documentIds.includes(document.id),
   );
 
   function selectShelf(next: ShelfId) {
-    setShelf(next);
+    router.setParams({ shelf: next });
     setEditing(false);
   }
 
@@ -95,6 +99,7 @@ export default function LibraryPage() {
           { paddingBottom: BottomTabInset + Spacing.four },
         ]}
       >
+        {shelf === "reading" ? <ReadingShelf /> : null}
         {shelf === "packs" ? (
           <View style={styles.section}>
             <SectionHeader
@@ -158,7 +163,8 @@ export default function LibraryPage() {
         {shelf === "bookmarks" ? (
           <View style={styles.section}>
             <SectionHeader title={t("library.savedPassages")} />
-            {sampleBookmarks.map((bookmark) => (
+            {!contentSources.openStax ? <ThemedText themeColor="textSecondary">{t("reading.noBookmarks")}</ThemedText> : null}
+            {(contentSources.openStax ? sampleBookmarks : []).map((bookmark) => (
               <NoteRow
                 key={bookmark.id}
                 icon={{
@@ -177,7 +183,8 @@ export default function LibraryPage() {
         {shelf === "history" ? (
           <View style={styles.section}>
             <SectionHeader title={t("library.recentlyViewed")} />
-            {sampleHistory.map((entry) => (
+            {!contentSources.openStax ? <ThemedText themeColor="textSecondary">{t("reading.noHistory")}</ThemedText> : null}
+            {(contentSources.openStax ? sampleHistory : []).map((entry) => (
               <NoteRow
                 key={entry.id}
                 icon={{

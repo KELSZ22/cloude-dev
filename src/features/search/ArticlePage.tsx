@@ -1,5 +1,5 @@
 import { Image } from "expo-image";
-import { router, useLocalSearchParams } from "expo-router";
+import { Redirect, router, useLocalSearchParams } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useState } from "react";
 import { Pressable, ScrollView, Share, StyleSheet, View } from "react-native";
@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
+import { contentSources } from "@/shared/constants/content-sources";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
 
@@ -20,6 +21,10 @@ const kindKey: Record<SearchKind, MessageKey> = {
 };
 
 export default function ArticlePage() {
+  return contentSources.openStax ? <OpenStaxArticlePage /> : <Redirect href="/learn" />;
+}
+
+function OpenStaxArticlePage() {
   const colors = useTheme();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();

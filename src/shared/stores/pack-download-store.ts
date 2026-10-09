@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { contentSources } from "@/shared/constants/content-sources";
 
 import {
   cancelActivePackDownload,
@@ -49,6 +50,7 @@ export const usePackDownloadStore = create<PackDownloadStore>()(
       totalBytes: 0,
       speedBps: 0,
       start: (packId) => {
+        if (!contentSources.openStax) return;
         if (get().installed[packId]) return;
         if (get().packId === packId) {
           if (get().paused) get().togglePause();
