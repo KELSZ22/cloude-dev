@@ -11,16 +11,16 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import {
-  providerLabel,
-  RESEARCH_PROVIDER_IDS,
-  searchResources,
-} from "@/features/resources";
 import type {
   AccessStatus,
   FederatedSearchResult,
   ResourceKind,
   ResourceResult,
+} from "@/features/resources";
+import {
+  providerLabel,
+  RESEARCH_PROVIDER_IDS,
+  searchResources,
 } from "@/features/resources";
 import { ActionButton } from "@/shared/components/action-button";
 import { ThemedText } from "@/shared/components/themed-text";
@@ -109,7 +109,10 @@ export default function SearchPage() {
       setPage(next);
       setItems((current) => {
         const seen = new Set(current.map((item) => item.id));
-        return [...current, ...next.results.filter((item) => !seen.has(item.id))];
+        return [
+          ...current,
+          ...next.results.filter((item) => !seen.has(item.id)),
+        ];
       });
     } catch {
       setFailed(true);
@@ -119,17 +122,23 @@ export default function SearchPage() {
   }
 
   const results = useMemo(
-    () => items.filter((item) => matchesFilter(item, filter)).map((item) => toCard(item, t)),
+    () =>
+      items
+        .filter((item) => matchesFilter(item, filter))
+        .map((item) => toCard(item, t)),
     [filter, items, t],
   );
 
   const searched = submitted.length >= 2;
   const offline = page?.networkUnavailable ?? false;
-  const partial = page?.providers.some((status) => status.state === "error") ?? false;
+  const partial =
+    page?.providers.some((status) => status.state === "error") ?? false;
   const countLabel =
     results.length === 1
       ? t(offline ? "search.oneResult" : "search.aboutOne")
-      : t(offline ? "search.manyResults" : "search.aboutResults", { count: results.length });
+      : t(offline ? "search.manyResults" : "search.aboutResults", {
+          count: results.length,
+        });
   const message = failed
     ? t("search.resourcesFailed")
     : offline
@@ -207,8 +216,12 @@ export default function SearchPage() {
                 style={[
                   styles.chip,
                   {
-                    backgroundColor: selected ? colors.tint : colors.backgroundElement,
-                    borderColor: selected ? colors.tint : colors.dashboardBorder,
+                    backgroundColor: selected
+                      ? colors.tint
+                      : colors.backgroundElement,
+                    borderColor: selected
+                      ? colors.tint
+                      : colors.dashboardBorder,
                   },
                 ]}
               >
@@ -226,7 +239,11 @@ export default function SearchPage() {
           <View style={styles.countRow}>
             {offline ? (
               <SymbolView
-                name={{ ios: "wifi.slash", android: "wifi_off", web: "wifi_off" }}
+                name={{
+                  ios: "wifi.slash",
+                  android: "wifi_off",
+                  web: "wifi_off",
+                }}
                 size={16}
                 tintColor={colors.tint}
               />
@@ -248,7 +265,10 @@ export default function SearchPage() {
           </View>
         ) : null}
         {message ? (
-          <ThemedText accessibilityRole="alert" style={[styles.empty, { color: colors.error }]}>
+          <ThemedText
+            accessibilityRole="alert"
+            style={[styles.empty, { color: colors.error }]}
+          >
             {message}
           </ThemedText>
         ) : null}
@@ -258,13 +278,19 @@ export default function SearchPage() {
               {t("search.resourcesEmpty")}
             </ThemedText>
           ) : (
-            results.map((result) => <ResultCard key={result.id} result={result} />)
+            results.map((result) => (
+              <ResultCard key={result.id} result={result} />
+            ))
           )}
         </View>
         {page?.nextCursor && !loading ? (
           <View style={styles.more}>
             <ActionButton
-              label={loadingMore ? t("search.resourcesSearching") : t("search.resourcesMore")}
+              label={
+                loadingMore
+                  ? t("search.resourcesSearching")
+                  : t("search.resourcesMore")
+              }
               disabled={loadingMore}
               onPress={() => void loadMore()}
             />
@@ -278,7 +304,8 @@ export default function SearchPage() {
 function matchesFilter(item: ResourceResult, filter: FilterId) {
   if (filter === "all") return true;
   if (filter === "pack") return false;
-  if (filter === "document") return item.kind === "book" || item.kind === "report";
+  if (filter === "document")
+    return item.kind === "book" || item.kind === "report";
   return isArticleKind(item.kind);
 }
 
@@ -296,7 +323,10 @@ function toCard(
   t: (key: MessageKey, vars?: Record<string, string | number>) => string,
 ): SearchResult {
   const document = item.kind === "book" || item.kind === "report";
-  const source = [item.provenance ?? providerLabel(item.provider), ...(item.alsoFoundAt ?? []).map(providerLabel)]
+  const source = [
+    item.provenance ?? providerLabel(item.provider),
+    ...(item.alsoFoundAt ?? []).map(providerLabel),
+  ]
     .filter(Boolean)
     .join(" · ");
   const authors = item.authors.slice(0, 3).join(", ");
