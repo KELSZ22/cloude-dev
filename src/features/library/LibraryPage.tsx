@@ -1,5 +1,6 @@
+import { useNavigation } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -16,7 +17,9 @@ import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 
 import { knowledgePacks, type PackCategory } from "./catalog";
+import { DownloadComplete } from "./components/DownloadComplete";
 import { DownloadView } from "./components/DownloadView";
+import { ExplorePack } from "./components/ExplorePack";
 import { PackCard } from "./components/PackCard";
 import { useDownloadStore } from "./download-store";
 
@@ -33,17 +36,21 @@ type FilterId = (typeof filters)[number]["id"];
 export default function LibraryPage() {
   const colors = useTheme();
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
   const searchRef = useRef<TextInput>(null);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterId>("all");
   const [focusedPackId, setFocusedPackId] = useState<string | null>(null);
+  const [exploreId, setExploreId] = useState<string | null>(null);
   const packId = useDownloadStore((state) => state.packId);
   const progress = useDownloadStore((state) => state.progress);
   const paused = useDownloadStore((state) => state.paused);
   const installed = useDownloadStore((state) => state.installed);
+  const finishedId = useDownloadStore((state) => state.finishedId);
   const start = useDownloadStore((state) => state.start);
   const togglePause = useDownloadStore((state) => state.togglePause);
   const cancel = useDownloadStore((state) => state.cancel);
+  const dismissFinished = useDownloadStore((state) => state.dismissFinished);
 
   const packs = useMemo(() => {
     const needle = query.trim().toLowerCase();
@@ -59,6 +66,47 @@ export default function LibraryPage() {
   const focused = knowledgePacks.find(
     (pack) => pack.id === focusedPackId && pack.id === packId,
   );
+  const finished = knowledgePacks.find((pack) => pack.id === finishedId);
+  const exploring = knowledgePacks.find((pack) => pack.id === exploreId);
+
+  useEffect(() => {
+    navigation.setOptions({
+      tabBarStyle: finished
+        ? { display: "none" }
+        : {
+            backgroundColor: colors.backgroundElement,
+            borderTopColor: colors.border,
+          },
+    });
+  }, [colors.backgroundElement, colors.border, finished, navigation]);
+
+  if (exploring) {
+    return (
+      <ThemedView
+        style={[styles.screen, { paddingTop: insets.top + Spacing.two }]}
+      >
+        <ExplorePack pack={exploring} onBack={() => setExploreId(null)} />
+      </ThemedView>
+    );
+  }
+
+  if (finished) {
+    return (
+      <ThemedView
+        style={[styles.screen, { paddingTop: insets.top + Spacing.two }]}
+      >
+        <DownloadComplete
+          pack={finished}
+          onBack={dismissFinished}
+          onViewLibrary={dismissFinished}
+          onExplore={() => {
+            setExploreId(finished.id);
+            dismissFinished();
+          }}
+        />
+      </ThemedView>
+    );
+  }
 
   return (
     <ThemedView style={styles.screen}>

@@ -9,6 +9,7 @@ export type KnowledgePackCard = {
   articles: number;
   sizeMb: number;
   description: string;
+  highlights: readonly string[];
   image: ImageSource;
 };
 
@@ -20,6 +21,7 @@ export const knowledgePacks: readonly KnowledgePackCard[] = [
     articles: 1850,
     sizeMb: 450,
     description: "A comprehensive collection covering multiple topics.",
+    highlights: ["World facts", "People and places", "Everyday science"],
     image: require("@/assets/catalog/castle.jpg"),
   },
   {
@@ -28,7 +30,9 @@ export const knowledgePacks: readonly KnowledgePackCard[] = [
     category: "science",
     articles: 2430,
     sizeMb: 620,
-    description: "Discover the wonders of our natural world, from ecosystems to space exploration.",
+    description:
+      "Discover the wonders of our natural world, from ecosystems to space exploration.",
+    highlights: ["Ecosystems", "Weather and climate", "Space exploration"],
     image: require("@/assets/catalog/earth.jpg"),
   },
   {
@@ -38,6 +42,11 @@ export const knowledgePacks: readonly KnowledgePackCard[] = [
     articles: 1240,
     sizeMb: 320,
     description: "Explore important events that shaped our world.",
+    highlights: [
+      "Ancient civilizations",
+      "Empires and trade",
+      "Modern history",
+    ],
     image: require("@/assets/catalog/colosseum.jpg"),
   },
   {
@@ -47,6 +56,7 @@ export const knowledgePacks: readonly KnowledgePackCard[] = [
     articles: 960,
     sizeMb: 280,
     description: "From innovations to digital life.",
+    highlights: ["Inventions", "Computing", "How the internet works"],
     image: require("@/assets/catalog/city.jpg"),
   },
 ];

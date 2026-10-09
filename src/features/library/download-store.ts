@@ -5,9 +5,11 @@ type DownloadStore = {
   progress: number;
   paused: boolean;
   installed: Record<string, boolean>;
+  finishedId: string | null;
   start: (packId: string) => void;
   togglePause: () => void;
   cancel: () => void;
+  dismissFinished: () => void;
 };
 
 let timer: ReturnType<typeof setInterval> | null = null;
@@ -23,13 +25,14 @@ export const useDownloadStore = create<DownloadStore>((set, get) => ({
   progress: 0,
   paused: false,
   installed: {},
+  finishedId: null,
   start: (packId) => {
     if (get().installed[packId]) return;
     if (get().packId === packId) {
-      set({ paused: false });
+      set({ paused: false, finishedId: null });
       return;
     }
-    set({ packId, progress: 0.56, paused: false });
+    set({ packId, progress: 0.56, paused: false, finishedId: null });
     if (timer) return;
     timer = setInterval(() => {
       const { packId: active, paused, progress } = get();
@@ -40,6 +43,7 @@ export const useDownloadStore = create<DownloadStore>((set, get) => ({
           progress: 1,
           packId: null,
           paused: false,
+          finishedId: active,
           installed: { ...state.installed, [active]: true },
         }));
         stopTimer();
@@ -53,4 +57,5 @@ export const useDownloadStore = create<DownloadStore>((set, get) => ({
     stopTimer();
     set({ packId: null, progress: 0, paused: false });
   },
+  dismissFinished: () => set({ finishedId: null }),
 }));
