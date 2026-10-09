@@ -1,15 +1,9 @@
-# Built-in model (optional)
+# Local model reference
 
-Put the pinned model file here to build an app that carries it inside the APK:
+This directory may hold a developer's local copy of `qwen3.5-0.8b-Q4_K_M.gguf` for manual import or desktop testing. The weights are git-ignored and are never packaged into the APK.
 
-```
-bundled-model/qwen3.5-0.8b-Q4_K_M.gguf
-```
+Users download Qwen directly from **Set up your offline assistant** during onboarding, or from **Settings → AI Model** later. The app verifies and stores the file on the device; it can then answer offline.
 
-Then run `bunx expo prebuild --platform android --no-install` and build as usual. On first launch the app copies the model into its own storage, so users skip the import step.
+The Android config plugin removes the old generated model asset during prebuild and excludes GGUF files from APK assets. It preserves any original file here. Run `bunx expo prebuild --platform android --no-install --no-clean` before building an existing generated Android project.
 
-- The file must be the exact pinned model. The build plugin checks its size and SHA-256 and stops if they differ. See [docs/LOCAL-MODEL.md](../docs/LOCAL-MODEL.md) for the download link and checksum.
-- The file is git-ignored. Never commit it: it is 529 MB.
-- Without the file, the app builds normally and asks the user to import the model.
-- An APK with the model inside is about 600 MB, and the app needs another 529 MB on the device for its working copy.
-- The model is Apache-2.0. When you share an APK that contains it, include the licence notice from the model's Hugging Face page.
+See [local model provisioning](../docs/LOCAL-MODEL.md) for the pinned download, checksum, and runtime checks.

@@ -21,7 +21,7 @@ export function DashboardHero() {
   return (
     <View style={[styles.hero, { height }]}>
       <Image
-        source={require("@/assets/dashboard/dashboard.png")}
+        source={require("@/assets/dashboard/dashboard.jpg")}
         contentFit="cover"
         contentPosition="center"
         accessible={false}

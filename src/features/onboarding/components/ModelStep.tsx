@@ -1,5 +1,5 @@
 import { SymbolView } from "expo-symbols";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 import { StateFigure } from "@/shared/components/state-figure";
 import { ThemedText } from "@/shared/components/themed-text";
@@ -17,7 +17,7 @@ const FACTS: MessageKey[] = [
   "onboarding.modelFactRemovable",
 ];
 
-const megabytes = Math.round(localModel.sizeBytes / (1024 * 1024)).toString();
+const megabytes = Math.round(localModel.sizeBytes / 1_000_000);
 
 export function ModelStep() {
   const colors = useTheme();
@@ -25,15 +25,26 @@ export function ModelStep() {
   const next = useOnboardingStore((state) => state.next);
   const model = useModel();
 
-  const working =
-    model.operation === "preparing" || model.operation === "importing";
+  const busy = model.operation !== null;
+  const downloading = model.operation === "downloading";
+  const verifying = model.operation === "importing" || model.operation === "verifying";
+  const working = downloading || verifying;
+  const canCancel = busy && model.operation !== "restoring" &&
+    model.operation !== "removing" && model.operation !== "unloading";
+  const percent = Math.round(Math.min(1, Math.max(0, model.progress)) * 100);
   const ready = model.installed !== null;
-  const tone = ready ? "done" : working ? "active" : "cost";
+  const tone = busy ? "active" : ready ? "done" : "cost";
+  const caption = downloading
+    ? t("model.downloading", { percent })
+    : verifying ? t("model.checking", { percent })
+    : model.operation === "restoring" ? t("model.restoring")
+    : busy ? t("model.setupInProgress")
+    : ready ? t("onboarding.modelReadyBody") : t("onboarding.modelOnce");
 
   function primary() {
+    if (busy) return;
     if (ready) return next();
-    if (model.hasBundled) return void model.setupBundledModel();
-    void model.importModel();
+    void model.downloadModel();
   }
 
   return (
@@ -42,36 +53,31 @@ export function ModelStep() {
       title={t("onboarding.modelTitle")}
       body={t("onboarding.modelBody")}
       primaryLabel={
-        ready
+        busy ? t("model.setupInProgress") : ready
           ? t("common.continue")
-          : model.hasBundled
-            ? t("onboarding.modelSetUp")
-            : t("onboarding.modelChooseFile")
+          : t(model.error ? "model.retryDownload" : "model.download", { size: megabytes })
       }
       onPrimary={primary}
-      primaryDisabled={working || !model.native}
-      secondaryLabel={ready || working ? undefined : t("onboarding.notNow")}
-      onSecondary={ready || working ? undefined : next}
+      primaryDisabled={busy || (!ready && !model.native)}
+      backDisabled={busy}
+      secondaryLabel={canCancel ? t("model.cancelOperation") : !busy && !ready ? t("onboarding.notNow") : undefined}
+      onSecondary={canCancel ? () => { void model.cancel(); } : !busy && !ready ? next : undefined}
     >
-      <View style={styles.figure}>
+      <View
+        style={styles.figure}
+        accessible={working}
+        accessibilityRole={working ? "progressbar" : undefined}
+        accessibilityLabel={working ? caption : undefined}
+        accessibilityValue={working ? { min: 0, max: 100, now: percent } : undefined}
+      >
         <StateFigure
           tone={tone}
           value={
-            ready
-              ? t("onboarding.modelReady")
-              : working
-                ? `${Math.round(model.progress * 100)}`
-                : megabytes
+            working ? String(percent) : ready ? t("onboarding.modelReady") : String(megabytes)
           }
-          unit={ready ? undefined : working ? "%" : t("onboarding.megabytes")}
-          caption={
-            ready
-              ? t("onboarding.modelReadyBody")
-              : working
-                ? t("onboarding.modelCopying")
-                : t("onboarding.modelOnce")
-          }
-          progress={working ? model.progress : null}
+          unit={working ? "%" : ready ? undefined : t("onboarding.megabytes")}
+          caption={caption}
+          progress={working ? percent / 100 : null}
         />
       </View>
 
@@ -109,6 +115,26 @@ export function ModelStep() {
         </View>
       </View>
 
+      {!ready ? (
+        <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
+          {t("onboarding.modelLater")}
+        </ThemedText>
+      ) : null}
+      {model.native && !ready ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t("model.importGguf")}
+          accessibilityState={{ disabled: busy }}
+          disabled={busy}
+          onPress={() => { void model.importModel(); }}
+          style={[styles.importAction, busy && styles.disabled]}
+        >
+          <ThemedText type="smallBold" themeColor="tint">
+            {t("onboarding.modelImport")}
+          </ThemedText>
+        </Pressable>
+      ) : null}
+
       {!model.native ? (
         <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
           {t("onboarding.modelWebNote")}
@@ -141,4 +167,6 @@ const styles = StyleSheet.create({
   fact: { flexDirection: "row", alignItems: "center", gap: Spacing.two },
   factText: { flex: 1 },
   note: { marginTop: Spacing.three },
+  importAction: { minHeight: 44, justifyContent: "center", alignItems: "center", marginTop: Spacing.two },
+  disabled: { opacity: 0.45 },
 });
