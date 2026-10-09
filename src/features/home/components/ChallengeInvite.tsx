@@ -1,8 +1,21 @@
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
+import Animated, {
+  cancelAnimation,
+  Easing,
+  interpolate,
+  useAnimatedStyle,
+  useReducedMotion,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import { Colors } from "@/shared/constants/theme";
@@ -13,6 +26,69 @@ import { useOfflineReadingStore } from "@/shared/stores/offline-reading-store";
 
 const STARTER_QUESTIONS = 10;
 const MINUTES = 3;
+
+/** How wide the glint is, how long it takes to cross, and how long the card rests between. */
+const SHINE_WIDTH = 86;
+const SHINE_SWEEP = 1100;
+const SHINE_REST = 2800;
+
+/**
+ * A glint that crosses the card every few seconds, marking it as the one thing on the dashboard
+ * asking to be tapped. Sits above the content, so it catches the mascot and the button too.
+ */
+function Shine() {
+  const reducedMotion = useReducedMotion();
+  const [width, setWidth] = useState(0);
+  const progress = useSharedValue(0);
+
+  useEffect(() => {
+    if (reducedMotion || !width) return;
+    progress.value = withRepeat(
+      withSequence(
+        withTiming(0, { duration: 0 }),
+        withDelay(
+          SHINE_REST,
+          withTiming(1, { duration: SHINE_SWEEP, easing: Easing.inOut(Easing.quad) }),
+        ),
+      ),
+      -1,
+    );
+    return () => cancelAnimation(progress);
+  }, [reducedMotion, width, progress]);
+
+  const sweep = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: interpolate(progress.value, [0, 1], [-SHINE_WIDTH * 2, width + SHINE_WIDTH]) },
+      { rotate: "18deg" },
+    ],
+  }));
+
+  return (
+    <View
+      pointerEvents="none"
+      style={StyleSheet.absoluteFill}
+      onLayout={(event) => setWidth(event.nativeEvent.layout.width)}
+    >
+      <Animated.View style={[styles.shine, sweep]}>
+        <LinearGradient
+          // A narrow bright core with a soft falloff reads as a glint; an even wash just looks
+          // like the card briefly lost its colour.
+          colors={[
+            "rgba(255,255,255,0)",
+            "rgba(255,255,255,0.28)",
+            "rgba(255,255,255,0.9)",
+            "rgba(255,255,255,0.28)",
+            "rgba(255,255,255,0)",
+          ]}
+          locations={[0, 0.35, 0.5, 0.65, 1]}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}
+          style={StyleSheet.absoluteFill}
+        />
+      </Animated.View>
+    </View>
+  );
+}
 
 /** True once a pack is on the device or a reading has been saved. */
 function useStartedLearning() {
@@ -95,6 +171,7 @@ export function ChallengeInvite() {
           />
         </View>
       </View>
+      <Shine />
     </Pressable>
   );
 }
@@ -111,6 +188,8 @@ const styles = StyleSheet.create({
     minHeight: 156,
   },
   pressed: { opacity: 0.92 },
+  // Taller than the card so the tilted band still covers it corner to corner.
+  shine: { position: "absolute", top: -40, bottom: -40, width: SHINE_WIDTH },
   mascot: { width: 132, height: 148, marginLeft: 4, marginBottom: 4 },
   copy: {
     flex: 1,

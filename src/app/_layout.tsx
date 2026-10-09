@@ -69,17 +69,30 @@ export default function RootLayout() {
                 options={{ headerShown: false, animation: "fade" }}
               />
               {/* These screens carry their own large title, so the header is just the way back. */}
+              {/* Setup, import, model and the assistant are tasks rather than places, so they
+                  rise from the bottom instead of pushing in from the side. */}
               <Stack.Screen
                 name="setup"
-                options={{ title: "", headerShadowVisible: false }}
+                options={{
+                  title: "",
+                  headerShadowVisible: false,
+                  animation: "slide_from_bottom",
+                }}
               />
               <Stack.Screen
                 name="import"
-                options={{ title: t("stack.importDocument") }}
+                options={{
+                  title: t("stack.importDocument"),
+                  animation: "slide_from_bottom",
+                }}
               />
               <Stack.Screen
                 name="model"
-                options={{ title: "", headerShadowVisible: false }}
+                options={{
+                  title: "",
+                  headerShadowVisible: false,
+                  animation: "slide_from_bottom",
+                }}
               />
               <Stack.Screen
                 name="packs/index"
@@ -103,7 +116,11 @@ export default function RootLayout() {
               />
               <Stack.Screen
                 name="floating-assistant"
-                options={{ title: "", headerShadowVisible: false }}
+                options={{
+                  title: "",
+                  headerShadowVisible: false,
+                  animation: "slide_from_bottom",
+                }}
               />
             </Stack>
             <AssistantSheet />

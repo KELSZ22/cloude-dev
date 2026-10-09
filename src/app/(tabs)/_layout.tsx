@@ -1,5 +1,6 @@
 import { Redirect, Tabs } from "expo-router";
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
+import { useReducedMotion } from "react-native-reanimated";
 
 import { Fonts } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
@@ -46,6 +47,8 @@ const tabs: {
 export default function TabLayout() {
   const colors = useTheme();
   const { t } = useTranslation();
+  // Navigation does not consult the motion setting itself, so the fade is opted out of here.
+  const reducedMotion = useReducedMotion();
   const openAssistant = useAssistantSheetStore((state) => state.openAssistant);
   const hasHydrated = useOnboardingStore((state) => state.hasHydrated);
   const completed = useOnboardingStore((state) => state.completed);
@@ -57,6 +60,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+        // Bottom tabs animate in JavaScript, so this is the one transition the web build shares
+        // with the phone. Sliding would fight the tab bar, so the screens cross-fade.
+        animation: reducedMotion ? "none" : "fade",
         tabBarActiveTintColor: colors.tint,
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarStyle: {
