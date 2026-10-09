@@ -16,6 +16,7 @@ import { useTranslation } from "@/shared/i18n";
 import { useInitializeTheme } from "@/shared/hooks/use-initialize-theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { ModelProvider } from "@/shared/providers/model-provider";
+import { useHydratePackDownloadStore } from "@/shared/hooks/use-hydrate-pack-download-store";
 import { useHydrateOnboardingStore } from "@/shared/stores/onboarding-store";
 
 void SplashScreen.preventAutoHideAsync();
@@ -26,6 +27,7 @@ export default function RootLayout() {
   const { t } = useTranslation();
   useInitializeTheme();
   useHydrateOnboardingStore();
+  useHydratePackDownloadStore();
 
   const [fontsLoaded, fontError] = useFonts({
     NotoSans_400Regular,

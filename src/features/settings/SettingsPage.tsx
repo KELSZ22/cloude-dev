@@ -10,6 +10,7 @@ import {
   formatMegabytes,
   installedSizeMb,
 } from "@/shared/constants/sample-library";
+import { usePackDownloadStore } from "@/shared/stores/pack-download-store";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTranslation } from "@/shared/i18n";
 import { useModel } from "@/shared/providers/model-provider";
@@ -43,6 +44,7 @@ export default function SettingsPage() {
   const setLanguage = useOnboardingStore((state) => state.setLanguage);
   const resetTour = useOnboardingStore((state) => state.resetTour);
   const { installed, state } = useModel();
+  const installedPacks = usePackDownloadStore((store) => store.installed);
 
   const appearanceOptions = [
     { id: APPEARANCE_IDS[0], label: t("settings.matchDevice") },
@@ -111,7 +113,7 @@ export default function SettingsPage() {
             }}
             label={t("settings.manageStorage")}
             value={t("settings.storageUsed", {
-              size: formatMegabytes(installedSizeMb()),
+              size: formatMegabytes(installedSizeMb(installedPacks)),
             })}
             onPress={() => router.navigate("/packs")}
           />

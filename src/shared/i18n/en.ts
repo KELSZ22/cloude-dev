@@ -189,7 +189,7 @@ export const en = {
     description: "You can explore the app while setup is pending.",
     searchTitle: "Search setup pending",
     searchBody:
-      "The local search index is not configured yet. No knowledge content is installed.",
+      "Browse OpenStax textbooks and resources indexed from content/openstax. Full-text PDF search still needs a local index.",
     continueSearch: "Continue to Search",
     reviewModel: "Review model requirements",
   },
@@ -204,10 +204,18 @@ export const en = {
       "TXT and Markdown will be copied into app-managed storage and indexed locally. PDF support depends on validating an offline text parser. Scanned PDFs need OCR and are outside the initial MVP.",
   },
   packs: {
-    description: "Expandable collections for your offline library.",
+    description:
+      "Subject packs built from the OpenStax catalog and download manifest in content/openstax.",
     emptyTitle: "No packs installed",
     emptyBody:
       "The starter pack and pack installer are not included yet. Packs must have attribution, a redistribution license, and verified content checksums before installation.",
+    corpusTitle: "OpenStax initial resources",
+    corpusBody:
+      "{{books}} textbooks inventoried · {{assets}} files verified on disk · {{size}} corpus",
+    downloading: "Downloading {{title}}…",
+    downloadPaused: "Paused: {{title}}",
+    inAppDownloadHint:
+      "Tap Download on a pack to fetch OpenStax PDFs and resources into app storage (Wi‑Fi recommended).",
   },
   model: {
     description: "A compatible local model is required for AI answers.",

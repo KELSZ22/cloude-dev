@@ -8,14 +8,15 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import {
   formatLibraryDate,
+  libraryPacksForInstalled,
   sampleBookmarks,
   sampleDocuments,
   sampleHistory,
-  samplePacks,
 } from "@/shared/constants/sample-library";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
+import { usePackDownloadStore } from "@/shared/stores/pack-download-store";
 import {
   DocumentRow,
   EmptyShelf,
@@ -39,12 +40,14 @@ export default function LibraryPage() {
   ];
   const [shelf, setShelf] = useState<ShelfId>("packs");
   const [editing, setEditing] = useState(false);
-  const [packIds, setPackIds] = useState(samplePacks.map((pack) => pack.id));
+  const installed = usePackDownloadStore((state) => state.installed);
+  const catalogPacks = libraryPacksForInstalled(installed);
+  const [hiddenPackIds, setHiddenPackIds] = useState<string[]>([]);
   const [documentIds, setDocumentIds] = useState(
     sampleDocuments.map((document) => document.id),
   );
 
-  const packs = samplePacks.filter((pack) => packIds.includes(pack.id));
+  const packs = catalogPacks.filter((pack) => !hiddenPackIds.includes(pack.id));
   const documents = sampleDocuments.filter((document) =>
     documentIds.includes(document.id),
   );
@@ -107,9 +110,7 @@ export default function LibraryPage() {
                   key={pack.id}
                   pack={pack}
                   editing={editing}
-                  onRemove={() =>
-                    setPackIds((ids) => ids.filter((id) => id !== pack.id))
-                  }
+                  onRemove={() => setHiddenPackIds((ids) => [...ids, pack.id])}
                 />
               ))
             ) : (
@@ -198,7 +199,12 @@ export default function LibraryPage() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  header: { width: "100%", maxWidth: 600, alignSelf: "center", gap: Spacing.two },
+  header: {
+    width: "100%",
+    maxWidth: 600,
+    alignSelf: "center",
+    gap: Spacing.two,
+  },
   titleRow: {
     flexDirection: "row",
     alignItems: "center",

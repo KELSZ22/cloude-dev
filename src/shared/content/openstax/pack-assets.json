@@ -1,0 +1,1549 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T14:11:29.617Z",
+  "packs": {
+    "business": {
+      "totalBytes": 1189099574,
+      "assets": [
+        {
+          "path": "files/business/business-ethics/business-ethics-web-f831d3e718f2.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/business-ethics_-_WEB.pdf",
+          "bytes": 51368382,
+          "sha256": "9d0a7b3be44c1059fe800de8e90195a654f48df27c52f3700c47579fe5034c01"
+        },
+        {
+          "path": "files/business/business-law-i-essentials-2e/business-law-i-essentials-2e-web-be8b699fc884.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Business_Law_I_Essentials_2e_-_WEB.pdf",
+          "bytes": 13076311,
+          "sha256": "6e7b5db71416d923ae0007154edad4288c98f8efcb2f93870fb6e4ab31baad4f"
+        },
+        {
+          "path": "files/business/business-law-i-essentials/business-law-i-essentials-web-9fd3ae7365fc.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/business-law-i-essentials-WEB.pdf",
+          "bytes": 12906008,
+          "sha256": "c56eef123fd5699ef7fac923394687c34cb46f349bad0b0f5f59b2106bc303bc"
+        },
+        {
+          "path": "files/business/entrepreneurship/entrepreneurship-web-a64ec3da0911.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Entrepreneurship-WEB.pdf",
+          "bytes": 129375799,
+          "sha256": "e2a29cee570f552360742956e9d27ef4df6aec35047d2cdc60b6b2cb24524613"
+        },
+        {
+          "path": "files/business/introduction-business-2e/introduction-to-business-2e-web-fced977d9a2e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Business_2e_-_WEB.pdf",
+          "bytes": 148842597,
+          "sha256": "2001b3e30587ceea8f351b11cccb64f8f678860014617d5706a7e27d478ecdc2"
+        },
+        {
+          "path": "files/business/introduction-business-2e/openstax-introduction-to-business-2e-transition-guide-28302e9bf07a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Introduction_to_Business_2e_Transition_Guide.pdf",
+          "bytes": 276622,
+          "sha256": "428dc8a93a35f50e7722b942de5f91e34b2e99c90618a70be42b8a38b8b27ff6"
+        },
+        {
+          "path": "files/business/introduction-intellectual-property/introduction-intellectual-property-web-277fe6be95ac.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/introduction-intellectual-property_-_WEB.pdf",
+          "bytes": 24582768,
+          "sha256": "1498509864d37cb63a6ccc11bab7c783f3d30b2ed37d808ef80c56fdb676378a"
+        },
+        {
+          "path": "files/business/introductory-business-statistics-2e/introductory-business-statistics-2e-transition-guide-48qax1z-0d6f3813c5ee.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introductory_Business_Statistics_2e_-_Transition_Guide_48QAX1z.zip",
+          "bytes": 154011,
+          "sha256": "1a6afee7583efb9189d7f78c4183ef2d282edc9a997db6576dff5ae40780be67"
+        },
+        {
+          "path": "files/business/introductory-business-statistics-2e/introductory-business-statistics-2e-try-it-answers-ompyvnp-883a5825b133.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introductory_Business_Statistics_2e_-_Try_It_Answers_oMPYVnp.zip",
+          "bytes": 1459953,
+          "sha256": "8288d2b62af17213feca25ab42aa91b4e03811e1c18db69596ed07647e4fad94"
+        },
+        {
+          "path": "files/business/introductory-business-statistics-2e/introductory-business-statistics-2e-web-dd1ae3a3cddc.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/introductory-business-statistics-2e_-_WEB.pdf",
+          "bytes": 22795257,
+          "sha256": "05749a9e925884c34716050b6478bb37d44a5a63d97bbbe1d59db6e36b8e63e2"
+        },
+        {
+          "path": "files/business/organizational-behavior/organizational-behavior-web-96132f2df10a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/organizational-behavior_-_WEB.pdf",
+          "bytes": 46231554,
+          "sha256": "17f40f05d37592cc65b1c77bb7ba991cf8948b5c4b67fb5474c5ebe8fb095fa9"
+        },
+        {
+          "path": "files/business/principles-finance-2e/principles-of-finance-2e-web-26320eb738da.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles_of_Finance_2e_-_WEB_.pdf",
+          "bytes": 30902513,
+          "sha256": "7d942df1aaf2fc3edcc7f681955cdabecdd0d4e4c754469f0bea159461a6ad79"
+        },
+        {
+          "path": "files/business/principles-finance/principles-finance-web-3849946092d4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-finance_-_WEB.pdf",
+          "bytes": 31916668,
+          "sha256": "d9dc9bc96cb6e3128a38aabf00609cc72d5e7721565fa3b5a672a41352f4a22c"
+        },
+        {
+          "path": "files/business/principles-financial-accounting/principles-financial-accounting-web-0f3f18f5dc59.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-financial-accounting_-_WEB.pdf",
+          "bytes": 167017826,
+          "sha256": "a98ed7dcb92eec2bd70f32b150aa4f1d3140ad78bb1477e86a31682ec5ac31e5"
+        },
+        {
+          "path": "files/business/principles-management/principles-management-web-50e604883069.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-management_-_WEB.pdf",
+          "bytes": 65629502,
+          "sha256": "59ea3ea149d631f57c26279d5ac71f588121ebc56c1a25eb6c76f011c9765b6d"
+        },
+        {
+          "path": "files/business/principles-managerial-accounting/principles-managerial-accounting-web-9e4ec43aa24e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-managerial-accounting_-_WEB.pdf",
+          "bytes": 89822467,
+          "sha256": "233b94100de54a5ed9fd6b9cf419a2b165aa2b5975ae06c9ac7bcba556a7bc26"
+        },
+        {
+          "path": "files/business/principles-marketing/principles-marketing-web-db829b0882b4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-marketing_-_WEB.pdf",
+          "bytes": 62477161,
+          "sha256": "7764b41cf778a8bb560f00ee3ed2c8c2d623575540c1b6702ed7429c745bcd31"
+        },
+        {
+          "path": "files/business/workplace-software-skills/workplace-software-and-skills-web-ilfjtcp-1772b451456c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Workplace_Software_and_Skills_-_WEB_IlfJtcP.pdf",
+          "bytes": 290264175,
+          "sha256": "cfc06bef22fb8c898e247fc70581589ce963b3bfef0d3e1f84ec94a1c18344ff"
+        }
+      ]
+    },
+    "ciencia": {
+      "totalBytes": 599765258,
+      "assets": [
+        {
+          "path": "files/ciencia/fisica-universitaria-volumen-1/fisica-universitaria-volumen1-ssg-f001ebf2812f.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Fisica_universitaria_volumen1_SSG.zip",
+          "bytes": 10115203,
+          "sha256": "9312819ea6719d72fa6571042b20622cc5d6eda67255f14dd2d56625fc18e97b"
+        },
+        {
+          "path": "files/ciencia/fisica-universitaria-volumen-1/fisicauniversitariavolumen1-web-jdl3rtk-8484ebab5279.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/FisicaUniversitariaVolumen1-WEB_JDl3rTk.pdf",
+          "bytes": 72134561,
+          "sha256": "36d9a201c9c41d1286d4e5c9a270fa8a3163d8c9329d60aca66686c475ae4228"
+        },
+        {
+          "path": "files/ciencia/fisica-universitaria-volumen-2/fisica-universitaria-volumen2-ssg-51880a24a7db.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Fisica_universitaria_volumen2_SSG.zip",
+          "bytes": 8959244,
+          "sha256": "37bf3f0eb7c04629f90c0b24f64e1ca4e718b016ed16fe141eb692185a02875b"
+        },
+        {
+          "path": "files/ciencia/fisica-universitaria-volumen-2/fisicauniversitariavolumen2-web-a817ce29da89.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/FisicaUniversitariaVolumen2-WEB.pdf",
+          "bytes": 56132268,
+          "sha256": "4a0c6ca3ad149d9a564aa9f6f3755a49cfeebf1f2f35df3ddf09f1666bf5ec4b"
+        },
+        {
+          "path": "files/ciencia/fisica-universitaria-volumen-3/fisica-universitaria-volumen3-ssg-jdqd4v3-12328e8906bf.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Fisica_universitaria_volumen3_SSG_Jdqd4V3.zip",
+          "bytes": 6900157,
+          "sha256": "d44e4a88ff4b9c522bed54b9182a50dd39bf9171d5046ae3bb694943891c41c9"
+        },
+        {
+          "path": "files/ciencia/fisica-universitaria-volumen-3/fisicauniversitariavolumen3web-ugpb6a5-66d0007cab4c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/FisicaUniversitariaVolumen3WEB_UGpB6A5.pdf",
+          "bytes": 48525279,
+          "sha256": "3ab89367aab123679115116f549a6eb922f26333c8bb45512f53230692ed3565"
+        },
+        {
+          "path": "files/ciencia/quimica-2ed/guia-de-soluciones-para-el-estudiante-d04bf8af2c4a.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Guia_de_soluciones_para_el_estudiante.zip",
+          "bytes": 12030115,
+          "sha256": "93ae3b03373a068093fde1df8ca8e570a3787018f1d1806ab59346a7adf771b4"
+        },
+        {
+          "path": "files/ciencia/quimica-2ed/quimica-2ed-web-64226d5fcdf0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Quimica-2ed-WEB.pdf",
+          "bytes": 185779507,
+          "sha256": "5becff52627822c8ed1ed67a766ce8fbb8d90bfefbc08b7a95e15ca82a4eacda"
+        },
+        {
+          "path": "files/ciencia/quimica-comenzando-atomos-2ed/guia-de-soluciones-para-el-estudiante-pxn2zlc-1747e945eee6.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Guia_de_soluciones_para_el_estudiante_pXn2zlc.zip",
+          "bytes": 13599195,
+          "sha256": "4789db80ab1bef655a0fc1ccabd8d4a11826ee605834b4cf74d00a18a3f981e1"
+        },
+        {
+          "path": "files/ciencia/quimica-comenzando-atomos-2ed/quimica-comenzando-atomos-2ed-web-onc32lp-c6998930ffe9.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Quimica-comenzando-atomos-2ed-WEB_oNc32Lp.pdf",
+          "bytes": 185589729,
+          "sha256": "8bf9e75225c87417b803936eee8845c62871d2b4b2caed2dd47cf8a4851ea218"
+        }
+      ]
+    },
+    "college-success": {
+      "totalBytes": 130800335,
+      "assets": [
+        {
+          "path": "files/college-success/college-success-concise/college-success-concise-web-b5c70648c7d9.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/college-success-concise_-_WEB.pdf",
+          "bytes": 21239128,
+          "sha256": "70fb761b4a7ae6e49991df05d8ff5aa4c20ad387d06f01a2deffd7fee2b642a1"
+        },
+        {
+          "path": "files/college-success/college-success/academic-planning-template-867741652b5c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Academic_Planning_Template.pdf",
+          "bytes": 48245,
+          "sha256": "923f769d1bf5643da076092e833310047e129dd96b48180a6527a5b2cc41d612"
+        },
+        {
+          "path": "files/college-success/college-success/college-success-web-20550eb2a67a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/college-success_-_WEB.pdf",
+          "bytes": 87510264,
+          "sha256": "a22309438c12691cf91217fcd8afe65c0c2a1cf775f83d88c5d9759e1f0456d0"
+        },
+        {
+          "path": "files/college-success/preparing-for-college-success/preparing-for-college-success-web-d494fb7335a2.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/preparing-for-college-success_-_WEB.pdf",
+          "bytes": 22002698,
+          "sha256": "9ff792297546a40ca63170ebdacc7b01f83159ac95990236dae42a5114a8631a"
+        }
+      ]
+    },
+    "computer-science": {
+      "totalBytes": 160452989,
+      "assets": [
+        {
+          "path": "files/computer-science/foundations-information-systems/foundations-of-information-systems-web-onlbgyl-edd4b7d432a9.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Foundations_of_Information_Systems_-_WEB_oNlbGYl.pdf",
+          "bytes": 25619781,
+          "sha256": "496dd5f206da66e0334514df9c22a22fa58267851c349619f35c2d3aeba69306"
+        },
+        {
+          "path": "files/computer-science/introduction-computer-science/introduction-to-computer-science-web-ff823c7705e9.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_To_Computer_Science_-_WEB.pdf",
+          "bytes": 56261511,
+          "sha256": "fd56aaf80c851e9f3b417745785ea5c832fc2911acfd2094a86f4c517fdf435a"
+        },
+        {
+          "path": "files/computer-science/introduction-python-programming/introduction-to-python-programming-web-dd14fd12a8e1.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Python_Programming-WEB.pdf",
+          "bytes": 9963388,
+          "sha256": "e1298e4fcfe541a8fc3bb786c5756d3d2be8e6ffc07997f1bc1e0ac270be383d"
+        },
+        {
+          "path": "files/computer-science/principles-data-science/principles-of-data-science-web-383b5e5703d0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles-of-Data-Science-WEB.pdf",
+          "bytes": 37337845,
+          "sha256": "6b47205459a2f4e25a2b2a86369e674a26a5ae566a4cc428dd31047670692398"
+        },
+        {
+          "path": "files/computer-science/principles-data-science/student-solutions-manual-782b6c5c5bb9.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual.zip",
+          "bytes": 31270464,
+          "sha256": "faa17789971aa10b0f008ca3a3b38b10e5d0aaa3b4a495cbae51778f6cbf09e2"
+        }
+      ]
+    },
+    "humanities": {
+      "totalBytes": 584820141,
+      "assets": [
+        {
+          "path": "files/humanities/introduction-philosophy/introduction-to-philosophy-web-32a535c8d3a3.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Philosophy-WEB.pdf",
+          "bytes": 48068887,
+          "sha256": "ec94e28ddb86bfb6d7703a8487124501164caa79624791ad7eadb24efada96e5"
+        },
+        {
+          "path": "files/humanities/us-history/questions-for-chapters-28-32-bbf1f8772d74.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Questions_for_Chapters_28-32.pdf",
+          "bytes": 69433,
+          "sha256": "02e667b7ea9d0dfa061c70cc8d94d4a686fdc71d57cc0dd80550ec3e6ef1cdf1"
+        },
+        {
+          "path": "files/humanities/us-history/us-history-web-784e93115adb.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/US_History_-_WEB.pdf",
+          "bytes": 136400038,
+          "sha256": "b1330275566d9847623394ad29173f9a6f1c9f9270279e00cd5da2ac366ea5c8"
+        },
+        {
+          "path": "files/humanities/world-history-volume-1/world-history-volume-1-web-585ab3165c7c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/World_History_Volume_1-WEB.pdf",
+          "bytes": 201039307,
+          "sha256": "227436a3d3951dc777f63a7e5d3329f2c095e2ccf5782ae192f22c40d831a4cf"
+        },
+        {
+          "path": "files/humanities/world-history-volume-2/world-history-volume-2-web-1fe5a407d221.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/World_History_Volume_2-WEB.pdf",
+          "bytes": 132663448,
+          "sha256": "57be7ba027ed9f66d9e4594493f56e6a9028bd72c166e62dcd07e72a5266f948"
+        },
+        {
+          "path": "files/humanities/writing-guide/toolkit-1c6308cdba42.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Toolkit.zip",
+          "bytes": 3032194,
+          "sha256": "336e97cb656abb1bb44416ed88ad31b4f3809c6df43d4c97ca78ac46e41498dd"
+        },
+        {
+          "path": "files/humanities/writing-guide/writingguide-web-27c537a49837.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/WritingGuide-WEB.pdf",
+          "bytes": 63546834,
+          "sha256": "86ef566965110032b651122c8e466a607157613302a5a283bd1f221727e590ab"
+        }
+      ]
+    },
+    "matematicas": {
+      "totalBytes": 303671814,
+      "assets": [
+        {
+          "path": "files/matematicas/calculo-volumen-1/calculo-volumen-1-web-vghb4xk-8cf024556e31.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculo_volumen_1_-_WEB_vGHB4xK.pdf",
+          "bytes": 43346007,
+          "sha256": "635476ee047052bceac5a1da222f62f6f3050ad5154f3e73f5ce9d43a6c49ba1"
+        },
+        {
+          "path": "files/matematicas/calculo-volumen-2/calculo-volumen-2-web-8joonwk-c46df0d0db6c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculo_volumen_2_-_WEB_8JoonWk.pdf",
+          "bytes": 40585825,
+          "sha256": "b49f7bf338dbfa520497b60a077c98b157a44aa675134e4d363125541026bd66"
+        },
+        {
+          "path": "files/matematicas/calculo-volumen-3/calculo-volumen-3-web-lnxewrt-1c14b4a05d53.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculo_volumen_3_-_WEB_lnXeWrT.pdf",
+          "bytes": 66713511,
+          "sha256": "d13412b9d0280072815d1dac8e216f10e462ba53ab88887a0ebb6cd77095bdc8"
+        },
+        {
+          "path": "files/matematicas/introduccion-estadistica-empresarial/introduccion-al-la-estadistica-empresarial-web-7e35f634b51b.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduccion_al_la_estadistica_empresarial_-_WEB.pdf",
+          "bytes": 23170999,
+          "sha256": "2db343c5780af0d2590ee2dd95c31e75098eb1cf88da4fd4f6b84e62050b9289"
+        },
+        {
+          "path": "files/matematicas/introduccion-estadistica/introduccion-al-la-estadistica-web-96432071962b.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduccion_al_la_estadistica_-_WEB.pdf",
+          "bytes": 25398040,
+          "sha256": "4518c261e4cbc8729710d0de55da9a950b530510d7a4a024a672ca9b377b0a63"
+        },
+        {
+          "path": "files/matematicas/precalculo-2ed/precalculo-2ed-web-r2h7jtx-1b0f5bdd4aa7.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Precalculo_2ed-WEB_R2h7jtX.pdf",
+          "bytes": 104457432,
+          "sha256": "7f2b419d05a937e3475c61e27b4add929ebd8655b24850e0d140cb5bc2207f35"
+        }
+      ]
+    },
+    "math": {
+      "totalBytes": 2041711910,
+      "assets": [
+        {
+          "path": "files/math/algebra-1/algebra-1-web-bbc1d8a238b9.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/algebra-1_-_WEB.pdf",
+          "bytes": 82715252,
+          "sha256": "c3f613a7b0c5b9ec1d163e1ee9a4cfaf2d81bdf7033ba795316bc7ba4347e271"
+        },
+        {
+          "path": "files/math/algebra-1/openstax-managing-time-and-priorities-guide-6d3e136f023c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax.Managing.Time.and.Priorities.Guide.pdf",
+          "bytes": 950749,
+          "sha256": "4c88915a34b546dc3c879c339dfdfac3aa20847402c479773404b78baec0d6f4"
+        },
+        {
+          "path": "files/math/algebra-1/student-getting-started-guide-24e5961a89f0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/student_getting_started_guide.pdf",
+          "bytes": 125404,
+          "sha256": "77100acd566f7c653e686ef9a688441c6c9bc57b31fcd7d61d18cf03c9d8b2c0"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry-2e/algebra-and-trigonometry-2e-web-49f6fb968710.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/algebra-and-trigonometry-2e_-_WEB.pdf",
+          "bytes": 116281063,
+          "sha256": "7108d242ef7f7ee286c1d0faf4f8477570e843c1b1cdd5e3b05e8c31797da9f0"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry-2e/openstax-algebra-and-precalculus-series-transition-guide-1ce154c9c3be.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_and_Precalculus_Series_Transition_Guide.docx",
+          "bytes": 2673530,
+          "sha256": "fe1d744f3e2f6a1032e1a4762c41a5b678485255e2d3c5a3b21b0dd004f82fb7"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry-2e/openstax-managing-time-and-priorities-guide-soca7rp-53f40530cfab.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax.Managing.Time.and.Priorities.Guide_soca7RP.pdf",
+          "bytes": 950749,
+          "sha256": "4c88915a34b546dc3c879c339dfdfac3aa20847402c479773404b78baec0d6f4"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry/algebra-and-trigonometry-release-notes-2017-d984b3677beb.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Algebra_and_Trigonometry_Release_Notes_2017.pdf",
+          "bytes": 173353,
+          "sha256": "fe0c8412a67ecae0714cd49455d57b041e255baf85b01a24c569fd88e4eb13b8"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry/algebraandtrigonometry-op-1te6r5r-bb235f4e38a7.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/AlgebraAndTrigonometry-OP_1tE6R5r.pdf",
+          "bytes": 86392139,
+          "sha256": "7bfd1ff40e044124fb32abada59fb6604f2f412a448a3e417c246f3352fa04bb"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-8s1zm3w-5ea490d55980.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_8s1ZM3w.zip",
+          "bytes": 29128546,
+          "sha256": "9256d1502b406fe35fcd9c19e40922a22db4984ac68fbda503aa05ca39bdc421"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry/openstax-algebra-trig-corequisite-skillsheets-g7jzkko-531088ae0cb4.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra_Trig_Corequisite_Skillsheets_g7JzkKO.zip",
+          "bytes": 29128546,
+          "sha256": "9256d1502b406fe35fcd9c19e40922a22db4984ac68fbda503aa05ca39bdc421"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry/openstax-algebra-trigonometry-recorded-lectures-and-notes-for-precalculus-20776dc6cfc4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Algebra__Trigonometry_Recorded_Lectures_and_Notes_for_Precalculus.pdf",
+          "bytes": 86120,
+          "sha256": "f2c7b54cf72bdf31cf9e9b69ad89d8b131c73e7491c0b82010e29a0aac62a90e"
+        },
+        {
+          "path": "files/math/algebra-and-trigonometry/openstax-diversity-equity-inclusion-development-guidelines-2022-fkjcepg-499451f57da0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Diversity_Equity_Inclusion_Development_Guidelines_2022_fkJcepg.pdf",
+          "bytes": 445249,
+          "sha256": "1318149f8242dfba04cbedd3e30f134faea096b6f22ade129f52281909661885"
+        },
+        {
+          "path": "files/math/calculus-volume-1/calculus-volume-1-student-answer-and-solution-guide-5bbe6a06274c.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculus_Volume_1_-_Student_Answer_and_Solution_Guide.zip",
+          "bytes": 16479226,
+          "sha256": "14ae799e8bda26827565588fdca03e88a7b25fa709b97929d0f640d6bd951032"
+        },
+        {
+          "path": "files/math/calculus-volume-1/calculus-volume-1-web-a098ae49996a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/calculus-volume-1_-_WEB.pdf",
+          "bytes": 52104540,
+          "sha256": "7303513c1927b9b6d04d150502e769cc1821638a24c774e2f6bba82bf9875990"
+        },
+        {
+          "path": "files/math/calculus-volume-2/calculus-volume-2-student-answer-and-solution-guide-1279970a2fc1.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculus_Volume_2_-_Student_Answer_and_Solution_Guide.zip",
+          "bytes": 10894211,
+          "sha256": "9a30ad9ad2bc25e5ff329eac8b363251fe3b82046cec804dd102acb99f8ad5dc"
+        },
+        {
+          "path": "files/math/calculus-volume-2/calculus-volume-2-web-1f2338b992c8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/calculus-volume-2_-_WEB.pdf",
+          "bytes": 47350759,
+          "sha256": "f6ac06038088711766e5b664a8114c8fcb0b7b88cfb38e92bbaf56ba2df43f4a"
+        },
+        {
+          "path": "files/math/calculus-volume-3/calculus-volume-3-student-answer-and-solution-guide-b492ed2f0659.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Calculus_Volume_3_-_Student_Answer_and_Solution_Guide.zip",
+          "bytes": 27528641,
+          "sha256": "7d6666bb04fc9caf1a14538d63ec4f591f9ea95fdb97c7aed1069617d3f6037b"
+        },
+        {
+          "path": "files/math/calculus-volume-3/calculus-volume-3-web-34299716dbf0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/calculus-volume-3_-_WEB.pdf",
+          "bytes": 79186757,
+          "sha256": "6feec9e9e64a286f880ae9b7444e2f262df6ab59bff4869e28322106d0c9018f"
+        },
+        {
+          "path": "files/math/college-algebra-2e/college-algebra-2e-web-994ef83284fc.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/college-algebra-2e_-_WEB.pdf",
+          "bytes": 84220165,
+          "sha256": "381c7d1f2ce21d6786a9e4624d33cdedf3c3be468c011321b25c865786999802"
+        },
+        {
+          "path": "files/math/college-algebra-corequisite-support-2e/college-algebra-corequisite-support-2e-web-f4765cf86e01.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/college-algebra-corequisite-support-2e_-_WEB.pdf",
+          "bytes": 91254385,
+          "sha256": "23984faa497e08e75c804fe60d94dee0a1311f1cb1d272d9d6e109bb52456431"
+        },
+        {
+          "path": "files/math/college-algebra-corequisite-support-2e/openstax-corequisite2e-skillsheets-840499d7d039.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite2e_Skillsheets.zip",
+          "bytes": 18911294,
+          "sha256": "0c7fde7aabf4b12f4ab6328c66456254ba611092fc4a52f39f260e8766596dd5"
+        },
+        {
+          "path": "files/math/college-algebra-corequisite-support/collegealgcoreq-web-a4273d6d3ef6.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/CollegeAlgCoreq-WEB.pdf",
+          "bytes": 89343095,
+          "sha256": "2574bf288096b7c38a386dab801346ca4bb4aff159c07e92081b8575a63e0ad8"
+        },
+        {
+          "path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-11d62973a50b.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets.zip",
+          "bytes": 18894300,
+          "sha256": "04d1df4f1ce1f20482923b55f20f2fced8490b2efce42425c1657700538a8f73"
+        },
+        {
+          "path": "files/math/college-algebra-corequisite-support/openstax-corequisite-skillsheets-qyajf7b-ce719c594c65.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Corequisite_Skillsheets_qyAJF7b.zip",
+          "bytes": 18894300,
+          "sha256": "04d1df4f1ce1f20482923b55f20f2fced8490b2efce42425c1657700538a8f73"
+        },
+        {
+          "path": "files/math/college-algebra/college-algebra-release-notes-2017-076f48534d9d.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/College_Algebra_Release_Notes_2017.pdf",
+          "bytes": 163120,
+          "sha256": "5d264f54452934b0189af7119df5afb2661fafac9bb3f5660aa51ec6a3107968"
+        },
+        {
+          "path": "files/math/college-algebra/collegealgebra-op-bec5e50dba3b.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/CollegeAlgebra-OP.pdf",
+          "bytes": 56807291,
+          "sha256": "74a89e41f7b2db84e18b158a9a5548a2813f1878927e816536d43229c20439d4"
+        },
+        {
+          "path": "files/math/contemporary-mathematics/contemporary-mathematics-web-5c11104c81ec.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/contemporary-mathematics_-_WEB.pdf",
+          "bytes": 106819604,
+          "sha256": "300726c9820a8d0822c56e33582a44dffa47111147d64e9cb936b316c448ab38"
+        },
+        {
+          "path": "files/math/contemporary-mathematics/contemporarymathematics-ssm-f0c01e61a14f.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/ContemporaryMathematics_SSM.zip",
+          "bytes": 6928851,
+          "sha256": "f73e6ebcd95184591884ed1bd193e1ad68caa627beae6f61fd906b093020978b"
+        },
+        {
+          "path": "files/math/elementary-algebra-2e/elementary-algebra-2e-web-d15c40ec3717.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/elementary-algebra-2e_-_WEB.pdf",
+          "bytes": 56728705,
+          "sha256": "a250861ff5e945a63a0b90f8c8790a6ed73d9eb04675854824a3880073d0759e"
+        },
+        {
+          "path": "files/math/elementary-algebra/elementaryalgebra-answerstobepreparedexercises-35b2f47eacff.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/ElementaryAlgebra-AnswerstoBePreparedExercises.pdf",
+          "bytes": 1816055,
+          "sha256": "33100b0b3a7d8f661cac7dc10d2d3212beebbd0353121e55823f66b66174d358"
+        },
+        {
+          "path": "files/math/elementary-algebra/elementaryalgebra-mms-bb97a07708c7.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/ElementaryAlgebra-MMS.pdf",
+          "bytes": 1484881,
+          "sha256": "2bb42fa9fe8c3af711f473465fbf6d1a5ba937dc59678844452bcc91f97b61a1"
+        },
+        {
+          "path": "files/math/elementary-algebra/elementaryalgebra-op-224c5ac76182.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/ElementaryAlgebra-OP.pdf",
+          "bytes": 77048396,
+          "sha256": "2a9589ee8a8d28e5149c26c1caee4d3a426ccf6dd6d4bc4d3563f7db0105e638"
+        },
+        {
+          "path": "files/math/elementary-algebra/elementaryalgebra-op-ft8t0ij-1d33d348f950.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/ElementaryAlgebra-OP_Ft8T0ij.pdf",
+          "bytes": 78397079,
+          "sha256": "e4e3fd30a1dcabee9fb120b64b93717ee8b70295ed196cc215eeb3c427564ae9"
+        },
+        {
+          "path": "files/math/intermediate-algebra-2e/intermediate-algebra-2e-web-1b95017f4e26.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/intermediate-algebra-2e_-_WEB.pdf",
+          "bytes": 80988726,
+          "sha256": "54a4b28b2af8d2502ab1cf55dab33135c375ed8b5f3d24b504c68159e0851f55"
+        },
+        {
+          "path": "files/math/intermediate-algebra/intermediate-algebra-release-notes-2019-9f3b0ff57673.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Intermediate_Algebra_Release_Notes_2019.pdf",
+          "bytes": 378242,
+          "sha256": "e9abb0d767ac9ed2c6a6d591301ed82e6717908336b38ee7a287f9b4cc3842d4"
+        },
+        {
+          "path": "files/math/intermediate-algebra/intermediatealgebra-answerstobepreparedexercises-0c0675004eb3.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntermediateAlgebra-AnswerstoBePreparedExercises.pdf",
+          "bytes": 1809721,
+          "sha256": "a8766956566b88f8b770b851e42c29565ab16dc716c060829461d57b5d728f4b"
+        },
+        {
+          "path": "files/math/intermediate-algebra/intermediatealgebra-op-cafgmpv-bd35caeccd38.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntermediateAlgebra-OP_cafGmpv.pdf",
+          "bytes": 99286581,
+          "sha256": "c2a8a854bbe6812eabb9774dd004d63de9b8bd75bd2ce275c6de256180e0d7b2"
+        },
+        {
+          "path": "files/math/intermediate-algebra/intermediatealgebra-op-tyko63g-a87c3152b8f6.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntermediateAlgebra-OP_TyKO63g.pdf",
+          "bytes": 65562094,
+          "sha256": "83f6d6ab2ab2c4986f5a6eb320f004cbe4b5f162e9c3a14fecf96f42d546a0f4"
+        },
+        {
+          "path": "files/math/introductory-business-statistics/business-statistics-try-it-answers-7289830b49cd.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Business_Statistics_Try-It_Answers.zip",
+          "bytes": 2128067,
+          "sha256": "afccf4f33a0b3bd7c70bfcfb45e601e0e5a93699b5a89c2c7c04a6d8fd242b93"
+        },
+        {
+          "path": "files/math/introductory-business-statistics/introductorybusinessstatistics-op-9845f5ef656e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntroductoryBusinessStatistics-OP.pdf",
+          "bytes": 23918922,
+          "sha256": "15592d8d476fd1b9022ab7c1bfbc4780213f498365b00318ddab485573545fcc"
+        },
+        {
+          "path": "files/math/introductory-business-statistics/introductorybusinessstatistics-releasenotes-cdb6f8989ce4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntroductoryBusinessStatistics-ReleaseNotes.pdf",
+          "bytes": 37264,
+          "sha256": "f4084b0f36f2b692791de15643ff912679ecd8da114bb9d9fc20946ad9ba2c3e"
+        },
+        {
+          "path": "files/math/introductory-statistics-2e/introductory-statistics-2e-transition-guide-7lqcaa2-3ab7e8e0ac75.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introductory_Statistics_2e_-_Transition_Guide_7lqcaA2.zip",
+          "bytes": 154706,
+          "sha256": "b6a222498fc9646a8801ffd37458a5fb5e5bcae88eb50070ec81a70d13e57f91"
+        },
+        {
+          "path": "files/math/introductory-statistics-2e/introductory-statistics-2e-try-it-answers-ebzr0ck-a186379c25c2.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introductory_Statistics_2e_-_Try_It_Answers_EBZr0ck.zip",
+          "bytes": 1934953,
+          "sha256": "da342d2a18650470bee786a9145ff4c0893f7b746e3d55fa8dc7e791a6143486"
+        },
+        {
+          "path": "files/math/introductory-statistics-2e/introductory-statistics-2e-web-5986fb1fb809.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/introductory-statistics-2e_-_WEB.pdf",
+          "bytes": 23503369,
+          "sha256": "a79a953b75e570030c74ea6f700b8bd70f41dc8c01bf4e9618e6a0adba3a382a"
+        },
+        {
+          "path": "files/math/introductory-statistics/introductory-statistics-try-it-answers-8bfe8be86d3c.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introductory_Statistics_Try-it_answers.zip",
+          "bytes": 5084378,
+          "sha256": "d015bb284058a956eaa5b346d960b8904a27e7141a7a1b64992ca53339baabeb"
+        },
+        {
+          "path": "files/math/introductory-statistics/introductorystatistics-op-i6tai7e-93c1b6f12cdf.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntroductoryStatistics-OP_i6tAI7e.pdf",
+          "bytes": 26571083,
+          "sha256": "6c8dc9a3942833cc9e9bff8937a025fd0184c3cf10ee7780270a3634e1ed175d"
+        },
+        {
+          "path": "files/math/introductory-statistics/math2112slides-1-f9982d570561.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/MATH2112Slides_1.zip",
+          "bytes": 7342200,
+          "sha256": "1d801436a40cb77d570a8382551bd06a36a0d7bfeea16c69150ecc0222616025"
+        },
+        {
+          "path": "files/math/introductory-statistics/statistics-releasenotes-sgbkost-b15e5cfd83c4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Statistics-ReleaseNotes_sGbkOSt.pdf",
+          "bytes": 314036,
+          "sha256": "9c33eae9ee589748c42bdcc6257fff95819e0a122eeb85b55557e25972c120f3"
+        },
+        {
+          "path": "files/math/prealgebra-2e/prealgebra-2e-web-8f2a943c6295.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/prealgebra-2e_-_WEB.pdf",
+          "bytes": 63194495,
+          "sha256": "1a58f63a28535d2a84659019103df32a0fb73db0bd14ce6e533a4dff307ca2cb"
+        },
+        {
+          "path": "files/math/prealgebra-2e/prealgebra-ltls-e91af29f4c2a.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Prealgebra-LtLS.docx",
+          "bytes": 406741,
+          "sha256": "8222cba6845d12276cd295651754e1b3c8e583af617b3b85fb5faefbf5cf5d33"
+        },
+        {
+          "path": "files/math/prealgebra/prealgebra-answerstobepreparedexercises-b7f14083b71e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Prealgebra-AnswerstoBePreparedExercises.pdf",
+          "bytes": 1616810,
+          "sha256": "454c6e122bf9cbd5a50126005d6fb5d8eca9b680965496a0fc55905bbf16c2ad"
+        },
+        {
+          "path": "files/math/prealgebra/prealgebra-ltls-8a7efabd0c34.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Prealgebra-LtLS.pdf",
+          "bytes": 1460775,
+          "sha256": "45ed17f8406f2a826f96ed1da8415258ae8ce6f58dddab2d16cf6b37a30a915b"
+        },
+        {
+          "path": "files/math/prealgebra/prealgebra-mms-0c2f78ae0b1d.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Prealgebra-MMS.pdf",
+          "bytes": 2693770,
+          "sha256": "0ebb4da49dd6c4d73935ec340f298715fc2facd788da5914cc47bc92a3230c7f"
+        },
+        {
+          "path": "files/math/prealgebra/prealgebra-op-ckkiw9j-63c1e9037384.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Prealgebra-OP_ckKIw9j.pdf",
+          "bytes": 55232232,
+          "sha256": "4ce19969b34dc0344e65d9e3f32c03c1ab73ca5258b547b1dc2b3de66b8d20f4"
+        },
+        {
+          "path": "files/math/prealgebra/prealgebra-op-oyhyxve-0c0e29d26072.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Prealgebra-OP_oYhyXVE.pdf",
+          "bytes": 55557984,
+          "sha256": "4a97c167fabcf040daa0c22c321a5a46770b4aea8bd7cd20ec93a764a0c018b0"
+        },
+        {
+          "path": "files/math/precalculus-2e/precalculus-2e-web-a2399ded79cd.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/precalculus-2e_-_WEB.pdf",
+          "bytes": 114386806,
+          "sha256": "4b7018778433d2c125229a35315cf70e0813cbaacb04118b7265baae625372b5"
+        },
+        {
+          "path": "files/math/precalculus/precalculus-op-9wwf7yt-e293866918f1.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Precalculus-OP_9wwF7YT.pdf",
+          "bytes": 86247471,
+          "sha256": "f0a83745e1ea5b4200bac371afb64615742528e4d31e1e4d241623a38e454e7d"
+        },
+        {
+          "path": "files/math/precalculus/precalculus-release-notes-2017-6f6e0ccf8aae.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Precalculus_Release_Notes_2017.pdf",
+          "bytes": 142992,
+          "sha256": "3626766607b738821710fbcd1dc1d15c1e03251a11e8c864ca2cd31cbff51dcc"
+        },
+        {
+          "path": "files/math/statistics/high-school-statistics-web-a92cb2930e5f.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/high-school-statistics_-_WEB.pdf",
+          "bytes": 31451137,
+          "sha256": "6aef489acbf932c6d94e8b6bf5339f0eeb60835f928a72e34ad8f937551e8def"
+        }
+      ]
+    },
+    "nursing": {
+      "totalBytes": 494658213,
+      "assets": [
+        {
+          "path": "files/nursing/clinical-nursing-skills/clinical-nursing-skills-web-c34bb0415e29.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Clinical-Nursing-Skills-WEB.pdf",
+          "bytes": 95717314,
+          "sha256": "cd5224b3f6c3096362c33a3e3af1f08f04a593e85ba444b82955689c50157175"
+        },
+        {
+          "path": "files/nursing/clinical-nursing-skills/skills-competencychecklists-6f53589bec82.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Skills-CompetencyChecklists.docx",
+          "bytes": 512989,
+          "sha256": "78c15363ac101f0016a1c90133acd84e91ac1c75e578840d1e32256608f7ade5"
+        },
+        {
+          "path": "files/nursing/fundamentals-nursing/fundamentals-of-nursing-web-3622f0823b60.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Fundamentals_of_Nursing_-_WEB.pdf",
+          "bytes": 96583335,
+          "sha256": "3818e4964b45513119d676c06e5dc3e81cb4424ae8db53891bff2619773a1cb9"
+        },
+        {
+          "path": "files/nursing/maternal-newborn-nursing/maternal-newborn-nursing-web-95c09d03155d.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Maternal-Newborn_Nursing-WEB.pdf",
+          "bytes": 60793393,
+          "sha256": "d4e4b9ef18e0c5f7b06a958432f3128fc85819b64e4b24ffe0bd07a3f1798703"
+        },
+        {
+          "path": "files/nursing/medical-surgical-nursing/medical-surgical-nursing-web-8a521e3bed07.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Medical-Surgical_Nursing-WEB.pdf",
+          "bytes": 72785345,
+          "sha256": "b91956fbef2a405f3c31a2cf19481df9d6b404bddbeb567f2012035a32ff868a"
+        },
+        {
+          "path": "files/nursing/nutrition/nutrition-for-nurses-web-a4a97ee89fa8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Nutrition_for_Nurses-WEB.pdf",
+          "bytes": 31569933,
+          "sha256": "3038dcc0947a304e0ccce4f629e90f4525298fa5c9dd6d2e19e1b24b4686670a"
+        },
+        {
+          "path": "files/nursing/pharmacology/pharmacology-web-a0cfb67a6a7f.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Pharmacology-WEB.pdf",
+          "bytes": 47218206,
+          "sha256": "7946bd1fc784ecc7bcfb0469fcacb9a89b3ac9c559773b7af0f4e1bc05a696fc"
+        },
+        {
+          "path": "files/nursing/population-health/population-health-for-nurses-web-6a23deb14e31.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Population_Health_for_Nurses_-_WEB.pdf",
+          "bytes": 60769717,
+          "sha256": "7fa848cef34723891cfcc2d3acfe0df481ab8b66e294d2044f19db9f4ff546bd"
+        },
+        {
+          "path": "files/nursing/psychiatric-mental-health/psychiatric-mental-health-nursing-web-d7556b36f8c0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychiatric-Mental_Health_Nursing-WEB.pdf",
+          "bytes": 28707981,
+          "sha256": "07a8abe8f3d93ef52206c990ebcefb559bbcdd443ac6e452ed96982a42e80536"
+        }
+      ]
+    },
+    "other": {
+      "totalBytes": 282980262,
+      "assets": [
+        {
+          "path": "files/other/principles-economics/principles-of-economics-release-notes-2016-c4f5a99a87e8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles_of_Economics_Release_Notes_2016.pdf",
+          "bytes": 104827,
+          "sha256": "9db0d2707855cfe8b50c891d0eff591c602137372e0da39d5f3663b3968d200c"
+        },
+        {
+          "path": "files/other/principles-economics/principlesofeconomics-op-9c1966c43e47.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/PrinciplesofEconomics-OP.pdf",
+          "bytes": 113952634,
+          "sha256": "377b9d2baf34b01b0ca4eeef78e3b97b916eac5e13c518fbe2907026fe75a92e"
+        },
+        {
+          "path": "files/other/principles-economics/video-assignment-perfect-competition-beada3d1881e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Video_Assignment_Perfect_Competition.pdf",
+          "bytes": 29707,
+          "sha256": "0e84d934839ef698bcb5d054f32370f05a4ef62fda7458d0edd0b71fb5b0f96f"
+        },
+        {
+          "path": "files/other/principles-macroeconomics-ap-courses/principles-of-macroeconomics-for-ap-courses-release-notes-2016-5e9675897328.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles_of_Macroeconomics_for_AP_Courses_Release_Notes_2016_.pdf",
+          "bytes": 122059,
+          "sha256": "4bc0953ac33f835e6e20bbeeedd90a0404406392ac3d62239a5853b1c971a5c3"
+        },
+        {
+          "path": "files/other/principles-macroeconomics-ap-courses/principlesofmacroeconomicsforapcourses-op-487421703f98.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/PrinciplesofMacroeconomicsforAPCourses-OP.pdf",
+          "bytes": 11639409,
+          "sha256": "ace9b4586c69625626f17327a87bd9cb0924e6f52d7b1a1530ab3039e1020c4f"
+        },
+        {
+          "path": "files/other/principles-macroeconomics/principles-of-macroeconomics-release-notes-2016-86f237078015.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles_of_Macroeconomics_Release_Notes_2016.pdf",
+          "bytes": 83831,
+          "sha256": "93cbf3f515b745510777463c6d945c0330b1e87e3cc577986cb74730f4c2e79d"
+        },
+        {
+          "path": "files/other/principles-macroeconomics/principlesofmacroeconomics-op-799e37f3660f.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/PrinciplesofMacroeconomics-OP.pdf",
+          "bytes": 82687108,
+          "sha256": "807e4f9d1fbdd3d17c238c1cdd1ff410e1632d9d486985bd3155699cd35b278a"
+        },
+        {
+          "path": "files/other/principles-microeconomics-ap-courses/principles-of-microeconomics-for-ap-courses-release-notes-2016-f142acb19616.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles_of_Microeconomics_for_AP_Courses_Release_Notes_2016.pdf",
+          "bytes": 123252,
+          "sha256": "b94cfd994771723101fdf89a50759ff1d8ba9b2b0fc97741e4bcfa3fefa6bfa6"
+        },
+        {
+          "path": "files/other/principles-microeconomics-ap-courses/principlesofmicroeconomicsforapcourses-op-66e76d6525c6.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/PrinciplesofMicroeconomicsforAPCourses-OP.pdf",
+          "bytes": 11083063,
+          "sha256": "6ca2a2e15ba5861a3fe28888c63f330131029f7f4fdae4d551b81e2fc8be093b"
+        },
+        {
+          "path": "files/other/principles-microeconomics/principles-of-microeconomics-release-notes-2016-99a4129ccf81.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Principles_of_Microeconomics_Release_Notes_2016.pdf",
+          "bytes": 132800,
+          "sha256": "3a536c3acd83a050bb5d60233ae280f27608934db6fa19679d28925ec81dc8a5"
+        },
+        {
+          "path": "files/other/principles-microeconomics/principlesofmicroeconomics-op-b6ea8d44465a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/PrinciplesofMicroeconomics-OP.pdf",
+          "bytes": 63021572,
+          "sha256": "1688121aee49e3263842e6d035b4c78005f8b3bf6558245b40466faf772cb928"
+        }
+      ]
+    },
+    "science": {
+      "totalBytes": 5480545907,
+      "assets": [
+        {
+          "path": "files/science/additive-manufacturing-essentials/additive-manufacturing-essentials-web-cc32b7f50371.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Additive_Manufacturing_Essentials_-_WEB.pdf",
+          "bytes": 20640015,
+          "sha256": "650b8bda1f26e7b53166eaae6ffc5ac3840cd922c0829d162f850d7e4b02d543"
+        },
+        {
+          "path": "files/science/additive-manufacturing-essentials/openstax-diversity-equity-inclusion-development-guidelines-2022-f2e0178a570e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Diversity_Equity_Inclusion_Development_Guidelines_2022.pdf",
+          "bytes": 445249,
+          "sha256": "1318149f8242dfba04cbedd3e30f134faea096b6f22ade129f52281909661885"
+        },
+        {
+          "path": "files/science/additive-manufacturing-essentials/openstax-effective-reading-and-notetaking-guide-e7wfzsp-c62ef9462df0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax.Effective.Reading.and.Notetaking.Guide_E7WFZSP.pdf",
+          "bytes": 788936,
+          "sha256": "2051fc76700d4019c29d3dd104ea738a0bb17cad2693ae6d28f5cddf6031c591"
+        },
+        {
+          "path": "files/science/additive-manufacturing-essentials/openstax-instructor-getting-started-guide-7bdea23c0fc2.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax.Instructor.Getting.Started.Guide.pdf",
+          "bytes": 383928,
+          "sha256": "dcf810603220b0918d7e70cad4f6cca0ae500b87ef716212095fb402a3a1a871"
+        },
+        {
+          "path": "files/science/additive-manufacturing-essentials/student-getting-started-guide-3xa7w8y-1ceaad8f5ed4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/student_getting_started_guide_3XA7W8Y.pdf",
+          "bytes": 125404,
+          "sha256": "77100acd566f7c653e686ef9a688441c6c9bc57b31fcd7d61d18cf03c9d8b2c0"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology-2e/anatomy-and-physiology-2e-student-solution-guide-3c1465b06fa5.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Anatomy_and_Physiology_2e_-_Student_Solution_Guide.zip",
+          "bytes": 401570,
+          "sha256": "6afae737399b95a272eeccf5a458c4ee9dd602e4ed6d58961b4cda8c2350d12f"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology-2e/anatomy-and-physiology-2e-testable-images-e8ab6c4a27ac.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Anatomy_and_Physiology_2e_Testable_Images.zip",
+          "bytes": 103732758,
+          "sha256": "ea3a67bb79bc8429485a97898db95adc9054a3515449bbf6d50de259fdbef73f"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology-2e/anatomy-and-physiology-2e-transition-guide-7504c3cf9d4d.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Anatomy.and.Physiology.2e.Transition.Guide.pdf",
+          "bytes": 63895,
+          "sha256": "f7ab57be978a8d8b67a5782219352c01c23ad73c201431d632dc7ec80750d5a0"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology-2e/anatomy-and-physiology-2e-web-ea6f3ba491ab.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/anatomy-and-physiology-2e_-_WEB.pdf",
+          "bytes": 476335014,
+          "sha256": "aa2e577b2083c343f4d57b38f00dd935dd2d98befdb38c0f368d72d636d0ff46"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology/anatomy-and-physiology-testable-images-owiiukd-5bf4c5199996.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Anatomy_and_Physiology_Testable_Images_OwiIukD.zip",
+          "bytes": 103485746,
+          "sha256": "134393afd13525bb78ec6cefdcbc04549d6aa16082d768c8ec4d0182bede4862"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology/anatomyandphysiology-op-944f7df1cd96.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/AnatomyandPhysiology-OP.pdf",
+          "bytes": 135405076,
+          "sha256": "16cb34457cbaa66cc8a4ddd70e745dba0611d6f942bebe51d505ed6e7bd80362"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology/anatomyandphysiology-studentsolutionguide-654f47d7c2a4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/AnatomyAndPhysiology_StudentSolutionGuide.pdf",
+          "bytes": 854897,
+          "sha256": "4880a3f8009795551615b50846f3c6ba8c56141f729295a3a56f995e48a9b00b"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology/anatomyphysiologyreleasenotes2017-395893af87f6.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/AnatomyPhysiologyReleaseNotes2017.pdf",
+          "bytes": 176562,
+          "sha256": "23a2016fac6622ac38d31c541bfbaef038e2af881de2256fdeb632df1a7bebd0"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology/openstax-anatomy-physiology-lecture-notes-1c0101dc25d5.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Anatomy_Physiology_Lecture_Notes.docx",
+          "bytes": 18155435,
+          "sha256": "9b57d941d0b4b35606cd40a857947466c64b526796817f0e03b7e0b146aec25e"
+        },
+        {
+          "path": "files/science/anatomy-and-physiology/pronunciation-guide-6ea123316dc1.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Pronunciation_Guide.zip",
+          "bytes": 8794989,
+          "sha256": "ba7e8a78dbe223269e3809954294f36ae03529e93e10d06c1f5dc0b561283f43"
+        },
+        {
+          "path": "files/science/astronomy-2e/astronomy-2e-web-51840713aa0c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/astronomy-2e_-_WEB.pdf",
+          "bytes": 162975061,
+          "sha256": "9c3c49fc2d0b35a122509d27714780a5991b8e97cb6bd8db954e2b37542797a5"
+        },
+        {
+          "path": "files/science/astronomy-2e/lab-exercises-for-astro-101-topical-listing-646f0db947f2.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Lab_Exercises_for_Astro_101_Topical_Listing.docx",
+          "bytes": 366922,
+          "sha256": "38df2c4064da4bbc1aacee83c5556ca9465830b1be6ba921b68b01daead30f36"
+        },
+        {
+          "path": "files/science/astronomy-2e/openstax-astronomy-1e-to-2e-transition-guide-e9619c5f2b53.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax.Astronomy.1e.to.2e.Transition.Guide.pdf",
+          "bytes": 101502,
+          "sha256": "11b9aec6f1c7351b5cc091dfc3e18fc8f68b9bf97e5f244c7a48f0189690a5c6"
+        },
+        {
+          "path": "files/science/astronomy/astronomy-op-zitt6lj-3c3b52de9e15.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Astronomy-OP_zItt6LJ.pdf",
+          "bytes": 161162805,
+          "sha256": "81f6d708839e307036c3f778f50d2b7b256eb361576367ac65c911f3c4f0802a"
+        },
+        {
+          "path": "files/science/astronomy/astronomy-releasenotes-400df069c4c9.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Astronomy-ReleaseNotes.pdf",
+          "bytes": 171255,
+          "sha256": "3ee7045eaa26514c68fc1a6d11a59d9023f5b9e54c10340f0103ff7cd0e74737"
+        },
+        {
+          "path": "files/science/astronomy/astronomy-sample-course-outlines-13edbe564de8.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/astronomy_sample_course_outlines.docx",
+          "bytes": 275383,
+          "sha256": "658c45f515a163b1bb6c6c3db990d2280f5d000e751f69a64bcb576a67bdf6e0"
+        },
+        {
+          "path": "files/science/astronomy/briefastronomyvideos-c76cd742ef4b.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/BriefAstronomyVideos.docx",
+          "bytes": 114177,
+          "sha256": "e6c7919dc9d0163daa57fd33f8d87ad1301dd4bb7f12c8bad48d9c36397325c5"
+        },
+        {
+          "path": "files/science/astronomy/lab-exercises-for-astro-101-topical-listing-lpxqzlu-135fc4752a38.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Lab_Exercises_for_Astro_101_Topical_Listing_lPXQZLU.pdf",
+          "bytes": 506233,
+          "sha256": "d965331c909f48e85226b4aec1ccc1fc5f4ff1b2f2cc9c2187f823109132bb97"
+        },
+        {
+          "path": "files/science/biology-2e/biology-2e-web-cd84e6ede5f8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Biology-2e_-_WEB.pdf",
+          "bytes": 401298122,
+          "sha256": "4d1f413fd779f114838cdaeab7859dcb2922ca7529230d3bfd7d36a77b4e27b6"
+        },
+        {
+          "path": "files/science/biology-2e/biology2e-ssm-e1fd23bbfe50.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Biology2e-SSM.pdf",
+          "bytes": 486778,
+          "sha256": "7c8ab640cecb4cc173d7a1a5f82b1d5c43f4b15c35707379442bfebbb7e8a7cb"
+        },
+        {
+          "path": "files/science/biology-2e/transition-guide-iotnrl1-4a62781a64f2.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Transition-Guide_iOtnrL1.pdf",
+          "bytes": 139617,
+          "sha256": "ab49c4b5ed78e9cfad00d663cf2ac31c8dfc698a4643c45e784ceb2c783b2eed"
+        },
+        {
+          "path": "files/science/biology-ap-courses/biology-ap-courses-web-46e06ae37ce7.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Biology-AP-Courses_-_WEB.pdf",
+          "bytes": 265033179,
+          "sha256": "86faba42bf6b89c038f573f6e5797fbaaf5a59927a9aaada4beb83d06af57d48"
+        },
+        {
+          "path": "files/science/biology-ap-courses/student-solutions-manual-apbiology-ba22cfb56357.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual-APBiology.zip",
+          "bytes": 21591432,
+          "sha256": "d01f262e8a6099977f1e8aa4b41bf4ac169a01815cbfd9e1c370a6b680a1711d"
+        },
+        {
+          "path": "files/science/biology/activities-for-engaging-students-in-biology-using-animations-1-b2fde6422c92.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Activities_for_engaging_students_in_Biology_using_animations_1.pdf",
+          "bytes": 79612,
+          "sha256": "7f4ed9a31ec230a0ce17d25ea2bedef31888bb2d90ace1344e54f950b5d89c88"
+        },
+        {
+          "path": "files/science/biology/biology-op-xqozm8z-3b03f83ca01b.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Biology-OP_xQoZM8Z.pdf",
+          "bytes": 279388465,
+          "sha256": "723dec671a4da7bcd6f665c1504253f2d6f3ce162de9e80949f868c16cdb770e"
+        },
+        {
+          "path": "files/science/biology/biology-release-notes-2016-d002fa6f5b6c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Biology_Release_Notes_2016.pdf",
+          "bytes": 117810,
+          "sha256": "1fb8aa68ab0651a81498f64752ea92e65c3d25944a2e84e98de698d6c79cb094"
+        },
+        {
+          "path": "files/science/chemistry-2e/chemistry-2e-web-64da8e920151.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/chemistry-2e_-_WEB.pdf",
+          "bytes": 217794376,
+          "sha256": "fd89db1b8a1fee06b8ad3e8982f4f4b34bde4e93654a4ce28b724f8c0efe98d6"
+        },
+        {
+          "path": "files/science/chemistry-2e/openstax-chemistry-1e-to-2e-transition-guide-56b289b8b1ec.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Chemistry_1e_to_2e_Transition_Guide.pdf",
+          "bytes": 195613,
+          "sha256": "9939e33bb3bc83a91c3d4e827ed9c26f6ca0e8fb955d52ea5a881e5bfec34ef4"
+        },
+        {
+          "path": "files/science/chemistry-2e/ssm-chemistry2e-846a59c45d4c.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/SSM-Chemistry2e.zip",
+          "bytes": 24785716,
+          "sha256": "f7ada8753ee6078b211f86cb2cff69abe1e8035c9b6b094b99e8cfe2016c3e3b"
+        },
+        {
+          "path": "files/science/chemistry-atoms-first-2e/chemistry-atoms-first-2e-student-solution-manual-2zhiork-9c0d51fac45e.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Chemistry_Atoms_First_2e_Student_Solution_Manual_2ZhIoRK.zip",
+          "bytes": 17104476,
+          "sha256": "08df6e31711f0a231708222434fdbdb80696afa20903d9ad9f287da65ceb500b"
+        },
+        {
+          "path": "files/science/chemistry-atoms-first-2e/chemistry-atoms-first-2e-web-98491bf0a4a3.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/chemistry-atoms-first-2e_-_WEB.pdf",
+          "bytes": 218252485,
+          "sha256": "083f28d4574dc50a927a67efd19e89cfca2284f1f4e63efe2d1c804523288cfb"
+        },
+        {
+          "path": "files/science/chemistry-atoms-first-2e/openstax-chemistry-atoms-first-1e-to-2e-transition-guide-1014e7cc9701.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Chemistry_Atoms_First_1e_to_2e_Transition_Guide.pdf",
+          "bytes": 119703,
+          "sha256": "c3e72e8be533b2ba9d0dcf29bbc47ce25da89698d41c5db1a78081174261bf2f"
+        },
+        {
+          "path": "files/science/chemistry-atoms-first/chemistry-atoms-first-1e-student-solution-manual-672e42ea3138.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Chemistry_-_Atoms_First_1e_Student_Solution_Manual.zip",
+          "bytes": 19943523,
+          "sha256": "a5d873ee0e2d456b73add28a5d2feed99b1f9e39323abecb3f349b232d6cda45"
+        },
+        {
+          "path": "files/science/chemistry-atoms-first/chemistryatomsfirst-op-1d7ubnb-f60b4c58891e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/ChemistryAtomsFirst-OP_1D7uBNB.pdf",
+          "bytes": 218085647,
+          "sha256": "c5e512f16b5087926050dfbea2c70c183bda23c85365481ec9a5064a8e5197ab"
+        },
+        {
+          "path": "files/science/chemistry/ch1-classification-of-matter-study-guide-1-719162bee2ce.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/CH1_Classification_of_Matter_Study_Guide_1.docx",
+          "bytes": 20883,
+          "sha256": "c1b801e2888ac957ff8129d1c57cb8de2bd09c38d15271df1c46e768165387dd"
+        },
+        {
+          "path": "files/science/chemistry/chemistry-op-xdqvzpq-f8938edf0050.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Chemistry-OP_XdqVZpQ.pdf",
+          "bytes": 218204400,
+          "sha256": "0db1d8990e32ab10689286865abf161743a6cd24c1361aa89abc970858919968"
+        },
+        {
+          "path": "files/science/chemistry/chemistry-release-notes-2017-743d3ef3e7ba.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Chemistry_Release_Notes_2017.pdf",
+          "bytes": 557003,
+          "sha256": "58b4ef1010bf5f08677da28535f58b2cf317402bf1b48e033fb65afb694a540a"
+        },
+        {
+          "path": "files/science/chemistry/student-solution-manual-1e-7a3ad29c11cb.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solution_Manual_1e.zip",
+          "bytes": 20866459,
+          "sha256": "7b93ee05e299406b32b8863c12ce66bd6c15ec8811c0f39f2b4c46f023823610"
+        },
+        {
+          "path": "files/science/college-physics-2e/college-physics-2e-web-3facb17fba36.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/college-physics-2e_-_WEB.pdf",
+          "bytes": 263463256,
+          "sha256": "a052d9fae2a90e135a74d70c001a78bb49b83280be58191e108d5de577699bb6"
+        },
+        {
+          "path": "files/science/college-physics-2e/openstax-college-physics-1e-to-2e-transition-guide-443b221c9b5b.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax.College.Physics.1e.to.2e.Transition.Guide.docx",
+          "bytes": 963255,
+          "sha256": "b688c7a6433331199bafe0737def8499485833e575e28a51fd340ef6dd68916a"
+        },
+        {
+          "path": "files/science/college-physics-2e/student-solution-manual-collegephysics2e-caab277195e8.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solution_Manual-CollegePhysics2e.zip",
+          "bytes": 33859923,
+          "sha256": "94f9fa1ddf46892365d1dc15fe3af2c3d76afb34c810d8093cd93c3147b29ca2"
+        },
+        {
+          "path": "files/science/college-physics-ap-courses-2e/college-physics-ap-courses-2e-web-8a7ddd109d40.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/college-physics-ap-courses-2e_-_WEB.pdf",
+          "bytes": 266882977,
+          "sha256": "de438d7a0ed13339340d3e6bb93346920ef146c99e1275e8c84ba476555943d7"
+        },
+        {
+          "path": "files/science/college-physics-ap-courses-2e/student-solution-manual-apcollegephysics2e-53ebaacd6309.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solution_Manual-APCollegePhysics2e.zip",
+          "bytes": 62512878,
+          "sha256": "3e063bd201e603a86281ffdb879082fd6ef63d520b74516cb2f448811d30dfe8"
+        },
+        {
+          "path": "files/science/college-physics-ap-courses/apcollegephysics-op-js6zfp7-25417084efb8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/APCollegePhysics-OP_js6ZFp7.pdf",
+          "bytes": 105524659,
+          "sha256": "8d8621a5b61fce71d6754f98339a2d5351931461ef587f784506b084dae49da0"
+        },
+        {
+          "path": "files/science/college-physics-ap-courses/apphys-ssm-08cd14ccd26f.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/APPhys-SSM.zip",
+          "bytes": 7621256,
+          "sha256": "54ae7b57f93de9468f9b3b52c9b95b3a963a8ebdffa0866619e1bd6a0c79cb20"
+        },
+        {
+          "path": "files/science/college-physics-ap-courses/collegephysicsforapcourses-releasenotes-2017-5d35601f8c6f.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/CollegePhysicsforAPCourses-ReleaseNotes-2017.pdf",
+          "bytes": 164355,
+          "sha256": "6c012d3d2c5ab825b4b43f26e4d45e82d64b6a7daffe2a64f49e60236690ac0e"
+        },
+        {
+          "path": "files/science/college-physics-ap-courses/instructor-getting-started-guide-2f86ba274097.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/instructor_getting_started_guide.pdf",
+          "bytes": 151124,
+          "sha256": "c4305ebfd19514598e5f3236c7ce04f89df37d3c1cf9f980ace9c93741f5df26"
+        },
+        {
+          "path": "files/science/college-physics-ap-courses/student-ap-physics-lab-manual-full-adc0fd791bdf.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/STUDENT_-_AP_Physics_Lab_Manual_Full.pdf",
+          "bytes": 10318424,
+          "sha256": "56f7e69e6ab54dcc72f11e3320df9fd71af5e0628a12c8dc8fc1bc87a62889e1"
+        },
+        {
+          "path": "files/science/college-physics/college-physics-release-notes-2020-3fb33f1d911b.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/College_Physics_Release_Notes_2020.pdf",
+          "bytes": 140381,
+          "sha256": "0cccce219f167c633fa07c247437ce37edd223d5f08e3fab01ca4c55ece84f5a"
+        },
+        {
+          "path": "files/science/college-physics/college-physics-web-2s5shvr-e901bae2fdc2.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/College_Physics-WEB_2s5sHvR.pdf",
+          "bytes": 264102523,
+          "sha256": "e4e91aa48b4e95ccdbac33ae938dae7e890bc0e123796635052bcafe53301671"
+        },
+        {
+          "path": "files/science/college-physics/collegephysics-ssm-cm0xonp-7b2a3c521aae.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/CollegePhysics-SSM_Cm0XONp.pdf",
+          "bytes": 3875524,
+          "sha256": "7921b580ffd2313251fa2e8e4824eddfa1a5c48cd7a6bbca4ce2718f914f1e0b"
+        },
+        {
+          "path": "files/science/college-physics/collegephysics-veritas-e36b03fd0645.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/CollegePhysics-Veritas.pdf",
+          "bytes": 1827996,
+          "sha256": "3cf5d102d4312c272210d4aea5cd5df5b415bf2452369781afbda75f47a4350e"
+        },
+        {
+          "path": "files/science/concepts-biology/concepts-biology-web-84c6413d7852.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Concepts-Biology_-_WEB.pdf",
+          "bytes": 185858638,
+          "sha256": "da0ffc8585e172f04eb0abb08949087baf85cc229ef2736ef06e5aa17094b1f6"
+        },
+        {
+          "path": "files/science/concepts-biology/concepts-of-biology-ssm-f1d63a01918d.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Concepts_of_Biology_-_SSM.zip",
+          "bytes": 689647,
+          "sha256": "5a266c60b78f9e99ea843db569379ce7e293d2426f359c7dca42a67dfb669aa9"
+        },
+        {
+          "path": "files/science/concepts-biology/instructors-guide-to-concepts-of-biology-chapters-12-21-9pzklm7-837a7858e9a0.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Instructors_Guide_to_Concepts_of_Biology_Chapters_12-21_9pZklM7.pdf",
+          "bytes": 26247554,
+          "sha256": "9d2bcf30b49f7653e0db325059b81dfd165fb43c7dd5842af73f0b809be4e1ab"
+        },
+        {
+          "path": "files/science/fizyka-dla-szko-wyzszych-tom-1/fizyka-dla-szko-wyzszych-tom-1-6ok9xzl-edbb4ba9c781.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Fizyka_dla_szko%C5%82_wyzszych_Tom_1_6Ok9XZL.pdf",
+          "bytes": 69987722,
+          "sha256": "e2c9d4eec6d9e691327cf380d34bea87ea68a5431a8b750f76fb5434860bb580"
+        },
+        {
+          "path": "files/science/fizyka-dla-szko-wyzszych-tom-2/fizyka-dla-szko-wyzszych-tom-2-uuy52zu-fdabfc7aa230.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Fizyka_dla_szko%C5%82_wyzszych_Tom_2_uUY52zU.pdf",
+          "bytes": 57133524,
+          "sha256": "9bd8f0b06f758bf81f03733540e0b595253bd67f4cbdfc2214bb0c9a0e23285f"
+        },
+        {
+          "path": "files/science/fizyka-dla-szko-wyzszych-tom-3/fizyka-dla-szko-wyzszych-tom-3-4go3h60-5eb342bfd521.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Fizyka_dla_szko%C5%82_wyzszych_Tom_3_4Go3H60.pdf",
+          "bytes": 46895779,
+          "sha256": "d3f5fe71334a3b4fba44cef4a2fd0343ea19e82bde9e16606d4bac688a204dcf"
+        },
+        {
+          "path": "files/science/microbiology/microbiology-web-4021ab01d8e6.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/microbiology_-_WEB.pdf",
+          "bytes": 332873038,
+          "sha256": "e3dd075104421429b41493171eb9380312610b68843bff07c3cdf6e9ecfc1751"
+        },
+        {
+          "path": "files/science/organic-chemistry/organic-chemistry-web-cd79d9663c08.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/organic-chemistry_-_WEB.pdf",
+          "bytes": 207713388,
+          "sha256": "d57b7da43589eaf94de53a06bb17b20a856bbde57020e7a0ee4be312085001c4"
+        },
+        {
+          "path": "files/science/organic-chemistry/organicchemistry10e-studyguide-widxluo-3607495b805b.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OrganicChemistry10e-StudyGuide_WIdXLUO.pdf",
+          "bytes": 7038642,
+          "sha256": "44f0d83931fbda21256a53cb4cfe3ece6dc92f5bba0e32f5838467cf5a09821c"
+        },
+        {
+          "path": "files/science/organic-chemistry/student-solutions-manual-organic-chemistry-10e-da485c0c1fb4.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Manual_-_Organic_Chemistry_10e.zip",
+          "bytes": 86931047,
+          "sha256": "21a8129a91527d402cd58eb3db46dda2615d529bfbba271ae88b3e63e0f57e63"
+        },
+        {
+          "path": "files/science/physics/physics-web-dd966ce94125.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Physics_-_WEB.pdf",
+          "bytes": 57463331,
+          "sha256": "a3f75487411ef13d0270c65fc801ceff2b28e6b339afed9b407fe477f7e8453e"
+        },
+        {
+          "path": "files/science/physics/student-answer-guide-physics-49a20b16b13a.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Answer_Guide_-_Physics.zip",
+          "bytes": 9571331,
+          "sha256": "d40706c6be76a8db27f65ecd8f1b4bd5f7c748de8aeb1be38be6461093e0a3c7"
+        },
+        {
+          "path": "files/science/university-physics-volume-1/student-solutions-guide-universityphysicsvol1-4f9ea0ecb601.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Solutions_Guide-UniversityPhysicsvol1.zip",
+          "bytes": 22601073,
+          "sha256": "b5ceef33816bb31b187201f6d6959daf57d30bf7ae37529fa8c1700b31731072"
+        },
+        {
+          "path": "files/science/university-physics-volume-1/university-physics-volume-1-web-65ecdccc7d9d.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-1_-_WEB.pdf",
+          "bytes": 81497906,
+          "sha256": "93652b69c43197d10dc83438b813b5f7515e61e7ea4336da8636ff902cb4aba8"
+        },
+        {
+          "path": "files/science/university-physics-volume-2/student-answers-and-solutions-guide-uphysvol2-3c6d73b1fa81.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Answers_and_Solutions_Guide-UPhysvol2.zip",
+          "bytes": 21071695,
+          "sha256": "c7f13fe71e2c15ae61ac0673c6bd9e367111b8bdc36b46da4887e7a4bf21280b"
+        },
+        {
+          "path": "files/science/university-physics-volume-2/university-physics-volume-2-web-bc944b88f771.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-2_-_WEB.pdf",
+          "bytes": 63815745,
+          "sha256": "3f5d8d0e38ba663c84a036b54cf6087bc2836adca553cb7849f2c0e85e97a445"
+        },
+        {
+          "path": "files/science/university-physics-volume-3/student-answers-and-solutions-guide-uphysvol3-297de0768ab5.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Student_Answers_and_Solutions_Guide-UPhysvol3.zip",
+          "bytes": 8761969,
+          "sha256": "1dcd1ed865a80fe02b15cb18056f63dd60501a0ec9f476eca96180468f3a69a9"
+        },
+        {
+          "path": "files/science/university-physics-volume-3/university-physics-volume-3-web-32f94571b132.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/university-physics-volume-3_-_WEB.pdf",
+          "bytes": 53457236,
+          "sha256": "311c6beb70bb9cc6073d40a6085d290a82afde2b38e9aaf672ccb6de0542541b"
+        }
+      ]
+    },
+    "social-sciences": {
+      "totalBytes": 1716065907,
+      "assets": [
+        {
+          "path": "files/social-sciences/american-government-2e/american-government-2e-6-11-f9d94b9bc561.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/american-government-2e-6.11.pdf",
+          "bytes": 151136113,
+          "sha256": "83c78392b2e6583d169c044a8d837020dcfc609b6112fa477f21d89c5fdca2ff"
+        },
+        {
+          "path": "files/social-sciences/american-government-3e/americangovernment3e-web-027d1825f19c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/AmericanGovernment3e-WEB.pdf",
+          "bytes": 156304666,
+          "sha256": "f794f133de7c6b39d5b0da997d70fceb9990b8da797c43cf87b09f60cbc404a6"
+        },
+        {
+          "path": "files/social-sciences/american-government-3e/openstax-american-government-2e-to-3e-transition-guide-24ec248e5916.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_American_Government_2e_to_3e_Transition_Guide.pdf",
+          "bytes": 161311,
+          "sha256": "2fd0226137c289c7ea1184607d435ea394c0b6b8042c5d60a25ff8b2915266ae"
+        },
+        {
+          "path": "files/social-sciences/american-government-4e/american-government-4e-web-em2tuqh-a17ce798d1a8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/American_Government_4e_-_WEB_eM2Tuqh.pdf",
+          "bytes": 155034953,
+          "sha256": "71e30f1c28a649dd72a6664a7add1462c0672df82b66d1bc282c4a47dd12e1be"
+        },
+        {
+          "path": "files/social-sciences/american-government/americangovernment-op-aca090ad6c4f.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/AmericanGovernment-OP.pdf",
+          "bytes": 152822994,
+          "sha256": "98b3e39befc2c086b4884579611ff5f699c9f6df8945842f5eb22a50c1a6a5d0"
+        },
+        {
+          "path": "files/social-sciences/american-government/amgov-releasenotes-015add8f336b.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/AmGov-ReleaseNotes.pdf",
+          "bytes": 70167,
+          "sha256": "dd1b3f0a3d0d67ea6f7a97d71ea541bb85fb003a2ad4384663b30dc20cad7874"
+        },
+        {
+          "path": "files/social-sciences/introduction-anthropology/introductiontoanthropology-web-4c8b0eb475b5.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntroductiontoAnthropology-WEB.pdf",
+          "bytes": 101187994,
+          "sha256": "2465cfb7df9635c45d30f4f1fbd3b601757b8c0ce133e4a496b59361e5be5da9"
+        },
+        {
+          "path": "files/social-sciences/introduction-behavioral-neuroscience/introduction-behavioral-neuroscience-web-c887ff9345dc.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction-Behavioral-Neuroscience_-_WEB.pdf",
+          "bytes": 262376027,
+          "sha256": "32af1ea701864dbde9be9c279cfe2bd10de02924f622085805c5bb80f409ff9f"
+        },
+        {
+          "path": "files/social-sciences/introduction-political-science/introduction-to-political-science-web-30ad9d67f89e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Introduction_to_Political_Science_-_WEB.pdf",
+          "bytes": 78449891,
+          "sha256": "64eb5a880b5a38bb77433d22e98a00e8a234b3f5abd44aa8556231b69f81bf00"
+        },
+        {
+          "path": "files/social-sciences/introduction-sociology-2e/introductiontosociology2e-op-tbtlqmj-d98986cec93d.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/IntroductionToSociology2e-OP_tbTLqMj.pdf",
+          "bytes": 39450399,
+          "sha256": "c4fa1cf65f2d0c34cc46679cc3f5d7b988d3db89e53f6cf5d3c3bf5a1e628b10"
+        },
+        {
+          "path": "files/social-sciences/introduction-sociology-2e/sociology-2e-release-notes-2016-a47c3ace69d8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Sociology_2e_Release_Notes_2016_.pdf",
+          "bytes": 135935,
+          "sha256": "69dfcddb04bdb53877ffc0812959a2d5dd0687a3ab47970bb7c50e9e578bc428"
+        },
+        {
+          "path": "files/social-sciences/introduction-sociology-2e/sociology2e-ssm-hrvjegl-3b1c0e215eb8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Sociology2e-SSM_hrvjegl.pdf",
+          "bytes": 194708,
+          "sha256": "8f7be03249526463ba71f9dd36739d9ce3b8200b09a0b5ec5509170236bf9afe"
+        },
+        {
+          "path": "files/social-sciences/introduction-sociology-3e/introduction-sociology-3e-web-4cefa6d7f7f5.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/introduction-sociology-3e_-_WEB.pdf",
+          "bytes": 48299547,
+          "sha256": "e70f1afc8495f4a4b481f3570cf8fbc186cbd5417b3a91033d8d01d237c0c5bd"
+        },
+        {
+          "path": "files/social-sciences/introduction-sociology-3e/openstax-sociology-2e-to-3e-transition-guide-a8d50bce20bf.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Sociology_2e_to_3e_Transition_Guide.docx",
+          "bytes": 90633,
+          "sha256": "0280d57b772865e0108f0fea9523b2cb99d4cd3006f156a6f9a075a7c25030b9"
+        },
+        {
+          "path": "files/social-sciences/lifespan-development/lifespan-development-web-7d1dc1b6c690.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Lifespan_Development_-_WEB.pdf",
+          "bytes": 75075373,
+          "sha256": "660c5908d26cda5f5d959004e3b79c281a4fc203cef398fe37cac46c488d34b0"
+        },
+        {
+          "path": "files/social-sciences/makroekonomia-podstawy/makroekonomia-podstawy-web-1941fe07850a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Makroekonomia-Podstawy-WEB.pdf",
+          "bytes": 10836323,
+          "sha256": "3b1792a26c01a134d5a1b1a3ac58578def5b457060d2ed914ad526e8ac270a97"
+        },
+        {
+          "path": "files/social-sciences/mikroekonomia-podstawy/mikroekonomia-podstawy-web-c91b42a34ec2.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Mikroekonomia-Podstawy-WEB.pdf",
+          "bytes": 8395600,
+          "sha256": "98050103438146c7dd95a405f3def0903ab4ab3e92c3f00e8f4aa3703d78e360"
+        },
+        {
+          "path": "files/social-sciences/principles-economics-2e/economics2e-op-s2jf42u-fdab72b604d7.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Economics2e-OP_s2jF42u.pdf",
+          "bytes": 51763377,
+          "sha256": "fb4dc24f2623ceea612ef040066f3d3d36f94be8959558dc864fb7c897b442d6"
+        },
+        {
+          "path": "files/social-sciences/principles-economics-2e/economics2e-releasenotes-71d73af9af3e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Economics2e-ReleaseNotes.pdf",
+          "bytes": 81821,
+          "sha256": "890d3894a034b9e6a656a957ea0d2bdaf83f8dc03f040283455b64aa16523efd"
+        },
+        {
+          "path": "files/social-sciences/principles-economics-2e/economics2e-transitionguide-f1efce57580a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Economics2e-TransitionGuide.pdf",
+          "bytes": 44377,
+          "sha256": "41c4f34f6d0e3ca2ecc98e661f1caa2ad1fb7f5f17487522aad3684a26c677e2"
+        },
+        {
+          "path": "files/social-sciences/principles-economics-3e/openstax-economics-2e-to-3e-transition-guide-324b7ac9896e.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax.Economics.2e.to.3e.Transition.Guide.docx",
+          "bytes": 2510585,
+          "sha256": "1fdaca9671183f35d773a98d5a0f8041d203165515735477171918d4422aba40"
+        },
+        {
+          "path": "files/social-sciences/principles-economics-3e/principles-economics-3e-web-7a857315c08f.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-economics-3e_-_WEB.pdf",
+          "bytes": 49444584,
+          "sha256": "2d2e7549e13a1975965bfb14a577a3d7935173ff10ca2e1d953815560590a4eb"
+        },
+        {
+          "path": "files/social-sciences/principles-macroeconomics-2e/macroeconomics2e-op-wrqqkiv-3c45c279bd77.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Macroeconomics2e-OP_WRQqkIv.pdf",
+          "bytes": 39011342,
+          "sha256": "709ce86fdf57ec230ffe8179f5688f86074413bac456e31a5cf626d3b11e265a"
+        },
+        {
+          "path": "files/social-sciences/principles-macroeconomics-2e/macroeconomics2e-releasenotes-e9e2a792ca8c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Macroeconomics2e-ReleaseNotes.pdf",
+          "bytes": 47469,
+          "sha256": "8730203152be7d2a3e1c7a6841474f22b0d2ab07c828a88dc652579a42ce32d0"
+        },
+        {
+          "path": "files/social-sciences/principles-macroeconomics-2e/macroeconomics2e-transitionguide-9ebff576d601.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Macroeconomics2e-TransitionGuide.pdf",
+          "bytes": 73231,
+          "sha256": "a778288166dc49ff5db9ba0eddf5d5ef50c71e8ce93ab672df4f3a21ac6d9b20"
+        },
+        {
+          "path": "files/social-sciences/principles-macroeconomics-3e/principles-macroeconomics-3e-web-c45ffd710ac3.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-macroeconomics-3e_-_WEB.pdf",
+          "bytes": 33585123,
+          "sha256": "c1ac3049ae23c7463c8071ff3de22b6df80de1107db8a43980e0f1935a1e5815"
+        },
+        {
+          "path": "files/social-sciences/principles-macroeconomics-ap-courses-2e/apmacroeconomics2e-op-7se2bz3-58930e2b051e.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/APMacroeconomics2e-OP_7sE2Bz3.pdf",
+          "bytes": 33409792,
+          "sha256": "104d6429c168d503ecb2cd6e170a4164e968f1d96e35be8d181a06e5a3dd42b0"
+        },
+        {
+          "path": "files/social-sciences/principles-macroeconomics-ap-courses-2e/apmacroeconomics2e-transitionguide-f52699200b4a.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/APMacroeconomics2e-TransitionGuide.pdf",
+          "bytes": 35017,
+          "sha256": "4f35a14f28e2438bc2e7455ef9168ea4c30d7470a2b563448d29077635d4fc05"
+        },
+        {
+          "path": "files/social-sciences/principles-microeconomics-2e/microeconomics2e-op-5b9c194ac60d.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Microeconomics2e-OP.pdf",
+          "bytes": 33969709,
+          "sha256": "009b4bb0e112850944b42bab2808fdd16436549b9c4d493c19d867cf1e8d9dd6"
+        },
+        {
+          "path": "files/social-sciences/principles-microeconomics-2e/microeconomics2e-releasenotes-bc469f300bda.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Microeconomics2e-ReleaseNotes.pdf",
+          "bytes": 50702,
+          "sha256": "ffdfae45fa504a60070f0186963f1c30c981e0c8bd072308ae2784f58edb2699"
+        },
+        {
+          "path": "files/social-sciences/principles-microeconomics-2e/microeconomics2e-transitionguide-ff1cf5d55cf1.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Microeconomics2e-TransitionGuide.pdf",
+          "bytes": 77987,
+          "sha256": "8c5164ba0fab994c25277078dd34610b35fbcd9d2b6a6436c23394f6e0fddf1c"
+        },
+        {
+          "path": "files/social-sciences/principles-microeconomics-3e/principles-microeconomics-3e-web-8b0a824e56ef.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/principles-microeconomics-3e_-_WEB.pdf",
+          "bytes": 29247593,
+          "sha256": "65a1856faa91d5fdef9c630928029c6e4e188a9580d9128fcbc9138c4f4a583f"
+        },
+        {
+          "path": "files/social-sciences/principles-microeconomics-ap-courses-2e/apmicroeconomics2e-op-0cgy3xk-35cb8adbef74.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/APMicroeconomics2e-OP_0CGY3xk.pdf",
+          "bytes": 30894376,
+          "sha256": "249e6b62c6b37046930ed616d82f9c9eb8e134ab7b761b5647aac10e1a7da9a1"
+        },
+        {
+          "path": "files/social-sciences/principles-microeconomics-ap-courses-2e/apmicroeconomics2e-transitionguide-eaa8be400d5c.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/APMicroeconomics2e-TransitionGuide.pdf",
+          "bytes": 160138,
+          "sha256": "a0ba05d8421869484ac676f8657bb8f3824f249e7ea09a87ac183273b0c08e8d"
+        },
+        {
+          "path": "files/social-sciences/psychologia-polska/psychologia-oenl2rt-e8e65d3a2af2.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychologia_OENL2rt.pdf",
+          "bytes": 44211687,
+          "sha256": "b2e2a72f24fc3e85180c4cf51ab6c256569f5c1a8f669081e9b8f435b92f4f42"
+        },
+        {
+          "path": "files/social-sciences/psychology-2e/openstax-psychology-1e-to-2e-transition-guide-a92be188c98f.docx",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Psychology_1e_to_2e_Transition_Guide.docx",
+          "bytes": 114389,
+          "sha256": "a6978ccfc04b681f7ee9c02f06e85dc7971d36d4e02480eb5ce10758e4f31bf2"
+        },
+        {
+          "path": "files/social-sciences/psychology-2e/psychology-2e-student-lecture-notes-2de528091899.zip",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychology_2e_Student_Lecture_Notes.zip",
+          "bytes": 1667815,
+          "sha256": "e8043bba7879e3db110c9fca8c78349f7d4593dc23dc1802263457544ad3f318"
+        },
+        {
+          "path": "files/social-sciences/psychology-2e/psychology2e-studentsolutionsguide-u4xzs76-fcc2cfa9a447.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychology2e_StudentSolutionsGuide_u4xZS76.pdf",
+          "bytes": 434705,
+          "sha256": "427f89c6f0cbc029c07586bed0b4487fa1c476864e83ad03b57b6912557a4a28"
+        },
+        {
+          "path": "files/social-sciences/psychology-2e/psychology2e-web-5d84757cd002.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychology2e_WEB.pdf",
+          "bytes": 57739919,
+          "sha256": "2f08113c78127bc684922ad6a819db22bd4705ce9fcf28a07f36a2041b1474e2"
+        },
+        {
+          "path": "files/social-sciences/psychology/chapter-3-eed5b55d0185.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Chapter_3.pdf",
+          "bytes": 68162,
+          "sha256": "9148a51b335c43ac6ed5b144c1f9335f6ed736006cc5867f92a947fccc32d6a3"
+        },
+        {
+          "path": "files/social-sciences/psychology/openstax-psychology-apa-guidelines-map-1-216bce96f5d4.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/OpenStax_Psychology_APA_Guidelines_Map_1.pdf",
+          "bytes": 812094,
+          "sha256": "042b14380370e861b574709b514491165cf92b1c70a5ada2c4d0f3c4ee432c4d"
+        },
+        {
+          "path": "files/social-sciences/psychology/psychology-op-14b36da8e008.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychology-OP.pdf",
+          "bytes": 66139228,
+          "sha256": "7e9784728fa0bd41d1a4265babccd148b43a6ebad5c97ee3f3b1b3e42b178605"
+        },
+        {
+          "path": "files/social-sciences/psychology/psychology-release-notes-2017-684e1611dc26.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychology_Release_Notes_2017.pdf",
+          "bytes": 136793,
+          "sha256": "9c9cdbef05c09ac90b3623bede8d43e104f10128af0f16ee08b54478486714a5"
+        },
+        {
+          "path": "files/social-sciences/psychology/psychology-studentsolutionsguide-cba16efd87f8.pdf",
+          "url": "https://assets.openstax.org/oscms-prodcms/media/documents/Psychology_StudentSolutionsGuide.pdf",
+          "bytes": 311258,
+          "sha256": "6771ed19fa591ef72730bff6f6c615331bdf7e60b6a6a9be46718e821143cc1e"
+        }
+      ]
+    }
+  }
+}

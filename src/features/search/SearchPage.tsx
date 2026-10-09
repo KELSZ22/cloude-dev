@@ -26,7 +26,7 @@ export default function SearchPage() {
     { id: "document" as const, label: t("search.documents") },
     { id: "pack" as const, label: t("search.packs") },
   ];
-  const [query, setQuery] = useState("renewable energy");
+  const [query, setQuery] = useState("biology");
   const [filter, setFilter] = useState<FilterId>("all");
 
   const results = useMemo(() => {

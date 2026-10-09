@@ -117,7 +117,7 @@ export default function HomePage() {
               <DashboardActionCard
                 label={t("home.explorePacks")}
                 title={t("home.explorePacksTitle")}
-                href="/(tabs)/library"
+                href="/packs"
                 icon={{ ios: "book", android: "menu_book", web: "menu_book" }}
                 accent={colors.tint}
               />

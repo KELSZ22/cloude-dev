@@ -189,10 +189,11 @@ export const fil = {
   },
   setup: {
     title: "Maghanda para sa offline",
-    description: "Maaari mong i-explore ang app habang hindi pa tapos ang setup.",
+    description:
+      "Maaari mong i-explore ang app habang hindi pa tapos ang setup.",
     searchTitle: "Hindi pa handa ang paghahanap",
     searchBody:
-      "Hindi pa naka-configure ang lokal na search index. Walang naka-install na kaalaman.",
+      "Mag-browse ng mga textbook at resource ng OpenStax mula sa content/openstax. Kailangan pa ng lokal na index para sa buong PDF search.",
     continueSearch: "Magpatuloy sa Paghahanap",
     reviewModel: "Suriin ang mga kinakailangan ng modelo",
   },
@@ -207,13 +208,22 @@ export const fil = {
       "Kokopyahin ang TXT at Markdown sa storage ng app at ii-index nang lokal. Ang PDF ay nakadepende sa pag-validate ng offline na text parser. Ang mga na-scan na PDF ay nangangailangan ng OCR at wala sa unang MVP.",
   },
   packs: {
-    description: "Mga koleksyong mapapalawak para sa iyong offline na aklatan.",
+    description:
+      "Mga subject pack mula sa OpenStax catalog at manifest sa content/openstax.",
     emptyTitle: "Walang naka-install na pack",
     emptyBody:
       "Wala pang starter pack at installer. Kailangan ng attribution, lisensya sa muling pamamahagi, at beripikadong checksum bago mag-install.",
+    corpusTitle: "OpenStax initial resources",
+    corpusBody:
+      "{{books}} textbook sa catalog · {{assets}} file na na-verify · {{size}} corpus",
+    downloading: "Dina-download ang {{title}}…",
+    downloadPaused: "Naka-pause: {{title}}",
+    inAppDownloadHint:
+      "I-tap ang Download sa isang pack para i-download ang mga PDF at resource ng OpenStax sa storage ng app (mas mainam sa Wi‑Fi).",
   },
   model: {
-    description: "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
+    description:
+      "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
     cardBody:
       "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito.",
     openDownload: "Buksan ang download ng modelo (529 MB · online)",
