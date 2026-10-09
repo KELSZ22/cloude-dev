@@ -3,7 +3,7 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-import { Platform } from "react-native";
+import { Platform, type TextStyle } from "react-native";
 
 export const Colors = {
   light: {
@@ -54,30 +54,46 @@ export const Colors = {
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: "system-ui",
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: "ui-serif",
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: "ui-rounded",
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: "ui-monospace",
-  },
-  default: {
-    sans: "normal",
-    serif: "serif",
-    rounded: "normal",
-    mono: "monospace",
-  },
-  web: {
-    sans: "var(--font-display)",
-    serif: "var(--font-serif)",
-    rounded: "var(--font-rounded)",
-    mono: "var(--font-mono)",
-  },
-});
+/**
+ * Noto Sans ships one file per weight, and SDK 57 registers each file as its
+ * own family, so a weight selects a family name instead of a `fontWeight`.
+ * Keep this in sync with the faces loaded in `src/app/_layout.tsx`.
+ */
+export const NotoSans = {
+  400: "NotoSans_400Regular",
+  500: "NotoSans_500Medium",
+  600: "NotoSans_600SemiBold",
+  700: "NotoSans_700Bold",
+} as const;
+
+export const Fonts = {
+  sans: NotoSans[400],
+  medium: NotoSans[500],
+  semibold: NotoSans[600],
+  bold: NotoSans[700],
+  mono: Platform.select({
+    ios: "ui-monospace",
+    web: "ui-monospace, SFMono-Regular, Menlo, monospace",
+    default: "monospace",
+  }),
+} as const;
+
+const WEIGHTS = [400, 500, 600, 700] as const;
+
+/** Maps any React Native `fontWeight` onto the closest Noto Sans face. */
+export function fontFamilyForWeight(weight: TextStyle["fontWeight"]) {
+  const requested =
+    weight === undefined || weight === "normal"
+      ? 400
+      : weight === "bold"
+        ? 700
+        : Number(weight);
+  if (!Number.isFinite(requested)) return NotoSans[400];
+  const nearest = WEIGHTS.reduce((closest, step) =>
+    Math.abs(step - requested) < Math.abs(closest - requested) ? step : closest,
+  );
+  return NotoSans[nearest];
+}
 
 export const Spacing = {
   half: 2,

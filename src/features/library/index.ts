@@ -1,1 +1,2 @@
-export { default as LibraryPage } from './LibraryPage';
+export { default as LibraryPage } from "./LibraryPage";
+export * from "./components";

@@ -3,11 +3,11 @@ import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { LeafDecor } from "@/shared/components/leaf-decor";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { IntroStep } from "./components/IntroStep";
-import { LeafDecor } from "./components/LeafDecor";
 import { PreferencesStep } from "./components/PreferencesStep";
 import { WelcomeStep } from "./components/WelcomeStep";
 

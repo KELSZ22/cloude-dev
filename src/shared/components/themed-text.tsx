@@ -1,6 +1,6 @@
-import { Platform, StyleSheet, Text, type TextProps } from 'react-native';
+import { Platform, StyleSheet, Text, type TextProps, type TextStyle } from 'react-native';
 
-import { Fonts, ThemeColor } from '@/shared/constants/theme';
+import { fontFamilyForWeight, Fonts, ThemeColor } from '@/shared/constants/theme';
 import { useTheme } from '@/shared/hooks/use-theme';
 
 export type ThemedTextProps = TextProps & {
@@ -19,21 +19,22 @@ export type ThemedTextProps = TextProps & {
 
 export function ThemedText({ style, type = 'default', themeColor, ...rest }: ThemedTextProps) {
   const theme = useTheme();
+  const typeStyle = styles[type];
+  const resolved = StyleSheet.flatten<TextStyle>([typeStyle, style]);
 
   return (
     <Text
       style={[
         { color: theme[themeColor ?? 'text'] },
-        type === 'default' && styles.default,
-        type === 'title' && styles.title,
-        type === 'small' && styles.small,
-        type === 'smallBold' && styles.smallBold,
-        type === 'subtitle' && styles.subtitle,
-        type === 'link' && styles.link,
-        type === 'linkPrimary' && styles.linkPrimary,
-        type === 'code' && styles.code,
-        type === 'tabLabel' && styles.tabLabel,
+        typeStyle,
         style,
+        // A per-weight font file already carries its weight, so the request is
+        // reset to normal — otherwise each platform synthesizes a second bold
+        // on top of the face.
+        !resolved.fontFamily && {
+          fontFamily: fontFamilyForWeight(resolved.fontWeight),
+          fontWeight: "normal",
+        },
       ]}
       {...rest}
     />

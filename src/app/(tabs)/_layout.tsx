@@ -1,6 +1,7 @@
 import { Redirect, Tabs } from "expo-router";
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
 
+import { Fonts } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 
@@ -54,6 +55,8 @@ export default function TabLayout() {
           backgroundColor: colors.backgroundElement,
           borderTopColor: colors.border,
         },
+        // The face carries the weight; `normal` stops a synthesized bold.
+        tabBarLabelStyle: { fontFamily: Fonts.medium, fontWeight: "normal" },
         tabBarHideOnKeyboard: true,
       }}
     >
@@ -70,6 +73,8 @@ export default function TabLayout() {
           }}
         />
       ))}
+      {/* Reached from a pack or the dashboard, so it keeps the tab bar but gets no tab. */}
+      <Tabs.Screen name="challenge" options={{ href: null }} />
     </Tabs>
   );
 }
