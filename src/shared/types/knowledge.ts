@@ -5,6 +5,9 @@ export interface KnowledgeDocument {
   id: string;
   packId: string | null;
   title: string;
+  /** Display labels from the source, such as "1. Linear Equations" and "1.2". */
+  chapter: string | null;
+  section: string | null;
   author: string | null;
   sourceUrl: string | null;
   license: string;
@@ -20,6 +23,8 @@ export interface KnowledgeDocument {
 export interface DocumentChunk {
   id: string;
   documentId: string;
+  /** The pack's own passage identifier; one passage may be split into several chunks. */
+  passageId: string | null;
   chunkIndex: number;
   text: string;
   pageNumber: number | null;
@@ -34,7 +39,10 @@ export interface KnowledgePack {
   version: string;
   description: string;
   language: string;
+  author: string;
   publisher: string;
+  /** Where the content came from, in words. */
+  source: string;
   license: string;
   sourceUrls: readonly string[];
   checksum: string;
