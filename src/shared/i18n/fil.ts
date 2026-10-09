@@ -70,6 +70,34 @@ export const fil = {
     topicsOptional: "Mga Paksang Interesado (opsyonal)",
     continueOnboarding: "Magpatuloy sa pagpapakilala",
     tagline: "Tuklasin. Matuto. Lumago.\nKahit saan.",
+    notNow: "Hindi muna",
+    megabytes: "MB",
+    passages: "mga sipi",
+    modelTitle: "I-set up ang offline mong assistant",
+    modelBody:
+      "Sa teleponong ito sumusulat ng sagot ang assistant. Minsan lang kokopyahin ang modelo sa Seekora, at gagana ito kahit walang signal.",
+    modelLicense: "Lisensyadong {{license}}",
+    modelOnce: "isang beses na setup",
+    modelCopying: "Kinokopya ang modelo sa Seekora",
+    modelSetUp: "I-set up ang modelo",
+    modelChooseFile: "Pumili ng file ng modelo",
+    modelReady: "Handa na",
+    modelReadyBody: "Makakasulat na ng sagot ang assistant sa teleponong ito",
+    modelFactOffline: "Sumasagot kahit saan, kahit walang signal",
+    modelFactPrivate: "Hindi lumalabas sa telepono ang mga tanong mo",
+    modelFactRemovable: "Maaaring alisin anumang oras sa Settings",
+    modelWebNote:
+      "Kailangan ng assistant ang Android o iOS na app. Magpatuloy lang at i-set up ito doon.",
+    packsTitle: "Piliin ang offline mong aklatan",
+    packsBody:
+      "Ang mga pack ang binabasa ng assistant para sumagot. Naka-imbak ang mga ito sa teleponong ito, kaya available kahit offline.",
+    packsCaption: "handang basahin offline",
+    packMeta: "{{passages}} sipi · {{language}} · {{license}}",
+    packAdded: "Nasa aklatan mo na",
+    packsAdd: "Idagdag ang {{count}} sa aklatan ko",
+    packsAdding: "Idinaragdag sa aklatan mo",
+    packsFinish: "Tapusin ang setup",
+    packsLater: "Maaari kang magdagdag o mag-alis ng pack mamaya sa Library.",
   },
   topics: {
     general: "Kaalamang Pangkalahatan",
@@ -215,6 +243,12 @@ export const fil = {
     setupModel: "I-set up ang on-device na modelo",
     chatTitle: "Tanungin ang Seekora AI",
     avatar: "Assistant ng Seekora",
+    greeting: "Kumusta! Ako si Seekora.\nAno ang maitutulong ko para maintindihan mo?",
+    statusReady: "Handa na ang offline na modelo",
+    statusLoading: "Nilo-load ang modelo...",
+    statusBusy: "Nag-iisip...",
+    statusNotLoaded: "Maglo-load ang modelo sa una mong tanong",
+    statusMissing: "Hindi pa naka-set up ang modelo · mga sipi lamang",
     followUp: "Magtanong ng kasunod...",
     askFirst: "Magtanong...",
     send: "Ipadala",
@@ -222,7 +256,9 @@ export const fil = {
     startVoice: "Simulan ang voice input",
     stopVoice: "Itigil ang voice input",
     voiceDenied: "Payagan ang mikropono at speech recognition sa Settings para sa voice input.",
-    voiceUnavailable: "Hindi available ang speech recognition sa device na ito.",
+    voiceUnavailable: "Hindi available ang on-device na speech recognition sa device na ito.",
+    voiceOffline:
+      "Kailangan ng voice input ang offline na language pack. Mag-aalok ang Android na i-download ito, pagkatapos subukan muli.",
     you: "Ikaw",
     sources: "Mga source ({{count}})",
     openSource: "Buksan ang source: {{title}}",
@@ -262,6 +298,7 @@ export const fil = {
     author: "May-akda: {{author}}",
     origin: "Pinagmulan: {{source}}",
     license: "Lisensya: {{license}}",
+    add: "Idagdag sa aklatan ko",
     moreTitle: "Pagdaragdag ng iba pang pack",
     moreBody:
       "Ang naka-bundle na sample pack lang ang available sa build na ito. Kailangan ng attribution, lisensya sa muling pamamahagi, at beripikadong checksum bago mag-install.",
@@ -270,6 +307,7 @@ export const fil = {
     description: "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
     cardBody:
       "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito. Binubuksan ng import ang file picker ng telepono; kung Google Drive o Recent ang lumabas, buksan ang menu nito at piliin ang Downloads. Walang ina-upload.",
+    setUpBundled: "I-set up ang modelong kasama sa app na ito",
     openDownload: "Buksan ang download ng modelo (529 MB · online)",
     importGguf: "Mag-import ng lokal na GGUF",
     verifyLoad: "I-verify at i-load ang modelo",
@@ -315,8 +353,9 @@ export const fil = {
     introTitle: "I-enable ang Lumulutang na Assistant",
     introBody:
       "Payagan ang Seekora na magpakita ng lumulutang na assistant sa ibabaw ng ibang app para magamit mo ang iyong offline na AI companion habang ginagamit ang iyong telepono.",
-    featureBubble: "Lumulutang na bubble na may logo ng Seekora",
+    featureBubble: "Lumulutang na bubble na may Seekora assistant",
     featureAsk: "Magtanong habang nasa kahit anong app",
+    featureVoice: "Magtanong sa pag-type o sa boses, kinikilala sa iyong device",
     featureAnalyze: "Suriin ang nasa screen, kapag hiniling mo lang",
     featureOffline: "Gumagana offline gamit ang parehong modelong AI",
     enable: "I-enable ang Lumulutang na Assistant",
@@ -378,6 +417,17 @@ export const fil = {
     appClosed:
       "Hindi tumatakbo ang Seekora, kaya hindi makakasagot ang assistant. Buksan ang Seekora, pagkatapos ay bumalik.",
     openApp: "Buksan ang Seekora",
+    voiceStart: "Magtanong sa pamamagitan ng boses",
+    voiceStop: "Itigil ang pakikinig",
+    voiceListening: "Nakikinig...",
+    voiceDenied:
+      "Naka-off ang mikropono. I-on ito para sa Seekora, pagkatapos ay i-off at i-on muli ang assistant.",
+    voiceUnavailable:
+      "Walang on-device na speech recognition ang device na ito, kaya hindi available ang voice input.",
+    voiceOffline:
+      "Kailangan ng voice input ang offline na language pack. Buksan ang Seekora at gamitin ang mikropono doon nang isang beses para ma-install ito.",
+    voiceNoMatch: "Walang narinig. I-tap ang mikropono at subukan muli.",
+    voiceFailed: "Biglang huminto ang voice input. I-tap ang mikropono para subukan muli.",
     captureTitle: "Suriin ang screen na ito?",
     captureBody:
       "Kukuha ang Seekora ng isang larawan ng screen, babasahin ang mga salita nito sa device na ito, at itatapon ang larawan. Mga salita lang ang binabasa, hindi ang mga larawan o video. Walang ina-upload. Hihingin ng Android ang iyong kumpirmasyon.",

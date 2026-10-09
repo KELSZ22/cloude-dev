@@ -67,6 +67,34 @@ export const en = {
     topicsOptional: "Topics of Interest (optional)",
     continueOnboarding: "Continue to onboarding",
     tagline: "Discover. Learn. Grow.\nAnywhere.",
+    notNow: "Not now",
+    megabytes: "MB",
+    passages: "passages",
+    modelTitle: "Set up your offline assistant",
+    modelBody:
+      "The assistant writes answers on this phone. Setting it up copies the model into Seekora once, and it keeps working with no signal.",
+    modelLicense: "Licensed {{license}}",
+    modelOnce: "one-time setup",
+    modelCopying: "Copying the model into Seekora",
+    modelSetUp: "Set up the model",
+    modelChooseFile: "Choose a model file",
+    modelReady: "Ready",
+    modelReadyBody: "The assistant can write answers on this phone",
+    modelFactOffline: "Answers you anywhere, with no signal",
+    modelFactPrivate: "Your questions never leave this phone",
+    modelFactRemovable: "Can be removed any time in Settings",
+    modelWebNote:
+      "The assistant needs the Android or iOS app. You can keep going and set it up there.",
+    packsTitle: "Choose your offline library",
+    packsBody:
+      "Packs are the reading the assistant answers from. They are stored on this phone, so they stay available offline.",
+    packsCaption: "ready to read offline",
+    packMeta: "{{passages}} passages · {{language}} · {{license}}",
+    packAdded: "Already in your library",
+    packsAdd: "Add {{count}} to my library",
+    packsAdding: "Adding to your library",
+    packsFinish: "Finish setup",
+    packsLater: "You can add or remove packs later in Library.",
   },
   topics: {
     general: "General Knowledge",
@@ -212,6 +240,12 @@ export const en = {
     setupModel: "Set up the on-device model",
     chatTitle: "Ask Seekora AI",
     avatar: "Seekora assistant",
+    greeting: "Hi! I'm Seekora.\nWhat can I help you understand?",
+    statusReady: "Offline model ready",
+    statusLoading: "Loading model...",
+    statusBusy: "Thinking...",
+    statusNotLoaded: "Model loads on your first question",
+    statusMissing: "Model not set up · passages only",
     followUp: "Ask a follow-up question...",
     askFirst: "Ask a question...",
     send: "Send",
@@ -219,7 +253,9 @@ export const en = {
     startVoice: "Start voice input",
     stopVoice: "Stop voice input",
     voiceDenied: "Allow microphone and speech recognition in Settings to use voice input.",
-    voiceUnavailable: "Speech recognition is not available on this device.",
+    voiceUnavailable: "On-device speech recognition is not available on this device.",
+    voiceOffline:
+      "Voice input needs the offline language pack. Android will offer to download it, then try again.",
     you: "You",
     sources: "Sources ({{count}})",
     openSource: "Open source: {{title}}",
@@ -259,6 +295,7 @@ export const en = {
     author: "Author: {{author}}",
     origin: "Origin: {{source}}",
     license: "License: {{license}}",
+    add: "Add to my library",
     moreTitle: "Adding more packs",
     moreBody:
       "Only the bundled sample pack is available in this build. Packs must have attribution, a redistribution license, and verified content checksums before installation.",
@@ -267,6 +304,7 @@ export const en = {
     description: "A compatible local model is required for AI answers.",
     cardBody:
       "529 MB · Apache 2.0 · text inference. Select the exact GGUF from the chosen Hugging Face repository. Import and loading verify its SHA-256. Import opens your phone's file picker; if it shows Google Drive or Recent, open its menu and choose Downloads. Nothing is uploaded.",
+    setUpBundled: "Set up the model included with this app",
     openDownload: "Open model download (529 MB · online)",
     importGguf: "Import local GGUF",
     verifyLoad: "Verify and load model",
@@ -311,8 +349,9 @@ export const en = {
     introTitle: "Enable Floating Assistant",
     introBody:
       "Allow Seekora to display a floating assistant over other apps so you can access your offline AI companion while using your phone.",
-    featureBubble: "Floating bubble with the Seekora logo",
+    featureBubble: "Floating bubble with the Seekora assistant",
     featureAsk: "Ask questions on any app",
+    featureVoice: "Ask by typing or by voice, recognized on your device",
     featureAnalyze: "Analyze screen content, only when you ask",
     featureOffline: "Works offline using the same AI model",
     enable: "Enable Floating Assistant",
@@ -373,6 +412,17 @@ export const en = {
     appClosed:
       "Seekora is not running, so the assistant cannot answer. Open Seekora, then come back.",
     openApp: "Open Seekora",
+    voiceStart: "Ask by voice",
+    voiceStop: "Stop listening",
+    voiceListening: "Listening...",
+    voiceDenied:
+      "Microphone access is off. Turn it on for Seekora, then turn the assistant off and on again.",
+    voiceUnavailable:
+      "This device has no on-device speech recognition, so voice input is unavailable.",
+    voiceOffline:
+      "Voice input needs the offline language pack. Open Seekora and use the microphone there once to install it.",
+    voiceNoMatch: "Nothing was heard. Tap the microphone and try again.",
+    voiceFailed: "Voice input stopped unexpectedly. Tap the microphone to try again.",
     captureTitle: "Analyze this screen?",
     captureBody:
       "Seekora will take one picture of the screen, read its words on this device, and discard the picture. Only words are read, not pictures or video. Nothing is uploaded. Android will ask you to confirm.",

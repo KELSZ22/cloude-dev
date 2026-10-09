@@ -8,7 +8,7 @@ import { createModelStorage } from '@/infrastructure/llm/model-storage';
 
 type Operation = 'restoring' | 'preparing' | 'choosing' | 'importing' | 'verifying' | 'loading' | 'testing' | 'answering' | 'unloading' | 'removing' | null;
 
-interface ModelContextValue {
+export interface ModelContextValue {
   installed: ModelManifest | null;
   state: ModelState;
   operation: Operation;
@@ -16,6 +16,10 @@ interface ModelContextValue {
   output: string;
   error: string | null;
   native: boolean;
+  /** True when this build carries the model, so setup is a copy rather than a download. */
+  hasBundled: boolean;
+  /** Copies the built-in model into app storage. The user asks for this; it never runs on its own. */
+  setupBundledModel(): Promise<void>;
   importModel(): Promise<void>;
   loadModel(): Promise<void>;
   unloadModel(): Promise<void>;
@@ -55,15 +59,9 @@ export function ModelProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     mounted.current = true;
     let disposed = false;
-    void storage.readInstalled().then(async (manifest) => {
-      if (manifest || disposed || !storage.hasBundledModel()) return manifest;
-      // A build that carries the model sets it up by itself the first time it opens.
-      const controller = new AbortController();
-      active.current = controller;
-      phase.current = 'preparing'; setOperation('preparing');
-      try { return await storage.installBundled(controller.signal, setProgress); }
-      finally { active.current = null; }
-    }).then((manifest) => {
+    // Only reads what is already set up. Copying the bundled model is half a gigabyte, so it waits
+    // until the user asks for it in onboarding or on the model screen.
+    void storage.readInstalled().then((manifest) => {
       if (!disposed) setInstalled(manifest);
     }).catch((failure: unknown) => {
       if (!disposed) setError(failure instanceof Error ? failure.message : 'Cannot read the installed model.');
@@ -101,6 +99,15 @@ export function ModelProvider({ children }: PropsWithChildren) {
       active.current = null;
       if (mounted.current) { setState(engine.getState()); updateOperation(null); }
     }
+  }
+
+  async function setupBundledModel() {
+    await run('preparing', async (signal) => {
+      if (!storage.hasBundledModel()) throw new Error('This build does not carry the model.');
+      if (installed) return;
+      const manifest = await storage.installBundled(signal, setProgress);
+      if (mounted.current) setInstalled(manifest);
+    });
   }
 
   async function importModel() {
@@ -187,6 +194,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
   }
 
   return <ModelContext.Provider value={{ installed, state, operation, progress, output, error, native,
+    hasBundled: storage.hasBundledModel(), setupBundledModel,
     importModel, loadModel, unloadModel, testModel, generate, ensureLoaded, setBackgroundHold, cancel, removeModel }}>{children}</ModelContext.Provider>;
 }
 

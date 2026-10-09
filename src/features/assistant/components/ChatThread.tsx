@@ -6,7 +6,6 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
-import { withAlpha } from "@/shared/lib/color";
 import type { SourceCitation } from "@/shared/types/knowledge";
 
 import type { AskOutcome } from "../hooks/useGroundedAnswer";
@@ -111,15 +110,35 @@ export function ChatThread({
 }) {
   const colors = useTheme();
   const { t } = useTranslation();
+  const bubble = {
+    backgroundColor: colors.backgroundElement,
+    borderColor: colors.dashboardBorder,
+  };
 
   return (
     <View style={styles.thread}>
+      <View style={styles.assistantRow}>
+        <Image
+          source={require("@/assets/seekora-assistant.png")}
+          accessibilityLabel={t("assistant.avatar")}
+          contentFit="cover"
+          style={[styles.assistantAvatar, { borderColor: colors.dashboardBorder }]}
+        />
+        <View style={styles.assistantBody}>
+          <View style={[styles.assistantBubble, bubble]}>
+            <ThemedText style={styles.answer}>{t("assistant.greeting")}</ThemedText>
+            <ThemedText type="small" themeColor="textSecondary" style={styles.itemBody}>
+              {t("assistant.description")}
+            </ThemedText>
+          </View>
+        </View>
+      </View>
       {messages.map((message) => {
         if (message.role === "user") {
           return (
             <View key={message.id} style={styles.userRow}>
               <View
-                style={[styles.userBubble, { backgroundColor: withAlpha(colors.tint, 0.16) }]}
+                style={[styles.userBubble, { backgroundColor: colors.backgroundSelected }]}
               >
                 <ThemedText style={styles.userText}>{message.text}</ThemedText>
               </View>
@@ -177,14 +196,18 @@ export function ChatThread({
               style={[styles.assistantAvatar, { borderColor: colors.dashboardBorder }]}
             />
             <View style={styles.assistantBody}>
-              {page ? <AnswerBody page={page} /> : null}
-              {note ? (
-                <ThemedText
-                  themeColor={outcome?.status === "error" ? "error" : "textSecondary"}
-                  style={styles.note}
-                >
-                  {note}
-                </ThemedText>
+              {page || note ? (
+                <View style={[styles.assistantBubble, bubble]}>
+                  {page ? <AnswerBody page={page} /> : null}
+                  {note ? (
+                    <ThemedText
+                      themeColor={outcome?.status === "error" ? "error" : "textSecondary"}
+                      style={styles.note}
+                    >
+                      {note}
+                    </ThemedText>
+                  ) : null}
+                </View>
               ) : null}
               {pages.length > 1 ? (
                 <View style={styles.pager}>
@@ -295,6 +318,15 @@ const styles = StyleSheet.create({
   assistantRow: { flexDirection: "row", alignItems: "flex-start", gap: 10 },
   assistantAvatar: { width: 36, height: 36, borderRadius: 18, borderWidth: 1 },
   assistantBody: { flex: 1, gap: 10, minWidth: 0 },
+  assistantBubble: {
+    alignSelf: "flex-start",
+    gap: 8,
+    borderRadius: 18,
+    borderBottomLeftRadius: 6,
+    borderWidth: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
   answer: { fontSize: 15, lineHeight: 22 },
   list: { gap: 12, alignSelf: "stretch" },
   item: { gap: 2 },

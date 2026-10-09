@@ -1,6 +1,6 @@
 # Floating AI assistant
 
-A bubble with the Seekora logo that stays on screen over other apps. Tapping it opens a small chat window that answers with the same on-device model the rest of the app uses. On request, and only after Android's own capture prompt is approved, it reads the text on the current screen and answers questions about it.
+A bubble with the Seekora assistant that stays on screen over other apps. Tapping it opens a small chat window that answers with the same on-device model the rest of the app uses. Questions can be typed or spoken. On request, and only after Android's own capture prompt is approved, it reads the text on the current screen and answers questions about it.
 
 It is off until the user turns it on in **Settings → Floating AI Assistant**. Android only.
 
@@ -15,8 +15,9 @@ FloatingAssistantProvider (shared/providers) ──► ModelProvider.generate() 
         │  │ events             └─► AssistantConversation + AssistantSession (shared/services/floating-assistant)
         ▼  │                         prompts, history, captured screen text (memory only)
 SeekoraFloatingAssistant (modules/floating-assistant, Kotlin)
-        ├─ FloatingAssistantService   foreground service (specialUse): draws the bubble and chat window
+        ├─ FloatingAssistantService   foreground service (specialUse, microphone): draws the bubble and chat window
         ├─ OverlayController          the views: bubble, long-press menu, chat window
+        ├─ VoiceInput                 on-device SpeechRecognizer behind the chat's microphone button
         ├─ ScreenCaptureActivity      invisible host for Android's capture consent dialog
         └─ ScreenCaptureService       foreground service (mediaProjection): one frame → ML Kit OCR → text
 ```
@@ -56,6 +57,12 @@ What it cannot do: understand pictures, video, charts, handwriting or layout; re
 
 **A screen that is mostly a picture gives the model almost nothing.** Capturing a video of a black hole yields only the page's labels ("Subscribe", "Share", "Home"), so a question about the picture gets "the text does not contain the answer". The sample line shows the user what was read, and when the model answers that way the chat adds a note that only words are read and that **Discard** lets them ask a general question instead. Looser prompts ("explain it with what you know") were tried against the model and rejected: they made it invent content from button labels and answer simple on-screen questions less accurately.
 
+## Voice input
+
+The chat's microphone button fills the input field with what was said; the user still decides when to send it. Recognition uses Android's **on-device** recogniser only (`SpeechRecognizer.createOnDeviceSpeechRecognizer`, Android 12+) with `EXTRA_PREFER_OFFLINE`, so audio never leaves the phone. There is deliberately no network fallback: a device without an offline voice model is told so instead. The in-app chat uses the same rule through `requiresOnDeviceRecognition` in `useSpeechInput`.
+
+Android only lets a foreground service reach the microphone if that service runs with the `microphone` type, and only if `RECORD_AUDIO` is already granted when it starts. So the settings screen asks for the microphone before starting the overlay, and `FloatingAssistantService` adds the microphone type only when the permission is held. Declining it leaves everything else working; the microphone button then explains that access is off and that the assistant has to be turned off and on again after granting it.
+
 ## Privacy and security
 
 - Overlay permission is used only to draw. It is never treated as permission to read the screen.
@@ -73,6 +80,7 @@ What it cannot do: understand pictures, video, charts, handwriting or layout; re
 | `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_SPECIAL_USE` | Keep the bubble alive while it is turned on. |
 | `FOREGROUND_SERVICE_MEDIA_PROJECTION` | Required by Android 14+ for the moment a user-approved capture runs. |
 | `POST_NOTIFICATIONS` | Show the "assistant is on" notification with its **Turn off** action (Android 13+). The bubble works without it. |
+| `RECORD_AUDIO`, `FOREGROUND_SERVICE_MICROPHONE` | Voice input in the chat window, recognised on the device. Optional: declined, the chat still takes typing. |
 
 Google Play requires a declaration for `specialUse` foreground services and for `SYSTEM_ALERT_WINDOW`; that has not been prepared.
 
@@ -85,6 +93,7 @@ Google Play requires a declaration for `specialUse` foreground services and for 
 | `src/shared/services/floating-assistant/` | `prompts.ts`, `session.ts`, `conversation.ts`: no React or native imports, covered by tests. |
 | `src/shared/providers/floating-assistant-provider.tsx` | Connects the overlay to `ModelProvider`. |
 | `src/shared/stores/floating-assistant-store.ts` | The on/off setting (AsyncStorage). |
+| `src/shared/lib/speech.ts` | The recognition language tag, shared by the in-app chat and the overlay. |
 | `src/features/floating-assistant/` and `src/app/floating-assistant.tsx` | The settings screen. |
 
 Because the module contains native code, it needs a new native build (`expo run:android` or a Gradle build). An older installed build shows "Not available here" on the settings screen and is otherwise unaffected.
@@ -102,7 +111,7 @@ On an Android 17 emulator (API 37, x86_64), development build:
 | Settings row and the rest of Settings | Row shows Off/On; nothing else on the screen changed |
 | Permission declined | Message shown, assistant stays off, no service started |
 | Permission allowed in Android's screen | "Floating Assistant Enabled"; foreground service running as `specialUse`; notification permission requested |
-| Bubble and chat window | Bubble shows the Seekora logo; tap opens the chat with greeting, quick actions, input |
+| Bubble and chat window | Bubble shows the Seekora assistant; tap opens the chat with greeting, quick actions, input |
 | Question answered by the existing model | Streamed into the chat: 76 prompt tokens at 26.7 tokens/s, 57 tokens at 10.4 tokens/s, 8.4 s in total |
 | Send from the button and from the keyboard's Send key | Both work |
 | Model status line | Not loaded → loading → thinking → ready |
@@ -111,7 +120,7 @@ On an Android 17 emulator (API 37, x86_64), development build:
 | Chat over another app, and one screen capture | Done by hand over YouTube: consent accepted, "Screen text attached · 9 lines"; afterwards the capture service was gone and `dumpsys media_projection` reported no session |
 | Existing screens | Home, Settings and the Model screen (including "Verify and load model") behave as before |
 
-**Not yet exercised:** dragging and edge snapping, the remembered position, the long-press menu, stopping an answer midway, declining Android's capture prompt, a `FLAG_SECURE` screen, rotation, dark mode, layout with the on-screen keyboard (the emulator used a hardware keyboard), turning off from the notification / the ✕ / the settings screen, revoking the permission while running, memory pressure, the Filipino overlay text, TalkBack, a release build at run time, and any physical phone.
+**Not yet exercised:** voice input (the microphone button, a device without an offline voice model, and a run with `RECORD_AUDIO` declined), dragging and edge snapping, the remembered position, the long-press menu, stopping an answer midway, declining Android's capture prompt, a `FLAG_SECURE` screen, rotation, dark mode, layout with the on-screen keyboard (the emulator used a hardware keyboard), turning off from the notification / the ✕ / the settings screen, revoking the permission while running, memory pressure, the Filipino overlay text, TalkBack, a release build at run time, and any physical phone.
 
 ## Testing on a phone
 
@@ -122,6 +131,7 @@ On an Android 17 emulator (API 37, x86_64), development build:
 3. Drag the bubble; release it and it snaps to the nearest edge. Close and reopen Seekora: it returns to the same place.
 4. Long-press the bubble: **Open Seekora AI**, **Move to left/right**, **Turn off**.
 5. Press Home, open another app, tap the bubble, and ask a question. The first answer after a fresh start includes the model load.
+   - Tap the microphone and speak: the words appear in the input field as you talk, and the icon turns red while it listens. Tap it again, or stop talking, then send.
 6. Tap the stop button while an answer is being written.
 7. Tap **Analyze current screen → Continue**, then decline Android's prompt: the chat says nothing was read.
 8. Repeat and accept: the chat shows "Screen text attached". Ask about the page. Tap **Discard**.

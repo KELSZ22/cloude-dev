@@ -1,3 +1,4 @@
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useRef, useState } from "react";
@@ -27,6 +28,7 @@ import { ThemedView } from "@/shared/components/themed-view";
 import { Fonts, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
+import { assistantModelStatus, type AssistantModelStatus } from "@/shared/lib/assistant-status";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { useKnowledge } from "@/shared/providers/knowledge-provider";
 import { useModel } from "@/shared/providers/model-provider";
@@ -36,6 +38,14 @@ import type { SourceCitation } from "@/shared/types/knowledge";
 import { ChatThread, type ChatMessage } from "./components/ChatThread";
 import { useGroundedAnswer, type AskOutcome } from "./hooks/useGroundedAnswer";
 import { useSpeechInput } from "./hooks/useSpeechInput";
+
+const statusKey: Record<AssistantModelStatus, MessageKey> = {
+  ready: "assistant.statusReady",
+  loading: "assistant.statusLoading",
+  busy: "assistant.statusBusy",
+  notLoaded: "assistant.statusNotLoaded",
+  missing: "assistant.statusMissing",
+};
 
 export function AssistantSheet() {
   const open = useAssistantSheetStore((state) => state.open);
@@ -218,9 +228,20 @@ export function AssistantSheet() {
                   tintColor={colors.text}
                 />
               </Pressable>
-              <ThemedText type="smallBold" accessibilityRole="header" style={styles.title}>
-                {t("assistant.chatTitle")}
-              </ThemedText>
+              <Image
+                source={require("@/assets/seekora-assistant.png")}
+                accessibilityLabel={t("assistant.avatar")}
+                contentFit="cover"
+                style={[styles.headerAvatar, { borderColor: colors.dashboardBorder }]}
+              />
+              <View style={styles.headerText}>
+                <ThemedText type="smallBold" accessibilityRole="header" style={styles.title}>
+                  {t("assistant.chatTitle")}
+                </ThemedText>
+                <ThemedText type="small" themeColor="textSecondary" style={styles.status}>
+                  {t(statusKey[assistantModelStatus(model)])}
+                </ThemedText>
+              </View>
             </View>
 
             <ScrollView
@@ -229,28 +250,22 @@ export function AssistantSheet() {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.scroll}
             >
-              {messages.length === 0 ? (
-                <ThemedText themeColor="textSecondary" style={styles.empty}>
-                  {t("assistant.description")}
-                </ThemedText>
-              ) : (
-                <ChatThread
-                  messages={messages}
-                  streamed={streamed}
-                  pageById={pageById}
-                  onPage={(id, page) => setPageById((current) => ({ ...current, [id]: page }))}
-                  onOpenSource={openSource}
-                  onLoadModel={() => {
-                    void model.loadModel();
-                  }}
-                  onSetupModel={() => {
-                    closeAssistant();
-                    router.push("/model");
-                  }}
-                  modelInstalled={model.installed !== null}
-                  modelBusy={model.operation !== null}
-                />
-              )}
+              <ChatThread
+                messages={messages}
+                streamed={streamed}
+                pageById={pageById}
+                onPage={(id, page) => setPageById((current) => ({ ...current, [id]: page }))}
+                onOpenSource={openSource}
+                onLoadModel={() => {
+                  void model.loadModel();
+                }}
+                onSetupModel={() => {
+                  closeAssistant();
+                  router.push("/model");
+                }}
+                modelInstalled={model.installed !== null}
+                modelBusy={model.operation !== null}
+              />
             </ScrollView>
 
             {voiceNotice ? (
@@ -366,7 +381,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   back: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
-  title: { fontSize: 18, lineHeight: 24 },
+  headerAvatar: { width: 32, height: 32, borderRadius: 10, borderWidth: 1 },
+  headerText: { flex: 1, minWidth: 0 },
+  title: { fontSize: 17, lineHeight: 22 },
+  status: { fontSize: 12, lineHeight: 16 },
   scroll: { flexGrow: 1, paddingBottom: Spacing.four },
   voiceNotice: {
     fontSize: 13,
@@ -374,7 +392,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
     paddingBottom: Spacing.one,
   },
-  empty: { paddingHorizontal: Spacing.four, paddingTop: Spacing.five, fontSize: 15, lineHeight: 22 },
   composer: {
     flexDirection: "row",
     alignItems: "center",

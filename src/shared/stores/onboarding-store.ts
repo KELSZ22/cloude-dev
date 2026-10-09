@@ -9,6 +9,8 @@ export const ONBOARDING_STEPS = [
   "intro1",
   "intro2",
   "preferences",
+  "model",
+  "packs",
 ] as const;
 export type OnboardingStep = (typeof ONBOARDING_STEPS)[number];
 

@@ -117,10 +117,37 @@ class FloatingAssistantService : Service() {
       .addAction(Notification.Action.Builder(null as Icon?, strings.notificationStop, stop).build())
       .build()
 
+    startInForeground(notification)
+  }
+
+  /**
+   * Android 11 and later only let a foreground service reach the microphone if it runs with the
+   * microphone type, which in turn needs the permission already granted as the service starts.
+   * Without it the bubble still works; only voice input is unavailable.
+   */
+  private fun startInForeground(notification: Notification) {
+    val mic = VoiceInput.micGranted(this)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-      startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
-    } else {
-      startForeground(NOTIFICATION_ID, notification)
+      val special = ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+      if (mic) {
+        try {
+          startForeground(NOTIFICATION_ID, notification, special or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE)
+          return
+        } catch (_: Exception) {
+          // Android refused the microphone type, so fall back to the bubble on its own.
+        }
+      }
+      startForeground(NOTIFICATION_ID, notification, special)
+      return
     }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && mic) {
+      try {
+        startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE)
+        return
+      } catch (_: Exception) {
+        // Same again: carry on without voice input.
+      }
+    }
+    startForeground(NOTIFICATION_ID, notification)
   }
 }

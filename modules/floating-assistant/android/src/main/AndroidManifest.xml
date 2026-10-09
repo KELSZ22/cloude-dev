@@ -9,12 +9,15 @@
   <!-- Only held for the moment a user-approved screen capture runs. -->
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+  <!-- Voice input. Optional: the bubble works without it, and speech is recognised on this device. -->
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
 
   <application>
     <service
       android:name=".FloatingAssistantService"
       android:exported="false"
-      android:foregroundServiceType="specialUse">
+      android:foregroundServiceType="specialUse|microphone">
       <property
         android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
         android:value="Floating chat bubble the user turns on to ask the on-device assistant while using other apps" />

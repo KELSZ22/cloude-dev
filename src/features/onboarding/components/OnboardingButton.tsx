@@ -11,10 +11,12 @@ export function OnboardingButton({
   label,
   onPress,
   accessibilityLabel,
+  disabled,
 }: {
   label: string;
   onPress: () => void;
   accessibilityLabel?: string;
+  disabled?: boolean;
 }) {
   const colors = useTheme();
   const [pressed, setPressed] = useState(false);
@@ -22,12 +24,20 @@ export function OnboardingButton({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityState={{ disabled: !!disabled }}
+      disabled={disabled}
       onPress={onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
       style={StyleSheet.flatten([
         styles.full,
-        { backgroundColor: pressed ? colors.tintPressed : colors.tint },
+        {
+          backgroundColor: disabled
+            ? colors.disabled
+            : pressed
+              ? colors.tintPressed
+              : colors.tint,
+        },
       ])}
     >
       <ThemedText type="smallBold" style={{ color: colors.backgroundElement }}>
