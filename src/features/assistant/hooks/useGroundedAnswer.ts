@@ -14,6 +14,12 @@ export type AskResult =
   | { status: 'passages-only'; citations: SourceCitation[] }
   | { status: 'insufficient-evidence'; reason: InsufficientReason };
 
+export type AskOutcome =
+  | AskResult
+  | { status: 'error'; message: string }
+  | { status: 'notice'; message: string }
+  | { status: 'stopped'; text: string };
+
 export function useGroundedAnswer() {
   const { repository } = useKnowledge();
   const model = useModel();
@@ -25,32 +31,45 @@ export function useGroundedAnswer() {
 
   const modelReady = model.state.status === 'ready' && model.operation === null;
 
-  async function ask(question: string) {
-    if (!repository || busy) return;
+  async function ask(question: string): Promise<AskOutcome | null> {
+    if (!repository || busy) return null;
     const controller = new AbortController();
     active.current = controller;
     setBusy(true); setStreamed(''); setResult(null); setError(null);
+    let written = '';
+    let outcome: AskOutcome;
     try {
       if (modelReady) {
         const answer = await answerQuestion({ repository, generate: model.generate }, {
-          question, signal: controller.signal, onToken: (token) => setStreamed((text) => text + token),
+          question, signal: controller.signal, onToken: (token) => {
+            written += token;
+            setStreamed(written);
+          },
         });
-        setResult(answer.status === 'answered' ? answer : { status: 'insufficient-evidence', reason: answer.reason });
+        outcome = answer.status === 'answered' ? answer : { status: 'insufficient-evidence', reason: answer.reason };
+        setResult(outcome);
       } else {
         const evidence = await retrieveEvidence(repository, question, controller.signal);
-        if (!evidence.sufficient) setResult({ status: 'insufficient-evidence', reason: evidence.reason });
+        if (!evidence.sufficient) outcome = { status: 'insufficient-evidence', reason: evidence.reason };
         else {
           const { sources } = buildRagPrompt(question, evidence.hits);
           // Only the source list is used here; the prompt is not sent because no model is loaded.
-          setResult({ status: 'passages-only', citations: await resolveCitations(repository, sources) });
+          outcome = { status: 'passages-only', citations: await resolveCitations(repository, sources) };
         }
+        setResult(outcome);
       }
     } catch (failure) {
-      setError(controller.signal.aborted ? 'Stopped.' : failure instanceof Error ? failure.message : 'Seekora could not answer that.');
+      if (controller.signal.aborted) outcome = { status: 'stopped', text: written };
+      else {
+        const message = failure instanceof Error ? failure.message : 'Seekora could not answer that.';
+        outcome = { status: 'error', message };
+        setError(message);
+      }
     } finally {
       active.current = null;
       setBusy(false); setStreamed('');
     }
+    return outcome;
   }
 
   function stop() {

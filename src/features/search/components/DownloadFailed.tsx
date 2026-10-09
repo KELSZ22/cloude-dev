@@ -45,7 +45,7 @@ export function DownloadFailed({
   const { t } = useTranslation();
 
   return (
-    <ThemedView style={styles.screen}>
+    <ThemedView type="backgroundWarm" style={styles.screen}>
       <LeafDecor width={130} />
       <View style={[styles.header, { paddingTop: insets.top + Spacing.one }]}>
         <Pressable

@@ -40,17 +40,6 @@ export function DashboardHero() {
           <Image
             source={
               isDark
-                ? require("@/assets/logo/logo-default.png")
-                : require("@/assets/logo/logo-greenbg.png")
-            }
-            contentFit="contain"
-            accessible={false}
-            accessibilityLabel=""
-            style={styles.logo}
-          />
-          <Image
-            source={
-              isDark
                 ? require("@/assets/logo/Seekora-textlogo-dark.png")
                 : require("@/assets/logo/Seekora-textlogo-light.png")
             }
@@ -108,8 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: Spacing.three,
   },
-  brand: { flexDirection: "row", alignItems: "center", gap: Spacing.two },
-  logo: { width: 40, height: 40 },
+  brand: { flexDirection: "row", alignItems: "center" },
   wordmark: { width: 120, height: 40 },
   headerActions: { flexDirection: "row" },
   iconButton: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
