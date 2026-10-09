@@ -31,4 +31,6 @@ export interface ModelManifest {
   sha256: string;
   license: string;
   sourceUrl: string | null;
+  /** MD5 of the installed copy, taken after its SHA-256 was verified. Used for the quick check before each load. */
+  md5?: string;
 }

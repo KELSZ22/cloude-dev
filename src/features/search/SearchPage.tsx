@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -23,15 +24,23 @@ import {
   searchResources,
 } from "@/features/resources";
 import { ActionButton } from "@/shared/components/action-button";
+import { FilterChips } from "@/shared/components/filter-chips";
+import { LeafDecor } from "@/shared/components/leaf-decor";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
+import { contentSources } from "@/shared/constants/content-sources";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
 
-import type { SearchKind } from "./catalog";
+import { articles, type CatalogArticle, type SearchKind } from "./catalog";
+import { DownloadFailed } from "./components/DownloadFailed";
+import { EmptyResults } from "./components/EmptyResults";
+import { PassageResultCard } from "./components/PassageResultCard";
 import { ResultCard, type SearchResult } from "./components/ResultCard";
 import { SearchBrandHeader } from "./components/SearchBrandHeader";
+import { downloadSearchPack } from "./download-pack";
+import { useLocalSearch } from "./hooks/useLocalSearch";
 
 type FilterId = "all" | SearchKind;
 
@@ -65,6 +74,7 @@ export default function SearchPage() {
   const [submitted, setSubmitted] = useState("");
   const [snapshot, setSnapshot] = useState<SearchSnapshot | null>(null);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [failedPackId, setFailedPackId] = useState<string | null>(null);
 
   useEffect(() => {
     const handle = setTimeout(() => setSubmitted(query.trim()), 400);
@@ -123,29 +133,64 @@ export default function SearchPage() {
     }
   }
 
-  const results = useMemo(() => {
+  const library = useLocalSearch(query);
+  const passages = filter === "all" || filter === "article" ? library.hits : [];
+
+  const catalog = useMemo(() => {
+    if (!contentSources.openStax) return [];
+    const needle = query.trim().toLowerCase();
+    return articles.filter((article) => {
+      const matchesKind = filter === "all" || article.kind === filter;
+      if (!matchesKind) return false;
+      if (!needle) return true;
+      const haystack = `${article.title} ${article.pack} ${article.summary} ${article.tags}`.toLowerCase();
+      return haystack.includes(needle);
+    });
+  }, [filter, query]);
+
+  const resources = useMemo(() => {
     const items = snapshot?.query === submitted ? snapshot.items : [];
     return items.filter((item) => matchesFilter(item, filter)).map((item) => toCard(item, t));
   }, [filter, snapshot, submitted, t]);
 
-  const searched = submitted.length >= 2;
   const offline = page?.networkUnavailable ?? false;
-  const partial =
-    page?.providers.some((status) => status.state === "error") ?? false;
+  const partial = page?.providers.some((status) => status.state === "error") ?? false;
+  const total = passages.length + catalog.length + resources.length;
   const countLabel =
-    results.length === 1
+    total === 1
       ? t(offline ? "search.oneResult" : "search.aboutOne")
-      : t(offline ? "search.manyResults" : "search.aboutResults", {
-          count: results.length,
-        });
+      : t(offline ? "search.manyResults" : "search.aboutResults", { count: total });
   const message = failed
     ? t("search.resourcesFailed")
     : offline
       ? t("search.resourcesOffline")
       : null;
+  const noResults =
+    query.trim().length > 0 &&
+    total === 0 &&
+    !loading &&
+    (!library.pending || library.error !== null || !library.ready);
+
+  function attemptDownload(article: CatalogArticle) {
+    const result = downloadSearchPack(article.id);
+    setFailedPackId(result.ok ? null : article.id);
+  }
+
+  if (failedPackId) {
+    return (
+      <DownloadFailed
+        onBack={() => setFailedPackId(null)}
+        onCancel={() => setFailedPackId(null)}
+        onRetry={() => {
+          if (downloadSearchPack(failedPackId).ok) setFailedPackId(null);
+        }}
+      />
+    );
+  }
 
   return (
-    <ThemedView style={styles.screen}>
+    <ThemedView type="backgroundWarm" style={styles.screen}>
+      {noResults ? <LeafDecor width={130} /> : null}
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
@@ -157,139 +202,119 @@ export default function SearchPage() {
           },
         ]}
       >
-        <SearchBrandHeader />
-        <View
-          style={[
-            styles.field,
-            {
-              backgroundColor: colors.backgroundElement,
-              borderColor: colors.dashboardBorder,
-            },
-          ]}
-        >
-          <SymbolView
-            name={{ ios: "magnifyingglass", android: "search", web: "search" }}
-            size={20}
-            tintColor={colors.textSecondary}
-          />
-          <TextInput
-            value={query}
-            onChangeText={setQuery}
-            placeholder={t("home.searchPlaceholder")}
-            placeholderTextColor={colors.textSecondary}
-            accessibilityLabel={t("home.searchLibrary")}
-            autoCorrect={false}
-            returnKeyType="search"
-            style={[styles.input, { color: colors.text }]}
-          />
-          {query.length > 0 ? (
+        {noResults ? null : <SearchBrandHeader />}
+        <View style={noResults ? styles.fieldRow : undefined}>
+          {noResults ? (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={t("search.clear")}
+              accessibilityLabel={t("common.goBack")}
               onPress={() => setQuery("")}
-              style={styles.clear}
+              style={styles.back}
             >
               <SymbolView
-                name={{ ios: "xmark", android: "close", web: "close" }}
-                size={16}
-                tintColor={colors.textSecondary}
+                name={{ ios: "chevron.left", android: "arrow_back", web: "arrow_back" }}
+                size={22}
+                tintColor={colors.text}
               />
             </Pressable>
           ) : null}
-        </View>
-        <ScrollView
-          horizontal
-          nestedScrollEnabled
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.chips}
-        >
-          {filters.map((option) => {
-            const selected = option.id === filter;
-            return (
+          <View
+            style={[
+              styles.field,
+              noResults ? styles.fieldInRow : null,
+              {
+                backgroundColor: colors.backgroundElement,
+                borderColor: colors.dashboardBorder,
+              },
+            ]}
+          >
+            <SymbolView
+              name={{ ios: "magnifyingglass", android: "search", web: "search" }}
+              size={20}
+              tintColor={colors.textSecondary}
+            />
+            <TextInput
+              value={query}
+              onChangeText={setQuery}
+              placeholder={t("home.searchPlaceholder")}
+              placeholderTextColor={colors.textSecondary}
+              accessibilityLabel={t("home.searchLibrary")}
+              autoCorrect={false}
+              returnKeyType="search"
+              style={[styles.input, { color: colors.text }]}
+            />
+            {query.length > 0 ? (
               <Pressable
-                key={option.id}
                 accessibilityRole="button"
-                accessibilityState={{ selected }}
-                accessibilityLabel={option.label}
-                onPress={() => setFilter(option.id)}
-                style={[
-                  styles.chip,
-                  {
-                    backgroundColor: selected
-                      ? colors.tint
-                      : colors.backgroundElement,
-                    borderColor: selected
-                      ? colors.tint
-                      : colors.dashboardBorder,
-                  },
-                ]}
+                accessibilityLabel={t("search.clear")}
+                onPress={() => setQuery("")}
+                style={styles.clear}
               >
-                <ThemedText
-                  type={selected ? "smallBold" : "small"}
-                  style={{ color: selected ? "#FFFFFF" : colors.textSecondary }}
-                >
-                  {option.label}
-                </ThemedText>
+                <SymbolView
+                  name={{ ios: "xmark", android: "close", web: "close" }}
+                  size={16}
+                  tintColor={colors.textSecondary}
+                />
               </Pressable>
-            );
-          })}
-        </ScrollView>
-        {searched ? (
-          <View style={styles.countRow}>
-            {offline ? (
-              <SymbolView
-                name={{
-                  ios: "wifi.slash",
-                  android: "wifi_off",
-                  web: "wifi_off",
-                }}
-                size={16}
-                tintColor={colors.tint}
-              />
-            ) : null}
-            <ThemedText
-              type="smallBold"
-              style={{ color: colors.tint }}
-              accessibilityLiveRegion="polite"
-            >
-              {countLabel}
-              {partial ? ` · ${t("search.resourcesPartial")}` : ""}
-            </ThemedText>
-            {loading ? (
-              <ActivityIndicator
-                color={colors.tint}
-                accessibilityLabel={t("search.resourcesSearching")}
-              />
             ) : null}
           </View>
-        ) : null}
+        </View>
+        {noResults ? null : (
+          <>
+            <FilterChips options={filters} value={filter} onChange={setFilter} />
+            {query.trim().length > 0 || total > 0 ? (
+              <View style={styles.countRow}>
+                {offline ? (
+                  <SymbolView
+                    name={{ ios: "wifi.slash", android: "wifi_off", web: "wifi_off" }}
+                    size={16}
+                    tintColor={colors.tint}
+                  />
+                ) : null}
+                <ThemedText
+                  type="smallBold"
+                  style={{ color: colors.tint }}
+                  accessibilityLiveRegion="polite"
+                >
+                  {countLabel}
+                  {partial ? ` · ${t("search.resourcesPartial")}` : ""}
+                </ThemedText>
+                {loading ? (
+                  <ActivityIndicator
+                    color={colors.tint}
+                    accessibilityLabel={t("search.resourcesSearching")}
+                  />
+                ) : null}
+              </View>
+            ) : null}
+          </>
+        )}
         {message ? (
-          <ThemedText
-            accessibilityRole="alert"
-            style={[styles.empty, { color: colors.error }]}
-          >
+          <ThemedText accessibilityRole="alert" style={[styles.empty, { color: colors.error }]}>
             {message}
           </ThemedText>
         ) : null}
+        {library.error && !noResults ? (
+          <ThemedText themeColor="error" accessibilityRole="alert" style={styles.empty}>
+            {library.error}
+          </ThemedText>
+        ) : null}
         <View style={styles.list}>
-          {searched && !loading && !message && results.length === 0 ? (
-            <ThemedText themeColor="textSecondary" style={styles.empty}>
-              {t("search.resourcesEmpty")}
-            </ThemedText>
-          ) : (
-            results.map((result) => (
-              <ResultCard key={result.id} result={result} />
-            ))
-          )}
+          {noResults ? <EmptyResults query={query.trim()} /> : null}
+          {passages.map((hit) => (
+            <PassageResultCard key={hit.chunkId} hit={hit} />
+          ))}
+          {catalog.map((article) => (
+            <ResultCard key={article.id} result={toCatalogCard(article, attemptDownload)} />
+          ))}
+          {resources.map((result) => (
+            <ResultCard key={result.id} result={result} />
+          ))}
         </View>
         {page?.nextCursor && !loading ? (
           <View style={styles.more}>
             <ActionButton
-              label={
-                loadingMore
-                  ? t("search.resourcesSearching")
-                  : t("search.resourcesMore")
-              }
+              label={loadingMore ? t("search.resourcesSearching") : t("search.resourcesMore")}
               disabled={loadingMore}
               onPress={() => void loadMore()}
             />
@@ -303,8 +328,7 @@ export default function SearchPage() {
 function matchesFilter(item: ResourceResult, filter: FilterId) {
   if (filter === "all") return true;
   if (filter === "pack") return false;
-  if (filter === "document")
-    return item.kind === "book" || item.kind === "report";
+  if (filter === "document") return item.kind === "book" || item.kind === "report";
   return isArticleKind(item.kind);
 }
 
@@ -344,13 +368,47 @@ function toCard(
   };
 }
 
+function toCatalogCard(
+  article: CatalogArticle,
+  onPackPress: (article: CatalogArticle) => void,
+): SearchResult {
+  return {
+    id: article.id,
+    title: article.title,
+    pack: article.pack,
+    kind: article.kind,
+    readMinutes: article.readMinutes,
+    summary: article.summary,
+    image: article.image,
+    onPress: () => {
+      if (article.kind === "pack") {
+        onPackPress(article);
+        return;
+      }
+      router.push(`/article/${article.id}`);
+    },
+  };
+}
+
 const styles = StyleSheet.create({
   screen: { flex: 1 },
   scroll: {
     width: "100%",
     maxWidth: 600,
     alignSelf: "center",
-    gap: 14,
+    gap: Spacing.three,
+  },
+  fieldRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingRight: Spacing.three,
+    gap: 4,
+  },
+  back: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
   },
   field: {
     flexDirection: "row",
@@ -362,22 +420,11 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     borderWidth: 1,
   },
+  fieldInRow: { flex: 1, marginLeft: 0, marginRight: 0 },
   input: { flex: 1, fontSize: 16, minHeight: 48 },
   clear: {
     width: 32,
     height: 32,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  chips: {
-    gap: 8,
-    paddingHorizontal: Spacing.three,
-  },
-  chip: {
-    minHeight: 36,
-    paddingHorizontal: 16,
-    borderRadius: 18,
-    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
   },

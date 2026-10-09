@@ -18,7 +18,7 @@ export function Page({ title, description, children, nested = false }: PropsWith
         styles.content,
         { paddingTop: (nested ? 0 : insets.top) + Spacing.four, paddingBottom: insets.bottom + Spacing.four },
       ]}>
-        <ThemedText type="smallBold" themeColor="tint">ARALSEARCH AI</ThemedText>
+        <ThemedText type="smallBold" themeColor="tint">SEEKORA</ThemedText>
         <ThemedText type="title" accessibilityRole="header">{title}</ThemedText>
         {description && <ThemedText themeColor="textSecondary">{description}</ThemedText>}
         {children}

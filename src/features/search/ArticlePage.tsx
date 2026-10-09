@@ -11,6 +11,7 @@ import { Spacing } from "@/shared/constants/theme";
 import { contentSources } from "@/shared/constants/content-sources";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
+import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
 
 import { articleById, type SearchKind } from "./catalog";
 
@@ -31,6 +32,7 @@ function OpenStaxArticlePage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const article = articleById(typeof id === "string" ? id : "");
   const [saved, setSaved] = useState(false);
+  const openAssistant = useAssistantSheetStore((state) => state.openAssistant);
 
   if (!article) {
     return (
@@ -152,7 +154,7 @@ function OpenStaxArticlePage() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t("article.askAi")}
-          onPress={() => router.navigate("/(tabs)/assistant")}
+          onPress={() => openAssistant({ articleTitle: article.title })}
           style={({ pressed }) => [
             styles.ask,
             { backgroundColor: pressed ? colors.tintPressed : colors.tint },

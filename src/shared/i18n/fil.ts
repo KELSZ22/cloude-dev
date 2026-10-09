@@ -112,6 +112,8 @@ export const fil = {
     importDocument: "Mag-import ng dokumento",
     onDeviceModel: "On-device na modelo",
     knowledgePacks: "Mga Knowledge Pack",
+    sourcePassage: "Sipi ng pinagmulan",
+    floatingAssistant: "Lumulutang na AI Assistant",
   },
   settings: {
     title: "Mga Setting",
@@ -133,6 +135,9 @@ export const fil = {
     notInstalled: "Hindi naka-install",
     ready: "Handa",
     installed: "Naka-install",
+    floatingAssistant: "Lumulutang na AI Assistant",
+    on: "Naka-on",
+    off: "Naka-off",
   },
   onboarding: {
     companionTitle: "Ang Kasama Mo sa Kaalaman",
@@ -217,6 +222,22 @@ export const fil = {
     aboutOne: "Mga 1 resulta",
     aboutResults: "Mga {{count}} resulta",
     empty: "Walang tumutugma sa iyong offline na aklatan.",
+    emptyTitle: "Walang nahanap",
+    emptyBody:
+      'Walang nahanap na kaugnay ng "{{query}}" sa iyong offline na nilalaman.',
+    emptyArt: "Isang explorer na nag-iisip kung saan titingin",
+    tryInstead: "Subukan ito:",
+    tipSpelling: "Suriin ang baybay",
+    tipKeywords: "Gumamit ng mas simpleng salita",
+    tipTopics: "Tingnan ang mga kaugnay na paksa",
+    tipPacks: "Mag-download ng mas maraming knowledge pack",
+    downloadFailed: "Hindi na-download",
+    downloadFailedBody:
+      "Hindi namin na-download ang pack. Suriin ang storage at subukan muli.",
+    possibleIssues: "Mga posibleng dahilan:",
+    issueStorage: "Kulang ang storage",
+    issueConnection: "Naputol ang koneksyon",
+    issueFile: "Maaaring hindi available ang file",
     packReady: "Pack · handa nang i-download",
     readMeta: "{{kind}} · {{minutes}} min na babasahin",
     fromPack: "Mula sa {{pack}}",
@@ -277,14 +298,47 @@ export const fil = {
     tryAgain: "Subukan muli",
   },
   assistant: {
-    title: "AI Assistant",
+    title: "Magtanong sa Seekora",
     description:
-      "Mga sagot na batay sa iyong offline na aklatan, na may mga source na maaari mong suriin.",
-    pendingTitle: "Hindi pa handa ang offline na pananaliksik",
-    pendingBody:
-      "Hindi pa konektado ang lokal na paghahanap at pagkuha ng citation. Available ang pagsubok ng modelo sa setup; ang mga sagot sa pananaliksik ay mangangailangan ng aktwal na lokal na ebidensya.",
-    viewModel: "Tingnan ang setup ng modelo",
-    goToSearch: "Pumunta sa Paghahanap",
+      "Ang mga sagot ay mula sa mga sipi sa iyong offline na aklatan, na may mga source na maaari mong buksan.",
+    questionLabel: "Iyong tanong",
+    questionPlaceholder:
+      "Halimbawa: Paano ko lulutasin ang quadratic equation sa pamamagitan ng factoring?",
+    ask: "Magtanong sa Seekora",
+    findPassages: "Hanapin ang mga sumusuportang sipi",
+    writing: "Sumusulat ng sagot sa device na ito…",
+    searching: "Hinahanap sa iyong aklatan…",
+    staysOnDevice: "Walang lumalabas sa device na ito.",
+    stop: "Itigil",
+    loadModel: "I-load ang on-device na modelo",
+    setupModel: "I-set up ang on-device na modelo",
+    chatTitle: "Tanungin ang Seekora AI",
+    avatar: "Assistant ng Seekora",
+    followUp: "Magtanong ng kasunod...",
+    askFirst: "Magtanong...",
+    send: "Ipadala",
+    voiceSoon: "Voice input, malapit na",
+    startVoice: "Simulan ang voice input",
+    stopVoice: "Itigil ang voice input",
+    voiceDenied:
+      "Payagan ang mikropono at speech recognition sa Settings para sa voice input.",
+    voiceUnavailable:
+      "Hindi available ang speech recognition sa device na ito.",
+    you: "Ikaw",
+    sources: "Mga source ({{count}})",
+    openSource: "Buksan ang source: {{title}}",
+    aboutArticle: "Ano ang mga pangunahing punto ng {{title}}?",
+    pageLabel: "Pahina {{page}} ng {{total}}",
+    libraryPending: "Inihahanda pa ang iyong offline na aklatan.",
+    stopped: "Itinigil.",
+    noMatch:
+      "Walang binabanggit ang iyong offline na aklatan tungkol sa paksang ito.",
+    weakMatch:
+      "May binabanggit ang iyong offline na aklatan tungkol sa tanong, pero kulang ang sipi para suportahan ang sagot.",
+    modelDeclined:
+      "Hindi sinasagot ng mga sipi sa iyong offline na aklatan ang tanong na ito.",
+    passagesBody:
+      "Tumutugma ang mga siping ito sa tanong mo. I-load ang on-device na modelo para sa paliwanag.",
   },
   setup: {
     title: "Maghanda para sa offline",
@@ -307,24 +361,20 @@ export const fil = {
       "Kokopyahin ang TXT at Markdown sa storage ng app at ii-index nang lokal. Ang PDF ay nakadepende sa pag-validate ng offline na text parser. Ang mga na-scan na PDF ay nangangailangan ng OCR at wala sa unang MVP.",
   },
   packs: {
-    description:
-      "Mga subject pack mula sa OpenStax catalog at manifest sa content/openstax.",
-    emptyTitle: "Walang naka-install na pack",
-    emptyBody:
-      "Wala pang starter pack at installer. Kailangan ng attribution, lisensya sa muling pamamahagi, at beripikadong checksum bago mag-install.",
-    corpusTitle: "OpenStax initial resources",
-    corpusBody:
-      "{{books}} textbook sa catalog · {{assets}} file na na-verify · {{size}} corpus",
-    downloading: "Dina-download ang {{title}}…",
-    downloadPaused: "Naka-pause: {{title}}",
-    inAppDownloadHint:
-      "I-tap ang Download sa isang pack para i-download ang mga PDF at resource ng OpenStax sa storage ng app (mas mainam sa Wi‑Fi).",
+    description: "Mga koleksyong mapapalawak para sa iyong offline na aklatan.",
+    versionLine: "Bersyon {{version}} · {{language}}",
+    author: "May-akda: {{author}}",
+    origin: "Pinagmulan: {{source}}",
+    license: "Lisensya: {{license}}",
+    moreTitle: "Pagdaragdag ng iba pang pack",
+    moreBody:
+      "Ang naka-bundle na sample pack lang ang available sa build na ito. Kailangan ng attribution, lisensya sa muling pamamahagi, at beripikadong checksum bago mag-install.",
   },
   model: {
     description:
       "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
     cardBody:
-      "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito.",
+      "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito. Binubuksan ng import ang file picker ng telepono; kung Google Drive o Recent ang lumabas, buksan ang menu nito at piliin ang Downloads. Walang ina-upload.",
     openDownload: "Buksan ang download ng modelo (529 MB · online)",
     importGguf: "Mag-import ng lokal na GGUF",
     verifyLoad: "I-verify at i-load ang modelo",
@@ -335,7 +385,10 @@ export const fil = {
       "Buburahin nito ang kopya ng modelong pag-aari ng app at magpapalaya ng storage. Mananatili ang orihinal mong file.",
     working: "Ginagawa nang lokal",
     checking: "Tinitingnan ang integridad ng modelo · {{percent}}%",
+    preparing:
+      "Inihahanda ang built-in na modelo. Sandali lang ito sa unang pagkakataon.",
     testing: "Gumagawa ng maikling runtime test…",
+    answering: "Sinusagot ang tanong sa Ask Seekora…",
     loading: "Nilo-load ang modelo sa memory…",
     choosing: "Piliin ang GGUF file sa iyong device.",
     updating: "Ina-update ang estado ng modelo…",
@@ -354,9 +407,126 @@ export const fil = {
     installedNotLoaded: "Naka-install ang modelo · hindi naka-load",
     notInstalled: "Hindi naka-install ang modelo",
     webBody: "Gumamit ng Android development build para sa lokal na inference.",
+    preparingBody:
+      "Inihahanda ang built-in na Qwen3.5 0.8B. Sandali lang ito sa unang pagkakataon.",
+    runningBody:
+      "Tumatakbo sa device na ito ang Qwen3.5 0.8B. Ang mga sagot ay mula sa iyong offline na aklatan.",
     installedBody:
-      "Naka-imbak sa device na ito ang Qwen3.5 0.8B. Kailangan din ng lokal na search index ang offline na pananaliksik.",
+      "Naka-imbak sa device na ito ang Qwen3.5 0.8B. I-load ito para makakuha ng paliwanag mula sa iyong offline na aklatan.",
     missingBody:
       "I-import ang napiling Qwen3.5 GGUF mula sa iyong device. Walang modelong awtomatikong dina-download.",
+  },
+  floating: {
+    introTitle: "I-enable ang Lumulutang na Assistant",
+    introBody:
+      "Payagan ang Seekora na magpakita ng lumulutang na assistant sa ibabaw ng ibang app para magamit mo ang iyong offline na AI companion habang ginagamit ang iyong telepono.",
+    featureBubble: "Lumulutang na bubble na may logo ng Seekora",
+    featureAsk: "Magtanong habang nasa kahit anong app",
+    featureAnalyze: "Suriin ang nasa screen, kapag hiniling mo lang",
+    featureOffline: "Gumagana offline gamit ang parehong modelong AI",
+    enable: "I-enable ang Lumulutang na Assistant",
+    notNow: "Hindi Muna",
+    permissionNote:
+      'Bubuksan ng Android ang "Display over other apps". I-on ito para sa Seekora, pagkatapos ay bumalik dito.',
+    permissionDenied:
+      "Hindi naibigay ang pahintulot, kaya mananatiling naka-off ang lumulutang na assistant. Magagamit mo pa rin ang Seekora gaya ng dati.",
+    successTitle: "Naka-enable na ang Lumulutang na Assistant",
+    successBody:
+      "Magagamit mo na ang Seekora sa kahit anong app gamit ang lumulutang na bubble.",
+    successBubble: "Handa na ang lumulutang na bubble",
+    successDrag: "Naililipat, at natatandaan nito kung saan mo inilagay",
+    successModel: "Gumagana sa iyong offline na modelong AI",
+    successScreen:
+      "May pagsusuri ng screen, na may pahintulot mo sa bawat pagkakataon",
+    getStarted: "Magsimula",
+    unavailableTitle: "Hindi available dito",
+    unavailableBody:
+      "Kailangan ng lumulutang na assistant ang Android app. Hindi ito available sa web preview, o sa build na ginawa bago idinagdag ang feature na ito.",
+    statusOn:
+      "Naka-on. Nananatili ang bubble sa screen sa ibabaw ng ibang app.",
+    statusOff: "Naka-off",
+    turnOn: "I-on ang lumulutang na assistant",
+    turnOff: "I-off ang lumulutang na assistant",
+    permissionTitle: "Display over other apps",
+    permissionGranted: "Pinapayagan",
+    permissionMissing: "Hindi pinapayagan",
+    openPermission: "Buksan ang mga setting ng pahintulot ng Android",
+    screenTitle: "Tungkol sa pagsusuri ng screen",
+    screenBody:
+      "Binabasa lang ng Seekora ang iyong screen kapag pinindot mo ang Suriin at inaprubahan mo ang kahilingan ng Android. Kumukuha ito ng isang larawan, binabasa ang teksto sa device na ito, at itinatapon ang larawan. Walang ina-upload o sine-save. Hindi mababasa ang mga app na humaharang sa capture, gaya ng mga screen ng password at bayad. Teksto lang ang naiintindihan, hindi mga larawan o chart.",
+    modelTitle: "Parehong modelo, parehong telepono",
+    modelBody:
+      "Ginagamit ng assistant ang on-device na modelong na-set up mo na, at kailangang tumatakbo ang Seekora sa background. Kapag sarado ang Seekora, hihilingin ng bubble na buksan mo itong muli.",
+    resetBubble: "I-reset ang posisyon ng bubble",
+    clearContext: "Burahin ang pansamantalang konteksto ng screen",
+    contextKept:
+      "Nakatabi sa memory ang teksto mula sa huli mong screen capture.",
+    contextNone: "Walang nakatabing teksto ng screen.",
+    notificationsOff:
+      "Naka-off ang mga abiso para sa Seekora, kaya hindi ipapakita ng Android ang abiso ng status ng assistant. Gumagana pa rin ang bubble.",
+    overlayTitle: "Seekora AI",
+    bubbleLabel: "Buksan ang Seekora assistant",
+    greeting:
+      "Kumusta! Ako si Seekora.\nAno ang maitutulong ko para maintindihan mo?",
+    placeholder: "Magtanong ng kahit ano...",
+    send: "Ipadala",
+    stop: "Itigil",
+    minimize: "Paliitin",
+    close: "I-off ang lumulutang na assistant",
+    actionAsk: "Magtanong",
+    actionAnalyze: "Suriin ang kasalukuyang screen",
+    actionExplain: "Ipaliwanag ang pahinang ito",
+    actionSummarize: "Ibuod ang nilalaman",
+    statusReady: "Handa na ang offline na modelo",
+    statusLoading: "Nilo-load ang modelo...",
+    statusBusy: "Nag-iisip...",
+    statusNotLoaded: "Maglo-load ang modelo sa una mong tanong",
+    statusMissing: "Hindi pa naka-set up ang modelo",
+    statusUnavailable: "Sarado ang Seekora",
+    appClosed:
+      "Hindi tumatakbo ang Seekora, kaya hindi makakasagot ang assistant. Buksan ang Seekora, pagkatapos ay bumalik.",
+    openApp: "Buksan ang Seekora",
+    captureTitle: "Suriin ang screen na ito?",
+    captureBody:
+      "Kukuha ang Seekora ng isang larawan ng screen, babasahin ang mga salita nito sa device na ito, at itatapon ang larawan. Mga salita lang ang binabasa, hindi ang mga larawan o video. Walang ina-upload. Hihingin ng Android ang iyong kumpirmasyon.",
+    captureContinue: "Magpatuloy",
+    captureCancel: "Kanselahin",
+    screenAttached: "Nakalakip ang teksto ng screen",
+    discard: "Itapon",
+    menuOpen: "Buksan ang Seekora AI",
+    menuMoveLeft: "Ilipat sa kaliwa",
+    menuMoveRight: "Ilipat sa kanan",
+    menuClose: "I-off",
+    notificationChannel: "Lumulutang na assistant",
+    notificationTitle: "Naka-on ang lumulutang na assistant ng Seekora",
+    notificationText:
+      "Pindutin ang bubble para magtanong. Hindi nito binabasa ang iyong screen maliban kung hilingin mo.",
+    notificationStop: "I-off",
+    captureNotificationTitle: "Binabasa ng Seekora ang screen na ito",
+    captureNotificationText: "Isang capture, pinoproseso sa device na ito.",
+    linesRead: "{{count}} linya",
+    captureReady:
+      "Nabasa ko ang mga salita sa iyong screen. Hindi ko nakikita ang mga larawan o video. Ano ang gusto mong malaman tungkol sa teksto?",
+    screenLimit:
+      "Mga salita lang sa screen ang nababasa ko, hindi ang mga larawan, video o chart. Para sa pangkalahatang tanong, i-tap ang Itapon at magtanong muli.",
+    captureDenied: "Kinansela ang screen capture, kaya walang nabasa.",
+    captureFailed: "Hindi na-capture ang screen. Pakisubukang muli.",
+    captureEmpty:
+      "Wala akong nakitang nababasang teksto sa screen na iyon. Maaaring puro larawan ito, o hinaharangan ng app ang screen capture para protektahan ang nilalaman nito.",
+    captureSparse:
+      "Kaunting teksto lang ang nakita. Hindi nababasa ang mga larawan, chart at diagram, kaya maaaring may makaligtaan ang sagot ko.",
+    screenDiscarded: "Itinapon ang teksto ng screen.",
+    askExplain: "Ipaliwanag sa simpleng salita ang sinasabi ng screen na ito.",
+    askSummarize: "Ibuod ang mga pangunahing punto ng screen na ito.",
+    modelMissing:
+      "Hindi pa naka-set up ang modelong AI. Buksan ang Seekora at i-set up muna ang on-device na modelo.",
+    modelBusy:
+      "Abala ang modelo o hindi ito na-load. Pakisubukang muli mamaya.",
+    busy: "Sinasagot ko pa ang nakaraang tanong.",
+    noAnswer: "Hindi ako nakabuo ng sagot. Pakisubukang ibahin ang tanong.",
+    stopped: "Itinigil.",
+    failed: "May nangyaring mali habang sumasagot.",
+    memoryUnloaded:
+      "In-unload ang modelo para magbakante ng memory. Maglo-load itong muli sa susunod mong tanong.",
   },
 } as const satisfies DeepString<Dict>;

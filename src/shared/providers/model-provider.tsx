@@ -2,11 +2,11 @@ import { createContext, useContext, useEffect, useRef, useState, type PropsWithC
 import { AppState, Platform } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
-import type { ModelManifest, ModelState } from '@/infrastructure/llm';
+import type { GenerationRequest, ModelManifest, ModelState } from '@/infrastructure/llm';
 import { createEngine } from '@/infrastructure/llm/create-engine';
 import { createModelStorage } from '@/infrastructure/llm/model-storage';
 
-type Operation = 'restoring' | 'choosing' | 'importing' | 'verifying' | 'loading' | 'testing' | 'unloading' | 'removing' | null;
+type Operation = 'restoring' | 'preparing' | 'choosing' | 'importing' | 'verifying' | 'loading' | 'testing' | 'answering' | 'unloading' | 'removing' | null;
 
 interface ModelContextValue {
   installed: ModelManifest | null;
@@ -20,6 +20,15 @@ interface ModelContextValue {
   loadModel(): Promise<void>;
   unloadModel(): Promise<void>;
   testModel(): Promise<void>;
+  /** Runs one generation on the loaded model. Rejects if the model is busy, not loaded, or cancelled. */
+  generate(request: GenerationRequest): Promise<string>;
+  /** Loads the installed model if it is not loaded yet. Resolves false when there is no model or it cannot load now. */
+  ensureLoaded(): Promise<boolean>;
+  /**
+   * While held, leaving the foreground neither cancels work nor unloads the model. The floating
+   * assistant holds it, because it is used while another app is in front.
+   */
+  setBackgroundHold(hold: boolean): void;
   cancel(): Promise<void>;
   removeModel(): Promise<void>;
 }
@@ -38,6 +47,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
   const active = useRef<AbortController | null>(null);
   const phase = useRef<Operation>('restoring');
   const mounted = useRef(true);
+  const backgroundHold = useRef(false);
   const native = Platform.OS === 'android' || Platform.OS === 'ios';
 
   const updateOperation = (next: Operation) => { phase.current = next; setOperation(next); };
@@ -45,7 +55,15 @@ export function ModelProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     mounted.current = true;
     let disposed = false;
-    void storage.readInstalled().then((manifest) => {
+    void storage.readInstalled().then(async (manifest) => {
+      if (manifest || disposed || !storage.hasBundledModel()) return manifest;
+      // A build that carries the model sets it up by itself the first time it opens.
+      const controller = new AbortController();
+      active.current = controller;
+      phase.current = 'preparing'; setOperation('preparing');
+      try { return await storage.installBundled(controller.signal, setProgress); }
+      finally { active.current = null; }
+    }).then((manifest) => {
       if (!disposed) setInstalled(manifest);
     }).catch((failure: unknown) => {
       if (!disposed) setError(failure instanceof Error ? failure.message : 'Cannot read the installed model.');
@@ -54,7 +72,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
     });
     const subscription = AppState.addEventListener('change', (next) => {
       // The system picker backgrounds Android while selection is open; no model is loaded then.
-      if (next !== 'active' && phase.current !== 'choosing') {
+      if (next !== 'active' && phase.current !== 'choosing' && !backgroundHold.current) {
         active.current?.abort();
         void engine.unload().then(() => {
           if (!disposed) setState(engine.getState());
@@ -125,6 +143,34 @@ export function ModelProvider({ children }: PropsWithChildren) {
     });
   }
 
+  async function generate(request: GenerationRequest) {
+    if (phase.current) throw new Error('The local model is busy. Wait for the current task to finish.');
+    const controller = new AbortController();
+    const forward = () => controller.abort();
+    request.signal?.addEventListener('abort', forward, { once: true });
+    active.current = controller;
+    updateOperation('answering'); setError(null);
+    try {
+      const task = engine.generate({ ...request, signal: controller.signal });
+      setState(engine.getState());
+      return await task;
+    } finally {
+      request.signal?.removeEventListener('abort', forward);
+      active.current = null;
+      if (mounted.current) { setState(engine.getState()); updateOperation(null); }
+    }
+  }
+
+  async function ensureLoaded() {
+    const status = engine.getState().status;
+    if (status === 'ready' || status === 'generating') return true;
+    if (!installed || phase.current) return false;
+    await loadModel();
+    return engine.getState().status === 'ready';
+  }
+
+  function setBackgroundHold(hold: boolean) { backgroundHold.current = hold; }
+
   async function cancel() {
     active.current?.abort();
     try { await engine.cancel(); }
@@ -141,7 +187,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
   }
 
   return <ModelContext.Provider value={{ installed, state, operation, progress, output, error, native,
-    importModel, loadModel, unloadModel, testModel, cancel, removeModel }}>{children}</ModelContext.Provider>;
+    importModel, loadModel, unloadModel, testModel, generate, ensureLoaded, setBackgroundHold, cancel, removeModel }}>{children}</ModelContext.Provider>;
 }
 
 export function useModel() {

@@ -1,0 +1,256 @@
+{
+  "format": "seekora-pack/1",
+  "id": "seekora-algebra-sample",
+  "title": "Algebra Starter (Sample)",
+  "version": "1.0.0",
+  "description": "A small set of originally written College Algebra study passages on linear equations, quadratic equations, functions, and exponents. It exists to test offline search and source-grounded answers.",
+  "language": "en",
+  "author": "Seekora project contributors",
+  "publisher": "Seekora",
+  "source": "Written for Seekora. Not copied or adapted from any textbook.",
+  "sourceUrls": [],
+  "license": "MIT",
+  "snapshotDate": "2026-10-09",
+  "chapters": [
+    {
+      "id": "linear-equations",
+      "number": "1",
+      "title": "Linear Equations",
+      "sections": [
+        {
+          "id": "solving-linear-equations",
+          "number": "1.1",
+          "title": "Solving linear equations in one variable",
+          "passages": [
+            {
+              "id": "lin-solve-definition",
+              "text": "A linear equation in one variable is an equation that can be written in the form ax + b = c, where a, b, and c are numbers and a is not zero. The variable x appears only to the first power: there is no x^2, no square root of x, and no x in a denominator. Solving the equation means finding the value of x that makes both sides equal. A linear equation in one variable has exactly one solution."
+            },
+            {
+              "id": "lin-solve-steps",
+              "text": "To solve a linear equation, undo the operations around the variable while keeping the equation balanced. Whatever you do to one side, do to the other side. First simplify each side by distributing and combining like terms. Next add or subtract to move the variable terms to one side and the constant terms to the other. Finally divide both sides by the coefficient of the variable. Example: solve 2x + 3 = 11. Subtract 3 from both sides to get 2x = 8. Divide both sides by 2 to get x = 4."
+            },
+            {
+              "id": "lin-solve-check",
+              "text": "Always check a solution by substituting it back into the original equation. For 2x + 3 = 11 with x = 4, the left side is 2(4) + 3 = 11, which matches the right side, so the solution is correct. When an equation contains fractions, first multiply every term on both sides by the least common denominator. This clears the fractions and leaves an equation with whole-number coefficients that is easier to solve."
+            }
+          ]
+        },
+        {
+          "id": "slope-and-lines",
+          "number": "1.2",
+          "title": "Slope and the equation of a line",
+          "passages": [
+            {
+              "id": "lin-slope-definition",
+              "text": "The slope of a line measures how steep the line is. Slope is the change in y divided by the change in x between any two points on the line, often described as rise over run. For the points (x1, y1) and (x2, y2), the slope is m = (y2 - y1) / (x2 - x1). Example: the line through (1, 2) and (3, 8) has slope m = (8 - 2) / (3 - 1) = 6 / 2 = 3. A positive slope rises from left to right, a negative slope falls, a horizontal line has slope 0, and a vertical line has an undefined slope."
+            },
+            {
+              "id": "lin-slope-intercept",
+              "text": "The slope-intercept form of a line is y = mx + b. In this form, m is the slope and b is the y-intercept, the y-value where the line crosses the y-axis. Example: for y = 3x - 1, the slope is 3 and the y-intercept is -1, so the line crosses the y-axis at the point (0, -1). To graph the line, plot the y-intercept, then use the slope to find a second point: from (0, -1), move right 1 and up 3 to reach (1, 2)."
+            },
+            {
+              "id": "lin-point-slope",
+              "text": "The point-slope form of a line is y - y1 = m(x - x1). Use it when you know the slope m and one point (x1, y1) on the line. Example: a line with slope 2 that passes through (4, 5) has the equation y - 5 = 2(x - 4). Distributing gives y - 5 = 2x - 8, and adding 5 to both sides gives the slope-intercept form y = 2x - 3. Parallel lines have equal slopes. Perpendicular lines have slopes whose product is -1, such as 2 and -1/2."
+            }
+          ]
+        },
+        {
+          "id": "linear-systems",
+          "number": "1.3",
+          "title": "Systems of two linear equations",
+          "passages": [
+            {
+              "id": "lin-system-definition",
+              "text": "A system of two linear equations is a pair of linear equations that use the same two variables. A solution of the system is an ordered pair (x, y) that makes both equations true at the same time. On a graph, the solution is the point where the two lines intersect. If the lines are parallel, the system has no solution. If the two equations describe the same line, the system has infinitely many solutions."
+            },
+            {
+              "id": "lin-system-substitution",
+              "text": "The substitution method solves a system by replacing one variable with an equivalent expression. Solve one equation for one variable, substitute that expression into the other equation, and solve the resulting one-variable equation. Example: y = x + 1 and 2x + y = 7. Substitute x + 1 for y to get 2x + (x + 1) = 7, so 3x + 1 = 7 and x = 2. Then y = 2 + 1 = 3. The solution is (2, 3)."
+            },
+            {
+              "id": "lin-system-elimination",
+              "text": "The elimination method solves a system by adding or subtracting the equations so that one variable cancels. If needed, first multiply one or both equations by a number so that the coefficients of one variable are opposites. Example: x + y = 10 and x - y = 2. Adding the equations eliminates y and gives 2x = 12, so x = 6. Substituting x = 6 into x + y = 10 gives y = 4. The solution is (6, 4)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "quadratic-equations",
+      "number": "2",
+      "title": "Quadratic Equations",
+      "sections": [
+        {
+          "id": "quadratic-factoring",
+          "number": "2.1",
+          "title": "Standard form, factoring, and square roots",
+          "passages": [
+            {
+              "id": "quad-standard-form",
+              "text": "A quadratic equation is an equation that can be written in the standard form ax^2 + bx + c = 0, where a, b, and c are numbers and a is not zero. The highest power of the variable is 2. The solutions of a quadratic equation are also called its roots or zeros. A quadratic equation can have two real solutions, one repeated real solution, or no real solutions."
+            },
+            {
+              "id": "quad-factoring",
+              "text": "Factoring solves a quadratic equation by rewriting it as a product equal to zero. The zero product property says that if a product of two factors is 0, then at least one of the factors must be 0. Example: solve x^2 - 5x + 6 = 0. Find two numbers that multiply to 6 and add to -5: these are -2 and -3. The equation factors as (x - 2)(x - 3) = 0. Setting each factor equal to zero gives x = 2 or x = 3."
+            },
+            {
+              "id": "quad-square-root",
+              "text": "When a quadratic equation has no x term, solve it with the square root method. Isolate the squared term, then take the square root of both sides, remembering both the positive and the negative root. Example: solve x^2 - 9 = 0. Add 9 to both sides to get x^2 = 9. Taking square roots gives x = 3 or x = -3. The same idea works for (x - 1)^2 = 16: x - 1 = 4 or x - 1 = -4, so x = 5 or x = -3."
+            },
+            {
+              "id": "quad-completing-square",
+              "text": "Completing the square rewrites a quadratic expression as a perfect square plus a constant. For x^2 + bx, add (b/2)^2 to form the perfect square (x + b/2)^2. Example: solve x^2 + 6x + 5 = 0. Move the constant to get x^2 + 6x = -5. Half of 6 is 3 and 3^2 = 9, so add 9 to both sides: x^2 + 6x + 9 = 4. Now (x + 3)^2 = 4, so x + 3 = 2 or x + 3 = -2. The solutions are x = -1 and x = -5."
+            }
+          ]
+        },
+        {
+          "id": "quadratic-formula",
+          "number": "2.2",
+          "title": "The quadratic formula and the discriminant",
+          "passages": [
+            {
+              "id": "quad-formula",
+              "text": "The quadratic formula solves any quadratic equation written in standard form ax^2 + bx + c = 0. The solutions are x = (-b + sqrt(b^2 - 4ac)) / (2a) and x = (-b - sqrt(b^2 - 4ac)) / (2a). Use the quadratic formula when an equation is difficult or impossible to factor. Before using the formula, make sure one side of the equation is 0 and identify the coefficients a, b, and c, including their signs."
+            },
+            {
+              "id": "quad-formula-example",
+              "text": "Example of the quadratic formula: solve 2x^2 + 3x - 2 = 0. Here a = 2, b = 3, and c = -2. First compute b^2 - 4ac = 3^2 - 4(2)(-2) = 9 + 16 = 25. The square root of 25 is 5. Then x = (-3 + 5) / 4 = 1/2 or x = (-3 - 5) / 4 = -2. The two solutions are x = 1/2 and x = -2."
+            },
+            {
+              "id": "quad-discriminant",
+              "text": "The discriminant of a quadratic equation ax^2 + bx + c = 0 is the expression b^2 - 4ac, the part under the square root in the quadratic formula. The discriminant tells how many real solutions the equation has. If the discriminant is positive, there are two different real solutions. If the discriminant is zero, there is exactly one repeated real solution. If the discriminant is negative, there are no real solutions, because the square root of a negative number is not a real number."
+            }
+          ]
+        },
+        {
+          "id": "parabolas",
+          "number": "2.3",
+          "title": "Graphs of quadratic functions",
+          "passages": [
+            {
+              "id": "quad-parabola",
+              "text": "The graph of a quadratic function f(x) = ax^2 + bx + c is a U-shaped curve called a parabola. If a is positive, the parabola opens upward and has a lowest point. If a is negative, the parabola opens downward and has a highest point. This turning point is called the vertex. The parabola is symmetric about a vertical line through the vertex, called the axis of symmetry."
+            },
+            {
+              "id": "quad-vertex",
+              "text": "The x-coordinate of the vertex of the parabola y = ax^2 + bx + c is x = -b / (2a). Substitute this x-value into the equation to find the y-coordinate. Example: for y = x^2 - 4x + 3, the vertex has x = -(-4) / (2 * 1) = 2. Then y = 2^2 - 4(2) + 3 = -1, so the vertex is (2, -1). The x-intercepts of a parabola are the real solutions of ax^2 + bx + c = 0."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "functions",
+      "number": "3",
+      "title": "Functions",
+      "sections": [
+        {
+          "id": "function-basics",
+          "number": "3.1",
+          "title": "Functions, domain, and range",
+          "passages": [
+            {
+              "id": "func-definition",
+              "text": "A function is a rule that assigns to each input exactly one output. The input is often called x and the output is called y or f(x). A relation is not a function if some input is paired with more than one output. On a graph, use the vertical line test: if any vertical line crosses the graph more than once, the graph does not represent a function."
+            },
+            {
+              "id": "func-notation",
+              "text": "Function notation writes the output of a function f for an input x as f(x), read as f of x. To evaluate a function, replace every x in the rule with the given input and simplify. Example: if f(x) = 2x + 1, then f(3) = 2(3) + 1 = 7. The notation f(3) = 7 means that the input 3 produces the output 7. It does not mean f multiplied by 3."
+            },
+            {
+              "id": "func-domain-range",
+              "text": "The domain of a function is the set of all inputs for which the function is defined. The range is the set of all outputs the function actually produces. To find the domain from a formula, look for inputs that cause problems: a denominator cannot be zero, and an even root such as a square root cannot contain a negative number. Example: f(x) = 1 / (x - 2) is undefined at x = 2, so its domain is all real numbers except 2. The function g(x) = sqrt(x) has domain x >= 0 and range y >= 0."
+            }
+          ]
+        },
+        {
+          "id": "composition-and-inverses",
+          "number": "3.2",
+          "title": "Composition and inverse functions",
+          "passages": [
+            {
+              "id": "func-composition",
+              "text": "The composition of two functions applies one function to the result of another. The composition f(g(x)) means first apply g to x, then apply f to that result. Example: if f(x) = x + 1 and g(x) = 2x, then f(g(x)) = f(2x) = 2x + 1, while g(f(x)) = g(x + 1) = 2(x + 1) = 2x + 2. The order matters: f(g(x)) and g(f(x)) are usually different functions."
+            },
+            {
+              "id": "func-inverse",
+              "text": "An inverse function reverses the action of a function. If f sends an input x to an output y, then the inverse function, written f^-1, sends y back to x. Only one-to-one functions, where different inputs always give different outputs, have inverse functions. To find an inverse, write y = f(x), swap x and y, and solve for y. Example: for f(x) = 2x + 3, write x = 2y + 3, so y = (x - 3) / 2. The inverse is f^-1(x) = (x - 3) / 2."
+            }
+          ]
+        },
+        {
+          "id": "linear-functions-and-transformations",
+          "number": "3.3",
+          "title": "Linear functions and transformations of graphs",
+          "passages": [
+            {
+              "id": "func-linear",
+              "text": "A linear function has the form f(x) = mx + b and its graph is a straight line. The number m is the slope, also called the rate of change: it tells how much the output changes when the input increases by 1. The number b is the initial value, the output when x = 0. Example: a taxi charges a 3 dollar fee plus 2 dollars per mile. The cost for x miles is f(x) = 2x + 3, so a 5 mile trip costs f(5) = 13 dollars."
+            },
+            {
+              "id": "func-transformations",
+              "text": "Transformations move or reshape the graph of a function. Adding a constant outside the function, f(x) + k, shifts the graph up k units when k is positive and down when k is negative. Replacing x with x - h, giving f(x - h), shifts the graph right h units when h is positive. Multiplying by -1, giving -f(x), reflects the graph across the x-axis. Example: y = (x - 2)^2 + 1 is the parabola y = x^2 shifted right 2 units and up 1 unit."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "exponents",
+      "number": "4",
+      "title": "Exponents",
+      "sections": [
+        {
+          "id": "exponent-rules",
+          "number": "4.1",
+          "title": "Rules of exponents",
+          "passages": [
+            {
+              "id": "exp-definition",
+              "text": "An exponent tells how many times a base is used as a factor. In the expression a^n, a is the base and n is the exponent, also called the power. Example: 2^4 means 2 * 2 * 2 * 2 = 16. An exponent applies only to the base directly next to it, so -3^2 means -(3 * 3) = -9, while (-3)^2 means (-3)(-3) = 9."
+            },
+            {
+              "id": "exp-product-quotient",
+              "text": "The product rule for exponents says that when you multiply powers with the same base, you add the exponents: a^m * a^n = a^(m + n). Example: x^2 * x^3 = x^5. The quotient rule says that when you divide powers with the same base, you subtract the exponents: a^m / a^n = a^(m - n), as long as a is not zero. Example: x^7 / x^4 = x^3. These rules work only when the bases are the same."
+            },
+            {
+              "id": "exp-power-rules",
+              "text": "The power rule for exponents says that to raise a power to another power, you multiply the exponents: (a^m)^n = a^(m * n). Example: (x^2)^3 = x^6. A power of a product applies the exponent to every factor: (ab)^n = a^n * b^n, so (2x)^3 = 8x^3. A power of a quotient applies the exponent to the numerator and the denominator: (a / b)^n = a^n / b^n."
+            }
+          ]
+        },
+        {
+          "id": "special-exponents",
+          "number": "4.2",
+          "title": "Zero, negative, and rational exponents",
+          "passages": [
+            {
+              "id": "exp-zero-negative",
+              "text": "Any nonzero number raised to the zero power equals 1: a^0 = 1. Example: 5^0 = 1. A negative exponent means the reciprocal of the base raised to the positive exponent: a^(-n) = 1 / a^n. Example: 2^(-3) = 1 / 2^3 = 1/8. A negative exponent does not make the result negative; it moves the factor from the numerator to the denominator."
+            },
+            {
+              "id": "exp-rational",
+              "text": "A rational exponent, also called a fractional exponent, represents a root. The exponent 1/n means the nth root: a^(1/n) is the nth root of a. Example: 9^(1/2) is the square root of 9, which is 3, and 8^(1/3) is the cube root of 8, which is 2. More generally, a^(m/n) means take the nth root of a and then raise the result to the power m. Example: 8^(2/3) = (cube root of 8)^2 = 2^2 = 4."
+            }
+          ]
+        },
+        {
+          "id": "scientific-notation-and-growth",
+          "number": "4.3",
+          "title": "Scientific notation and exponential growth",
+          "passages": [
+            {
+              "id": "exp-scientific-notation",
+              "text": "Scientific notation writes a number as a product of a number between 1 and 10 and a power of 10. It is useful for very large and very small numbers. Example: 4,500,000 = 4.5 * 10^6 and 0.00032 = 3.2 * 10^(-4). A positive exponent on 10 moves the decimal point to the right, and a negative exponent moves it to the left. To multiply numbers in scientific notation, multiply the number parts and add the exponents of 10."
+            },
+            {
+              "id": "exp-exponential-growth",
+              "text": "An exponential function has the variable in the exponent, as in f(x) = a * b^x, where a is the starting value and b is the growth factor. If b is greater than 1, the function models exponential growth; if b is between 0 and 1, it models exponential decay. Example: a population of 100 that doubles every year is modeled by f(x) = 100 * 2^x, so after 3 years it is 100 * 2^3 = 800. Exponential functions change by equal factors, while linear functions change by equal amounts."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

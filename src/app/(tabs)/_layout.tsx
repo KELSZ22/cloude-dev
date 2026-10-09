@@ -4,6 +4,7 @@ import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { Fonts } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation, type MessageKey } from "@/shared/i18n";
+import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 
 const tabs: {
@@ -45,6 +46,7 @@ const tabs: {
 export default function TabLayout() {
   const colors = useTheme();
   const { t } = useTranslation();
+  const openAssistant = useAssistantSheetStore((state) => state.openAssistant);
   const hasHydrated = useOnboardingStore((state) => state.hasHydrated);
   const completed = useOnboardingStore((state) => state.completed);
 
@@ -77,6 +79,16 @@ export default function TabLayout() {
               <SymbolView name={icon} size={size} tintColor={color} />
             ),
           }}
+          listeners={
+            name === "assistant"
+              ? {
+                  tabPress: (event) => {
+                    event.preventDefault();
+                    openAssistant();
+                  },
+                }
+              : undefined
+          }
         />
       ))}
       {/* Reached from a pack or the dashboard, so it keeps the tab bar but gets no tab. */}

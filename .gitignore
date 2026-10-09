@@ -42,7 +42,20 @@ example
 /ios
 /android
 
+# third-party source material; not licensed for redistribution or AI ingestion
+/resources/raw/
+
+# optional model packed into the APK at build time (529 MB); see bundled-model/README.md
+/bundled-model/*.gguf
+
 # Downloaded source corpus (metadata is kept in content/openstax)
 /content/openstax/files/
 *.part
 __pycache__/
+
+
+# Android generated build files
+**/android/build/
+**/android/.gradle/
+**/build/
+**/.gradle/

@@ -1,0 +1,47 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
+
+  <!-- Draw the bubble and chat window over other apps. Granted by the user in system settings. -->
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+  <!-- Keep the bubble alive while the user has it turned on. -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+  <!-- Only held for the moment a user-approved screen capture runs. -->
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+  <application>
+    <service
+      android:name=".FloatingAssistantService"
+      android:exported="false"
+      android:foregroundServiceType="specialUse">
+      <property
+        android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+        android:value="Floating chat bubble the user turns on to ask the on-device assistant while using other apps" />
+    </service>
+
+    <service
+      android:name=".ScreenCaptureService"
+      android:exported="false"
+      android:foregroundServiceType="mediaProjection" />
+
+    <!-- Invisible host for Android's own screen-capture consent dialog. -->
+    <activity
+      android:name=".ScreenCaptureActivity"
+      android:exported="false"
+      android:excludeFromRecents="true"
+      android:taskAffinity=""
+      android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+    <!-- Text recognition must not report usage statistics: drop the uploader that ML Kit's logging would use. -->
+    <service
+      android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+      tools:node="remove" />
+    <service
+      android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+      tools:node="remove" />
+    <receiver
+      android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+      tools:node="remove" />
+  </application>
+</manifest>

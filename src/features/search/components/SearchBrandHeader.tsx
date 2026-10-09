@@ -20,17 +20,6 @@ export function SearchBrandHeader() {
         <Image
           source={
             isDark
-              ? require("@/assets/logo/logo-default.png")
-              : require("@/assets/logo/logo-greenbg.png")
-          }
-          contentFit="contain"
-          accessible={false}
-          accessibilityLabel=""
-          style={styles.logo}
-        />
-        <Image
-          source={
-            isDark
               ? require("@/assets/logo/Seekora-textlogo-dark.png")
               : require("@/assets/logo/Seekora-textlogo-light.png")
           }
@@ -80,12 +69,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
   },
   brand: { flexDirection: "row", alignItems: "center", gap: Spacing.two },
-  logo: { width: 36, height: 36 },
   wordmark: { width: 118, height: 36 },
   actions: { flexDirection: "row", alignItems: "center" },
   iconButton: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     alignItems: "center",
     justifyContent: "center",
   },

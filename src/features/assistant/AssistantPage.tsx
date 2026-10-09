@@ -1,19 +1,19 @@
-import { NavigationButton } from '@/shared/components/navigation-button';
-import { ModelStatus } from '@/shared/components/model-status';
-import { Page } from '@/shared/components/page';
-import { StatusCard } from '@/shared/components/status-card';
-import { useTranslation } from '@/shared/i18n';
+import { router, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 
+import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
+
+/** The assistant lives in a sheet. This route only remains so the AI tab can exist. */
 export default function AssistantPage() {
-  const { t } = useTranslation();
+  const openAssistant = useAssistantSheetStore((state) => state.openAssistant);
 
-  return (
-    <Page title={t('assistant.title')} description={t('assistant.description')}>
-      <ModelStatus />
-      <StatusCard variant="ai" title={t('assistant.pendingTitle')} description={t('assistant.pendingBody')}>
-        <NavigationButton href="/model" label={t('assistant.viewModel')} />
-      </StatusCard>
-      <NavigationButton href="/(tabs)/search" label={t('assistant.goToSearch')} />
-    </Page>
+  useFocusEffect(
+    useCallback(() => {
+      openAssistant();
+      if (router.canGoBack()) router.back();
+      else router.replace("/");
+    }, [openAssistant]),
   );
+
+  return null;
 }

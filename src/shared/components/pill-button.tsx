@@ -1,3 +1,4 @@
+import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 
@@ -12,12 +13,14 @@ export function PillButton({
   variant = "solid",
   disabled = false,
   accessibilityLabel,
+  icon,
 }: {
   label: string;
   onPress: () => void;
   variant?: "solid" | "outline";
   disabled?: boolean;
   accessibilityLabel?: string;
+  icon?: SymbolViewProps["name"];
 }) {
   const colors = useTheme();
   const [pressed, setPressed] = useState(false);
@@ -54,6 +57,13 @@ export function PillButton({
         },
       ])}
     >
+      {icon ? (
+        <SymbolView
+          name={icon}
+          size={18}
+          tintColor={solid ? colors.backgroundElement : colors.tint}
+        />
+      ) : null}
       <ThemedText
         type="smallBold"
         style={[
@@ -71,8 +81,10 @@ const styles = StyleSheet.create({
   button: {
     minHeight: 52,
     borderRadius: 999,
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    gap: 8,
     paddingHorizontal: Spacing.four,
   },
   label: { fontSize: 15, lineHeight: 20 },

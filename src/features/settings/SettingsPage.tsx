@@ -16,6 +16,7 @@ import { useOfflineReadingStore } from "@/shared/stores/offline-reading-store";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTranslation } from "@/shared/i18n";
 import { useModel } from "@/shared/providers/model-provider";
+import { useFloatingAssistantStore } from "@/shared/stores/floating-assistant-store";
 import {
   APP_LOCALES,
   LOCALE_NAMES,
@@ -51,6 +52,7 @@ export default function SettingsPage() {
   const hydrateReading = useOfflineReadingStore((store) => store.hydrate);
   useEffect(() => { void hydrateReading(); }, [hydrateReading]);
   const readingBytes = readings.reduce((total, item) => total + item.sizeBytes, 0);
+  const floatingEnabled = useFloatingAssistantStore((store) => store.enabled);
 
   const appearanceOptions = [
     { id: APPEARANCE_IDS[0], label: t("settings.matchDevice") },
@@ -110,6 +112,12 @@ export default function SettingsPage() {
             label={t("settings.aiModel")}
             value={modelLabel}
             onPress={() => router.navigate("/model")}
+          />
+          <SettingsRow
+            icon={{ ios: "bubble.left", android: "chat_bubble", web: "chat_bubble" }}
+            label={t("settings.floatingAssistant")}
+            value={floatingEnabled ? t("settings.on") : t("settings.off")}
+            onPress={() => router.navigate("/floating-assistant")}
           />
           <SettingsRow
             icon={{
