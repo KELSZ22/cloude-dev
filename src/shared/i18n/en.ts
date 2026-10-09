@@ -1,4 +1,86 @@
 export const en = {
+  reading: {
+    onlineTitle: "Search online",
+    onlineDescription:
+      "Discover Wikipedia articles and download the ones you want to keep.",
+    onlineResults: "Available online · {{count}} articles",
+    downloaded: "Downloaded to your Library",
+    exploreLabel: "Explore learning",
+    exploreTitle: "Read & learn",
+    setupTitle: "Read your downloads offline",
+    setupBody:
+      "Download Wikipedia articles while connected, then open them from Library → Reading without internet. Search your saved titles and summaries locally.",
+    noBookmarks: "No saved bookmarks yet.",
+    noHistory: "No reading history yet.",
+    title: "Open learning",
+    reader: "Offline reader",
+    shelf: "Reading",
+    savedTitle: "Saved for offline reading",
+    browse: "Find learning on Wikipedia",
+    description:
+      "Download articles while connected. Read them here anytime, even without internet.",
+    textEdition:
+      "Text edition: includes article text and section headings. Wikipedia images are saved when available; tables and some formulas may still be omitted.",
+    illustratedEdition:
+      "Illustrated edition: article text plus Wikipedia figures saved on this device. Tables and some formulas may still be omitted.",
+    browserNote:
+      "On web, downloads stay in this browser. Load the app before going offline; offline browser reloads are not supported yet. Clearing site data removes downloads.",
+    placeholder: "Search a topic, e.g. photosynthesis",
+    search: "Search Wikipedia",
+    searching: "Searching Wikipedia…",
+    connectionHint:
+      "Search and downloads need internet. Saved reading opens from this device.",
+    download: "Download for offline reading",
+    downloading: "Downloading article…",
+    saving: "Saving on this device…",
+    available: "Available offline · text edition",
+    availableIllustrated: "Available offline · illustrated edition",
+    figure: "Article figure",
+    figureSource: "Image source & license",
+    figures: "{{count}} images",
+    read: "Read offline",
+    readTitle: "Read {{title}} offline",
+    minutes: "{{count}} min read",
+    openLibrary: "Open my reading library",
+    openStax: "Browse OpenStax textbook packs",
+    empty:
+      "Your reading shelf is empty. Find a topic on Wikipedia and download an article to start your offline library.",
+    noResults: "No articles found. Try another topic or language.",
+    noSavedMatches: "No saved articles match this search.",
+    loading: "Opening local reading library…",
+    retry: "Try again",
+    remove: "Remove download",
+    removeTitle: "Remove download of {{title}}",
+    removePrompt:
+      "Remove this article from this device? You will need internet to download it again.",
+    missing:
+      "This article is not saved on this device. Download it from Open learning first.",
+    introduction: "Introduction",
+    contents: "Contents",
+    largeText: "Larger text",
+    normalText: "Normal text",
+    sectionProgress: "Section {{current}} of {{total}}",
+    next: "Next section →",
+    previous: "← Previous section",
+    downloadedOn: "Downloaded {{date}}",
+    sourceTitle: "Source & license",
+    credit:
+      "Text by Wikipedia contributors, shared under Creative Commons Attribution-ShareAlike 4.0. This is a saved copy and does not update automatically.",
+    original: "View source revision",
+    contributors: "Contributor history",
+    sourceOnline: "Source and license links need an internet connection.",
+    errors: {
+      network:
+        "Could not reach Wikipedia. Check your connection and try again. Your saved articles are still available in the Library.",
+      unavailable:
+        "Wikipedia could not provide readable text for this article or search. Please try another topic.",
+      tooLarge:
+        "This article is too large for a text download. Please choose a shorter article.",
+      storage:
+        "Could not access local reading storage. Check free space and storage permissions, then try again.",
+      cancelled: "Download cancelled. You can try again anytime.",
+    },
+  },
   common: {
     close: "Close",
     back: "Back",
@@ -158,8 +240,10 @@ export const en = {
     documents: "Documents",
     packs: "Packs",
     clear: "Clear search",
-    oneResult: "1 result (offline)",
-    manyResults: "{{count}} results (offline)",
+    oneResult: "About 1 result (offline)",
+    manyResults: "About {{count}} results (offline)",
+    aboutOne: "About 1 result",
+    aboutResults: "About {{count}} results",
     empty: "Nothing in your offline library matches that search.",
     emptyTitle: "No results found",
     emptyBody:
@@ -183,6 +267,31 @@ export const en = {
     article: "Article",
     document: "Document",
     pack: "Pack",
+    resourcesTitle: "Open resources",
+    resourcesSearching: "Searching open resources…",
+    resourcesCount: "{{count}} open resources",
+    resourcesEmpty: "No open resources matched that search.",
+    resourcesOffline: "Open resources need an internet connection.",
+    resourcesFailed: "Open resources could not be searched. Try again.",
+    resourcesPartial: "Some sources did not respond.",
+    resourcesMore: "Load more resources",
+    resourcesOpen: "Open source",
+    resourcesPdf: "Open PDF",
+    resourcesDownloadPdf: "Save PDF",
+    resourcesReadPdf: "Read saved PDF",
+    resourcesDownloadingPdf: "Saving PDF…",
+    pdfFailedNetwork:
+      "The PDF could not be downloaded. Check your connection and try again.",
+    pdfFailedType: "That file is not a PDF, so it was not saved.",
+    pdfFailedSize: "This PDF is too large to save on this device.",
+    pdfFailedStorage: "This device could not store the PDF.",
+    pdfReader: "Saved PDF",
+    pdfMissing: "This PDF is no longer on this device.",
+    pdfSavedNative: "This PDF is saved on this device.",
+    pdfOpenSaved: "Open saved PDF",
+    accessOpen: "Open access",
+    accessRestricted: "Restricted",
+    accessUnknown: "Access not confirmed",
   },
   article: {
     notFound: "Article not found",
@@ -252,8 +361,10 @@ export const en = {
     voiceSoon: "Voice input, coming soon",
     startVoice: "Start voice input",
     stopVoice: "Stop voice input",
-    voiceDenied: "Allow microphone and speech recognition in Settings to use voice input.",
-    voiceUnavailable: "On-device speech recognition is not available on this device.",
+    voiceDenied:
+      "Allow microphone and speech recognition in Settings to use voice input.",
+    voiceUnavailable:
+      "On-device speech recognition is not available on this device.",
     voiceOffline:
       "Voice input needs the offline language pack. Android will offer to download it, then try again.",
     you: "You",
@@ -266,7 +377,8 @@ export const en = {
     noMatch: "Nothing in your offline library mentions this topic.",
     weakMatch:
       "Your offline library mentions parts of this question, but no passage covers enough of it to support an answer.",
-    modelDeclined: "The passages found in your offline library do not answer this question.",
+    modelDeclined:
+      "The passages found in your offline library do not answer this question.",
     passagesBody:
       "These passages match your question. Load the on-device model for an explanation.",
   },
@@ -275,7 +387,7 @@ export const en = {
     description: "You can explore the app while setup is pending.",
     searchTitle: "Search setup pending",
     searchBody:
-      "The local search index is not configured yet. No knowledge content is installed.",
+      "Browse OpenStax textbooks and resources indexed from content/openstax. Full-text PDF search still needs a local index.",
     continueSearch: "Continue to Search",
     reviewModel: "Review model requirements",
   },
@@ -315,7 +427,8 @@ export const en = {
       "This deletes the app-owned model copy and frees storage. Your original file is kept.",
     working: "Working locally",
     checking: "Checking model integrity · {{percent}}%",
-    preparing: "Setting up the built-in model. This takes a moment the first time.",
+    preparing:
+      "Setting up the built-in model. This takes a moment the first time.",
     testing: "Generating a short runtime test…",
     answering: "Answering a question in Ask Seekora…",
     loading: "Loading model into memory…",
@@ -357,7 +470,7 @@ export const en = {
     enable: "Enable Floating Assistant",
     notNow: "Not Now",
     permissionNote:
-      "Android will open \"Display over other apps\". Turn it on for Seekora, then come back here.",
+      'Android will open "Display over other apps". Turn it on for Seekora, then come back here.',
     permissionDenied:
       "The permission was not granted, so the floating assistant stays off. You can keep using Seekora as usual.",
     successTitle: "Floating Assistant Enabled",
@@ -422,7 +535,8 @@ export const en = {
     voiceOffline:
       "Voice input needs the offline language pack. Open Seekora and use the microphone there once to install it.",
     voiceNoMatch: "Nothing was heard. Tap the microphone and try again.",
-    voiceFailed: "Voice input stopped unexpectedly. Tap the microphone to try again.",
+    voiceFailed:
+      "Voice input stopped unexpectedly. Tap the microphone to try again.",
     captureTitle: "Analyze this screen?",
     captureBody:
       "Seekora will take one picture of the screen, read its words on this device, and discard the picture. Only words are read, not pictures or video. Nothing is uploaded. Android will ask you to confirm.",

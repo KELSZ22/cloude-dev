@@ -12,16 +12,33 @@ type DownloadViewProps = {
   pack: KnowledgePackCard;
   progress: number;
   paused: boolean;
+  downloadedMb?: number;
+  totalMb?: number;
+  speedMbps?: number;
   onBack: () => void;
   onTogglePause: () => void;
   onCancel: () => void;
 };
 
-export function DownloadView({ pack, progress, paused, onBack, onTogglePause, onCancel }: DownloadViewProps) {
+export function DownloadView({
+  pack,
+  progress,
+  paused,
+  downloadedMb,
+  totalMb,
+  speedMbps,
+  onBack,
+  onTogglePause,
+  onCancel,
+}: DownloadViewProps) {
   const colors = useTheme();
   const percent = Math.round(progress * 100);
-  const downloaded = Math.round(pack.sizeMb * progress);
-  const remainingMinutes = Math.max(1, Math.round((1 - progress) * 18));
+  const total = totalMb ?? pack.sizeMb;
+  const downloaded = downloadedMb ?? Math.round(pack.sizeMb * progress);
+  const speed = speedMbps ?? (paused ? 0 : 8.2);
+  const remainingMb = Math.max(0, total - downloaded);
+  const remainingMinutes =
+    speed > 0.05 ? Math.max(1, Math.round(remainingMb / speed / 60)) : null;
 
   return (
     <View style={styles.wrap}>
@@ -63,21 +80,23 @@ export function DownloadView({ pack, progress, paused, onBack, onTogglePause, on
           <View style={[styles.fill, { width: `${percent}%`, backgroundColor: colors.tint }]} />
         </View>
         <ThemedText type="small" themeColor="textSecondary">
-          {`${downloaded} MB of ${pack.sizeMb} MB`}
+          {`${downloaded} MB of ${total} MB`}
         </ThemedText>
       </View>
 
       <View style={styles.stats}>
         <View style={[styles.stat, { backgroundColor: colors.backgroundElement, borderColor: colors.dashboardBorder }]}>
           <SymbolView name={{ ios: "clock", android: "schedule", web: "schedule" }} size={18} tintColor={colors.tint} />
-          <ThemedText type="smallBold">{`${remainingMinutes} min`}</ThemedText>
+          <ThemedText type="smallBold">
+            {remainingMinutes ? `${remainingMinutes} min` : "—"}
+          </ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
             remaining
           </ThemedText>
         </View>
         <View style={[styles.stat, { backgroundColor: colors.backgroundElement, borderColor: colors.dashboardBorder }]}>
           <SymbolView name={{ ios: "speedometer", android: "speed", web: "speed" }} size={18} tintColor={colors.tint} />
-          <ThemedText type="smallBold">{paused ? "0 MB/s" : "8.2 MB/s"}</ThemedText>
+          <ThemedText type="smallBold">{`${speed.toFixed(1)} MB/s`}</ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
             speed
           </ThemedText>

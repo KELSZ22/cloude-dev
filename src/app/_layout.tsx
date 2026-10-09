@@ -13,9 +13,10 @@ import { useEffect } from "react";
 import { AssistantSheet } from "@/features/assistant";
 import { Fonts } from "@/shared/constants/theme";
 import { useColorScheme } from "@/shared/hooks/use-color-scheme";
-import { useTranslation } from "@/shared/i18n";
+import { useHydratePackDownloadStore } from "@/shared/hooks/use-hydrate-pack-download-store";
 import { useInitializeTheme } from "@/shared/hooks/use-initialize-theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 import { FloatingAssistantProvider } from "@/shared/providers/floating-assistant-provider";
 import { KnowledgeProvider } from "@/shared/providers/knowledge-provider";
 import { ModelProvider } from "@/shared/providers/model-provider";
@@ -29,6 +30,7 @@ export default function RootLayout() {
   const { t } = useTranslation();
   useInitializeTheme();
   useHydrateOnboardingStore();
+  useHydratePackDownloadStore();
 
   const [fontsLoaded, fontError] = useFonts({
     NotoSans_400Regular,
@@ -66,17 +68,26 @@ export default function RootLayout() {
                 name="onboarding"
                 options={{ headerShown: false, animation: "fade" }}
               />
-              <Stack.Screen name="setup" options={{ title: t("stack.offlineSetup") }} />
+              <Stack.Screen
+                name="setup"
+                options={{ title: t("stack.offlineSetup") }}
+              />
               <Stack.Screen
                 name="import"
                 options={{ title: t("stack.importDocument") }}
               />
-              <Stack.Screen name="model" options={{ title: t("stack.onDeviceModel") }} />
+              <Stack.Screen
+                name="model"
+                options={{ title: t("stack.onDeviceModel") }}
+              />
               <Stack.Screen
                 name="packs/index"
                 options={{ title: t("stack.knowledgePacks") }}
               />
-              <Stack.Screen name="article/[id]" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="article/[id]"
+                options={{ headerShown: false }}
+              />
               <Stack.Screen
                 name="passage/[chunkId]"
                 options={{ title: t("stack.sourcePassage") }}

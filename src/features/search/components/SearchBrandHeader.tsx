@@ -35,13 +35,14 @@ export function SearchBrandHeader() {
           accessibilityRole="button"
           accessibilityLabel={t("home.notificationsSoon")}
           accessibilityState={{ disabled: true }}
-          style={[styles.iconButton, styles.unavailable]}
+          style={styles.iconButton}
         >
           <SymbolView
             name={{ ios: "bell", android: "notifications_none", web: "notifications_none" }}
             size={22}
             tintColor={iconColor}
           />
+          <View style={[styles.badge, { borderColor: colors.background }]} />
         </Pressable>
         <Pressable
           accessibilityRole="button"
@@ -50,9 +51,9 @@ export function SearchBrandHeader() {
           style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
         >
           <SymbolView
-            name={{ ios: "person.circle", android: "account_circle", web: "account_circle" }}
-            size={24}
-            tintColor={colors.tint}
+            name={{ ios: "gearshape", android: "settings", web: "settings" }}
+            size={22}
+            tintColor={iconColor}
           />
         </Pressable>
       </View>
@@ -67,10 +68,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: Spacing.three,
   },
-  brand: { flexDirection: "row", alignItems: "center" },
-  wordmark: { width: 112, height: 36 },
-  actions: { flexDirection: "row" },
-  iconButton: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
-  unavailable: { opacity: 0.45 },
+  brand: { flexDirection: "row", alignItems: "center", gap: Spacing.two },
+  wordmark: { width: 118, height: 36 },
+  actions: { flexDirection: "row", alignItems: "center" },
+  iconButton: {
+    width: 44,
+    height: 44,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badge: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#F97316",
+    borderWidth: 1.5,
+  },
   pressed: { opacity: 0.6 },
 });

@@ -1,6 +1,90 @@
 import type { DeepString, Dict } from "./en";
 
 export const fil = {
+  reading: {
+    onlineTitle: "Maghanap online",
+    onlineDescription:
+      "Tumuklas ng mga artikulo sa Wikipedia at i-download ang gusto mong itabi.",
+    onlineResults: "Available online · {{count}} artikulo",
+    downloaded: "Na-download sa iyong Aklatan",
+    exploreLabel: "Tuklasin ang kaalaman",
+    exploreTitle: "Magbasa at matuto",
+    setupTitle: "Basahin ang mga download kahit offline",
+    setupBody:
+      "Mag-download ng artikulo sa Wikipedia habang may internet. Buksan ito sa Aklatan → Babasahin kahit offline. Lokal na mahahanap ang mga na-save na pamagat at buod.",
+    noBookmarks: "Wala pang na-save na bookmark.",
+    noHistory: "Wala pang kasaysayan ng pagbabasa.",
+    title: "Bukas na kaalaman",
+    reader: "Offline na mambabasa",
+    shelf: "Babasahin",
+    savedTitle: "Na-save para sa offline na pagbabasa",
+    browse: "Maghanap ng kaalaman sa Wikipedia",
+    description:
+      "Mag-download ng mga artikulo habang may internet. Basahin dito anumang oras, kahit offline.",
+    textEdition:
+      "Bersyong teksto: kasama ang teksto at mga pamagat ng seksyon. Sine-save ang mga larawan ng Wikipedia kapag available; maaaring wala pa ring talahanayan at ilang formula.",
+    illustratedEdition:
+      "May larawan: teksto ng artikulo at mga figure ng Wikipedia na naka-save sa device. Maaaring wala pa ring talahanayan at ilang formula.",
+    browserNote:
+      "Sa web, nasa browser na ito ang mga download. Buksan ang app bago mag-offline; hindi pa suportado ang offline na pag-reload. Mawawala ang mga download kapag binura ang site data.",
+    placeholder: "Maghanap ng paksa, hal. potosintesis",
+    search: "Maghanap sa Wikipedia",
+    searching: "Naghahanap sa Wikipedia…",
+    connectionHint:
+      "Kailangan ng internet para maghanap at mag-download. Nasa device na ito ang mga na-save na babasahin.",
+    download: "I-download para mabasa offline",
+    downloading: "Dina-download ang artikulo…",
+    saving: "Sine-save sa device na ito…",
+    available: "Mababasa offline · bersyong teksto",
+    availableIllustrated: "Mababasa offline · may larawan",
+    figure: "Larawan sa artikulo",
+    figureSource: "Pinagmulan at lisensya ng larawan",
+    figures: "{{count}} larawan",
+    read: "Basahin offline",
+    readTitle: "Basahin ang {{title}} offline",
+    minutes: "{{count}} minutong pagbabasa",
+    openLibrary: "Buksan ang aking mga babasahin",
+    openStax: "Tingnan ang mga textbook pack ng OpenStax",
+    empty:
+      "Wala ka pang na-save na babasahin. Maghanap sa Wikipedia at mag-download ng artikulo para simulan ang iyong offline na aklatan.",
+    noResults: "Walang nahanap na artikulo. Subukan ang ibang paksa o wika.",
+    noSavedMatches: "Walang na-save na artikulong tugma sa paghahanap.",
+    loading: "Binubuksan ang lokal na mga babasahin…",
+    retry: "Subukan muli",
+    remove: "Alisin ang download",
+    removeTitle: "Alisin ang download ng {{title}}",
+    removePrompt:
+      "Alisin ang artikulong ito sa device? Kailangan ng internet para i-download itong muli.",
+    missing:
+      "Hindi naka-save sa device na ito ang artikulo. I-download muna ito mula sa Bukas na kaalaman.",
+    introduction: "Panimula",
+    contents: "Mga nilalaman",
+    largeText: "Mas malaking teksto",
+    normalText: "Normal na teksto",
+    sectionProgress: "Seksyon {{current}} sa {{total}}",
+    next: "Susunod na seksyon →",
+    previous: "← Nakaraang seksyon",
+    downloadedOn: "Na-download noong {{date}}",
+    sourceTitle: "Pinagmulan at lisensya",
+    credit:
+      "Teksto ng mga kontribyutor ng Wikipedia sa ilalim ng Creative Commons Attribution-ShareAlike 4.0. Na-save na kopya ito at hindi awtomatikong nag-a-update.",
+    original: "Tingnan ang pinagmulang rebisyon",
+    contributors: "Kasaysayan ng mga kontribyutor",
+    sourceOnline:
+      "Kailangan ng internet para buksan ang mga link ng pinagmulan at lisensya.",
+    errors: {
+      network:
+        "Hindi makakonekta sa Wikipedia. Suriin ang koneksyon at subukan muli. Nasa Aklatan pa rin ang mga na-save na artikulo.",
+      unavailable:
+        "Hindi makapagbigay ang Wikipedia ng nababasang teksto para sa artikulo o paghahanap. Subukan ang ibang paksa.",
+      tooLarge:
+        "Masyadong malaki ang artikulong ito para i-download bilang teksto. Pumili ng mas maikling artikulo.",
+      storage:
+        "Hindi ma-access ang lokal na imbakan. Suriin ang bakanteng espasyo at pahintulot sa storage, at subukan muli.",
+      cancelled:
+        "Kinansela ang download. Maaari mong subukan muli anumang oras.",
+    },
+  },
   common: {
     close: "Isara",
     back: "Bumalik",
@@ -161,8 +245,10 @@ export const fil = {
     documents: "Mga Dokumento",
     packs: "Mga Pack",
     clear: "Burahin ang hinahanap",
-    oneResult: "1 resulta (offline)",
-    manyResults: "{{count}} resulta (offline)",
+    oneResult: "Mga 1 resulta (offline)",
+    manyResults: "Mga {{count}} resulta (offline)",
+    aboutOne: "Mga 1 resulta",
+    aboutResults: "Mga {{count}} resulta",
     empty: "Walang tumutugma sa iyong offline na aklatan.",
     emptyTitle: "Walang nahanap",
     emptyBody:
@@ -186,6 +272,31 @@ export const fil = {
     article: "Artikulo",
     document: "Dokumento",
     pack: "Pack",
+    resourcesTitle: "Bukas na sanggunian",
+    resourcesSearching: "Hinahanap ang mga bukas na sanggunian…",
+    resourcesCount: "{{count}} bukas na sanggunian",
+    resourcesEmpty: "Walang bukas na sanggunian na tumugma.",
+    resourcesOffline: "Kailangan ng internet para sa mga bukas na sanggunian.",
+    resourcesFailed: "Hindi nahanap ang mga bukas na sanggunian. Subukan muli.",
+    resourcesPartial: "May ilang pinagmulan na hindi tumugon.",
+    resourcesMore: "Magpakita pa ng sanggunian",
+    resourcesOpen: "Buksan ang pinagmulan",
+    resourcesPdf: "Buksan ang PDF",
+    resourcesDownloadPdf: "I-save ang PDF",
+    resourcesReadPdf: "Basahin ang na-save na PDF",
+    resourcesDownloadingPdf: "Sine-save ang PDF…",
+    pdfFailedNetwork:
+      "Hindi na-download ang PDF. Suriin ang koneksyon at subukan muli.",
+    pdfFailedType: "Hindi PDF ang file, kaya hindi ito na-save.",
+    pdfFailedSize: "Masyadong malaki ang PDF para i-save sa device na ito.",
+    pdfFailedStorage: "Hindi na-store ng device ang PDF.",
+    pdfReader: "Na-save na PDF",
+    pdfMissing: "Wala na ang PDF na ito sa device.",
+    pdfSavedNative: "Naka-save ang PDF na ito sa device.",
+    pdfOpenSaved: "Buksan ang na-save na PDF",
+    accessOpen: "Bukas na access",
+    accessRestricted: "Limitado",
+    accessUnknown: "Hindi kumpirmado ang access",
   },
   article: {
     notFound: "Hindi nahanap ang artikulo",
@@ -243,7 +354,8 @@ export const fil = {
     setupModel: "I-set up ang on-device na modelo",
     chatTitle: "Tanungin ang Seekora AI",
     avatar: "Assistant ng Seekora",
-    greeting: "Kumusta! Ako si Seekora.\nAno ang maitutulong ko para maintindihan mo?",
+    greeting:
+      "Kumusta! Ako si Seekora.\nAno ang maitutulong ko para maintindihan mo?",
     statusReady: "Handa na ang offline na modelo",
     statusLoading: "Nilo-load ang modelo...",
     statusBusy: "Nag-iisip...",
@@ -255,8 +367,10 @@ export const fil = {
     voiceSoon: "Voice input, malapit na",
     startVoice: "Simulan ang voice input",
     stopVoice: "Itigil ang voice input",
-    voiceDenied: "Payagan ang mikropono at speech recognition sa Settings para sa voice input.",
-    voiceUnavailable: "Hindi available ang on-device na speech recognition sa device na ito.",
+    voiceDenied:
+      "Payagan ang mikropono at speech recognition sa Settings para sa voice input.",
+    voiceUnavailable:
+      "Hindi available ang on-device na speech recognition sa device na ito.",
     voiceOffline:
       "Kailangan ng voice input ang offline na language pack. Mag-aalok ang Android na i-download ito, pagkatapos subukan muli.",
     you: "Ikaw",
@@ -266,19 +380,22 @@ export const fil = {
     pageLabel: "Pahina {{page}} ng {{total}}",
     libraryPending: "Inihahanda pa ang iyong offline na aklatan.",
     stopped: "Itinigil.",
-    noMatch: "Walang binabanggit ang iyong offline na aklatan tungkol sa paksang ito.",
+    noMatch:
+      "Walang binabanggit ang iyong offline na aklatan tungkol sa paksang ito.",
     weakMatch:
       "May binabanggit ang iyong offline na aklatan tungkol sa tanong, pero kulang ang sipi para suportahan ang sagot.",
-    modelDeclined: "Hindi sinasagot ng mga sipi sa iyong offline na aklatan ang tanong na ito.",
+    modelDeclined:
+      "Hindi sinasagot ng mga sipi sa iyong offline na aklatan ang tanong na ito.",
     passagesBody:
       "Tumutugma ang mga siping ito sa tanong mo. I-load ang on-device na modelo para sa paliwanag.",
   },
   setup: {
     title: "Maghanda para sa offline",
-    description: "Maaari mong i-explore ang app habang hindi pa tapos ang setup.",
+    description:
+      "Maaari mong i-explore ang app habang hindi pa tapos ang setup.",
     searchTitle: "Hindi pa handa ang paghahanap",
     searchBody:
-      "Hindi pa naka-configure ang lokal na search index. Walang naka-install na kaalaman.",
+      "Mag-browse ng mga textbook at resource ng OpenStax mula sa content/openstax. Kailangan pa ng lokal na index para sa buong PDF search.",
     continueSearch: "Magpatuloy sa Paghahanap",
     reviewModel: "Suriin ang mga kinakailangan ng modelo",
   },
@@ -304,7 +421,8 @@ export const fil = {
       "Ang naka-bundle na sample pack lang ang available sa build na ito. Kailangan ng attribution, lisensya sa muling pamamahagi, at beripikadong checksum bago mag-install.",
   },
   model: {
-    description: "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
+    description:
+      "Kailangan ng katugmang lokal na modelo para sa mga sagot ng AI.",
     cardBody:
       "529 MB · Apache 2.0 · text inference. Piliin ang eksaktong GGUF mula sa napiling Hugging Face repository. Bine-verify ng import at loading ang SHA-256 nito. Binubuksan ng import ang file picker ng telepono; kung Google Drive o Recent ang lumabas, buksan ang menu nito at piliin ang Downloads. Walang ina-upload.",
     setUpBundled: "I-set up ang modelong kasama sa app na ito",
@@ -355,13 +473,14 @@ export const fil = {
       "Payagan ang Seekora na magpakita ng lumulutang na assistant sa ibabaw ng ibang app para magamit mo ang iyong offline na AI companion habang ginagamit ang iyong telepono.",
     featureBubble: "Lumulutang na bubble na may Seekora assistant",
     featureAsk: "Magtanong habang nasa kahit anong app",
-    featureVoice: "Magtanong sa pag-type o sa boses, kinikilala sa iyong device",
+    featureVoice:
+      "Magtanong sa pag-type o sa boses, kinikilala sa iyong device",
     featureAnalyze: "Suriin ang nasa screen, kapag hiniling mo lang",
     featureOffline: "Gumagana offline gamit ang parehong modelong AI",
     enable: "I-enable ang Lumulutang na Assistant",
     notNow: "Hindi Muna",
     permissionNote:
-      "Bubuksan ng Android ang \"Display over other apps\". I-on ito para sa Seekora, pagkatapos ay bumalik dito.",
+      'Bubuksan ng Android ang "Display over other apps". I-on ito para sa Seekora, pagkatapos ay bumalik dito.',
     permissionDenied:
       "Hindi naibigay ang pahintulot, kaya mananatiling naka-off ang lumulutang na assistant. Magagamit mo pa rin ang Seekora gaya ng dati.",
     successTitle: "Naka-enable na ang Lumulutang na Assistant",
@@ -370,12 +489,14 @@ export const fil = {
     successBubble: "Handa na ang lumulutang na bubble",
     successDrag: "Naililipat, at natatandaan nito kung saan mo inilagay",
     successModel: "Gumagana sa iyong offline na modelong AI",
-    successScreen: "May pagsusuri ng screen, na may pahintulot mo sa bawat pagkakataon",
+    successScreen:
+      "May pagsusuri ng screen, na may pahintulot mo sa bawat pagkakataon",
     getStarted: "Magsimula",
     unavailableTitle: "Hindi available dito",
     unavailableBody:
       "Kailangan ng lumulutang na assistant ang Android app. Hindi ito available sa web preview, o sa build na ginawa bago idinagdag ang feature na ito.",
-    statusOn: "Naka-on. Nananatili ang bubble sa screen sa ibabaw ng ibang app.",
+    statusOn:
+      "Naka-on. Nananatili ang bubble sa screen sa ibabaw ng ibang app.",
     statusOff: "Naka-off",
     turnOn: "I-on ang lumulutang na assistant",
     turnOff: "I-off ang lumulutang na assistant",
@@ -398,7 +519,8 @@ export const fil = {
       "Naka-off ang mga abiso para sa Seekora, kaya hindi ipapakita ng Android ang abiso ng status ng assistant. Gumagana pa rin ang bubble.",
     overlayTitle: "Seekora AI",
     bubbleLabel: "Buksan ang Seekora assistant",
-    greeting: "Kumusta! Ako si Seekora.\nAno ang maitutulong ko para maintindihan mo?",
+    greeting:
+      "Kumusta! Ako si Seekora.\nAno ang maitutulong ko para maintindihan mo?",
     placeholder: "Magtanong ng kahit ano...",
     send: "Ipadala",
     stop: "Itigil",
@@ -427,7 +549,8 @@ export const fil = {
     voiceOffline:
       "Kailangan ng voice input ang offline na language pack. Buksan ang Seekora at gamitin ang mikropono doon nang isang beses para ma-install ito.",
     voiceNoMatch: "Walang narinig. I-tap ang mikropono at subukan muli.",
-    voiceFailed: "Biglang huminto ang voice input. I-tap ang mikropono para subukan muli.",
+    voiceFailed:
+      "Biglang huminto ang voice input. I-tap ang mikropono para subukan muli.",
     captureTitle: "Suriin ang screen na ito?",
     captureBody:
       "Kukuha ang Seekora ng isang larawan ng screen, babasahin ang mga salita nito sa device na ito, at itatapon ang larawan. Mga salita lang ang binabasa, hindi ang mga larawan o video. Walang ina-upload. Hihingin ng Android ang iyong kumpirmasyon.",

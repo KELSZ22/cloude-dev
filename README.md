@@ -2,7 +2,13 @@
 
 Explore more. Understand better. Anywhere.
 
-Seekora is an offline-first Android knowledge search and AI assistant, first developed as AralSearch AI. It is built with React Native on Expo SDK 57, Expo Router, Bun, and strict TypeScript.
+Seekora is an offline-first Android knowledge search and AI assistant, first developed as AralSearch AI. It is built with React Native on Expo SDK 57, Expo Router, Bun, and strict TypeScript. The app includes Wikipedia article downloads and an offline text reader, plus native local-model import, SHA-256 verification, persistent model metadata, load/unload, cancellation, and a real inference diagnostic. Actual GGUF loading/generation requires device validation.
+
+## Offline learning library
+
+Open **Search** to browse online Wikipedia articles available to download. Science results load initially; choose a suggested topic, search your own topic, or switch between English and Tagalog. Download an article, then open it from **Library → Reading** to browse its sections offline. Downloads remain in the Library after restarting and can be removed to free space.
+
+Articles are text editions with source revision, contributor history, and CC BY-SA 4.0 attribution. Images, tables, and some formulas are omitted. Android/iOS use app-owned document files; web uses IndexedDB. The web app must already be loaded to read while disconnected; offline browser reloads are not supported. OpenStax content is hidden from the app, with its source code and data preserved. It can be restored through `src/shared/constants/content-sources.ts`. See [offline reading](docs/OFFLINE-READING.md) for architecture, limits, and device checks.
 
 What works today:
 

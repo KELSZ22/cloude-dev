@@ -5,6 +5,7 @@ import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
+import { contentSources } from "@/shared/constants/content-sources";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
 import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
@@ -117,9 +118,9 @@ export default function HomePage() {
             </ThemedText>
             <View style={styles.grid}>
               <DashboardActionCard
-                label={t("home.explorePacks")}
-                title={t("home.explorePacksTitle")}
-                href="/(tabs)/library"
+                label={t(contentSources.openStax ? "home.explorePacks" : "reading.exploreLabel")}
+                title={t(contentSources.openStax ? "home.explorePacksTitle" : "reading.exploreTitle")}
+                href={contentSources.openStax ? "/packs" : "/(tabs)/search"}
                 icon={{ ios: "book", android: "menu_book", web: "menu_book" }}
                 accent={colors.tint}
               />

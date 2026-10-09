@@ -1,5 +1,5 @@
 import { SymbolView } from "expo-symbols";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import {
@@ -29,10 +29,14 @@ export function DocumentRow({
   document,
   editing,
   onRemove,
+  onPress,
+  meta,
 }: {
   document: LibraryDocument;
   editing: boolean;
   onRemove: () => void;
+  onPress?: () => void;
+  meta?: string;
 }) {
   const colors = useTheme();
   const accent = document.kind === "pdf" ? colors.error : colors.accentBlue;
@@ -52,14 +56,20 @@ export function DocumentRow({
       >
         <SymbolView name={kindIcons[document.kind]} size={20} tintColor={accent} />
       </View>
-      <View style={styles.body}>
-        <ThemedText type="smallBold" style={styles.title} numberOfLines={1}>
+      <Pressable
+        accessibilityRole={onPress ? "button" : undefined}
+        accessibilityLabel={onPress ? document.name : undefined}
+        disabled={!onPress}
+        onPress={onPress}
+        style={styles.body}
+      >
+        <ThemedText type="smallBold" style={styles.title} numberOfLines={2}>
           {document.name}
         </ThemedText>
         <ThemedText type="small" themeColor="textSecondary" style={styles.meta}>
-          {`${formatMegabytes(document.sizeMb)} · ${formatLibraryDate(document.addedAt)}`}
+          {meta ?? `${formatMegabytes(document.sizeMb)} · ${formatLibraryDate(document.addedAt)}`}
         </ThemedText>
-      </View>
+      </Pressable>
       <RowTrailing name={document.name} editing={editing} onRemove={onRemove} />
     </View>
   );

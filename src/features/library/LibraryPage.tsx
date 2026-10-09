@@ -1,21 +1,27 @@
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { ReadingShelf } from "@/features/offline-reading/components/ReadingShelf";
+import { pdfLibrary } from "@/infrastructure/resources/pdf-library";
+import type { SavedPdfSummary } from "@/infrastructure/resources/pdf-record";
 import { FilterChips } from "@/shared/components/filter-chips";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
+import { contentSources } from "@/shared/constants/content-sources";
 import {
   formatLibraryDate,
+  libraryPacksForInstalled,
   sampleBookmarks,
   sampleDocuments,
   sampleHistory,
-  samplePacks,
 } from "@/shared/constants/sample-library";
 import { BottomTabInset, Fonts, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { useTranslation } from "@/shared/i18n";
+import { usePackDownloadStore } from "@/shared/stores/pack-download-store";
 import {
   DocumentRow,
   EmptyShelf,
@@ -24,7 +30,7 @@ import {
   SectionHeader,
 } from "./components";
 
-type ShelfId = "packs" | "documents" | "bookmarks" | "history";
+type ShelfId = "reading" | "packs" | "documents" | "bookmarks" | "history";
 
 function matchesQuery(text: string, needle: string) {
   if (!needle) return true;
@@ -36,40 +42,58 @@ export default function LibraryPage() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const inputRef = useRef<TextInput>(null);
+  const { shelf: requestedShelf } = useLocalSearchParams<{ shelf?: string }>();
   const shelves = [
-    { id: "packs" as const, label: t("library.packs") },
+    { id: "reading" as const, label: t("reading.shelf") },
+    ...(contentSources.openStax ? [{ id: "packs" as const, label: t("library.packs") }] : []),
     { id: "documents" as const, label: t("library.documents") },
     { id: "bookmarks" as const, label: t("library.bookmarks") },
     { id: "history" as const, label: t("library.history") },
   ];
-  const [shelf, setShelf] = useState<ShelfId>("packs");
+  const shelf = shelves.find((item) => item.id === requestedShelf)?.id ?? "reading";
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState(false);
-  const [packIds, setPackIds] = useState(samplePacks.map((pack) => pack.id));
+  const installed = usePackDownloadStore((state) => state.installed);
+  const catalogPacks = contentSources.openStax ? libraryPacksForInstalled(installed) : [];
+  const [hiddenPackIds, setHiddenPackIds] = useState<string[]>([]);
   const [documentIds, setDocumentIds] = useState(
     sampleDocuments.map((document) => document.id),
+  );
+  const [savedPdfs, setSavedPdfs] = useState<SavedPdfSummary[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      void pdfLibrary
+        .listSummaries()
+        .then(setSavedPdfs)
+        .catch(() => setSavedPdfs([]));
+    }, []),
   );
 
   const needle = query.trim().toLowerCase();
 
   const packs = useMemo(
     () =>
-      samplePacks
-        .filter((pack) => packIds.includes(pack.id))
+      catalogPacks
+        .filter((pack) => !hiddenPackIds.includes(pack.id))
         .filter((pack) => matchesQuery(pack.name, needle)),
-    [needle, packIds],
+    [catalogPacks, hiddenPackIds, needle],
   );
   const documents = useMemo(
     () =>
-      sampleDocuments
+      (contentSources.openStax ? sampleDocuments : [])
         .filter((document) => documentIds.includes(document.id))
         .filter((document) => matchesQuery(document.name, needle)),
     [documentIds, needle],
   );
+  const localPdfs = useMemo(
+    () => savedPdfs.filter((pdf) => matchesQuery(pdf.title, needle)),
+    [needle, savedPdfs],
+  );
   const bookmarks = useMemo(
     () =>
-      sampleBookmarks.filter(
+      (contentSources.openStax ? sampleBookmarks : []).filter(
         (bookmark) =>
           matchesQuery(bookmark.title, needle) ||
           matchesQuery(bookmark.source, needle),
@@ -78,7 +102,7 @@ export default function LibraryPage() {
   );
   const history = useMemo(
     () =>
-      sampleHistory.filter(
+      (contentSources.openStax ? sampleHistory : []).filter(
         (entry) =>
           matchesQuery(entry.query, needle) || matchesQuery(entry.source, needle),
       ),
@@ -86,7 +110,7 @@ export default function LibraryPage() {
   );
 
   function selectShelf(next: ShelfId) {
-    setShelf(next);
+    router.setParams({ shelf: next });
     setEditing(false);
   }
 
@@ -104,7 +128,7 @@ export default function LibraryPage() {
   const shelfEmpty =
     needle.length > 0 &&
     ((shelf === "packs" && packs.length === 0) ||
-      (shelf === "documents" && documents.length === 0) ||
+      (shelf === "documents" && documents.length === 0 && localPdfs.length === 0) ||
       (shelf === "bookmarks" && bookmarks.length === 0) ||
       (shelf === "history" && history.length === 0));
 
@@ -203,6 +227,7 @@ export default function LibraryPage() {
           { paddingBottom: BottomTabInset + Spacing.four },
         ]}
       >
+        {shelf === "reading" ? <ReadingShelf query={query} /> : null}
         {shelfEmpty ? (
           <ThemedText themeColor="textSecondary" style={styles.empty}>
             {t("search.empty")}
@@ -224,9 +249,7 @@ export default function LibraryPage() {
                   key={pack.id}
                   pack={pack}
                   editing={editing}
-                  onRemove={() =>
-                    setPackIds((ids) => ids.filter((id) => id !== pack.id))
-                  }
+                  onRemove={() => setHiddenPackIds((ids) => [...ids, pack.id])}
                 />
               ))
             ) : (
@@ -249,7 +272,27 @@ export default function LibraryPage() {
                   : undefined
               }
             />
-            {documents.length ? (
+            {localPdfs.map((pdf) => (
+              <DocumentRow
+                key={pdf.id}
+                document={{
+                  id: pdf.id,
+                  name: pdf.title,
+                  sizeMb: 0,
+                  addedAt: pdf.savedAt,
+                  kind: "pdf",
+                }}
+                editing={false}
+                onRemove={() => undefined}
+                meta={t("library.savedOn", {
+                  date: formatLibraryDate(pdf.savedAt),
+                })}
+                onPress={() =>
+                  router.push({ pathname: "/pdf/[id]", params: { id: pdf.id } })
+                }
+              />
+            ))}
+            {documents.length || localPdfs.length ? (
               documents.map((document) => (
                 <DocumentRow
                   key={document.id}
@@ -274,6 +317,9 @@ export default function LibraryPage() {
         {shelf === "bookmarks" && !shelfEmpty ? (
           <View style={styles.section}>
             <SectionHeader title={t("library.savedPassages")} />
+            {!contentSources.openStax ? (
+              <ThemedText themeColor="textSecondary">{t("reading.noBookmarks")}</ThemedText>
+            ) : null}
             {bookmarks.map((bookmark) => (
               <NoteRow
                 key={bookmark.id}
@@ -293,6 +339,9 @@ export default function LibraryPage() {
         {shelf === "history" && !shelfEmpty ? (
           <View style={styles.section}>
             <SectionHeader title={t("library.recentlyViewed")} />
+            {!contentSources.openStax ? (
+              <ThemedText themeColor="textSecondary">{t("reading.noHistory")}</ThemedText>
+            ) : null}
             {history.map((entry) => (
               <NoteRow
                 key={entry.id}
@@ -315,7 +364,12 @@ export default function LibraryPage() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1 },
-  header: { width: "100%", maxWidth: 600, alignSelf: "center", gap: Spacing.two },
+  header: {
+    width: "100%",
+    maxWidth: 600,
+    alignSelf: "center",
+    gap: Spacing.two,
+  },
   titleRow: {
     flexDirection: "row",
     alignItems: "center",
