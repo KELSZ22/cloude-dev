@@ -6,8 +6,9 @@ alwaysApply: false
 
 # Expo Router screens
 
-- One route per file in `src/app/`; use `_layout.tsx` for navigators and shared providers for that subtree.
+- One route per file in `src/app/`; default export should re-export a feature `*Page` from `@/features/`.
+- Use `_layout.tsx` for app shell (providers, tabs, `PortalHost`).
 - Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
-- Keep screens thin: compose `@/components/*` and hooks; avoid large inline UI or data layers in route files.
+- No feature UI or data fetching in route files — only re-exports and layouts.
 - Use `router.push` / `router.replace` for imperative navigation; `Link` for tappable navigation.
 - Do not add non-route modules under `src/app/` — they become accidental routes.

@@ -1,0 +1,14 @@
+---
+description: Feature-based folders with thin Expo Router routes
+globs: "{src/app/**/*.{ts,tsx},src/features/**/*.{ts,tsx},src/shared/**/*.{ts,tsx}}"
+alwaysApply: false
+---
+
+# Feature architecture
+
+- `src/app/`: layouts and route entry files only — re-export `*Page` from `src/features/`.
+- `src/features/<name>/`: one domain per folder (`*Page.tsx`, `components/`, `hooks/`, `services/`, `types/`).
+- `src/shared/`: cross-feature UI, hooks, `lib/`, `constants/`, `apiClient`.
+- Style with `StyleSheet` and themed components in `src/shared/`; do not add Tailwind/shadcn unless explicitly requested.
+- Features do not import other features; lift shared code to `src/shared/`.
+- New screen: add feature page + `src/app/<route>.tsx` re-export; register in `_layout` / tabs if needed.

@@ -7,7 +7,7 @@ alwaysApply: false
 # Components & UI
 
 - Functional components; extract hooks for reusable state and side effects.
-- Use `StyleSheet` or the project's existing pattern (`ThemedView`, `ThemedText`, theme constants) — stay consistent with neighboring files.
+- Use `StyleSheet.create` and the project pattern (`ThemedView`, `ThemedText`, `src/shared/constants/theme`) — no NativeWind/Tailwind/shadcn unless the user asks.
 - Platform differences: `*.web.tsx` / `*.ios.tsx` / `*.android.tsx` siblings instead of deep `Platform.OS` branches when layouts diverge materially.
 - Mobile-first: safe areas, touch targets (~44pt), and list performance (`keyExtractor`, avoid anonymous heavy renders in `FlatList`).
 - Web: respect `react-native-web` constraints; use web-specific files when using DOM-only APIs or CSS modules already used in the project.

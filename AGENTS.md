@@ -25,7 +25,7 @@ Run lint and typecheck before declaring any task done.
 
 ## Navigation & Routing
 
-- Use **Expo Router** for all navigation. Routes live in `src/app/` — every file there is a screen, `_layout.tsx` files define navigators. Keep non-route code (components, hooks, utils) outside `src/app/`.
+- Use **Expo Router** for navigation. **`src/app/`** holds layouts and thin route files (re-export feature pages). Screen UI lives in **`src/features/<name>/`**; cross-feature code in **`src/shared/`**. Style with **`StyleSheet.create`** and **`src/shared/constants/theme`** (ThemedView / ThemedText).
 - Import `Link`, `router`, and `useLocalSearchParams` from `expo-router`.
 - Docs: https://docs.expo.dev/router/introduction.md
 

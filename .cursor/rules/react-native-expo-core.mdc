@@ -8,7 +8,7 @@ alwaysApply: false
 
 - Match APIs to the `expo` major version in `package.json`; verify on https://docs.expo.dev/llms.txt when unsure.
 - Add packages with `bunx expo install <pkg>` — not `bun add` alone for Expo-managed deps.
-- Routes only under `src/app/`; components, hooks, and utils live outside `src/app/`.
+- Routes only under `src/app/` (thin re-exports); feature UI in `src/features/`; shared code in `src/shared/`.
 - Prefer Expo modules over random native libs; check docs for SDK support before adding.
 - Native folders from prebuild: configure via `app.json` and plugins, not manual edits unless the team explicitly maintains native projects.
 - Before finishing: `bunx expo lint` and `bunx tsc --noEmit`.
