@@ -41,3 +41,8 @@ example
 # generated native folders
 /ios
 /android
+
+# Downloaded source corpus (metadata is kept in content/openstax)
+/content/openstax/files/
+*.part
+__pycache__/
