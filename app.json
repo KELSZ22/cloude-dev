@@ -69,7 +69,8 @@
           "microphonePermission": "Seekora uses the microphone so you can ask questions by voice. Audio stays on your device.",
           "speechRecognitionPermission": "Seekora converts your speech to text on your device so you can ask questions without typing."
         }
-      ]
+      ],
+      "expo-video"
     ],
     "experiments": {
       "typedRoutes": true,
