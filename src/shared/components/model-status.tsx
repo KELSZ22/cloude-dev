@@ -12,7 +12,9 @@ export function ModelStatus() {
   const description = state.status === 'unsupported' ? state.reason
     : state.status === 'error' ? state.message
     : !native ? 'Use an Android development build for local inference.'
-    : installed ? 'Qwen3.5 0.8B is stored on this device. Offline research also requires a local search index.'
+    : operation === 'preparing' ? 'Setting up the built-in Qwen3.5 0.8B model. This takes a moment the first time.'
+    : state.status === 'ready' || state.status === 'generating' ? 'Qwen3.5 0.8B is running on this device. Answers are written from your offline library.'
+    : installed ? 'Qwen3.5 0.8B is stored on this device. Load it to get explanations written from your offline library.'
     : 'Import the selected Qwen3.5 GGUF from your device. No model is downloaded automatically.';
   return <StatusCard title={title} description={description} />;
 }

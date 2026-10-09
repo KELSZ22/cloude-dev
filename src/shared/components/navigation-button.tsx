@@ -1,5 +1,5 @@
 import { Link, type Href } from 'expo-router';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import { Spacing } from '@/shared/constants/theme';
 import { useTheme } from '@/shared/hooks/use-theme';
@@ -9,9 +9,13 @@ export function NavigationButton({ href, label }: { href: Href; label: string })
   const colors = useTheme();
   return (
     <Link href={href} asChild>
-      <Pressable accessibilityRole="link" accessibilityLabel={label}
-        style={({ pressed }) => [styles.button, { borderColor: colors.tint, backgroundColor: colors.backgroundSelected, opacity: pressed ? 0.65 : 1 }]}>
-        <ThemedText themeColor="tint">{label}</ThemedText>
+      <Pressable accessibilityRole="link" accessibilityLabel={label}>
+        {({ pressed }) => (
+          // The look lives on an inner view: on Android, Link's asChild drops a style function set on the Pressable.
+          <View style={[styles.button, { borderColor: colors.tint, backgroundColor: colors.backgroundSelected, opacity: pressed ? 0.65 : 1 }]}>
+            <ThemedText themeColor="tint">{label}</ThemedText>
+          </View>
+        )}
       </Pressable>
     </Link>
   );

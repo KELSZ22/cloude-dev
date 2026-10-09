@@ -41,3 +41,9 @@ example
 # generated native folders
 /ios
 /android
+
+# third-party source material; not licensed for redistribution or AI ingestion
+/resources/raw/
+
+# optional model packed into the APK at build time (529 MB); see bundled-model/README.md
+/bundled-model/*.gguf

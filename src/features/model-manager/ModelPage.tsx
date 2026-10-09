@@ -21,7 +21,7 @@ export default function ModelPage() {
   return (
     <Page nested title="On-device model" description="A compatible local model is required for AI answers.">
       <ModelStatus />
-      <StatusCard title={localModel.name} description="529 MB · Apache 2.0 · text inference. Select the exact GGUF from the chosen Hugging Face repository. Import and loading verify its SHA-256.">
+      <StatusCard title={localModel.name} description="529 MB · Apache 2.0 · text inference. Select the exact GGUF from the chosen Hugging Face repository. Import and loading verify its SHA-256. Import opens your phone's file picker; if it shows Google Drive or Recent, open its menu and choose Downloads. Nothing is uploaded.">
         <NavigationButton href={localModel.downloadUrl} label="Open model download (529 MB · online)" />
         <ActionButton label="Import local GGUF" disabled={!model.native || busy || !!model.installed}
           onPress={() => { void model.importModel(); }} />
@@ -34,11 +34,13 @@ export default function ModelPage() {
       {busy && <StatusCard title="Working locally" description={
         model.operation === 'importing' || model.operation === 'verifying'
           ? `Checking model integrity · ${Math.round(model.progress * 100)}%`
+          : model.operation === 'preparing' ? 'Setting up the built-in model. This takes a moment the first time.'
           : model.operation === 'testing' ? 'Generating a short runtime test…'
+          : model.operation === 'answering' ? 'Answering a question in Ask Seekora…'
           : model.operation === 'loading' ? 'Loading model into memory…'
           : model.operation === 'choosing' ? 'Choose the GGUF file on your device.' : 'Updating model state…'
       }>
-        <ActionButton label="Cancel operation" disabled={model.operation === 'restoring' || model.operation === 'removing' || model.operation === 'unloading'}
+        <ActionButton label="Cancel operation" disabled={model.operation === 'restoring' || model.operation === 'preparing' || model.operation === 'removing' || model.operation === 'unloading'}
           onPress={() => { void model.cancel(); }} />
       </StatusCard>}
       {model.error && <ThemedText themeColor="error" accessibilityRole="alert">{model.error}</ThemedText>}
