@@ -5,10 +5,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import { Colors, Spacing } from "@/shared/constants/theme";
+import { useTranslation } from "@/shared/i18n";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 
 export function WelcomeStep() {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
   const next = useOnboardingStore((state) => state.next);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export function WelcomeStep() {
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel="Continue to onboarding"
+      accessibilityLabel={t("onboarding.continueOnboarding")}
       onPress={next}
       style={styles.screen}
     >
@@ -49,9 +51,7 @@ export function WelcomeStep() {
           accessibilityLabel=""
           style={styles.wordmark}
         />
-        <ThemedText style={styles.tagline}>
-          {"Discover. Learn. Grow.\nAnywhere."}
-        </ThemedText>
+        <ThemedText style={styles.tagline}>{t("onboarding.tagline")}</ThemedText>
       </View>
     </Pressable>
   );

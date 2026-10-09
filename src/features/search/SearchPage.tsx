@@ -8,23 +8,24 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 import { articles, type SearchKind } from "./catalog";
 import { ResultCard } from "./components/ResultCard";
 import { SearchBrandHeader } from "./components/SearchBrandHeader";
 
-const filters = [
-  { id: "all", label: "All" },
-  { id: "article", label: "Articles" },
-  { id: "document", label: "Documents" },
-  { id: "pack", label: "Packs" },
-] as const;
-
-type FilterId = (typeof filters)[number]["id"];
+type FilterId = "all" | "article" | "document" | "pack";
 
 export default function SearchPage() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const filters = [
+    { id: "all" as const, label: t("search.all") },
+    { id: "article" as const, label: t("search.articles") },
+    { id: "document" as const, label: t("search.documents") },
+    { id: "pack" as const, label: t("search.packs") },
+  ];
   const [query, setQuery] = useState("renewable energy");
   const [filter, setFilter] = useState<FilterId>("all");
 
@@ -64,16 +65,16 @@ export default function SearchPage() {
           <TextInput
             value={query}
             onChangeText={setQuery}
-            placeholder="Search anything..."
+            placeholder={t("home.searchPlaceholder")}
             placeholderTextColor={colors.textSecondary}
-            accessibilityLabel="Search your library"
+            accessibilityLabel={t("home.searchLibrary")}
             autoCorrect={false}
             style={[styles.input, { color: colors.text }]}
           />
           {query.length > 0 ? (
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Clear search"
+              accessibilityLabel={t("search.clear")}
               onPress={() => setQuery("")}
               style={styles.clear}
             >
@@ -87,12 +88,14 @@ export default function SearchPage() {
         </View>
         <FilterChips options={filters} value={filter} onChange={setFilter} />
         <ThemedText type="smallBold" style={[styles.count, { color: colors.tint }]}>
-          {results.length === 1 ? "1 result (offline)" : `${results.length} results (offline)`}
+          {results.length === 1
+            ? t("search.oneResult")
+            : t("search.manyResults", { count: results.length })}
         </ThemedText>
         <View style={styles.list}>
           {results.length === 0 ? (
             <ThemedText themeColor="textSecondary" style={styles.empty}>
-              Nothing in your offline library matches that search.
+              {t("search.empty")}
             </ThemedText>
           ) : (
             results.map((article) => <ResultCard key={article.id} article={article} />)

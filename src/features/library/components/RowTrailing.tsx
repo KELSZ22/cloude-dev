@@ -2,6 +2,7 @@ import { SymbolView } from "expo-symbols";
 import { Pressable, StyleSheet } from "react-native";
 
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 export function RowTrailing({
   name,
@@ -13,12 +14,13 @@ export function RowTrailing({
   onRemove: () => void;
 }) {
   const colors = useTheme();
+  const { t } = useTranslation();
 
   if (editing) {
     return (
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`Remove ${name} from this device`}
+        accessibilityLabel={t("library.removeFromDevice", { name })}
         onPress={onRemove}
         style={({ pressed }) => [styles.button, pressed && styles.pressed]}
       >
@@ -39,7 +41,7 @@ export function RowTrailing({
     <Pressable
       disabled
       accessibilityRole="button"
-      accessibilityLabel={`More options for ${name}, coming soon`}
+      accessibilityLabel={t("library.moreOptions", { name })}
       accessibilityState={{ disabled: true }}
       style={[styles.button, styles.unavailable]}
     >

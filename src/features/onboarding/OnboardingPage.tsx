@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LeafDecor } from "@/shared/components/leaf-decor";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
+import { useTranslation } from "@/shared/i18n";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { IntroStep } from "./components/IntroStep";
 import { PreferencesStep } from "./components/PreferencesStep";
@@ -13,6 +14,7 @@ import { WelcomeStep } from "./components/WelcomeStep";
 
 export default function OnboardingPage() {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
   const step = useOnboardingStore((state) => state.step);
   const completed = useOnboardingStore((state) => state.completed);
 
@@ -39,16 +41,16 @@ export default function OnboardingPage() {
           <IntroStep
             scene="companion"
             dotIndex={0}
-            title="Your Knowledge Companion"
-            body="Search, explore, and learn with the power of AI — anytime, anywhere."
+            title={t("onboarding.companionTitle")}
+            body={t("onboarding.companionBody")}
           />
         ) : null}
         {step === "intro2" ? (
           <IntroStep
             scene="explore"
             dotIndex={1}
-            title="Explore a World of Knowledge"
-            body="Access a wide range of topics through curated knowledge packs and your personal library."
+            title={t("onboarding.exploreTitle")}
+            body={t("onboarding.exploreBody")}
           />
         ) : null}
         {step === "preferences" ? <PreferencesStep /> : null}

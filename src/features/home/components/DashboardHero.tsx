@@ -8,9 +8,11 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { Colors, Spacing } from "@/shared/constants/theme";
 import { useColorScheme } from "@/shared/hooks/use-color-scheme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 export function DashboardHero() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const isDark = useColorScheme() === "dark";
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -62,7 +64,7 @@ export function DashboardHero() {
           <Pressable
             disabled
             accessibilityRole="button"
-            accessibilityLabel="Notifications, coming soon"
+            accessibilityLabel={t("home.notificationsSoon")}
             accessibilityState={{ disabled: true }}
             style={[styles.iconButton, styles.unavailable]}
           >
@@ -74,7 +76,7 @@ export function DashboardHero() {
           </Pressable>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Open settings"
+            accessibilityLabel={t("home.openSettings")}
             onPress={() => router.navigate("/(tabs)/settings")}
             style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
           >
@@ -88,9 +90,9 @@ export function DashboardHero() {
       </View>
       <View style={[styles.greeting, { backgroundColor: colors.backgroundElement }]}>
         <View style={[styles.bubbleTail, { backgroundColor: colors.backgroundElement }]} />
-        <ThemedText type="subtitle" style={styles.hello}>Hello!</ThemedText>
+        <ThemedText type="subtitle" style={styles.hello}>{t("home.hello")}</ThemedText>
         <ThemedText type="smallBold" style={styles.greetingText}>
-          What would you like to explore today?
+          {t("home.greeting")}
         </ThemedText>
       </View>
     </View>

@@ -9,11 +9,19 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation, type MessageKey } from "@/shared/i18n";
 
-import { articleById, kindLabel } from "./catalog";
+import { articleById, type SearchKind } from "./catalog";
+
+const kindKey: Record<SearchKind, MessageKey> = {
+  article: "search.article",
+  document: "search.document",
+  pack: "search.pack",
+};
 
 export default function ArticlePage() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const article = articleById(typeof id === "string" ? id : "");
@@ -22,10 +30,10 @@ export default function ArticlePage() {
   if (!article) {
     return (
       <ThemedView style={[styles.missing, { paddingTop: insets.top + Spacing.four }]}>
-        <ThemedText type="subtitle">Article not found</ThemedText>
+        <ThemedText type="subtitle">{t("article.notFound")}</ThemedText>
         <Pressable accessibilityRole="button" onPress={() => router.back()}>
           <ThemedText type="smallBold" style={{ color: colors.tint }}>
-            Back to search
+            {t("article.backToSearch")}
           </ThemedText>
         </Pressable>
       </ThemedView>
@@ -44,7 +52,7 @@ export default function ArticlePage() {
         <View style={styles.toolbar}>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Go back"
+            accessibilityLabel={t("common.goBack")}
             onPress={() => router.back()}
             style={styles.iconButton}
           >
@@ -57,7 +65,7 @@ export default function ArticlePage() {
           <View style={styles.toolbarActions}>
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel={saved ? "Remove bookmark" : "Bookmark article"}
+              accessibilityLabel={saved ? t("article.removeBookmark") : t("article.bookmark")}
               accessibilityState={{ selected: saved }}
               onPress={() => setSaved((value) => !value)}
               style={styles.iconButton}
@@ -74,7 +82,7 @@ export default function ArticlePage() {
             </Pressable>
             <Pressable
               accessibilityRole="button"
-              accessibilityLabel="Share article"
+              accessibilityLabel={t("article.share")}
               onPress={() => {
                 void Share.share({ message: `${article.title}\n\n${article.overview}` });
               }}
@@ -101,11 +109,14 @@ export default function ArticlePage() {
             </ThemedText>
           </View>
           <ThemedText type="small" themeColor="textSecondary">
-            {`${kindLabel(article.kind)} · ${article.readMinutes} min read · Available offline`}
+            {t("article.offlineMeta", {
+              kind: t(kindKey[article.kind]),
+              minutes: article.readMinutes,
+            })}
           </ThemedText>
 
           <ThemedText type="smallBold" accessibilityRole="header" style={styles.section}>
-            Overview
+            {t("article.overview")}
           </ThemedText>
           <ThemedText>{article.overview}</ThemedText>
 
@@ -135,7 +146,7 @@ export default function ArticlePage() {
       <View style={[styles.footer, { paddingBottom: insets.bottom + Spacing.three, backgroundColor: colors.background }]}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Ask AI about this article"
+          accessibilityLabel={t("article.askAi")}
           onPress={() => router.navigate("/(tabs)/assistant")}
           style={({ pressed }) => [
             styles.ask,
@@ -148,7 +159,7 @@ export default function ArticlePage() {
             tintColor={colors.backgroundElement}
           />
           <ThemedText type="smallBold" style={{ color: colors.backgroundElement }}>
-            Ask AI about this article
+            {t("article.askAi")}
           </ThemedText>
         </Pressable>
       </View>

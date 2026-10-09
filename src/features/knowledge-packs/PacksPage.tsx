@@ -1,10 +1,13 @@
 import { Page } from '@/shared/components/page';
 import { StatusCard } from '@/shared/components/status-card';
+import { useTranslation } from '@/shared/i18n';
 
 export default function PacksPage() {
+  const { t } = useTranslation();
+
   return (
-    <Page nested title="Knowledge Packs" description="Expandable collections for your offline library.">
-      <StatusCard title="No packs installed" description="The starter pack and pack installer are not included yet. Packs must have attribution, a redistribution license, and verified content checksums before installation." />
+    <Page nested title={t('stack.knowledgePacks')} description={t('packs.description')}>
+      <StatusCard title={t('packs.emptyTitle')} description={t('packs.emptyBody')} />
     </Page>
   );
 }

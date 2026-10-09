@@ -9,6 +9,7 @@ import {
 } from "@/shared/constants/sample-library";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 import { withAlpha } from "@/shared/lib/color";
 import { RowTrailing } from "./RowTrailing";
 
@@ -22,6 +23,7 @@ export function PackRow({
   onRemove: () => void;
 }) {
   const colors = useTheme();
+  const { t } = useTranslation();
   const accent = colors[pack.accent];
 
   return (
@@ -50,10 +52,13 @@ export function PackRow({
           {pack.name}
         </ThemedText>
         <ThemedText type="small" themeColor="textSecondary" style={styles.meta}>
-          {`${pack.articles.toLocaleString()} articles · ${formatMegabytes(pack.sizeMb)}`}
+          {t("library.packMeta", {
+            count: pack.articles.toLocaleString(),
+            size: formatMegabytes(pack.sizeMb),
+          })}
         </ThemedText>
         <ThemedText type="small" themeColor="textSecondary" style={styles.meta}>
-          {`Updated ${formatLibraryDate(pack.updatedAt)}`}
+          {t("library.updated", { date: formatLibraryDate(pack.updatedAt) })}
         </ThemedText>
       </View>
       <RowTrailing name={pack.name} editing={editing} onRemove={onRemove} />

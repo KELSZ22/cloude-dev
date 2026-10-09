@@ -16,6 +16,7 @@ import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation, type MessageKey } from "@/shared/i18n";
 import {
   ChallengeHeader,
   ProgressRail,
@@ -29,33 +30,42 @@ import { useCountUp } from "./hooks";
 const tiers = [
   {
     floor: 0.8,
-    headline: "Great job!",
+    headline: "challenge.greatJob",
     art: require("@/assets/results/celebration.png"),
-    label: "An explorer cheering with confetti",
+    label: "challenge.artCheer",
   },
   {
     floor: 0.5,
-    headline: "Good effort!",
+    headline: "challenge.goodEffort",
     art: require("@/assets/results/noresult.png"),
-    label: "An explorer thinking it over",
+    label: "challenge.artThink",
   },
   {
     floor: 0,
-    headline: "Keep exploring",
+    headline: "challenge.keepExploring",
     art: require("@/assets/results/error.png"),
-    label: "An explorer puzzling over a tablet",
+    label: "challenge.artPuzzle",
   },
-] as const;
+] as const satisfies readonly {
+  floor: number;
+  headline: MessageKey;
+  art: number;
+  label: MessageKey;
+}[];
 
-function formatDuration(seconds: number) {
+function formatDuration(
+  seconds: number,
+  t: (key: MessageKey, vars?: Record<string, string | number>) => string,
+) {
   const minutes = Math.floor(seconds / 60);
   const rest = seconds % 60;
-  if (!minutes) return `${rest} sec`;
-  return `${minutes} min ${rest} sec`;
+  if (!minutes) return t("challenge.seconds", { count: rest });
+  return t("challenge.minutesSeconds", { minutes, seconds: rest });
 }
 
 export default function QuizResultPage() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const reducedMotion = useReducedMotion();
   const params = useLocalSearchParams<{ answers?: string; seconds?: string }>();
@@ -86,22 +96,22 @@ export default function QuizResultPage() {
       id: "correct",
       icon: { ios: "checkmark", android: "check", web: "check" },
       accent: colors.tint,
-      label: "Correct answers",
+      label: t("challenge.correct"),
       value: String(correct),
     },
     {
       id: "incorrect",
       icon: { ios: "xmark", android: "close", web: "close" },
       accent: colors.error,
-      label: "Incorrect answers",
+      label: t("challenge.incorrect"),
       value: String(total - correct),
     },
     {
       id: "time",
       icon: { ios: "clock", android: "schedule", web: "schedule" },
       accent: colors.textSecondary,
-      label: "Time taken",
-      value: formatDuration(seconds),
+      label: t("challenge.time"),
+      value: formatDuration(seconds, t),
     },
   ];
 
@@ -110,7 +120,7 @@ export default function QuizResultPage() {
       <LeafDecor width={140} />
       <View style={[styles.frame, { paddingTop: insets.top + Spacing.one }]}>
         <ChallengeHeader
-          title="Quiz Result"
+          title={t("challenge.quizResult")}
           onBack={() => router.replace("/(tabs)")}
         />
       </View>
@@ -125,7 +135,7 @@ export default function QuizResultPage() {
         <Animated.View entering={animate ? ZoomIn.duration(420) : undefined}>
           <Image
             source={tier.art}
-            accessibilityLabel={tier.label}
+            accessibilityLabel={t(tier.label)}
             contentFit="contain"
             style={styles.art}
           />
@@ -140,17 +150,17 @@ export default function QuizResultPage() {
             accessibilityRole="header"
             style={styles.headline}
           >
-            {tier.headline}
+            {t(tier.headline)}
           </ThemedText>
           <ThemedText type="small" themeColor="textSecondary">
-            You scored
+            {t("challenge.youScored")}
           </ThemedText>
           <ThemedText
             type="title"
             style={[styles.tally, { color: colors.tint }]}
-            accessibilityLabel={`${correct} out of ${total}`}
+            accessibilityLabel={t("challenge.tallyLabel", { correct, total })}
           >
-            {`${shown} out of ${total}`}
+            {t("challenge.tally", { shown, total })}
           </ThemedText>
         </Animated.View>
 
@@ -160,7 +170,7 @@ export default function QuizResultPage() {
         >
           <ProgressRail
             segments={segments}
-            label={`${correct} of ${total} questions answered correctly`}
+            label={t("challenge.rail", { correct, total })}
           />
         </Animated.View>
 
@@ -171,7 +181,7 @@ export default function QuizResultPage() {
           style={styles.actions}
         >
           <PillButton
-            label="Review answers"
+            label={t("challenge.review")}
             onPress={() =>
               router.replace({
                 pathname: "/(tabs)/challenge",
@@ -183,7 +193,7 @@ export default function QuizResultPage() {
             }
           />
           <PillButton
-            label="Try again"
+            label={t("challenge.tryAgain")}
             variant="outline"
             onPress={() => router.replace("/(tabs)/challenge")}
           />

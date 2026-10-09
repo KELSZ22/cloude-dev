@@ -126,9 +126,3 @@ export const articles: readonly CatalogArticle[] = [
 export function articleById(id: string) {
   return articles.find((article) => article.id === id);
 }
-
-export function kindLabel(kind: SearchKind) {
-  if (kind === "article") return "Article";
-  if (kind === "document") return "Document";
-  return "Pack";
-}
