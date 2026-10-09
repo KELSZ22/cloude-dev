@@ -68,7 +68,8 @@
           "sizeBytes": 529297312
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-localization"
     ],
     "experiments": {
       "typedRoutes": true,

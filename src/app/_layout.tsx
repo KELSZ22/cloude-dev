@@ -12,6 +12,7 @@ import { useEffect } from "react";
 
 import { Fonts } from "@/shared/constants/theme";
 import { useColorScheme } from "@/shared/hooks/use-color-scheme";
+import { useTranslation } from "@/shared/i18n";
 import { useInitializeTheme } from "@/shared/hooks/use-initialize-theme";
 import { useTheme } from "@/shared/hooks/use-theme";
 import { KnowledgeProvider } from "@/shared/providers/knowledge-provider";
@@ -23,6 +24,7 @@ void SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const colors = useTheme();
+  const { t } = useTranslation();
   useInitializeTheme();
   useHydrateOnboardingStore();
 
@@ -61,20 +63,20 @@ export default function RootLayout() {
               name="onboarding"
               options={{ headerShown: false, animation: "fade" }}
             />
-            <Stack.Screen name="setup" options={{ title: "Offline setup" }} />
+            <Stack.Screen name="setup" options={{ title: t("stack.offlineSetup") }} />
             <Stack.Screen
               name="import"
-              options={{ title: "Import a document" }}
+              options={{ title: t("stack.importDocument") }}
             />
-            <Stack.Screen name="model" options={{ title: "On-device model" }} />
+            <Stack.Screen name="model" options={{ title: t("stack.onDeviceModel") }} />
             <Stack.Screen
               name="packs/index"
-              options={{ title: "Knowledge Packs" }}
+              options={{ title: t("stack.knowledgePacks") }}
             />
             <Stack.Screen name="article/[id]" options={{ headerShown: false }} />
             <Stack.Screen
               name="passage/[chunkId]"
-              options={{ title: "Source passage" }}
+              options={{ title: t("stack.sourcePassage") }}
             />
           </Stack>
         </ModelProvider>

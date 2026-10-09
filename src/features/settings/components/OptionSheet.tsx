@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 export function OptionSheet<T extends string>({
   title,
@@ -30,6 +31,7 @@ export function OptionSheet<T extends string>({
   onClose: () => void;
 }) {
   const colors = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const reducedMotion = useReducedMotion();
 
@@ -63,7 +65,7 @@ export function OptionSheet<T extends string>({
       <View style={styles.root}>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Close"
+          accessibilityLabel={t("common.close")}
           onPress={onClose}
           style={[StyleSheet.absoluteFill, styles.backdrop]}
         />

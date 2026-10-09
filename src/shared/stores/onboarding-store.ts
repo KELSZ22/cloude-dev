@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getLocales } from "expo-localization";
 import { useEffect } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -11,40 +12,59 @@ export const ONBOARDING_STEPS = [
 ] as const;
 export type OnboardingStep = (typeof ONBOARDING_STEPS)[number];
 
-export const ONBOARDING_LANGUAGES = [
-  "English",
-  "Filipino",
-  "Spanish",
-  "French",
-  "Arabic",
-] as const;
-export type OnboardingLanguage = (typeof ONBOARDING_LANGUAGES)[number];
+export const APP_LOCALES = ["en", "fil"] as const;
+export type AppLocale = (typeof APP_LOCALES)[number];
 
-export const ONBOARDING_TOPICS = [
-  { id: "general", label: "General Knowledge" },
-  { id: "science", label: "Science" },
-  { id: "technology", label: "Technology" },
-  { id: "history", label: "History" },
-  { id: "health", label: "Health" },
-  { id: "business", label: "Business" },
-  { id: "arts", label: "Arts & Culture" },
-  { id: "environment", label: "Environment" },
+/** Native names, so the picker stays readable in either language. */
+export const LOCALE_NAMES: Record<AppLocale, string> = {
+  en: "English",
+  fil: "Filipino",
+};
+
+export const ONBOARDING_TOPIC_IDS = [
+  "general",
+  "science",
+  "technology",
+  "history",
+  "health",
+  "business",
+  "arts",
+  "environment",
 ] as const;
 
-export type OnboardingTopicId = (typeof ONBOARDING_TOPICS)[number]["id"];
+export type OnboardingTopicId = (typeof ONBOARDING_TOPIC_IDS)[number];
+
+/** Device language on first launch. Filipino covers both `fil` and Tagalog `tl`. */
+export function deviceLocale(): AppLocale {
+  try {
+    const code = getLocales()[0]?.languageCode?.toLowerCase();
+    if (code === "fil" || code === "tl") return "fil";
+  } catch {
+    // Locale lookup can fail before the native module is ready.
+  }
+  return "en";
+}
+
+/** Maps a persisted value, including the old display names, onto a locale. */
+function savedLocale(value: unknown): AppLocale | null {
+  if (value === "en" || value === "English") return "en";
+  if (value === "fil" || value === "Filipino") return "fil";
+  if (typeof value === "string") return "en";
+  return null;
+}
 
 type OnboardingState = {
   hasHydrated: boolean;
   completed: boolean;
   step: OnboardingStep;
-  language: OnboardingLanguage;
+  language: AppLocale;
   topics: OnboardingTopicId[];
   setHasHydrated: (value: boolean) => void;
   next: () => void;
   back: () => void;
   skip: () => void;
   complete: () => void;
-  setLanguage: (language: OnboardingLanguage) => void;
+  setLanguage: (language: AppLocale) => void;
   toggleTopic: (id: OnboardingTopicId) => void;
   resetTour: () => void;
 };
@@ -57,7 +77,7 @@ export const useOnboardingStore = create<OnboardingState>()(
       hasHydrated: false,
       completed: false,
       step: "splash",
-      language: "English",
+      language: deviceLocale(),
       topics: [],
       setHasHydrated: (value) => set({ hasHydrated: value }),
       next: () => {
@@ -93,6 +113,18 @@ export const useOnboardingStore = create<OnboardingState>()(
         language: state.language,
         topics: state.topics,
       }),
+      merge: (persisted, current) => {
+        if (!persisted || typeof persisted !== "object") return current;
+        const saved = persisted as Partial<OnboardingState> & {
+          language?: unknown;
+        };
+        const { language: stored, ...rest } = saved;
+        return {
+          ...current,
+          ...rest,
+          language: savedLocale(stored) ?? current.language,
+        };
+      },
     },
   ),
 );

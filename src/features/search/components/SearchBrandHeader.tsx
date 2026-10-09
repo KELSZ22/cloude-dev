@@ -6,9 +6,11 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { Colors, Spacing } from "@/shared/constants/theme";
 import { useColorScheme } from "@/shared/hooks/use-color-scheme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 export function SearchBrandHeader() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const isDark = useColorScheme() === "dark";
   const iconColor = isDark ? Colors.dark.text : Colors.light.brand;
 
@@ -42,7 +44,7 @@ export function SearchBrandHeader() {
         <Pressable
           disabled
           accessibilityRole="button"
-          accessibilityLabel="Notifications, coming soon"
+          accessibilityLabel={t("home.notificationsSoon")}
           accessibilityState={{ disabled: true }}
           style={[styles.iconButton, styles.unavailable]}
         >
@@ -54,7 +56,7 @@ export function SearchBrandHeader() {
         </Pressable>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Open settings"
+          accessibilityLabel={t("home.openSettings")}
           onPress={() => router.navigate("/(tabs)/settings")}
           style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
         >

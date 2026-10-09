@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 export function ChallengeHeader({
   title,
@@ -16,12 +17,13 @@ export function ChallengeHeader({
   trailing?: ReactNode;
 }) {
   const colors = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.header}>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel="Go back"
+        accessibilityLabel={t("common.goBack")}
         onPress={onBack}
         style={({ pressed }) => [styles.back, pressed && styles.pressed]}
       >
@@ -65,3 +67,4 @@ const styles = StyleSheet.create({
   trailing: { minWidth: 36, alignItems: "flex-end" },
   pressed: { opacity: 0.6 },
 });
+

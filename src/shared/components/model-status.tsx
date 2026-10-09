@@ -1,20 +1,22 @@
+import { useTranslation } from '@/shared/i18n';
 import { useModel } from '@/shared/providers/model-provider';
 import { StatusCard } from './status-card';
 
 export function ModelStatus() {
   const { installed, state, native, operation } = useModel();
-  const title = !native ? 'AI unavailable on web'
-    : operation ? 'Model setup in progress'
-    : state.status === 'ready' ? 'Local model loaded'
-    : state.status === 'generating' ? 'Local model generating'
-    : state.status === 'unsupported' ? 'Development build required'
-    : installed ? 'Model installed · not loaded' : 'Model not installed';
+  const { t } = useTranslation();
+  const title = !native ? t('model.unavailableWeb')
+    : operation ? t('model.setupInProgress')
+    : state.status === 'ready' ? t('model.loaded')
+    : state.status === 'generating' ? t('model.generating')
+    : state.status === 'unsupported' ? t('model.devBuildTitle')
+    : installed ? t('model.installedNotLoaded') : t('model.notInstalled');
   const description = state.status === 'unsupported' ? state.reason
     : state.status === 'error' ? state.message
-    : !native ? 'Use an Android development build for local inference.'
-    : operation === 'preparing' ? 'Setting up the built-in Qwen3.5 0.8B model. This takes a moment the first time.'
-    : state.status === 'ready' || state.status === 'generating' ? 'Qwen3.5 0.8B is running on this device. Answers are written from your offline library.'
-    : installed ? 'Qwen3.5 0.8B is stored on this device. Load it to get explanations written from your offline library.'
-    : 'Import the selected Qwen3.5 GGUF from your device. No model is downloaded automatically.';
+    : !native ? t('model.webBody')
+    : operation === 'preparing' ? t('model.preparingBody')
+    : state.status === 'ready' || state.status === 'generating' ? t('model.runningBody')
+    : installed ? t('model.installedBody')
+    : t('model.missingBody');
   return <StatusCard variant="ai" title={title} description={description} />;
 }

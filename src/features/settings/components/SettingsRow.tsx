@@ -3,6 +3,7 @@ import { Pressable, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 export function SettingsRow({
   icon,
@@ -19,7 +20,9 @@ export function SettingsRow({
   first?: boolean;
 }) {
   const colors = useTheme();
+  const { t } = useTranslation();
   const available = Boolean(onPress);
+  const soon = t("common.comingSoon");
 
   return (
     <Pressable
@@ -29,7 +32,7 @@ export function SettingsRow({
           ? value
             ? `${label}, ${value}`
             : label
-          : `${label}, coming soon`
+          : `${label}, ${soon}`
       }
       accessibilityState={{ disabled: !available }}
       disabled={!available}
@@ -75,7 +78,7 @@ export function SettingsRow({
         </>
       ) : (
         <ThemedText type="small" themeColor="textSecondary" style={styles.soon}>
-          Soon
+          {t("common.soon")}
         </ThemedText>
       )}
     </Pressable>

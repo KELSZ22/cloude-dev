@@ -5,6 +5,7 @@ import { SymbolView } from "expo-symbols";
 import { ThemedText } from "@/shared/components/themed-text";
 import { Spacing } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation } from "@/shared/i18n";
 
 export function OnboardingButton({
   label,
@@ -38,11 +39,12 @@ export function OnboardingButton({
 
 export function OnboardingNextButton({ onPress }: { onPress: () => void }) {
   const colors = useTheme();
+  const { t } = useTranslation();
   const [pressed, setPressed] = useState(false);
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel="Continue"
+      accessibilityLabel={t("common.continue")}
       onPress={onPress}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}

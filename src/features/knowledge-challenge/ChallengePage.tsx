@@ -6,6 +6,7 @@ import { PillButton } from "@/shared/components/pill-button";
 import { ThemedText } from "@/shared/components/themed-text";
 import { ThemedView } from "@/shared/components/themed-view";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
+import { useTranslation } from "@/shared/i18n";
 import {
   AnswerOption,
   ChallengeHeader,
@@ -20,6 +21,7 @@ import { useChallengeRun } from "./hooks";
 
 export default function ChallengePage() {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
   const params = useLocalSearchParams<{ review?: string; seconds?: string }>();
   const reviewAnswers = params.review
     ? params.review.split(",").map(Number)
@@ -35,9 +37,11 @@ export default function ChallengePage() {
   }
 
   function primaryLabel() {
-    if (!run.revealed) return "Check answer";
-    if (run.reviewing) return run.isLast ? "Back to results" : "Next question";
-    return run.isLast ? "See results" : "Next question";
+    if (!run.revealed) return t("challenge.check");
+    if (run.reviewing) {
+      return run.isLast ? t("challenge.backToResults") : t("challenge.next");
+    }
+    return run.isLast ? t("challenge.results") : t("challenge.next");
   }
 
   function onPrimary() {
@@ -67,7 +71,7 @@ export default function ChallengePage() {
     <ThemedView type="backgroundElement" style={styles.screen}>
       <View style={[styles.frame, { paddingTop: insets.top + Spacing.one }]}>
         <ChallengeHeader
-          title={run.reviewing ? "Review answers" : "Knowledge Challenge"}
+          title={run.reviewing ? t("challenge.review") : t("challenge.title")}
           onBack={() =>
             router.canGoBack() ? router.back() : router.replace("/(tabs)")
           }
@@ -80,7 +84,10 @@ export default function ChallengePage() {
         <View style={styles.railWrap}>
           <ProgressRail
             segments={run.segments}
-            label={`Question ${run.index + 1} of ${run.total}`}
+            label={t("challenge.progress", {
+              current: run.index + 1,
+              total: run.total,
+            })}
           />
         </View>
       </View>
@@ -92,7 +99,7 @@ export default function ChallengePage() {
         <TopicChip label={CHALLENGE_TOPIC} />
         <QuestionBanner
           icon={run.question.icon}
-          label={`Illustration for a ${CHALLENGE_TOPIC} question`}
+          label={t("challenge.illustration", { topic: CHALLENGE_TOPIC })}
         />
         <ThemedText
           type="subtitle"
@@ -103,7 +110,7 @@ export default function ChallengePage() {
         </ThemedText>
         <View
           accessibilityRole="radiogroup"
-          accessibilityLabel="Answer choices"
+          accessibilityLabel={t("challenge.choices")}
           style={styles.options}
         >
           {run.question.options.map((option, index) => (

@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ThemedText } from "@/shared/components/themed-text";
 import { Colors, Spacing } from "@/shared/constants/theme";
+import { useTranslation } from "@/shared/i18n";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import { MascotScene } from "./MascotScene";
 import { OnboardingNextButton } from "./OnboardingButton";
@@ -27,6 +28,7 @@ export function IntroStep({
 }) {
   const { height, width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
   const next = useOnboardingStore((state) => state.next);
   const skip = useOnboardingStore((state) => state.skip);
   const compact = height < 720;
@@ -47,12 +49,12 @@ export function IntroStep({
           <MascotScene scene={scene} />
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Skip onboarding"
+            accessibilityLabel={t("common.skipOnboarding")}
             onPress={skip}
             style={[styles.skip, { top: insets.top + Spacing.two }]}
           >
             <ThemedText type="smallBold" style={styles.skipLabel}>
-              Skip
+              {t("common.skip")}
             </ThemedText>
           </Pressable>
         </View>

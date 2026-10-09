@@ -11,11 +11,12 @@ import {
   installedSizeMb,
 } from "@/shared/constants/sample-library";
 import { BottomTabInset, Spacing } from "@/shared/constants/theme";
+import { useTranslation } from "@/shared/i18n";
 import { useModel } from "@/shared/providers/model-provider";
 import {
-  ONBOARDING_LANGUAGES,
+  APP_LOCALES,
+  LOCALE_NAMES,
   useOnboardingStore,
-  type OnboardingLanguage,
 } from "@/shared/stores/onboarding-store";
 import { useThemeStore, type ThemeMode } from "@/shared/stores/theme-store";
 import {
@@ -25,19 +26,16 @@ import {
   SettingsRow,
 } from "./components";
 
-const APPEARANCE_OPTIONS: readonly { id: ThemeMode; label: string }[] = [
-  { id: "system", label: "Match device" },
-  { id: "light", label: "Light mode" },
-  { id: "dark", label: "Dark mode" },
-];
+const APPEARANCE_IDS = ["system", "light", "dark"] as const satisfies readonly ThemeMode[];
 
-const LANGUAGE_OPTIONS = ONBOARDING_LANGUAGES.map((language) => ({
+const LANGUAGE_OPTIONS = APP_LOCALES.map((language) => ({
   id: language,
-  label: language,
+  label: LOCALE_NAMES[language],
 }));
 
 export default function SettingsPage() {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
   const [sheet, setSheet] = useState<"appearance" | "language" | null>(null);
   const themeMode = useThemeStore((state) => state.mode);
   const setThemeMode = useThemeStore((state) => state.setMode);
@@ -46,21 +44,26 @@ export default function SettingsPage() {
   const resetTour = useOnboardingStore((state) => state.resetTour);
   const { installed, state } = useModel();
 
+  const appearanceOptions = [
+    { id: APPEARANCE_IDS[0], label: t("settings.matchDevice") },
+    { id: APPEARANCE_IDS[1], label: t("settings.lightMode") },
+    { id: APPEARANCE_IDS[2], label: t("settings.darkMode") },
+  ];
   const appearanceLabel =
-    APPEARANCE_OPTIONS.find((option) => option.id === themeMode)?.label ??
-    "Match device";
+    appearanceOptions.find((option) => option.id === themeMode)?.label ??
+    t("settings.matchDevice");
   const modelLabel = !installed
-    ? "Not installed"
+    ? t("settings.notInstalled")
     : state.status === "ready" || state.status === "generating"
-      ? "Ready"
-      : "Installed";
+      ? t("settings.ready")
+      : t("settings.installed");
 
   return (
     <ThemedView type="backgroundElement" style={styles.screen}>
       <LeafDecor width={130} />
       <View style={[styles.header, { paddingTop: insets.top + Spacing.two }]}>
         <ThemedText type="title" accessibilityRole="header" style={styles.title}>
-          Settings
+          {t("settings.title")}
         </ThemedText>
       </View>
 
@@ -73,21 +76,21 @@ export default function SettingsPage() {
       >
         <ProfileCard
           name="Explorer"
-          detail="Local profile · nothing leaves this device"
+          detail={t("settings.profileDetail")}
         />
 
         <SettingsGroup>
           <SettingsRow
             first
             icon={{ ios: "sun.max", android: "light_mode", web: "light_mode" }}
-            label="Appearance"
+            label={t("settings.appearance")}
             value={appearanceLabel}
             onPress={() => setSheet("appearance")}
           />
           <SettingsRow
             icon={{ ios: "globe", android: "language", web: "language" }}
-            label="Language"
-            value={language}
+            label={t("settings.language")}
+            value={LOCALE_NAMES[language]}
             onPress={() => setSheet("language")}
           />
           <SettingsRow
@@ -96,7 +99,7 @@ export default function SettingsPage() {
               android: "memory",
               web: "memory",
             }}
-            label="AI Model"
+            label={t("settings.aiModel")}
             value={modelLabel}
             onPress={() => router.navigate("/model")}
           />
@@ -106,8 +109,10 @@ export default function SettingsPage() {
               android: "storage",
               web: "storage",
             }}
-            label="Manage Storage"
-            value={`${formatMegabytes(installedSizeMb())} used`}
+            label={t("settings.manageStorage")}
+            value={t("settings.storageUsed", {
+              size: formatMegabytes(installedSizeMb()),
+            })}
             onPress={() => router.navigate("/packs")}
           />
           <SettingsRow
@@ -116,7 +121,7 @@ export default function SettingsPage() {
               android: "notifications_none",
               web: "notifications_none",
             }}
-            label="Notifications"
+            label={t("settings.notifications")}
           />
           <SettingsRow
             icon={{
@@ -124,7 +129,7 @@ export default function SettingsPage() {
               android: "shield",
               web: "shield",
             }}
-            label="Privacy & Offline"
+            label={t("settings.privacy")}
             onPress={() => router.navigate("/setup")}
           />
           <SettingsRow
@@ -133,7 +138,7 @@ export default function SettingsPage() {
               android: "help_outline",
               web: "help_outline",
             }}
-            label="Help & About"
+            label={t("settings.help")}
           />
         </SettingsGroup>
 
@@ -141,30 +146,30 @@ export default function SettingsPage() {
           <SettingsRow
             first
             icon={{ ios: "sparkles", android: "auto_awesome", web: "auto_awesome" }}
-            label="Replay welcome tour"
+            label={t("settings.replayTour")}
             onPress={resetTour}
           />
         </SettingsGroup>
 
         <ThemedText type="small" themeColor="textSecondary" style={styles.note}>
-          Replaying the tour is how you change your topics of interest.
+          {t("settings.replayNote")}
         </ThemedText>
       </ScrollView>
 
       <OptionSheet
-        title="Appearance"
+        title={t("settings.appearance")}
         visible={sheet === "appearance"}
-        options={APPEARANCE_OPTIONS}
+        options={appearanceOptions}
         value={themeMode}
         onSelect={setThemeMode}
         onClose={() => setSheet(null)}
       />
       <OptionSheet
-        title="Language"
+        title={t("settings.language")}
         visible={sheet === "language"}
         options={LANGUAGE_OPTIONS}
         value={language}
-        onSelect={(next) => setLanguage(next as OnboardingLanguage)}
+        onSelect={setLanguage}
         onClose={() => setSheet(null)}
       />
     </ThemedView>

@@ -3,22 +3,27 @@ import { SymbolView, type SymbolViewProps } from "expo-symbols";
 
 import { Fonts } from "@/shared/constants/theme";
 import { useTheme } from "@/shared/hooks/use-theme";
+import { useTranslation, type MessageKey } from "@/shared/i18n";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 
-const tabs: { name: string; title: string; icon: SymbolViewProps["name"] }[] = [
+const tabs: {
+  name: string;
+  titleKey: MessageKey;
+  icon: SymbolViewProps["name"];
+}[] = [
   {
     name: "index",
-    title: "Home",
+    titleKey: "tabs.home",
     icon: { ios: "house.fill", android: "home", web: "home" },
   },
   {
     name: "search",
-    title: "Search",
+    titleKey: "tabs.search",
     icon: { ios: "magnifyingglass", android: "search", web: "search" },
   },
   {
     name: "library",
-    title: "Library",
+    titleKey: "tabs.library",
     icon: {
       ios: "book",
       android: "menu_book",
@@ -27,18 +32,19 @@ const tabs: { name: string; title: string; icon: SymbolViewProps["name"] }[] = [
   },
   {
     name: "assistant",
-    title: "AI",
+    titleKey: "tabs.ai",
     icon: { ios: "sparkles", android: "auto_awesome", web: "auto_awesome" },
   },
   {
     name: "settings",
-    title: "Settings",
+    titleKey: "tabs.settings",
     icon: { ios: "gearshape", android: "settings", web: "settings" },
   },
 ];
 
 export default function TabLayout() {
   const colors = useTheme();
+  const { t } = useTranslation();
   const hasHydrated = useOnboardingStore((state) => state.hasHydrated);
   const completed = useOnboardingStore((state) => state.completed);
 
@@ -60,13 +66,13 @@ export default function TabLayout() {
         tabBarHideOnKeyboard: true,
       }}
     >
-      {tabs.map(({ name, title, icon }) => (
+      {tabs.map(({ name, titleKey, icon }) => (
         <Tabs.Screen
           key={name}
           name={name}
           options={{
-            title,
-            tabBarAccessibilityLabel: title,
+            title: t(titleKey),
+            tabBarAccessibilityLabel: t(titleKey),
             tabBarIcon: ({ color, size }) => (
               <SymbolView name={icon} size={size} tintColor={color} />
             ),
