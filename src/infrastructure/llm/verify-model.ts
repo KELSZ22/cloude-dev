@@ -21,10 +21,10 @@ export async function verifyModelStream(options: {
       if (!bytes.length) throw new Error('The model file is truncated.');
       if (total === 0) {
         if (bytes.length < 8 || bytes[0] !== 71 || bytes[1] !== 71 || bytes[2] !== 85 || bytes[3] !== 70) {
-          throw new Error('This is not a GGUF model file.');
+          throw new Error('This file is not a valid Seekora AI download.');
         }
         const version = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(4, true);
-        if (version !== 3) throw new Error('Expected a GGUF version 3 file.');
+        if (version !== 3) throw new Error('This Seekora AI file is not supported.');
       }
       total += bytes.length;
       hash.update(bytes);
@@ -39,7 +39,7 @@ export async function verifyModelStream(options: {
     if (options.signal?.aborted) throw new Error('Model verification cancelled.');
     if (total !== options.expected.sizeBytes || options.read(1).length) throw new Error('The model file size does not match.');
     if (bytesToHex(hash.digest()) !== options.expected.sha256) {
-      throw new Error('SHA-256 mismatch. Select the exact pinned Qwen3.5 file; it may be damaged or a different model.');
+      throw new Error('This file does not match the expected Seekora AI download. It may be damaged or from a different source.');
     }
   } finally {
     hash.destroy();

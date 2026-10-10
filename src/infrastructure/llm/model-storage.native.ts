@@ -53,7 +53,7 @@ export function createModelStorage(): ModelStorage {
       || manifest.sha256 !== localModel.sha256 || manifest.sizeBytes !== localModel.sizeBytes
       || manifest.localUri !== modelFile().uri || manifest.license !== localModel.license
       || manifest.sourceUrl !== localModel.sourceUrl || !modelFile().exists || modelFile().size !== localModel.sizeBytes) {
-      throw new Error('The stored model is incomplete or does not match the selected Qwen3.5 revision. Remove and reimport it.');
+      throw new Error('Seekora AI on this device is incomplete or outdated. Remove it and download or import again.');
     }
     return manifest as ModelManifest;
   };
@@ -186,7 +186,7 @@ export function createModelStorage(): ModelStorage {
       const { staged } = prepareDirectory();
       const source = new File(sourceUri);
       try {
-        if (source.size !== localModel.sizeBytes) throw new Error('Select the 529,297,312-byte Qwen3.5 GGUF file.');
+        if (source.size !== localModel.sizeBytes) throw new Error('Choose the correct Seekora AI file from your downloads.');
         // Do not read a picked file through a handle: on Android its descriptor can be closed partway
         // through a long read ("Bad file descriptor"). The platform copies it; the app-owned copy is verified.
         await source.copy(staged);
