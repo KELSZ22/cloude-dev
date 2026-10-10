@@ -432,6 +432,37 @@ export const fil = {
     scannedPage:
       "Binasa ng Seekora ang artikulo sa pahinang ito. I-load ang Seekora AI para sa paliwanag.",
   },
+  help: {
+    intro:
+      "Nananatili sa teleponong ito ang iyong pagbabasa, paghahanap at mga hamon, kaya gumagana ang mga ito kahit walang koneksyon. Ganito nagkakasya ang bawat bahagi.",
+    questionsTitle: "Mga tanong",
+    q1: "Gumagana ba ang Seekora nang walang internet?",
+    a1: "Oo. Tumatakbo sa teleponong ito ang pagbabasa, paghahanap at mga hamon kapag naka-save na ang mga artikulo. Kailangan lang ng koneksyon para mag-download ng bagong artikulo o ng Seekora AI.",
+    q2: "Kailangan ko ba ang Seekora AI?",
+    a2: "Hindi. Gumagana ang pagbabasa, paghahanap, aklatan at mga hamon kahit wala ito. Ang Seekora AI lang ang sumusulat ng paliwanag sa Ask Seekora.",
+    q3: "Saan nanggagaling ang mga artikulo?",
+    a3: "Sa Wikipedia. Kapag nag-save ka ng artikulo, kinokopya sa teleponong ito ang teksto at mga larawan nito at mananatili doon hanggang alisin mo.",
+    q4: "Bakit sinasabi ng assistant na walang ebidensya?",
+    a4: "Sumasagot lang ito mula sa mga sipi sa offline mong aklatan at hindi ito nanghuhula. Mag-save pa ng artikulo tungkol sa paksang iyon, pagkatapos ay magtanong muli.",
+    q5: "Paano ako makakabawas ng storage?",
+    a5: "Buksan ang Mga Setting, pagkatapos ang Pamahalaan ang Storage para tingnan ang mga naka-save na babasahin. May sariling opsyong Alisin ang Artipisyal na Katalinuhan, at ito ang pinakamalaking mababawas.",
+    q6: "Lumalabas ba sa teleponong ito ang mga tanong ko?",
+    a6: "Hindi. Sa device na ito pinoproseso ang mga tanong at sagot mo, may koneksyon man o wala.",
+    contactTitle: "Makipag-ugnayan",
+    contactLabel: "Mag-email sa suporta",
+    contactNote:
+      "Sumulat sa {{email}}. Malaking tulong kung sasabihin mo ang teleponong ginagamit mo at kung ano ang ginagawa mo.",
+    contactFailed: "Walang naka-set up na mail app sa device na ito. Maaari kang sumulat sa {{email}} kahit saan.",
+    aboutTitle: "Tungkol sa app",
+    rowVersion: "Bersyon",
+    creditsTitle: "Mga kredito",
+    rowWikipedia: "Teksto ng artikulo",
+    rowAi: "Seekora AI",
+    rowFonts: "Noto Sans",
+    rowOpenStax: "Mga knowledge pack",
+    privacyNote:
+      "Ginawa ang Seekora para magamit kahit walang signal. Walang ina-upload sa binabasa, tinatanong o sinasagot mo.",
+  },
   setup: {
     title: "Maghanda para sa offline",
     stateReady: "Handa offline",

@@ -425,6 +425,37 @@ export const en = {
     scannedPage:
       "Seekora read the article on this page. Load Seekora AI for an explanation.",
   },
+  help: {
+    intro:
+      "Seekora keeps your reading, search and challenges on this phone, so they work with no connection. Here is how the parts fit together.",
+    questionsTitle: "Questions",
+    q1: "Does Seekora work without internet?",
+    a1: "Yes. Reading, search and challenges run on this phone once articles are saved. You only need a connection to download new articles or Seekora AI.",
+    q2: "Do I need Seekora AI?",
+    a2: "No. Reading, search, your library and challenges all work without it. Seekora AI only writes the explanations in Ask Seekora.",
+    q3: "Where do articles come from?",
+    a3: "From Wikipedia. When you save an article, its text and pictures are copied onto this phone and stay there until you remove them.",
+    q4: "Why does the assistant say it has no evidence?",
+    a4: "It answers only from passages in your offline library and will not guess. Save more articles on that topic, then ask again.",
+    q5: "How do I free up space?",
+    a5: "Open Settings, then Manage Storage to review saved readings. Artificial Intelligence has its own Remove option, which frees the most space.",
+    q6: "Do my questions leave this phone?",
+    a6: "No. Your questions and the answers are handled on this device, with or without a connection.",
+    contactTitle: "Get in touch",
+    contactLabel: "Email support",
+    contactNote:
+      "Write to {{email}}. Telling us the phone you use and what you were doing helps most.",
+    contactFailed: "No mail app is set up on this device. You can write to {{email}} from anywhere.",
+    aboutTitle: "About",
+    rowVersion: "Version",
+    creditsTitle: "Credits",
+    rowWikipedia: "Article text",
+    rowAi: "Seekora AI",
+    rowFonts: "Noto Sans",
+    rowOpenStax: "Knowledge packs",
+    privacyNote:
+      "Seekora is built to be useful with no signal. Nothing you read, ask or answer is uploaded.",
+  },
   setup: {
     title: "Prepare for offline use",
     stateReady: "Ready offline",
