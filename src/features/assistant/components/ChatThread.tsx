@@ -119,7 +119,7 @@ export function ChatThread({
     <View style={styles.thread}>
       <View style={styles.assistantRow}>
         <Image
-          source={require("@/assets/seekora-assistant.png")}
+          source={require("@/assets/seekora-assistant.webp")}
           accessibilityLabel={t("assistant.avatar")}
           contentFit="cover"
           style={[styles.assistantAvatar, { borderColor: colors.dashboardBorder }]}
@@ -194,7 +194,7 @@ export function ChatThread({
         return (
           <View key={message.id} style={styles.assistantRow}>
             <Image
-              source={require("@/assets/seekora-assistant.png")}
+              source={require("@/assets/seekora-assistant.webp")}
               accessibilityLabel={t("assistant.avatar")}
               contentFit="cover"
               style={[styles.assistantAvatar, { borderColor: colors.dashboardBorder }]}

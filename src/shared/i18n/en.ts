@@ -194,6 +194,7 @@ export const en = {
     searchLibrary: "Search your library",
     voiceSoon: "Voice search, coming soon",
     askAi: "Ask AI a question",
+    languageCycleHint: "Switches to the next language",
     getStarted: "Get started",
     readAndLearn: "Read and learn",
     readAndLearnTitle: "Read & Learn",

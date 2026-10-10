@@ -30,19 +30,19 @@ const tiers = [
   {
     floor: 0.8,
     headline: "challenge.greatJob",
-    art: require("@/assets/results/celebration.png"),
+    art: require("@/assets/results/celebration.webp"),
     label: "challenge.artCheer",
   },
   {
     floor: 0.5,
     headline: "challenge.goodEffort",
-    art: require("@/assets/results/noresult.png"),
+    art: require("@/assets/results/noresult.webp"),
     label: "challenge.artThink",
   },
   {
     floor: 0,
     headline: "challenge.keepExploring",
-    art: require("@/assets/results/error.png"),
+    art: require("@/assets/results/error.webp"),
     label: "challenge.artPuzzle",
   },
 ] as const satisfies readonly {

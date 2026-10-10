@@ -136,7 +136,7 @@ export function ChallengeInvite() {
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}
     >
       <Image
-        source={require("@/assets/avatars/Thumbs-Up.png")}
+        source={require("@/assets/avatars/Thumbs-Up.webp")}
         contentFit="contain"
         contentPosition="bottom center"
         accessible={false}

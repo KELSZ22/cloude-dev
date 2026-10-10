@@ -70,7 +70,7 @@ export function DownloadFailed({
         ]}
       >
         <Image
-          source={require("@/assets/results/error.png")}
+          source={require("@/assets/results/error.webp")}
           accessibilityLabel={t("challenge.artPuzzle")}
           contentFit="contain"
           style={styles.art}

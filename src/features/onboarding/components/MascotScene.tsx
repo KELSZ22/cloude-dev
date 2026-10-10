@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native";
 
 const scenes = {
   companion: {
-    source: require("@/assets/onboarding/onboarding1.png"),
+    source: require("@/assets/onboarding/onboarding1.webp"),
     label: "An explorer learning on a tablet beside a colorful parrot",
   },
   explore: {
-    source: require("@/assets/onboarding/onboarding2.png"),
+    source: require("@/assets/onboarding/onboarding2.webp"),
     label: "An explorer discovering science, history, technology, and health",
   },
 } as const;

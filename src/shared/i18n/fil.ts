@@ -199,6 +199,7 @@ export const fil = {
     searchLibrary: "Hanapin sa iyong aklatan",
     voiceSoon: "Voice search, malapit na",
     askAi: "Magtanong sa AI",
+    languageCycleHint: "Lilipat sa susunod na wika",
     getStarted: "Magsimula",
     readAndLearn: "Magbasa at matuto",
     readAndLearnTitle: "Magbasa at Matuto",

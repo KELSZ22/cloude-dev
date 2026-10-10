@@ -14,7 +14,7 @@ export function EmptyShelf({
   return (
     <View style={styles.wrapper}>
       <Image
-        source={require("@/assets/results/noresult.png")}
+        source={require("@/assets/results/noresult.webp")}
         accessible={false}
         accessibilityLabel=""
         contentFit="contain"

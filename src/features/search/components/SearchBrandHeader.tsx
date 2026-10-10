@@ -15,8 +15,8 @@ export function SearchBrandHeader() {
         <Image
           source={
             isDark
-              ? require("@/assets/logo/Seekora-textlogo-dark.png")
-              : require("@/assets/logo/Seekora-textlogo-light.png")
+              ? require("@/assets/logo/Seekora-textlogo-dark.webp")
+              : require("@/assets/logo/Seekora-textlogo-light.webp")
           }
           contentFit="contain"
           accessible={false}

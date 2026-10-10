@@ -255,7 +255,7 @@ export function AssistantSheet() {
                 />
               </Pressable>
               <Image
-                source={require("@/assets/seekora-assistant.png")}
+                source={require("@/assets/seekora-assistant.webp")}
                 accessibilityLabel={t("assistant.avatar")}
                 contentFit="cover"
                 style={[

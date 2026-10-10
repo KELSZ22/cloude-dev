@@ -57,7 +57,7 @@ export function WelcomeStep({ exiting = false }: { exiting?: boolean }) {
     >
       <Animated.View style={[StyleSheet.absoluteFill, pictureStyle]}>
         <Image
-          source={require("@/assets/splash/splash.jpg")}
+          source={require("@/assets/splash/splash.webp")}
           accessible={false}
           accessibilityLabel=""
           contentFit="cover"
@@ -70,14 +70,14 @@ export function WelcomeStep({ exiting = false }: { exiting?: boolean }) {
         style={[styles.brand, { paddingTop: insets.top + Spacing.five }]}
       >
         <Image
-          source={require("@/assets/logo/logo-greenbg.png")}
+          source={require("@/assets/logo/logo-greenbg.webp")}
           contentFit="contain"
           accessible={false}
           accessibilityLabel=""
           style={styles.logo}
         />
         <Image
-          source={require("@/assets/logo/Seekora-textlogo-light.png")}
+          source={require("@/assets/logo/Seekora-textlogo-light.webp")}
           contentFit="contain"
           accessible={false}
           accessibilityLabel=""
