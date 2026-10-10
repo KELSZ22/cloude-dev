@@ -23,15 +23,27 @@ import {
   APP_LOCALES,
   LOCALE_NAMES,
   useOnboardingStore,
+  type AppLocale,
 } from "@/shared/stores/onboarding-store";
 
 const GAP = 6;
 
+function nextLocale(current: AppLocale): AppLocale {
+  const index = APP_LOCALES.indexOf(current);
+  return APP_LOCALES[(index + 1) % APP_LOCALES.length] ?? APP_LOCALES[0];
+}
+
+type LanguageMenuProps = {
+  tintColor: string;
+  /** Dashboard: each tap cycles locales. Search and elsewhere: dropdown picker. */
+  variant?: "menu" | "cycle";
+};
+
 /**
- * Language switch for a screen header. The menu drops from the trigger, which is
- * measured on press so the same component works wherever the header sits.
+ * Language switch for a screen header. Use `cycle` on the dashboard; elsewhere the menu
+ * drops from the trigger, measured on press so it aligns wherever the header sits.
  */
-export function LanguageMenu({ tintColor }: { tintColor: string }) {
+export function LanguageMenu({ tintColor, variant = "menu" }: LanguageMenuProps) {
   const colors = useTheme();
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
@@ -79,25 +91,38 @@ export function LanguageMenu({ tintColor }: { tintColor: string }) {
     });
   }
 
+  const triggerButton = (
+    <Pressable
+      ref={variant === "menu" ? trigger : undefined}
+      accessibilityRole="button"
+      accessibilityLabel={`${t("settings.language")}, ${LOCALE_NAMES[language]}`}
+      accessibilityHint={
+        variant === "cycle" ? t("home.languageCycleHint") : undefined
+      }
+      accessibilityState={variant === "menu" ? { expanded: open } : undefined}
+      onPress={
+        variant === "cycle"
+          ? () => setLanguage(nextLocale(language))
+          : openMenu
+      }
+      style={({ pressed }) => [styles.trigger, pressed && styles.pressed]}
+    >
+      <SymbolView
+        name={{ ios: "globe", android: "language", web: "language" }}
+        size={22}
+        tintColor={tintColor}
+      />
+      <ThemedText type="smallBold" style={[styles.code, { color: tintColor }]}>
+        {language.toUpperCase()}
+      </ThemedText>
+    </Pressable>
+  );
+
+  if (variant === "cycle") return triggerButton;
+
   return (
     <>
-      <Pressable
-        ref={trigger}
-        accessibilityRole="button"
-        accessibilityLabel={`${t("settings.language")}, ${LOCALE_NAMES[language]}`}
-        accessibilityState={{ expanded: open }}
-        onPress={openMenu}
-        style={({ pressed }) => [styles.trigger, pressed && styles.pressed]}
-      >
-        <SymbolView
-          name={{ ios: "globe", android: "language", web: "language" }}
-          size={22}
-          tintColor={tintColor}
-        />
-        <ThemedText type="smallBold" style={[styles.code, { color: tintColor }]}>
-          {language.toUpperCase()}
-        </ThemedText>
-      </Pressable>
+      {triggerButton}
       <Modal
         visible={open}
         transparent

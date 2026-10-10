@@ -21,7 +21,7 @@ export function EmptyResults({ query }: { query: string }) {
   return (
     <View style={styles.wrap}>
       <Image
-        source={require("@/assets/results/noresult.png")}
+        source={require("@/assets/results/noresult.webp")}
         accessibilityLabel={t("search.emptyArt")}
         contentFit="contain"
         style={styles.art}

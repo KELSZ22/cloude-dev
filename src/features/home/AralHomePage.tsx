@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { SymbolView } from "expo-symbols";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 
@@ -27,58 +26,12 @@ export default function HomePage() {
       >
         <DashboardHero />
         <View style={styles.content}>
-          <View
-            style={[
-              styles.searchBar,
-              {
-                backgroundColor: colors.backgroundElement,
-                borderColor: colors.dashboardBorder,
-              },
-            ]}
-          >
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t("home.searchLibrary")}
-              onPress={() => router.navigate("/(tabs)/search")}
-              style={({ pressed }) => [
-                styles.searchAction,
-                pressed && styles.pressed,
-              ]}
-            >
-              <SymbolView
-                name={{
-                  ios: "magnifyingglass",
-                  android: "search",
-                  web: "search",
-                }}
-                size={24}
-                tintColor={colors.tint}
-              />
-              <ThemedText themeColor="textSecondary" style={styles.searchLabel}>
-                {t("home.searchPlaceholder")}
-              </ThemedText>
-            </Pressable>
-            <Pressable
-              disabled
-              accessibilityRole="button"
-              accessibilityLabel={t("home.voiceSoon")}
-              accessibilityState={{ disabled: true }}
-              style={styles.microphone}
-            >
-              <SymbolView
-                name={{ ios: "mic.fill", android: "mic", web: "mic" }}
-                size={22}
-                tintColor={colors.textSecondary}
-              />
-            </Pressable>
-          </View>
-
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={t("home.askAi")}
             onPress={() => openAssistant()}
             style={({ pressed }) => [
-              styles.assistant,
+              styles.askBar,
               {
                 borderColor: colors.dashboardBorder,
                 backgroundColor: pressed
@@ -93,7 +46,7 @@ export default function HomePage() {
                 android: "auto_awesome",
                 web: "auto_awesome",
               }}
-              size={23}
+              size={24}
               tintColor={colors.tint}
             />
             <ThemedText type="smallBold" style={styles.grow}>
@@ -158,42 +111,18 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.three,
   },
   content: { marginTop: -28, paddingHorizontal: Spacing.three, gap: 12 },
-  searchBar: {
+  askBar: {
     flexDirection: "row",
     alignItems: "center",
+    gap: 12,
     minHeight: 56,
+    paddingHorizontal: Spacing.three,
     borderWidth: 1,
     borderRadius: 20,
     boxShadow: "0 3px 9px rgba(4, 120, 87, 0.12)",
-  },
-  searchAction: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    minHeight: 56,
-    paddingLeft: Spacing.three,
-  },
-  searchLabel: { flex: 1, fontSize: 14 },
-  microphone: {
-    width: 48,
-    minHeight: 48,
-    alignItems: "center",
-    justifyContent: "center",
-    opacity: 0.5,
-  },
-  assistant: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    minHeight: 48,
-    paddingHorizontal: Spacing.three,
-    borderWidth: 1,
-    borderRadius: 16,
   },
   grow: { flex: 1 },
   section: { gap: 12, marginTop: Spacing.one },
   sectionTitle: { fontSize: 18, lineHeight: 24 },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  pressed: { opacity: 0.7 },
 });

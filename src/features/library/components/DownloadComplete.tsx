@@ -44,14 +44,14 @@ export function DownloadComplete({
 
       <View style={styles.hero}>
         <Image
-          source={require("@/assets/elements/left-leaves.png")}
+          source={require("@/assets/elements/left-leaves.webp")}
           accessible={false}
           accessibilityLabel=""
           contentFit="contain"
           style={styles.heroLeavesLeft}
         />
         <Image
-          source={require("@/assets/elements/right-leaves.png")}
+          source={require("@/assets/elements/right-leaves.webp")}
           accessible={false}
           accessibilityLabel=""
           contentFit="contain"
@@ -168,14 +168,14 @@ export function DownloadComplete({
 
       <View pointerEvents="none" style={styles.cornerLeaves}>
         <Image
-          source={require("@/assets/elements/left-leaves.png")}
+          source={require("@/assets/elements/left-leaves.webp")}
           accessible={false}
           accessibilityLabel=""
           contentFit="contain"
           style={styles.bottomLeft}
         />
         <Image
-          source={require("@/assets/elements/right-leaves.png")}
+          source={require("@/assets/elements/right-leaves.webp")}
           accessible={false}
           accessibilityLabel=""
           contentFit="contain"

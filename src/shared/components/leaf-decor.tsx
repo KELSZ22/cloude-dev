@@ -11,7 +11,7 @@ export function LeafDecor({
   return (
     <View pointerEvents="none" style={StyleSheet.absoluteFill}>
       <Image
-        source={require("@/assets/elements/left-leaves.png")}
+        source={require("@/assets/elements/left-leaves.webp")}
         accessible={false}
         accessibilityLabel=""
         contentFit="contain"
@@ -19,7 +19,7 @@ export function LeafDecor({
       />
       {showRight ? (
         <Image
-          source={require("@/assets/elements/right-leaves.png")}
+          source={require("@/assets/elements/right-leaves.webp")}
           accessible={false}
           accessibilityLabel=""
           contentFit="contain"

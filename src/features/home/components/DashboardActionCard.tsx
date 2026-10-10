@@ -20,8 +20,8 @@ type DashboardActionCardProps = {
 };
 
 const logos = {
-  readLearn: require("@/assets/dashboard/read-and-learn.png"),
-  library: require("@/assets/dashboard/library.png"),
+  readLearn: require("@/assets/dashboard/read-and-learn.webp"),
+  library: require("@/assets/dashboard/library.webp"),
 } as const;
 
 function variantPalette(variant: DashboardActionCardVariant, scheme: "light" | "dark") {

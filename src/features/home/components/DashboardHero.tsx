@@ -93,7 +93,7 @@ export function DashboardHero() {
   return (
     <View style={[styles.hero, { height }]}>
       <Image
-        source={require("@/assets/dashboard/dashboard.jpg")}
+        source={require("@/assets/dashboard/dashboard.webp")}
         contentFit="cover"
         contentPosition="center"
         accessible={false}
@@ -132,8 +132,8 @@ export function DashboardHero() {
           <Image
             source={
               isDark
-                ? require("@/assets/logo/Seekora-textlogo-dark.png")
-                : require("@/assets/logo/Seekora-textlogo-light.png")
+                ? require("@/assets/logo/Seekora-textlogo-dark.webp")
+                : require("@/assets/logo/Seekora-textlogo-light.webp")
             }
             contentFit="contain"
             accessible={false}
@@ -142,7 +142,7 @@ export function DashboardHero() {
           />
         </View>
         <View style={styles.headerActions}>
-          <LanguageMenu tintColor={headerColor} />
+          <LanguageMenu tintColor={headerColor} variant="cycle" />
         </View>
       </View>
       <Animated.View

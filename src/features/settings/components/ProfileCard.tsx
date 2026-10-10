@@ -23,7 +23,7 @@ export function ProfileCard({ name, detail }: { name: string; detail: string }) 
       ]}
     >
       <Image
-        source={require("@/assets/logo/logo-greenbg.png")}
+        source={require("@/assets/logo/logo-greenbg.webp")}
         accessible={false}
         accessibilityLabel=""
         contentFit="cover"

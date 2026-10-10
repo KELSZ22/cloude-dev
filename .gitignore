@@ -45,6 +45,9 @@ example
 # third-party source material; not licensed for redistribution or AI ingestion
 /resources/raw/
 
+# full-size artwork kept for re-exporting; the app bundles the WebP next to it
+/assets/_originals/
+
 # local model reference for testing; never packed into the APK
 /bundled-model/*.gguf
 
