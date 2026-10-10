@@ -1,5 +1,6 @@
 import type { KnowledgeRepository, SearchHit } from '@/infrastructure/database';
 import type { GenerationRequest } from '@/infrastructure/llm';
+import { repeatsAnswer } from '@/shared/services/ai/repetition';
 import type { SourceCitation } from '@/shared/types/knowledge';
 import { checkCitations } from './citations';
 import { buildPagePrompt, buildRagPrompt, RAG_LIMITS, type RagSource } from './context-builder';
@@ -8,6 +9,10 @@ import { buildPagePrompt, buildRagPrompt, RAG_LIMITS, type RagSource } from './c
 export const ANSWER_MAX_TOKENS = 192;
 /** Enough for "YES" or "NO". */
 export const CHECK_MAX_TOKENS = 4;
+/** Shorter than a grounded answer: without sources there is nothing to quote, only to summarise. */
+export const UNSOURCED_MAX_TOKENS = 160;
+/** Mild; at temperature 0 the small model otherwise tends to loop on one sentence. */
+export const ANSWER_REPEAT_PENALTY = 1.1;
 /** Candidates fetched before the evidence check; only the best few reach the model. */
 const RETRIEVAL_LIMIT = 6;
 
@@ -28,6 +33,22 @@ export type GroundedAnswer =
     citedByModel: boolean;
   }
   | { status: 'insufficient-evidence'; reason: InsufficientReason; citations: [] };
+
+/** An answer with nothing behind it but the model's own training. Shown only when labelled as such. */
+export type UnsourcedAnswer = { status: 'unsourced'; text: string } | { status: 'no-answer' };
+
+export interface AnswerRequest {
+  question: string;
+  /**
+   * Answers already shown in this conversation. A reply that only repeats one of them is thrown
+   * away and asked for again in different words.
+   */
+  earlierAnswers?: readonly string[];
+  onToken?: (token: string) => void;
+  /** Called when a reply is discarded and the model is asked again, so a streamed draft can be cleared. */
+  onRestart?: () => void;
+  signal?: AbortSignal;
+}
 
 export interface Evidence {
   sufficient: true;
@@ -117,7 +138,7 @@ export async function generateParagraph(generate: Generate, request: GenerationR
  */
 export async function answerQuestion(
   deps: { repository: Pick<KnowledgeRepository, 'search' | 'getChunk'>; generate: Generate },
-  request: { question: string; onToken?: (token: string) => void; signal?: AbortSignal },
+  request: AnswerRequest,
 ): Promise<GroundedAnswer> {
   const question = request.question.trim();
   if (!question) throw new Error('Type a question first.');
@@ -126,40 +147,80 @@ export async function answerQuestion(
 
   // A passage that misses part of the question may be about something else. A small model answers
   // anyway if simply asked to, so it is first asked a yes/no question it handles more reliably.
+  const hits = evidence.hits;
   let needsCheck = !evidence.complete;
-  let raw = '';
+  let declined = false;
   let sources: RagSource[] = [];
-  for (let count = evidence.hits.length; count >= 1; count--) {
-    const built = buildRagPrompt(question, evidence.hits, count);
-    sources = built.sources;
-    try {
-      if (needsCheck) {
-        const verdict = await deps.generate({ prompt: built.checkPrompt, maxTokens: CHECK_MAX_TOKENS, signal: request.signal });
-        if (!/^\W*yes\b/i.test(verdict)) return { status: 'insufficient-evidence', reason: 'model-declined', citations: [] };
-        needsCheck = false;
+
+  async function generateAnswer(rephrase: boolean): Promise<string> {
+    for (let count = hits.length; count >= 1; count--) {
+      const built = buildRagPrompt(question, hits, count, { rephrase });
+      sources = built.sources;
+      try {
+        if (needsCheck) {
+          const verdict = await deps.generate({ prompt: built.checkPrompt, maxTokens: CHECK_MAX_TOKENS, signal: request.signal });
+          if (!/^\W*yes\b/i.test(verdict)) { declined = true; return ''; }
+          needsCheck = false;
+        }
+        return await generateParagraph(deps.generate, {
+          prompt: built.prompt, maxTokens: ANSWER_MAX_TOKENS, repeatPenalty: ANSWER_REPEAT_PENALTY,
+          onToken: request.onToken, signal: request.signal,
+        });
+      } catch (error) {
+        // The engine counts tokens exactly; if the prompt is too long for the context, retry with fewer passages.
+        const tooLong = error instanceof Error && error.message.includes('context budget');
+        if (!tooLong || count === 1) throw error;
       }
-      raw = await generateParagraph(deps.generate,
-        { prompt: built.prompt, maxTokens: ANSWER_MAX_TOKENS, onToken: request.onToken, signal: request.signal });
-      break;
-    } catch (error) {
-      // The engine counts tokens exactly; if the prompt is too long for the context, retry with fewer passages.
-      const tooLong = error instanceof Error && error.message.includes('context budget');
-      if (!tooLong || count === 1) throw error;
     }
+    return '';
   }
 
-  const checked = checkCitations(raw, sources);
-  if (!checked.text) return { status: 'insufficient-evidence', reason: 'model-declined', citations: [] };
+  const raw = await generateAnswer(false);
+  let checked = checkCitations(raw, sources);
+  if (checked.text && repeatsAnswer(checked.text, request.earlierAnswers ?? [])) {
+    request.onRestart?.();
+    checked = checkCitations(await generateAnswer(true), sources);
+  }
+  if (declined || !checked.text) return { status: 'insufficient-evidence', reason: 'model-declined', citations: [] };
   const citedByModel = checked.cited.length > 0;
   const citations = await resolveCitations(deps.repository, citedByModel ? checked.cited : sources);
   if (!citations.length) return { status: 'insufficient-evidence', reason: 'no-match', citations: [] };
   return { status: 'answered', text: checked.text, citations, citedByModel };
 }
 
+/**
+ * There is no source to quote, so the model is told to keep it short, to admit doubt, and not to
+ * invent a reference. Callers must present the result as unsourced; see `UnsourcedAnswer`.
+ */
+const UNSOURCED_SYSTEM = 'You are Seekora, a study assistant. The reader\'s offline library has nothing on this question, so answer from what you already know. Write at most three plain sentences. Do not cite sources and do not use square brackets. If you are not confident, say so instead of guessing.';
+
+/**
+ * A last resort for a question the library cannot support: the model answers from its own
+ * training. Nothing backs it up, so it is returned under its own status rather than as an answer.
+ */
+export async function answerWithoutSources(
+  generate: Generate, request: AnswerRequest,
+): Promise<UnsourcedAnswer> {
+  const question = request.question.trim();
+  if (!question) throw new Error('Type a question first.');
+  const raw = await generateParagraph(generate, {
+    system: UNSOURCED_SYSTEM,
+    prompt: question.slice(0, RAG_LIMITS.questionChars),
+    maxTokens: UNSOURCED_MAX_TOKENS,
+    repeatPenalty: ANSWER_REPEAT_PENALTY,
+    onToken: request.onToken,
+    signal: request.signal,
+  });
+  // No sources were supplied, so every marker the model wrote points at nothing and is removed.
+  const { text } = checkCitations(raw, []);
+  if (!text || repeatsAnswer(text, request.earlierAnswers ?? [])) return { status: 'no-answer' };
+  return { status: 'unsourced', text };
+}
+
 /** Answers from the article on screen. The page is the only source, so nothing is retrieved. */
 export async function answerFromPage(
   generate: Generate,
-  request: { question: string; title: string; pageText: string; onToken?: (token: string) => void; signal?: AbortSignal },
+  request: AnswerRequest & { title: string; pageText: string },
 ): Promise<GroundedAnswer> {
   const question = request.question.trim();
   if (!question) throw new Error('Type a question first.');
@@ -168,6 +229,7 @@ export async function answerFromPage(
   const raw = await generateParagraph(generate, {
     prompt: built.prompt,
     maxTokens: ANSWER_MAX_TOKENS,
+    repeatPenalty: ANSWER_REPEAT_PENALTY,
     onToken: request.onToken,
     signal: request.signal,
   });

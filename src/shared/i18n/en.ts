@@ -375,7 +375,7 @@ export const en = {
   assistant: {
     title: "Ask Seekora",
     description:
-      "Answers are written from passages in your offline library, with sources you can open.",
+      "Answers are written from passages in your offline library, with sources you can open. When nothing there fits, I say so before answering.",
     questionLabel: "Your question",
     questionPlaceholder:
       "For example: How do I solve a quadratic equation by factoring?",
@@ -424,6 +424,14 @@ export const en = {
       "These passages match your question. Load Seekora AI for an explanation.",
     scannedPage:
       "Seekora read the article on this page. Load Seekora AI for an explanation.",
+    unsourcedLabel:
+      "Not from your library — Seekora AI answered from its own knowledge, so check it before you rely on it.",
+    outOfScopeLive:
+      "Seekora works offline, so it cannot look up anything happening right now, such as today's weather, news or prices. Ask about a topic instead and it will answer from your library.",
+    outOfScopeDevice:
+      "Seekora only reads and explains. It cannot send messages, set alarms or control anything else on your phone.",
+    outOfScopePersonal:
+      "Seekora cannot see your messages, photos or accounts. It only reads the articles saved in your library.",
   },
   help: {
     intro:
@@ -436,7 +444,7 @@ export const en = {
     q3: "Where do articles come from?",
     a3: "From Wikipedia. When you save an article, its text and pictures are copied onto this phone and stay there until you remove them.",
     q4: "Why does the assistant say it has no evidence?",
-    a4: "It answers only from passages in your offline library and will not guess. Save more articles on that topic, then ask again.",
+    a4: "It prefers passages from your offline library over guessing. When nothing there fits, it may answer from its own knowledge and label the answer as unsourced. Save more articles on that topic for an answer you can check.",
     q5: "How do I free up space?",
     a5: "Open Settings, then Manage Storage to review saved readings. Artificial Intelligence has its own Remove option, which frees the most space.",
     q6: "Do my questions leave this phone?",
@@ -677,6 +685,12 @@ export const en = {
       "Seekora AI is busy or could not load. Please try again in a moment.",
     busy: "I'm still answering the previous question.",
     noAnswer: "I could not produce an answer. Please try rephrasing.",
+    outOfScopeLive:
+      "I work offline, so I cannot check anything happening right now, such as today's weather, news or prices.",
+    outOfScopeDevice:
+      "I can read and explain things, but I cannot send messages, set alarms or control anything else on your phone.",
+    outOfScopePersonal:
+      "I cannot see your messages, photos or accounts. Share the text you want help with instead.",
     stopped: "Stopped.",
     failed: "Something went wrong while answering.",
     memoryUnloaded:

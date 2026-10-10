@@ -34,6 +34,7 @@ import {
 } from "@/shared/lib/assistant-status";
 import { useKnowledge } from "@/shared/providers/knowledge-provider";
 import { useModel } from "@/shared/providers/model-provider";
+import type { AskedTurn } from "@/shared/services/rag/follow-up";
 import { useAssistantSheetStore } from "@/shared/stores/assistant-sheet-store";
 import { useOnboardingStore } from "@/shared/stores/onboarding-store";
 import type { SourceCitation } from "@/shared/types/knowledge";
@@ -41,6 +42,25 @@ import type { SourceCitation } from "@/shared/types/knowledge";
 import { ChatThread, type ChatMessage } from "./components/ChatThread";
 import { useGroundedAnswer, type AskOutcome } from "./hooks/useGroundedAnswer";
 import { useSpeechInput } from "./hooks/useSpeechInput";
+
+/** Enough for a follow-up to find its subject without carrying the whole conversation around. */
+const HISTORY_TURNS = 6;
+
+/** The questions asked so far paired with the answer each produced, oldest last. */
+function askedTurns(messages: readonly ChatMessage[]): AskedTurn[] {
+  const turns: AskedTurn[] = [];
+  for (const message of messages) {
+    if (message.role === "user") {
+      turns.push({ question: message.text, answer: "" });
+      continue;
+    }
+    const outcome = message.outcome;
+    const answered =
+      outcome?.status === "answered" || outcome?.status === "unsourced";
+    if (answered && turns.length) turns[turns.length - 1].answer = outcome.text;
+  }
+  return turns.slice(-HISTORY_TURNS);
+}
 
 const statusKey: Record<AssistantModelStatus, MessageKey> = {
   ready: "assistant.statusReady",
@@ -66,7 +86,8 @@ export function AssistantSheet() {
   const appLocale = useOnboardingStore((state) => state.language);
   const model = useModel();
   const knowledge = useKnowledge();
-  const { ask, stop, busy, streamed, libraryReady } = useGroundedAnswer();
+  const { ask, stop, busy, streamed, libraryReady, modelReady } =
+    useGroundedAnswer();
 
   const [presented, setPresented] = useState(false);
   const [draft, setDraft] = useState("");
@@ -160,11 +181,10 @@ export function AssistantSheet() {
     let outcome: AskOutcome | null = null;
     try {
       const library = knowledge.state;
-      const page = pageRef.current;
-      outcome = page
-        ? await ask(question, page)
-        : libraryReady
-          ? await ask(question)
+      const page = pageRef.current ?? undefined;
+      outcome =
+        page || libraryReady || modelReady
+          ? await ask(question, { page, history: askedTurns(messages) })
           : {
               status: "notice",
               message:

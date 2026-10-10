@@ -16,6 +16,12 @@ const reasonKey: Record<string, MessageKey> = {
   "model-declined": "assistant.modelDeclined",
 };
 
+const scopeKey: Record<string, MessageKey> = {
+  "live-data": "assistant.outOfScopeLive",
+  "device-action": "assistant.outOfScopeDevice",
+  "personal-data": "assistant.outOfScopePersonal",
+};
+
 export type ChatMessage =
   | { id: string; role: "user"; text: string }
   | { id: string; role: "assistant"; pending: boolean; outcome: AskOutcome | null };
@@ -162,30 +168,34 @@ export function ChatThread({
         const outcome = message.outcome;
         const live = message.pending ? streamed : "";
         const answerText =
-          outcome?.status === "answered"
+          outcome?.status === "answered" ||
+          outcome?.status === "unsourced" ||
+          outcome?.status === "stopped"
             ? outcome.text
-            : outcome?.status === "stopped"
-              ? outcome.text
-              : live;
+            : live;
         const pages = answerText.trim() ? present(answerText) : [];
         const pageIndex = Math.min(pageById[message.id] ?? 0, Math.max(pages.length - 1, 0));
         const page = pages[pageIndex];
+        // An answer the library does not back must never look like one that it does.
+        const unsourced = outcome?.status === "unsourced";
         const note =
           outcome?.status === "insufficient-evidence"
             ? t(reasonKey[outcome.reason] ?? "assistant.noMatch")
-            : outcome?.status === "passages-only"
-              ? t(
-                  outcome.citations.some((citation) => citation.chunkId.startsWith("page:"))
-                    ? "assistant.scannedPage"
-                    : "assistant.passagesBody",
-                )
-              : outcome?.status === "error" || outcome?.status === "notice"
-                ? outcome.message
-                : outcome?.status === "stopped" && !outcome.text
-                  ? t("assistant.stopped")
-                  : message.pending && !live
-                    ? t("assistant.writing")
-                    : null;
+            : outcome?.status === "out-of-scope"
+              ? t(scopeKey[outcome.reason])
+              : outcome?.status === "passages-only"
+                ? t(
+                    outcome.citations.some((citation) => citation.chunkId.startsWith("page:"))
+                      ? "assistant.scannedPage"
+                      : "assistant.passagesBody",
+                  )
+                : outcome?.status === "error" || outcome?.status === "notice"
+                  ? outcome.message
+                  : outcome?.status === "stopped" && !outcome.text
+                    ? t("assistant.stopped")
+                    : message.pending && !live
+                      ? t("assistant.writing")
+                      : null;
         const citations =
           outcome?.status === "answered" || outcome?.status === "passages-only"
             ? outcome.citations
@@ -200,8 +210,20 @@ export function ChatThread({
               style={[styles.assistantAvatar, { borderColor: colors.dashboardBorder }]}
             />
             <View style={styles.assistantBody}>
-              {page || note ? (
+              {page || note || unsourced ? (
                 <View style={[styles.assistantBubble, bubble]}>
+                  {unsourced ? (
+                    <View style={[styles.unsourced, { borderColor: colors.dashboardBorder }]}>
+                      <SymbolView
+                        name={{ ios: "exclamationmark.circle", android: "info", web: "info" }}
+                        size={14}
+                        tintColor={colors.textSecondary}
+                      />
+                      <ThemedText type="smallBold" themeColor="textSecondary" style={styles.unsourcedLabel}>
+                        {t("assistant.unsourcedLabel")}
+                      </ThemedText>
+                    </View>
+                  ) : null}
                   {page ? <AnswerBody page={page} /> : null}
                   {note ? (
                     <ThemedText
@@ -337,6 +359,15 @@ const styles = StyleSheet.create({
   itemTitle: { fontSize: 15, lineHeight: 22 },
   itemBody: { fontSize: 14, lineHeight: 20 },
   note: { fontSize: 15, lineHeight: 22 },
+  unsourced: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "stretch",
+    gap: 6,
+    paddingBottom: 8,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  unsourcedLabel: { flex: 1, fontSize: 12, lineHeight: 16 },
   pager: { flexDirection: "row", alignSelf: "flex-end", gap: 4 },
   page: { minWidth: 28, height: 28, borderRadius: 8, alignItems: "center", justifyContent: "center", paddingHorizontal: 6 },
   modelAction: { minHeight: 44, justifyContent: "center" },

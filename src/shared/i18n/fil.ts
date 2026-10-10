@@ -380,7 +380,7 @@ export const fil = {
   assistant: {
     title: "Magtanong sa Seekora",
     description:
-      "Ang mga sagot ay mula sa mga sipi sa iyong offline na aklatan, na may mga source na maaari mong buksan.",
+      "Ang mga sagot ay mula sa mga sipi sa iyong offline na aklatan, na may mga source na maaari mong buksan. Kapag wala doong tugma, sasabihin ko muna bago sumagot.",
     questionLabel: "Iyong tanong",
     questionPlaceholder:
       "Halimbawa: Paano ko lulutasin ang quadratic equation sa pamamagitan ng factoring?",
@@ -431,6 +431,14 @@ export const fil = {
       "Tumutugma ang mga siping ito sa tanong mo. I-load ang Seekora AI para sa paliwanag.",
     scannedPage:
       "Binasa ng Seekora ang artikulo sa pahinang ito. I-load ang Seekora AI para sa paliwanag.",
+    unsourcedLabel:
+      "Wala ito sa iyong aklatan — sumagot ang Seekora AI mula sa sarili nitong kaalaman, kaya suriin muna bago mo ito pagkatiwalaan.",
+    outOfScopeLive:
+      "Offline gumagana ang Seekora, kaya hindi nito matitingnan ang kahit anong nangyayari ngayon, gaya ng panahon, balita o presyo ngayong araw. Magtanong tungkol sa isang paksa at sasagot ito mula sa iyong aklatan.",
+    outOfScopeDevice:
+      "Nagbabasa at nagpapaliwanag lang ang Seekora. Hindi ito makakapagpadala ng mensahe, makakapag-set ng alarm, o makakakontrol ng kahit ano sa telepono mo.",
+    outOfScopePersonal:
+      "Hindi nakikita ng Seekora ang iyong mga mensahe, larawan o account. Ang mga artikulong naka-save sa aklatan mo lang ang nababasa nito.",
   },
   help: {
     intro:
@@ -443,7 +451,7 @@ export const fil = {
     q3: "Saan nanggagaling ang mga artikulo?",
     a3: "Sa Wikipedia. Kapag nag-save ka ng artikulo, kinokopya sa teleponong ito ang teksto at mga larawan nito at mananatili doon hanggang alisin mo.",
     q4: "Bakit sinasabi ng assistant na walang ebidensya?",
-    a4: "Sumasagot lang ito mula sa mga sipi sa offline mong aklatan at hindi ito nanghuhula. Mag-save pa ng artikulo tungkol sa paksang iyon, pagkatapos ay magtanong muli.",
+    a4: "Mas pinipili nitong sumagot mula sa mga sipi sa offline mong aklatan kaysa manghula. Kapag wala doong tugma, maaari itong sumagot mula sa sarili nitong kaalaman at lalagyan ng babala na walang sanggunian. Mag-save pa ng artikulo tungkol sa paksang iyon para sa sagot na masusuri mo.",
     q5: "Paano ako makakabawas ng storage?",
     a5: "Buksan ang Mga Setting, pagkatapos ang Pamahalaan ang Storage para tingnan ang mga naka-save na babasahin. May sariling opsyong Alisin ang Artipisyal na Katalinuhan, at ito ang pinakamalaking mababawas.",
     q6: "Lumalabas ba sa teleponong ito ang mga tanong ko?",
@@ -690,6 +698,12 @@ export const fil = {
       "Abala ang Seekora AI o hindi ito na-load. Pakisubukang muli mamaya.",
     busy: "Sinasagot ko pa ang nakaraang tanong.",
     noAnswer: "Hindi ako nakabuo ng sagot. Pakisubukang ibahin ang tanong.",
+    outOfScopeLive:
+      "Offline ako, kaya hindi ko matitingnan ang kahit anong nangyayari ngayon, gaya ng panahon, balita o presyo ngayong araw.",
+    outOfScopeDevice:
+      "Nakakabasa at nakakapaliwanag ako, pero hindi ako makakapagpadala ng mensahe, makakapag-set ng alarm, o makakakontrol ng kahit ano sa telepono mo.",
+    outOfScopePersonal:
+      "Hindi ko nakikita ang iyong mga mensahe, larawan o account. Ibahagi na lang ang tekstong kailangan mo ng tulong.",
     stopped: "Itinigil.",
     failed: "May nangyaring mali habang sumasagot.",
     memoryUnloaded:
