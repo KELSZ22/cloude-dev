@@ -95,6 +95,14 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen
+                name="help"
+                options={{
+                  title: "",
+                  headerShadowVisible: false,
+                  animation: "slide_from_bottom",
+                }}
+              />
+              <Stack.Screen
                 name="packs/index"
                 options={{ title: t("stack.knowledgePacks") }}
               />

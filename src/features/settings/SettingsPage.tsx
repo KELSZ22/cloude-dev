@@ -156,6 +156,7 @@ export default function SettingsPage() {
               web: "help_outline",
             }}
             label={t("settings.help")}
+            onPress={() => router.navigate("/help")}
           />
         </RowGroup>
 

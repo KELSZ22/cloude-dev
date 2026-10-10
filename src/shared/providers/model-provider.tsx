@@ -134,7 +134,7 @@ export function ModelProvider({ children }: PropsWithChildren) {
 
   async function loadModel() {
     await run('verifying', async (signal) => {
-      if (!installed) throw new Error('Download or import the selected Qwen model first.');
+      if (!installed) throw new Error('Download or import Seekora AI first.');
       await storage.verifyInstalled(installed, signal, setProgress);
       if (signal.aborted) throw new Error('Loading cancelled.');
       updateOperation('loading');

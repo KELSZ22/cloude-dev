@@ -34,7 +34,7 @@ describe('pinned model integrity', () => {
     expect(copied).toEqual([...fixture]);
   });
   test('rejects a non-GGUF header', async () => {
-    await expect(verifyModelStream({ expected, read: reader(new Uint8Array(12)) })).rejects.toThrow('not a GGUF');
+    await expect(verifyModelStream({ expected, read: reader(new Uint8Array(12)) })).rejects.toThrow('not a valid Seekora AI download');
   });
   test('validates multiple chunks and reports bounded reads', async () => {
     const bytes = new Uint8Array(700000).fill(42); bytes.set(fixture);
@@ -47,7 +47,7 @@ describe('pinned model integrity', () => {
   });
   test('rejects unsupported GGUF versions', async () => {
     const bytes = fixture.slice(); bytes[4] = 2;
-    await expect(verifyModelStream({ expected, read: reader(bytes) })).rejects.toThrow('version 3');
+    await expect(verifyModelStream({ expected, read: reader(bytes) })).rejects.toThrow('not supported');
   });
   test('rejects truncated and oversized files', async () => {
     await expect(verifyModelStream({ expected, read: reader(fixture.slice(0, 10)) })).rejects.toThrow('truncated');
@@ -55,7 +55,7 @@ describe('pinned model integrity', () => {
   });
   test('rejects changed content under a valid GGUF header', async () => {
     const bytes = fixture.slice(); bytes[10] = 99;
-    await expect(verifyModelStream({ expected, read: reader(bytes) })).rejects.toThrow('SHA-256');
+    await expect(verifyModelStream({ expected, read: reader(bytes) })).rejects.toThrow('does not match the expected');
   });
   test('cancelled validation never reads or writes', async () => {
     const controller = new AbortController(); controller.abort();

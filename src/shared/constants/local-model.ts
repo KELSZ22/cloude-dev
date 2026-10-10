@@ -1,7 +1,8 @@
 /** Pinned Hugging Face LFS metadata; never resolve a moving main branch at runtime. */
 export const localModel = {
   id: 'diodel/Qwen3.5-0.8B-Q4_K_M-GGUF',
-  name: 'Qwen3.5 0.8B · Q4_K_M',
+  /** Shown in Settings and setup; not the pinned Hugging Face repo id. */
+  name: 'Seekora AI',
   filename: 'qwen3.5-0.8b-Q4_K_M.gguf',
   revision: 'dfdaeea1fdbef1d8900313cf5bed689abff3feec',
   sizeBytes: 529297312,

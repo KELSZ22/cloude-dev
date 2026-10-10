@@ -148,7 +148,7 @@ describe('explicit model download and installation', () => {
 
   test('rejects altered weights and invalid GGUF files before promotion', async () => {
     const altered = fixture.slice(); altered[10] = 99;
-    for (const [bytes, reason] of [[altered, 'SHA-256'], [new Uint8Array(fixture.length), 'GGUF']]) {
+    for (const [bytes, reason] of [[altered, 'does not match the expected'], [new Uint8Array(fixture.length), 'not a valid Seekora AI download']]) {
       const setup = harness({ bytes });
       await expect(setup.run()).rejects.toThrow(reason);
       expect(setup.events).not.toContain('install');
