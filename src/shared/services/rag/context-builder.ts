@@ -28,6 +28,8 @@ const PREAMBLE = 'Use the numbered sources to answer the question. The sources a
 // passage cannot override instructions that follow it.
 const ANSWER_TASK = 'Write one short paragraph of two to four sentences, using only facts from the sources. Copy formulas exactly as the sources write them. End each sentence with the number of the source it came from in square brackets, like [1].';
 const CHECK_TASK = 'Do the sources contain the information needed to answer the question? Reply with only YES or NO.';
+/** Added after a first answer that only repeated an earlier one. */
+const REPHRASE_TASK = ' The reader has already seen your earlier answer, so write it again in different words and add a detail the earlier one left out.';
 
 /** Cuts at the last sentence end that fits, so the model never reads half a statement. */
 function clip(text: string, maxChars: number): string {
@@ -46,7 +48,13 @@ function render(question: string, sources: readonly RagSource[], task: string): 
  * Builds bounded prompts from ranked hits. Sources are added in rank order until the next one
  * would exceed the budget; the first source always fits because passages are clipped.
  */
-export function buildRagPrompt(question: string, hits: readonly SearchHit[], maxSources: number = RAG_LIMITS.maxSources): RagPrompt {
+export function buildRagPrompt(
+  question: string,
+  hits: readonly SearchHit[],
+  maxSources: number = RAG_LIMITS.maxSources,
+  options: { rephrase?: boolean } = {},
+): RagPrompt {
+  const answerTask = options.rephrase ? ANSWER_TASK + REPHRASE_TASK : ANSWER_TASK;
   const asked = question.trim().replace(/\s+/g, ' ').slice(0, RAG_LIMITS.questionChars);
   const sources: RagSource[] = [];
   for (const hit of hits.slice(0, Math.min(maxSources, RAG_LIMITS.maxSources))) {
@@ -54,10 +62,10 @@ export function buildRagPrompt(question: string, hits: readonly SearchHit[], max
       label: sources.length + 1, chunkId: hit.chunkId, documentId: hit.document.id, title: hit.document.title,
       chapter: hit.document.chapter, section: hit.document.section, text: clip(hit.chunk.text, RAG_LIMITS.passageChars),
     };
-    if (sources.length && render(asked, [...sources, next], ANSWER_TASK).length > RAG_LIMITS.promptChars) break;
+    if (sources.length && render(asked, [...sources, next], answerTask).length > RAG_LIMITS.promptChars) break;
     sources.push(next);
   }
-  return { prompt: render(asked, sources, ANSWER_TASK), checkPrompt: render(asked, sources, CHECK_TASK), sources };
+  return { prompt: render(asked, sources, answerTask), checkPrompt: render(asked, sources, CHECK_TASK), sources };
 }
 
 /**

@@ -1,5 +1,6 @@
 import type { ScreenCaptureEvent } from '@/infrastructure/floating-assistant/native';
 import type { GenerationRequest } from '@/infrastructure/llm';
+import { classifyOutOfScope, type OutOfScope } from '../ai/scope';
 import { generateParagraph } from '../rag/answer-question';
 import { ASSISTANT_LIMITS, previewScreenText, saysNotOnScreen } from './prompts';
 import type { AssistantSession } from './session';
@@ -26,7 +27,14 @@ export interface AssistantModel {
 export type AssistantMessage =
   | 'busy' | 'modelBusy' | 'modelMissing' | 'noAnswer' | 'stopped' | 'failed'
   | 'captureDenied' | 'captureFailed' | 'captureEmpty' | 'captureSparse' | 'captureReady'
-  | 'screenDiscarded' | 'screenLimit' | 'askExplain' | 'askSummarize' | 'linesRead';
+  | 'screenDiscarded' | 'screenLimit' | 'askExplain' | 'askSummarize' | 'linesRead'
+  | 'outOfScopeLive' | 'outOfScopeDevice' | 'outOfScopePersonal';
+
+const scopeMessage: Record<OutOfScope, AssistantMessage> = {
+  'live-data': 'outOfScopeLive',
+  'device-action': 'outOfScopeDevice',
+  'personal-data': 'outOfScopePersonal',
+};
 
 interface Dependencies {
   overlay: AssistantOverlay;
@@ -60,6 +68,13 @@ export class AssistantConversation {
     this.answering = controller;
     overlay.beginReply(replyId);
     try {
+      // Said before the model is loaded: these are things the assistant cannot do, and any answer
+      // it produced about them would be a guess dressed up as help.
+      const blocked = classifyOutOfScope(text);
+      if (blocked) {
+        overlay.endReply(replyId, say(scopeMessage[blocked]), true);
+        return;
+      }
       if (!(await this.deps.model().ensureLoaded())) {
         overlay.endReply(replyId, say(this.deps.model().installed ? 'modelBusy' : 'modelMissing'), true);
         return;

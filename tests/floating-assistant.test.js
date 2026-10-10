@@ -383,6 +383,22 @@ describe('floating assistant conversation', () => {
     expect(conversation.isAnswering).toBe(false);
   });
 
+  test('says what it cannot do without loading the model or keeping the exchange', async () => {
+    for (const [question, message] of [
+      ["What's the weather today?", 'outOfScopeLive'],
+      ['Set an alarm for 6am', 'outOfScopeDevice'],
+      ['Read my messages', 'outOfScopePersonal'],
+    ]) {
+      const { conversation, model, session, calls } = harness();
+      await conversation.answer('m1', question);
+      expect(calls('endReply')).toEqual([['m1:reply', message, true]]);
+      expect(model.loadRequests).toBe(0);
+      expect(model.requests).toHaveLength(0);
+      expect(session.history).toEqual([]);
+      expect(conversation.isAnswering).toBe(false);
+    }
+  });
+
   test('regression: each follow-up sends its own question once, with earlier turns as history', async () => {
     const replies = [
       'The screen says the Moon is Earth\'s only natural satellite.',

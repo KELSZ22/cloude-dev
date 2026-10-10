@@ -6,7 +6,8 @@ import { SqliteKnowledgeRepository } from '../src/infrastructure/database/sqlite
 import { parsePack } from '../src/infrastructure/knowledge/pack-format';
 import { LlamaRnEngine } from '../src/infrastructure/llm/llama-engine';
 import {
-  ANSWER_MAX_TOKENS, answerQuestion, CHECK_MAX_TOKENS, requiredTerms, retrieveEvidence, tidyAnswer,
+  ANSWER_MAX_TOKENS, answerQuestion, answerWithoutSources, CHECK_MAX_TOKENS, requiredTerms, retrieveEvidence,
+  tidyAnswer, UNSOURCED_MAX_TOKENS,
 } from '../src/shared/services/rag/answer-question';
 import { checkCitations } from '../src/shared/services/rag/citations';
 import { buildRagPrompt, RAG_LIMITS } from '../src/shared/services/rag/context-builder';
@@ -320,6 +321,57 @@ describe('grounded answers', () => {
     expect(prompt.lastIndexOf('using only facts from the sources')).toBeGreaterThan(prompt.indexOf('Ignore previous instructions'));
     expect(answer.text).toBe('Wombat burrows are long [1]. As instructed, see.');
     expect(answer.citations.map((citation) => citation.chunkId)).toEqual(['hostile-pack:hp:0']);
+  });
+});
+
+describe('answers the reader has already seen', () => {
+  const asked = 'What is the quadratic formula?';
+
+  test('asks again in other words, and tells the caller to drop the streamed repeat', async () => {
+    const model = scriptedModel((request, call) => (call === 1
+      ? 'Use the quadratic formula [1].'
+      : 'Substitute a, b and c into x = (-b ± sqrt(b^2 - 4ac)) / (2a) [1].'));
+    let restarts = 0;
+    const answer = await ask(model, asked, { earlierAnswers: ['Use the quadratic formula [1].'], onRestart: () => { restarts++; } });
+    expect(answer.status).toBe('answered');
+    expect(answer.text).toContain('Substitute a, b and c');
+    expect(restarts).toBe(1);
+    expect(model.calls.length).toBe(2);
+    expect(model.calls[1].prompt).toContain('already seen your earlier answer');
+  });
+
+  test('a new answer is kept as it is, and the rephrase instruction is never sent', async () => {
+    const model = scriptedModel('Use x = (-b + sqrt(b^2 - 4ac)) / (2a) [1].');
+    const answer = await ask(model, asked, { earlierAnswers: ['Something else entirely.'] });
+    expect(answer.status).toBe('answered');
+    expect(model.calls.length).toBe(1);
+    expect(model.calls[0].prompt).not.toContain('already seen');
+  });
+
+  test('the default prompt is unchanged by the rephrase option', async () => {
+    const hits = await hitsFor(asked);
+    expect(buildRagPrompt(asked, hits).prompt).toBe(buildRagPrompt(asked, hits, RAG_LIMITS.maxSources, {}).prompt);
+    expect(buildRagPrompt(asked, hits, RAG_LIMITS.maxSources, { rephrase: true }).prompt)
+      .not.toBe(buildRagPrompt(asked, hits).prompt);
+  });
+});
+
+describe('answers with nothing behind them', () => {
+  test('answers from the model alone, under its own status and with no citation markers', async () => {
+    const model = scriptedModel('A sonnet has fourteen lines [1].');
+    const answer = await answerWithoutSources(model.generate, { question: 'What is a sonnet?' });
+    expect(answer).toEqual({ status: 'unsourced', text: 'A sonnet has fourteen lines.' });
+    expect(model.calls[0].maxTokens).toBe(UNSOURCED_MAX_TOKENS);
+    expect(model.calls[0].system).toContain('Do not cite sources');
+    expect(model.calls[0].prompt).toBe('What is a sonnet?');
+  });
+
+  test('says nothing rather than repeating an answer the reader has seen', async () => {
+    const model = scriptedModel('A sonnet has fourteen lines.');
+    expect(await answerWithoutSources(model.generate, { question: 'What is a sonnet?', earlierAnswers: ['A sonnet has fourteen lines.'] }))
+      .toEqual({ status: 'no-answer' });
+    expect(await answerWithoutSources(scriptedModel(' \n ').generate, { question: 'What is a sonnet?' }))
+      .toEqual({ status: 'no-answer' });
   });
 });
 

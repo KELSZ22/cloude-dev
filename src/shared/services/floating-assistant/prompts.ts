@@ -3,6 +3,7 @@
  * so nothing here changes how Ask Seekora answers.
  */
 import type { ChatTurn } from '@/infrastructure/llm';
+import { repeatsAnswer } from '../ai/repetition';
 
 /** Sized for the engine's 4000-character and 2048-token limits, and for a phone that reads about ten tokens a second. */
 export const ASSISTANT_LIMITS = {
@@ -113,9 +114,7 @@ const ASKED_AGAIN_SYSTEM = ' The user has asked this before in other words, so y
 
 /** True when a reply says the same as an earlier one, ignoring case, spacing and punctuation. */
 export function repeatsEarlierAnswer(reply: string, history: readonly Turn[]): boolean {
-  const normal = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
-  const said = normal(reply);
-  return said !== '' && history.some((turn) => normal(turn.answer) === said);
+  return repeatsAnswer(reply, history.map((turn) => turn.answer));
 }
 
 /** Screen text cannot open or close its own markers, so it can never pose as anything outside them. */
