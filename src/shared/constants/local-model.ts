@@ -1,3 +1,9 @@
+/**
+ * Optional team mirror (e.g. Cloudflare R2), set per build in EXPO_PUBLIC_MODEL_MIRROR_URL.
+ * Public config, not a secret: Expo inlines EXPO_PUBLIC_* values into the bundle.
+ */
+const mirrorUrl = process.env.EXPO_PUBLIC_MODEL_MIRROR_URL?.trim();
+
 /** Pinned Hugging Face LFS metadata; never resolve a moving main branch at runtime. */
 export const localModel = {
   id: 'diodel/Qwen3.5-0.8B-Q4_K_M-GGUF',
@@ -11,6 +17,12 @@ export const localModel = {
   md5: 'f1c74709ebde32840d23454e38eafda5',
   license: 'Apache-2.0',
   sourceUrl: 'https://huggingface.co/diodel/Qwen3.5-0.8B-Q4_K_M-GGUF',
-  /** Team mirror (Cloudflare R2 public dev URL); same bytes as the pinned Hugging Face revision. */
-  downloadUrl: 'https://pub-6fe7720fb0974858a0a09acfd37e866e.r2.dev/models/qwen3.5-0.8b-Q4_K_M.gguf',
+  /**
+   * Tried in order. The team mirror, when configured, comes first; some networks block it, so the
+   * pinned Hugging Face revision always follows. Every source must serve the same verified bytes.
+   */
+  downloadUrls: [
+    ...(mirrorUrl?.startsWith('https://') ? [mirrorUrl] : []),
+    'https://huggingface.co/diodel/Qwen3.5-0.8B-Q4_K_M-GGUF/resolve/dfdaeea1fdbef1d8900313cf5bed689abff3feec/qwen3.5-0.8b-Q4_K_M.gguf',
+  ],
 } as const;

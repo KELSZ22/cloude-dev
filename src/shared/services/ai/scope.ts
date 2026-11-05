@@ -59,6 +59,9 @@ const DEVICE_ACTION: readonly RegExp[] = [
  */
 const PERSONAL_DATA: readonly RegExp[] = [
   /\bmy (?:messages|texts|text messages|emails|e-mails|inbox|chats|contacts|photos|gallery|camera roll|calendar|passwords?|bank|balance|location|call log|browsing history)\b/i,
+  // One message needs a word that points at the inbox, so "help me write my email" stays a task.
+  /\bmy (?:latest|last|newest|new|recent|unread) (?:e-?mails?|mails?|messages?|texts?|chats?)\b/i,
+  /\b(?:in|on|from|check|open) my (?:gmail|outlook|inbox|e-?mail account|messenger|whatsapp|viber|telegram)\b/i,
   /\bwho (?:texted|messaged|called|emailed) me\b/i,
   /\bwhere am i\b/i,
   /\bwhat(?:'s| is) (?:on )?my (?:schedule|calendar)\b/i,

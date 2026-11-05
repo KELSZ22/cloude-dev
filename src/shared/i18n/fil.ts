@@ -74,9 +74,9 @@ export const fil = {
       "Kailangan ng internet para buksan ang mga link ng pinagmulan at lisensya.",
     errors: {
       network:
-        "Hindi makakonekta sa Wikipedia. Suriin ang koneksyon at subukan muli. Nasa Aklatan pa rin ang mga na-save na artikulo.",
+        "Hindi ma-load ang mga artikulo ngayon. Suriin ang koneksyon at subukan muli. Nasa Aklatan pa rin ang mga na-save na artikulo.",
       unavailable:
-        "Hindi makapagbigay ang Wikipedia ng nababasang teksto para sa artikulo o paghahanap. Subukan ang ibang paksa.",
+        "Walang nababasang teksto para sa artikulo o paghahanap na ito. Subukan ang ibang paksa.",
       tooLarge:
         "Masyadong malaki ang artikulong ito para i-download bilang teksto. Pumili ng mas maikling artikulo.",
       storage:
@@ -636,7 +636,7 @@ export const fil = {
     minimize: "Paliitin",
     close: "I-off ang lumulutang na assistant",
     actionAsk: "Magtanong",
-    actionAnalyze: "Suriin ang kasalukuyang screen",
+    actionAnalyze: "Hayaang basahin ng Seekora ang screen ko",
     actionExplain: "Ipaliwanag ang pahinang ito",
     actionSummarize: "Ibuod ang nilalaman",
     statusReady: "Handa na ang Seekora AI offline",
@@ -660,24 +660,26 @@ export const fil = {
     voiceNoMatch: "Walang narinig. I-tap ang mikropono at subukan muli.",
     voiceFailed:
       "Biglang huminto ang voice input. I-tap ang mikropono para subukan muli.",
-    captureTitle: "Suriin ang screen na ito?",
+    captureTitle: "Hayaang basahin ng Seekora ang iyong screen?",
     captureBody:
-      "Kukuha ang Seekora ng isang larawan ng screen, babasahin ang mga salita nito sa device na ito, at itatapon ang larawan. Mga salita lang ang binabasa, hindi ang mga larawan o video. Walang ina-upload. Hihingin ng Android ang iyong kumpirmasyon.",
+      "Habang naka-on ang bubble, babasahin ng Seekora ang mga salita sa iyong screen tuwing bubuksan mo ito, para makapagtanong ka tungkol sa kahit anong app. Mga salita lang ang binabasa, hindi ang mga larawan o video. Binabasa ang teksto sa device na ito at walang ina-upload. Isang beses lang hihingin ng Android ang iyong kumpirmasyon. Maaari mo itong itigil anumang oras mula sa menu ng bubble.",
+    capturing: "Binabasa ang screen...",
     captureContinue: "Magpatuloy",
     captureCancel: "Kanselahin",
     screenAttached: "Nakalakip ang teksto ng screen",
     discard: "Itapon",
     menuOpen: "Buksan ang Seekora AI",
-    menuMoveLeft: "Ilipat sa kaliwa",
-    menuMoveRight: "Ilipat sa kanan",
+    menuReadScreen: "Basahin ang screen ko",
+    menuStopReading: "Itigil ang pagbasa ng screen",
     menuClose: "I-off",
     notificationChannel: "Lumulutang na assistant",
     notificationTitle: "Naka-on ang lumulutang na assistant ng Seekora",
     notificationText:
-      "Pindutin ang bubble para magtanong. Hindi nito binabasa ang iyong screen maliban kung hilingin mo.",
+      "Pindutin ang bubble para magtanong. Binabasa lang nito ang iyong screen kapag pinayagan mo.",
     notificationStop: "I-off",
-    captureNotificationTitle: "Binabasa ng Seekora ang screen na ito",
-    captureNotificationText: "Isang capture, pinoproseso sa device na ito.",
+    captureNotificationTitle: "Nababasa ng Seekora ang iyong screen",
+    captureNotificationText:
+      "Binabasa sa device na ito ang mga salita sa screen kapag binuksan mo ang bubble. Itigil ito mula sa menu ng bubble.",
     linesRead: "{{count}} linya",
     captureReady:
       "Nabasa ko ang mga salita sa iyong screen. Hindi ko nakikita ang mga larawan o video. Ano ang gusto mong malaman tungkol sa teksto?",
@@ -703,7 +705,7 @@ export const fil = {
     outOfScopeDevice:
       "Nakakabasa at nakakapaliwanag ako, pero hindi ako makakapagpadala ng mensahe, makakapag-set ng alarm, o makakakontrol ng kahit ano sa telepono mo.",
     outOfScopePersonal:
-      "Hindi ko nakikita ang iyong mga mensahe, larawan o account. Ibahagi na lang ang tekstong kailangan mo ng tulong.",
+      "Hindi ko mabubuksan ang iyong mga account. Para magtanong tungkol sa isang email o mensahe, buksan ito sa iyong screen, pagkatapos ay i-tap ang bubble at babasahin ko ang mga salita doon.",
     stopped: "Itinigil.",
     failed: "May nangyaring mali habang sumasagot.",
     memoryUnloaded:

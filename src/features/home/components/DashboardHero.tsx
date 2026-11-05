@@ -83,7 +83,9 @@ export function DashboardHero() {
       player.play();
       setWaving(true);
       return () => {
-        player.pause();
+        // On unmount useVideoPlayer may already have released the player, which also stops it.
+        try { player.pause(); }
+        catch { /* Already released: nothing left to pause. */ }
       };
     }, [player, reducedMotion]),
   );

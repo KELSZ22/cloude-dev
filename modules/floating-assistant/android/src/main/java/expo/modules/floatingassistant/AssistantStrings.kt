@@ -16,7 +16,7 @@ internal class AssistantStrings(private val values: Map<String, String> = emptyM
   val minimize get() = text("minimize", "Minimize")
   val close get() = text("close", "Turn off floating assistant")
   val actionAsk get() = text("actionAsk", "Ask a question")
-  val actionAnalyze get() = text("actionAnalyze", "Analyze current screen")
+  val actionAnalyze get() = text("actionAnalyze", "Let Seekora read my screen")
   val actionExplain get() = text("actionExplain", "Explain this page")
   val actionSummarize get() = text("actionSummarize", "Summarize content")
   val statusReady get() = text("statusReady", "Offline model ready")
@@ -27,11 +27,12 @@ internal class AssistantStrings(private val values: Map<String, String> = emptyM
   val statusUnavailable get() = text("statusUnavailable", "Seekora is closed")
   val appClosed get() = text("appClosed", "Seekora is not running, so the assistant cannot answer. Open Seekora, then come back.")
   val openApp get() = text("openApp", "Open Seekora")
-  val captureTitle get() = text("captureTitle", "Analyze this screen?")
+  val captureTitle get() = text("captureTitle", "Let Seekora read your screen?")
   val captureBody get() = text(
     "captureBody",
-    "Seekora will take one picture of the screen, read its text on this device, and discard the picture. " +
-      "Nothing is uploaded. Android will ask you to confirm."
+    "While the bubble is on, Seekora reads the words on your screen each time you open it, so you can ask about any app. " +
+      "Text is read on this device, pictures are discarded, and nothing is uploaded. Android will ask you to confirm once. " +
+      "Stop anytime from the bubble's menu."
   )
   val voiceStart get() = text("voiceStart", "Ask by voice")
   val voiceStop get() = text("voiceStop", "Stop listening")
@@ -49,13 +50,16 @@ internal class AssistantStrings(private val values: Map<String, String> = emptyM
   val screenAttached get() = text("screenAttached", "Screen text attached")
   val discard get() = text("discard", "Discard")
   val menuOpen get() = text("menuOpen", "Open Seekora AI")
-  val menuMoveLeft get() = text("menuMoveLeft", "Move to left")
-  val menuMoveRight get() = text("menuMoveRight", "Move to right")
+  val menuReadScreen get() = text("menuReadScreen", "Read my screen")
+  val menuStopReading get() = text("menuStopReading", "Stop reading screen")
   val menuClose get() = text("menuClose", "Turn off")
   val notificationChannel get() = text("notificationChannel", "Floating assistant")
   val notificationTitle get() = text("notificationTitle", "Seekora floating assistant is on")
-  val notificationText get() = text("notificationText", "Tap the bubble to ask a question. It never reads your screen unless you ask.")
+  val notificationText get() = text("notificationText", "Tap the bubble to ask a question. It reads your screen only after you allow it.")
   val notificationStop get() = text("notificationStop", "Turn off")
-  val captureNotificationTitle get() = text("captureNotificationTitle", "Seekora is reading this screen")
-  val captureNotificationText get() = text("captureNotificationText", "One capture, processed on this device.")
+  val captureNotificationTitle get() = text("captureNotificationTitle", "Seekora can read your screen")
+  val captureNotificationText get() = text(
+    "captureNotificationText",
+    "Words on screen are read on this device when you open the bubble. Stop it from the bubble's menu."
+  )
 }

@@ -399,6 +399,30 @@ describe('floating assistant conversation', () => {
     }
   });
 
+  test('answers about private text the user scanned, but still refuses what it cannot do', async () => {
+    const INBOX = [
+      'Inbox',
+      'Ms. Santos: Science fair projects are due on Friday. Bring your poster to room 204.',
+      'Library: The book you reserved, A Brief History of Time, is ready for pickup.',
+    ].join('\n');
+    const scanned = harness({ reply: 'Your science fair project is due Friday, and a library book is ready.' });
+    scanned.session.attachScreen(capture(INBOX));
+    await scanned.conversation.answer('m1', 'Summarize my emails');
+    expect(scanned.model.requests).toHaveLength(1);
+    expect(scanned.calls('endReply').at(-1)[2]).toBe(false);
+
+    for (const [question, message] of [
+      ['Set an alarm for 6am', 'outOfScopeDevice'],
+      ["What's the weather today?", 'outOfScopeLive'],
+    ]) {
+      const { conversation, model, session, calls } = harness();
+      session.attachScreen(capture(INBOX));
+      await conversation.answer('m1', question);
+      expect(calls('endReply')).toEqual([['m1:reply', message, true]]);
+      expect(model.requests).toHaveLength(0);
+    }
+  });
+
   test('regression: each follow-up sends its own question once, with earlier turns as history', async () => {
     const replies = [
       'The screen says the Moon is Earth\'s only natural satellite.',
@@ -619,6 +643,41 @@ describe('floating assistant conversation', () => {
     }
   });
 
+  test('a screen read as the bubble opens is attached without a word', () => {
+    const { conversation, session, calls, context } = harness();
+    conversation.captured(capture(PAGE, { action: 'auto' }));
+    expect(session.screenContext.text).toBe(PAGE);
+    expect(calls('setScreenAttached')).toHaveLength(1);
+    expect(calls('showNotice')).toEqual([]);
+    expect(calls('submitUserMessage')).toEqual([]);
+    expect(context).toEqual([true]);
+
+    conversation.captured(capture('Battery saver\nOn', { action: 'auto', captureId: 'c2' }));
+    expect(session.screenContext.captureId).toBe('c2');
+    expect(calls('showNotice')).toEqual([]);
+  });
+
+  test('a screen read again before a typed question replaces the earlier screen without a word', () => {
+    const { conversation, session, calls } = harness();
+    conversation.captured(capture(MOON, { action: 'auto', captureId: 'inbox' }));
+    conversation.captured(capture(MARS, { action: 'refresh', captureId: 'email' }));
+    expect(session.screenContext.captureId).toBe('email');
+    expect(session.buildRequest('What is this?').prompt + JSON.stringify(session.buildRequest('?'))).not.toContain('only natural satellite');
+    expect(calls('showNotice')).toEqual([]);
+    expect(calls('submitUserMessage')).toEqual([]);
+  });
+
+  test('an automatic read that finds nothing quietly drops the text of the earlier screen', () => {
+    for (const next of [capture('', { status: 'empty', action: 'auto' }), capture('', { status: 'failed', action: 'auto' })]) {
+      const { conversation, session, calls } = harness();
+      conversation.captured(capture(MOON, { action: 'auto' }));
+      conversation.captured(next);
+      expect(session.screenContext).toBeNull();
+      expect(calls('setScreenAttached').at(-1)).toEqual([false, null]);
+      expect(calls('showNotice')).toEqual([]);
+    }
+  });
+
   test('warns when only a little text was found', () => {
     const { conversation, session, calls } = harness();
     conversation.captured(capture('Battery saver\nOn'));
@@ -728,13 +787,19 @@ describe('floating assistant native module', () => {
     expect(sources).not.toMatch(/WakeLock|FLAG_KEEP_SCREEN_ON/);
   });
 
-  test('releases the screen capture as soon as one frame is read', () => {
+  test('stops drawing the screen as soon as one frame is read, and ends with the bubble', () => {
     const service = readFileSync(join(sourceDir, 'ScreenCaptureService.kt'), 'utf8');
-    const grab = service.slice(service.indexOf('private fun grabFrame'), service.indexOf('private fun toBitmap'));
-    expect(grab).toContain('releaseProjection()');
-    expect(grab.indexOf('releaseProjection()')).toBeLessThan(grab.indexOf('readText(bitmap)'));
-    const release = service.slice(service.indexOf('private fun releaseProjection'), service.indexOf('private fun finish'));
+    const grab = service.slice(service.indexOf('private fun grabFrame'), service.indexOf('private fun detachSurface'));
+    expect(grab).toContain('detachSurface()');
+    expect(grab.indexOf('detachSurface()')).toBeLessThan(grab.indexOf('readText(bitmap)'));
+    // Between captures the virtual display has no surface, so nothing is rendered.
+    expect(service.slice(service.indexOf('private fun detachSurface'))).toContain('display?.surface = null');
+    expect(service.match(/createVirtualDisplay\(/g)).toHaveLength(1);
+    const release = service.slice(service.indexOf('private fun releaseSession'), service.indexOf('override fun onDestroy'));
     expect(release).toContain('it.stop()');
     expect(service).toContain('bitmap.recycle()');
+    const bubble = readFileSync(join(sourceDir, 'FloatingAssistantService.kt'), 'utf8');
+    const destroy = bubble.slice(bubble.indexOf('override fun onDestroy'));
+    expect(destroy).toContain('ScreenCaptureService.stop(this)');
   });
 });

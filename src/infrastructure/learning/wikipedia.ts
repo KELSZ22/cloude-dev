@@ -19,6 +19,11 @@ const MAX_EXTRACT = 1_000_000;
 const MAX_FIGURES = 8;
 const MAX_FIGURE_BYTES = 400_000;
 const MIN_FIGURE_WIDTH = 240;
+const USER_AGENT = "AralSearch/1.0 (offline educational reader)";
+// Wikimedia answers 403 to the default okhttp agent React Native sends on Android, so native
+// requests name the app. Browsers own User-Agent, and setting it there would force a preflight.
+const NATIVE_HEADERS: Record<string, string> | undefined =
+  typeof document === "undefined" ? { "User-Agent": USER_AGENT } : undefined;
 const DECORATIVE = /logo|icon|ambox|symbol[_ ]|speaker|wiktionary|wikibooks|commons-logo|edit-clear|question.?book|padlock|disambig|crystal|nuvola|increase|decrease|office-book|red.?pencil|featured|sound-icon|videoicon|lock-|folder_|check\.svg|x.?mark|star_of|p_?vip|wikimedia|activemarker/i;
 
 function object(value: unknown): JsonObject {
@@ -90,7 +95,7 @@ async function queryWikipediaResponse(
     });
     const response = await fetcher(`https://${language}.wikipedia.org/w/api.php?${search}`, {
       signal: controller.signal,
-      headers: { "Api-User-Agent": "AralSearch/1.0 (offline educational reader)" },
+      headers: { ...NATIVE_HEADERS, "Api-User-Agent": USER_AGENT },
     });
     if (!response.ok) throw new ReadingError("network");
     const data = object(await response.json());
@@ -128,7 +133,7 @@ async function fetchImageBytes(url: string, signal: AbortSignal | undefined, fet
     if (controller.signal.aborted) throw new ReadingError("cancelled");
     // No Api-User-Agent here: that is an api.php convention, and sending it to the media host
     // makes the request preflighted, which the host refuses. Every figure would fail on web.
-    const response = await fetcher(url, { signal: controller.signal });
+    const response = await fetcher(url, { signal: controller.signal, headers: NATIVE_HEADERS });
     if (!response.ok) throw new ReadingError("network");
     const buffer = new Uint8Array(await response.arrayBuffer());
     if (buffer.byteLength < 32 || buffer.byteLength > MAX_FIGURE_BYTES) throw new ReadingError("tooLarge");

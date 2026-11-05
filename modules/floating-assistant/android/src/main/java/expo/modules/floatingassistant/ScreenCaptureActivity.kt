@@ -3,6 +3,7 @@ package expo.modules.floatingassistant
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.media.projection.MediaProjectionConfig
 import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.Bundle
@@ -10,7 +11,8 @@ import java.util.UUID
 
 /**
  * Invisible activity whose only job is to show Android's own "start recording or casting?" dialog.
- * A service cannot receive that dialog's answer, and the answer is valid for one capture only.
+ * A service cannot receive that dialog's answer. One answer starts a session that lasts while the
+ * bubble is on.
  */
 class ScreenCaptureActivity : Activity() {
   private companion object {
@@ -20,11 +22,16 @@ class ScreenCaptureActivity : Activity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    AssistantBus.consentShown = true
     if (savedInstanceState?.getBoolean(STATE_ASKED) == true) return
     val manager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
     try {
+      // The whole screen, not one app: the user asks about whatever app is under the bubble.
+      val consent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        manager.createScreenCaptureIntent(MediaProjectionConfig.createConfigForDefaultDisplay())
+      } else manager.createScreenCaptureIntent()
       @Suppress("DEPRECATION")
-      startActivityForResult(manager.createScreenCaptureIntent(), REQUEST_CAPTURE)
+      startActivityForResult(consent, REQUEST_CAPTURE)
     } catch (_: Exception) {
       finishWith("failed")
     }
@@ -44,7 +51,7 @@ class ScreenCaptureActivity : Activity() {
       return
     }
     // Android 14 and later require a media-projection foreground service to be running before the
-    // approval can be used, so the capture itself happens in that short-lived service.
+    // approval can be used, so the session lives in that service.
     val intent = Intent(this, ScreenCaptureService::class.java)
       .putExtra(ScreenCaptureService.EXTRA_RESULT_CODE, resultCode)
       .putExtra(ScreenCaptureService.EXTRA_RESULT_DATA, data)

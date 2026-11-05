@@ -171,13 +171,16 @@ export default function ModelPage() {
           }}
           disabled={busy || !installed || !ready}
         />
-        <ActionRow
-          icon={{ ios: "trash", android: "delete", web: "delete" }}
-          label={t("model.rowRemove")}
-          destructive
-          onPress={confirmRemove}
-          disabled={busy || !model.native || (!installed && !model.error)}
-        />
+        {/* Only offered to recover a damaged or incomplete install, whose error says to remove it. */}
+        {model.error && model.native ? (
+          <ActionRow
+            icon={{ ios: "trash", android: "delete", web: "delete" }}
+            label={t("model.rowRemove")}
+            destructive
+            onPress={confirmRemove}
+            disabled={busy}
+          />
+        ) : null}
       </RowGroup>
 
       {model.output !== "" ? (

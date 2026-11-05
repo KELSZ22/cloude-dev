@@ -12,7 +12,11 @@ export interface ScreenCaptureEvent {
   text: string;
   blocks: number;
   lines: number;
-  /** What the user asked for when starting the capture: "explain", "summarize", or null. */
+  /**
+   * What the user asked for when starting the capture: "explain", "summarize", or null.
+   * "auto" when screen reading is on and the capture ran by itself as the bubble opened, and
+   * "refresh" when it ran just before a typed question was sent.
+   */
   action: string | null;
 }
 

@@ -1,4 +1,4 @@
-import { REQUEST_TIMEOUT_MS, providerLabel, resourceUserAgent } from "../config";
+import { REQUEST_TIMEOUT_MS, resourceUserAgent } from "../config";
 import { ResourceApiError, type ResourceErrorCode } from "../types/resource.types";
 
 export interface ProviderDeps {
@@ -154,14 +154,14 @@ function failure(
   retryable: boolean,
   status?: number,
 ): ResourceApiError {
-  const label = providerLabel(provider);
+  // Users see these, so they never name the service behind the search; `provider` keeps it for logs.
   const userMessage =
-    code === "timeout" ? `${label} took too long to respond.`
-    : code === "network" ? `Could not reach ${label}. Check your connection.`
+    code === "timeout" ? "The search took too long to respond. Please try again."
+    : code === "network" ? "Could not load results right now. Check your connection and try again."
     : code === "cancelled" ? "Search cancelled."
-    : code === "config" ? `${label} needs a contact email before it can be used.`
-    : code === "invalid" ? `${label} returned a response that could not be read.`
-    : `${label} could not complete the request.`;
+    : code === "config" ? "This search is not set up yet."
+    : code === "invalid" ? "The results could not be read. Please try again."
+    : "The search could not be completed. Please try again.";
   return new ResourceApiError({ provider, code, retryable, status, userMessage });
 }
 

@@ -33,8 +33,23 @@ describe('what the app cannot be asked', () => {
   });
 
   test('names requests for the reader\'s own accounts', () => {
-    for (const question of ['Read my messages', 'Who texted me?', 'What is on my calendar?', 'Where am I?']) {
+    for (const question of [
+      'Read my messages', 'Who texted me?', 'What is on my calendar?', 'Where am I?',
+      'Can you tell me what is my latest email I receive in my gmail?',
+      'What was my last message?', "What's in my inbox?", 'Check my Gmail',
+    ]) {
       expect(classifyOutOfScope(question)).toBe('personal-data');
+    }
+  });
+
+  test('helping to write or understand email is not a request to read the inbox', () => {
+    for (const question of [
+      'Help me write my email to my teacher',
+      'How do I set up my Gmail?',
+      'How do I make my email sound polite?',
+      'What is the latest version of email protocols?',
+    ]) {
+      expect(classifyOutOfScope(question)).toBeNull();
     }
   });
 

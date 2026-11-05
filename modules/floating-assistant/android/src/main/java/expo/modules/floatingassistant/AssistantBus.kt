@@ -40,7 +40,11 @@ internal object AssistantBus {
     fun setScreenAttached(attached: Boolean, summary: String?)
     fun resetBubblePosition()
     fun applyStrings()
+    /** The picture is taken; the overlay may come back while the text is still being read. */
+    fun onCaptureTaken()
     fun onCaptureFinished(result: CaptureResult)
+    /** Screen reading was turned on or off. */
+    fun onScreenSessionChanged()
   }
 
   private val main = Handler(Looper.getMainLooper())
@@ -52,6 +56,8 @@ internal object AssistantBus {
   @Volatile var modelStatus: String = "unavailable"
   /** Set while a capture is in flight, so its result can say what the user wanted done with it. */
   @Volatile var pendingCaptureAction: String? = null
+  /** Set once Android's consent dialog is up, so the overlay knows the launch was not refused. */
+  @Volatile var consentShown: Boolean = false
 
   /** Returns false when nothing is listening, so the overlay can tell the user to reopen Seekora. */
   fun toJs(event: String, payload: Map<String, Any?> = emptyMap()): Boolean {
@@ -66,6 +72,14 @@ internal object AssistantBus {
 
   fun onUi(action: (Ui) -> Unit) {
     main.post { ui?.let(action) }
+  }
+
+  fun captureTaken() {
+    main.post { ui?.onCaptureTaken() }
+  }
+
+  fun screenSessionChanged() {
+    main.post { ui?.onScreenSessionChanged() }
   }
 
   fun captureFinished(result: CaptureResult) {

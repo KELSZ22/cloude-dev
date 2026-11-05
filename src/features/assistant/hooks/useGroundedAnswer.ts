@@ -50,7 +50,7 @@ export function useGroundedAnswer() {
   async function ask(question: string, options: AskOptions = {}): Promise<AskOutcome | null> {
     const { page, history = [] } = options;
     // With no page and no library the model can still answer from its own knowledge, labelled.
-    if (busy || (!page && !repository && !modelReady)) return null;
+    if (busy || (!page && !repository && !modelReady && !model.installed)) return null;
     const controller = new AbortController();
     active.current = controller;
     setBusy(true); setStreamed(''); setResult(null); setError(null);
@@ -68,9 +68,12 @@ export function useGroundedAnswer() {
 
     try {
       const blocked = classifyOutOfScope(question);
+      // An installed model that is not loaded yet loads now, as the status line promises; without
+      // this the question would only be matched against the library, word for word.
+      const canGenerate = !blocked && (modelReady || (model.installed !== null && await model.ensureLoaded()));
       if (blocked) {
         outcome = { status: 'out-of-scope', reason: blocked };
-      } else if (modelReady) {
+      } else if (canGenerate) {
         // The open article is tried first because most questions are about what is on screen, but a
         // question it cannot answer is not the reader's mistake: the library, then the model's own
         // knowledge, get their turn before anything is refused.

@@ -69,9 +69,10 @@ export class AssistantConversation {
     overlay.beginReply(replyId);
     try {
       // Said before the model is loaded: these are things the assistant cannot do, and any answer
-      // it produced about them would be a guess dressed up as help.
+      // it produced about them would be a guess dressed up as help. With a screen attached, the user
+      // has shown the private text they mean ("summarize my emails" after scanning the inbox).
       const blocked = classifyOutOfScope(text);
-      if (blocked) {
+      if (blocked && !(blocked === 'personal-data' && session.screenContext)) {
         overlay.endReply(replyId, say(scopeMessage[blocked]), true);
         return;
       }
@@ -119,16 +120,25 @@ export class AssistantConversation {
   /** Takes the result of a capture the user approved. Nothing is kept unless readable text came back. */
   captured(event: ScreenCaptureEvent): void {
     const { overlay, session, say } = this.deps;
+    // Read on its own as the bubble opened, or just before a typed question was sent. The user did
+    // not ask for it, so it stays quiet; and the screen has changed, so text from an earlier screen
+    // must not linger either way.
+    const auto = event.action === 'auto' || event.action === 'refresh';
     if (event.status === 'denied') return overlay.showNotice(say('captureDenied'));
-    if (event.status === 'failed') return overlay.showNotice(say('captureFailed'));
+    if (event.status === 'failed') {
+      if (auto) return this.dropScreen();
+      return overlay.showNotice(say('captureFailed'));
+    }
     const result = event.status === 'ok' ? session.attachScreen(event) : { attached: false as const };
     if (!result.attached) {
       this.dropScreen();
-      return overlay.showNotice(say('captureEmpty'));
+      if (!auto) overlay.showNotice(say('captureEmpty'));
+      return;
     }
     this.deps.onScreenContext?.(true);
     // The sample shows the user exactly what was read. It sits with the attached text and goes when that is discarded.
     overlay.setScreenAttached(true, `${say('linesRead', { count: result.context.lines })}\n“${previewScreenText(result.context.text)}”`);
+    if (auto) return;
     if (result.context.quality === 'sparse') overlay.showNotice(say('captureSparse'));
     if (event.action === 'explain') overlay.submitUserMessage(say('askExplain'));
     else if (event.action === 'summarize') overlay.submitUserMessage(say('askSummarize'));

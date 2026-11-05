@@ -16,7 +16,8 @@ import android.os.IBinder
 
 /**
  * Keeps the floating bubble on screen while the user has the assistant turned on.
- * It draws the overlay and nothing else: it never captures the screen and never runs the model.
+ * It draws the overlay and nothing else: screen capture lives in [ScreenCaptureService], and the
+ * model runs in the app's JavaScript.
  */
 class FloatingAssistantService : Service() {
   companion object {
@@ -78,6 +79,8 @@ class FloatingAssistantService : Service() {
 
   override fun onDestroy() {
     running = false
+    // Screen reading lasts only as long as the bubble.
+    ScreenCaptureService.stop(this)
     val current = controller
     controller = null
     current?.destroy()

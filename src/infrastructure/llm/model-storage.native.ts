@@ -29,7 +29,7 @@ export function createModelStorage(): ModelStorage {
       const staged = stagingFile();
       if (!record.exists || !staged.exists) return null;
       const value = JSON.parse(record.textSync()) as Partial<SavedTransfer>;
-      if (value.url !== localModel.downloadUrl || value.fileUri !== staged.uri
+      if (!(localModel.downloadUrls as readonly unknown[]).includes(value.url) || value.fileUri !== staged.uri
         || typeof value.resumeData !== 'string' || value.resumeData.length === 0
         || staged.size <= 0 || staged.size >= localModel.sizeBytes) return null;
       return value as SavedTransfer;
@@ -119,66 +119,85 @@ export function createModelStorage(): ModelStorage {
     }
   };
 
+  const downloadFrom = (
+    url: string, signal: AbortSignal, onProgress: Parameters<ModelStorage['downloadModel']>[1],
+  ) => {
+    let staged = stagingFile();
+    let resume: SavedTransfer | null = null;
+    const android = Platform.OS === 'android';
+    return downloadAndInstallModel({
+      prepare() { ({ staged, resume } = prepareDirectory(true)); },
+      createTask(_taskSignal, onBytes) {
+        // The workflow owns abort handling: Expo's automatic signal handler calls the unsafe
+        // Android cancel path instead of our pause-and-discard adapter.
+        const start = (saved: SavedTransfer | null): TransferSegment => {
+          let adapted: ReturnType<typeof adaptModelDownloadTask> | null = null;
+          const options = {
+            // iOS keeps the transfer going after the app is suspended; Android ignores the option
+            // and is paused/resumed by the resumable task instead.
+            sessionType: android ? 'foreground' as const : 'background' as const,
+            onProgress: ({ bytesWritten }: { bytesWritten: number }) => {
+              adapted?.onProgress();
+              onBytes(bytesWritten);
+            },
+          };
+          const task = saved
+            ? DownloadTask.fromSavable(saved, options)
+            : File.createDownloadTask(url, staged, options);
+          // A restored task continues with resumeAsync; a new one starts with downloadAsync.
+          adapted = adaptModelDownloadTask({
+            get state() { return task.state; },
+            downloadAsync: () => (saved ? task.resumeAsync() : task.downloadAsync()),
+            pause: () => task.pause(),
+            cancel: () => task.cancel(),
+            release: () => task.release(),
+          }, android);
+          const segment = adapted;
+          return {
+            get state() { return task.state; },
+            run: () => segment.downloadAsync(),
+            pause: () => task.pause(),
+            cancel: () => segment.cancel(),
+            release: () => segment.release(),
+            savable: () => task.savable(),
+          };
+        };
+        return createResumableTask({
+          start,
+          save: saveResume,
+          clear: () => { if (resumeFile().exists) resumeFile().delete(); },
+          isActive: () => AppState.currentState === 'active',
+          onVisibility: (listener) => {
+            const subscription = AppState.addEventListener('change', (next) => listener(next === 'active'));
+            return () => subscription.remove();
+          },
+          pauseInBackground: android,
+        }, resume);
+      },
+      size: () => staged.size,
+      verify: (taskSignal, update) => verifyStaged(staged, taskSignal, update),
+      install: () => finishInstall(staged, staged.md5 ?? undefined),
+      cleanup: cleanupStaging,
+    }, { sizeBytes: localModel.sizeBytes, signal, onProgress });
+  };
+
   return {
     readInstalled,
     async downloadModel(signal, onProgress) {
-      let staged = stagingFile();
-      let resume: SavedTransfer | null = null;
-      const android = Platform.OS === 'android';
-      return downloadAndInstallModel({
-        prepare() { ({ staged, resume } = prepareDirectory(true)); },
-        createTask(_taskSignal, onBytes) {
-          // The workflow owns abort handling: Expo's automatic signal handler calls the unsafe
-          // Android cancel path instead of our pause-and-discard adapter.
-          const start = (saved: SavedTransfer | null): TransferSegment => {
-            let adapted: ReturnType<typeof adaptModelDownloadTask> | null = null;
-            const options = {
-              // iOS keeps the transfer going after the app is suspended; Android ignores the option
-              // and is paused/resumed by the resumable task instead.
-              sessionType: android ? 'foreground' as const : 'background' as const,
-              onProgress: ({ bytesWritten }: { bytesWritten: number }) => {
-                adapted?.onProgress();
-                onBytes(bytesWritten);
-              },
-            };
-            const task = saved
-              ? DownloadTask.fromSavable(saved, options)
-              : File.createDownloadTask(localModel.downloadUrl, staged, options);
-            // A restored task continues with resumeAsync; a new one starts with downloadAsync.
-            adapted = adaptModelDownloadTask({
-              get state() { return task.state; },
-              downloadAsync: () => (saved ? task.resumeAsync() : task.downloadAsync()),
-              pause: () => task.pause(),
-              cancel: () => task.cancel(),
-              release: () => task.release(),
-            }, android);
-            const segment = adapted;
-            return {
-              get state() { return task.state; },
-              run: () => segment.downloadAsync(),
-              pause: () => task.pause(),
-              cancel: () => segment.cancel(),
-              release: () => segment.release(),
-              savable: () => task.savable(),
-            };
-          };
-          return createResumableTask({
-            start,
-            save: saveResume,
-            clear: () => { if (resumeFile().exists) resumeFile().delete(); },
-            isActive: () => AppState.currentState === 'active',
-            onVisibility: (listener) => {
-              const subscription = AppState.addEventListener('change', (next) => listener(next === 'active'));
-              return () => subscription.remove();
-            },
-            pauseInBackground: android,
-          }, resume);
-        },
-        size: () => staged.size,
-        verify: (taskSignal, update) => verifyStaged(staged, taskSignal, update),
-        install: () => finishInstall(staged, staged.md5 ?? undefined),
-        cleanup: cleanupStaging,
-      }, { sizeBytes: localModel.sizeBytes, signal, onProgress });
+      const urls = localModel.downloadUrls;
+      for (let index = 0; ; index += 1) {
+        let received = false;
+        try {
+          return await downloadFrom(urls[index], signal, (progress) => {
+            if (progress.stage !== 'downloading' || progress.fraction > 0) received = true;
+            onProgress(progress);
+          });
+        } catch (error) {
+          // Move to the next mirror only when this one sent nothing (blocked or unreachable host).
+          // A transfer that started and then failed is reported, not silently restarted elsewhere.
+          if (signal.aborted || received || index >= urls.length - 1) throw error;
+        }
+      }
     },
     async importFile(sourceUri, signal, onProgress) {
       if (signal.aborted) throw new Error('Model import cancelled.');

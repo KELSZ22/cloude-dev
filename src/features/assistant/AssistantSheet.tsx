@@ -183,7 +183,7 @@ export function AssistantSheet() {
       const library = knowledge.state;
       const page = pageRef.current ?? undefined;
       outcome =
-        page || libraryReady || modelReady
+        page || libraryReady || modelReady || model.installed
           ? await ask(question, { page, history: askedTurns(messages) })
           : {
               status: "notice",

@@ -166,7 +166,8 @@ describe("Wikipedia downloads", () => {
     });
     expect(mediaRequests.length).toBe(1);
     // thumb.wikimedia.org refuses the preflight any custom header forces, so none may be sent.
-    expect(mediaRequests[0].headers).toBeUndefined();
+    // Tests run without a DOM, so this is the native path: only User-Agent, which never preflights there.
+    expect(Object.keys(mediaRequests[0].headers ?? {})).toEqual(["User-Agent"]);
   });
 
   test("keeps the article if figure downloads fail", async () => {

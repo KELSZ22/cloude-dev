@@ -24,13 +24,16 @@ import android.os.Looper
 import android.view.WindowManager
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.util.UUID
 
 /**
- * Takes exactly one picture of the screen after the user approved it, reads the text in it on the
- * device, and stops. The picture stays in memory, is never written to storage or logged, and is
- * released as soon as the text has been read.
+ * A screen-reading session the user approved once. While the bubble is on, each capture takes one
+ * picture of the screen, reads its text on the device and drops the picture. Pictures are never
+ * written to storage or logged. Between captures the virtual display has no surface, so nothing is
+ * rendered. The session ends when the bubble is turned off, the user stops it, or Android ends it
+ * (for example when the screen locks).
  */
 class ScreenCaptureService : Service() {
   companion object {
@@ -38,23 +41,45 @@ class ScreenCaptureService : Service() {
     const val EXTRA_RESULT_DATA = "resultData"
     private const val CHANNEL = "seekora_screen_capture"
     private const val NOTIFICATION_ID = 4712
-    /** Lets Android's consent dialog and this app's own windows leave the screen first. */
-    private const val SETTLE_MS = 500L
-    private const val RETRY_MS = 150L
+    /** Lets Android's consent dialog leave the screen before the first capture. */
+    private const val CONSENT_SETTLE_MS = 500L
+    /** Lets this app's own windows leave the screen before a picture is taken. */
+    private const val SETTLE_MS = 250L
+    private const val RETRY_MS = 100L
     private const val TIMEOUT_MS = 6000L
+
+    @Volatile private var active: ScreenCaptureService? = null
+
+    /** True while the user's approval is still valid, so a capture needs no new consent. */
+    val sessionActive: Boolean get() = active != null
+
+    /** Starts a capture in the running session. Returns false when there is no session. */
+    fun capture(action: String?): Boolean = active?.startCapture(action) ?: false
+
+    fun stop(context: Context) {
+      context.stopService(Intent(context, ScreenCaptureService::class.java))
+    }
   }
 
   private val main = Handler(Looper.getMainLooper())
   private var projection: MediaProjection? = null
   private var display: VirtualDisplay? = null
   private var reader: ImageReader? = null
-  private var finished = false
-  private val captureId = UUID.randomUUID().toString()
+  private var recognizer: TextRecognizer? = null
+  private var width = 0
+  private var height = 0
+  /** The newest frame since the surface was attached. Only one is held, and only during a capture. */
+  private var latest: Image? = null
+
+  private var capturing = false
+  private var captureId = ""
+  private var captureAction: String? = null
+  private var deadline = 0L
 
   private val projectionCallback = object : MediaProjection.Callback() {
     override fun onStop() {
-      // The user or the system ended the session before a picture was taken.
-      finish("failed", "", 0, 0)
+      // The user stopped sharing, or Android ended the session.
+      endSession()
     }
   }
 
@@ -68,54 +93,118 @@ class ScreenCaptureService : Service() {
     } else {
       @Suppress("DEPRECATION") intent?.getParcelableExtra(EXTRA_RESULT_DATA)
     }
-    if (resultCode != Activity.RESULT_OK || data == null) {
-      finish("denied", "", 0, 0)
+    val action = AssistantBus.pendingCaptureAction
+    if (projection != null) {
+      // Already running: an approval cannot be reused, so take the picture with the session we have.
+      startCapture(action)
       return START_NOT_STICKY
     }
-    main.postDelayed({ beginCapture(resultCode, data) }, SETTLE_MS)
-    main.postDelayed({ finish("failed", "", 0, 0) }, TIMEOUT_MS)
+    if (resultCode != Activity.RESULT_OK || data == null) {
+      report("denied", "", 0, 0, UUID.randomUUID().toString(), action)
+      stopSelf()
+      return START_NOT_STICKY
+    }
+    main.postDelayed({
+      if (beginSession(resultCode, data)) startCapture(action)
+      else {
+        report("failed", "", 0, 0, UUID.randomUUID().toString(), action)
+        stopSelf()
+      }
+    }, CONSENT_SETTLE_MS)
     return START_NOT_STICKY
   }
 
-  private fun beginCapture(resultCode: Int, data: Intent) {
-    if (finished) return
-    try {
+  private fun beginSession(resultCode: Int, data: Intent): Boolean {
+    return try {
       val manager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
-      val session = manager.getMediaProjection(resultCode, data)
-      if (session == null) {
-        finish("failed", "", 0, 0)
-        return
-      }
+      val session = manager.getMediaProjection(resultCode, data) ?: return false
       projection = session
       session.registerCallback(projectionCallback, main)
-
-      val size = Point()
-      val windows = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-      @Suppress("DEPRECATION") windows.defaultDisplay.getRealSize(size)
-      val imageReader = ImageReader.newInstance(size.x, size.y, PixelFormat.RGBA_8888, 2)
+      val (w, h) = screenSize()
+      width = w; height = h
+      val imageReader = newReader(w, h)
       reader = imageReader
+      // Created once: Android 14 and later allow a single virtual display per approval. It starts
+      // with the reader attached, because a new display is always drawn once, so the first capture
+      // gets a frame even when nothing on the screen moves.
       display = session.createVirtualDisplay(
-        "seekora-screen-analysis", size.x, size.y, resources.displayMetrics.densityDpi,
+        "seekora-screen-analysis", w, h, resources.displayMetrics.densityDpi,
         DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, imageReader.surface, null, main
       )
-      main.postDelayed({ grabFrame(imageReader) }, SETTLE_MS)
+      recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+      active = this
+      true
     } catch (_: Exception) {
-      finish("failed", "", 0, 0)
+      releaseSession()
+      false
     }
   }
 
-  /** The first frame can arrive a moment after the display is created, so poll briefly. */
-  private fun grabFrame(imageReader: ImageReader) {
-    if (finished) return
-    val image = try { imageReader.acquireLatestImage() } catch (_: Exception) { null }
+  private fun screenSize(): Pair<Int, Int> {
+    val size = Point()
+    val windows = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    @Suppress("DEPRECATION") windows.defaultDisplay.getRealSize(size)
+    return size.x to size.y
+  }
+
+  private fun newReader(w: Int, h: Int): ImageReader =
+    ImageReader.newInstance(w, h, PixelFormat.RGBA_8888, 3).apply {
+      setOnImageAvailableListener({ source ->
+        val image = try { source.acquireLatestImage() } catch (_: Exception) { null }
+        if (image == null) return@setOnImageAvailableListener
+        latest?.close()
+        latest = image
+      }, main)
+    }
+
+  private fun startCapture(action: String?): Boolean {
+    val virtual = display ?: return false
+    if (capturing) return true
+    capturing = true
+    captureId = UUID.randomUUID().toString()
+    captureAction = action
+    deadline = System.currentTimeMillis() + TIMEOUT_MS
+    try {
+      // The screen may have rotated since the last capture.
+      val (w, h) = screenSize()
+      if (w != width || h != height) {
+        width = w; height = h
+        virtual.surface = null
+        reader?.close()
+        reader = newReader(w, h)
+        virtual.resize(w, h, resources.displayMetrics.densityDpi)
+      }
+      // Attaching the surface makes Android draw the screen into it; the overlay leaving the
+      // screen at the same moment guarantees a fresh frame even when nothing else moves.
+      virtual.surface = reader?.surface
+    } catch (_: Exception) {
+      finishCapture("failed", "", 0, 0)
+      return true
+    }
+    main.postDelayed(::grabFrame, SETTLE_MS)
+    return true
+  }
+
+  private fun grabFrame() {
+    if (!capturing) return
+    val image = latest
     if (image == null) {
-      main.postDelayed({ grabFrame(imageReader) }, RETRY_MS)
+      if (System.currentTimeMillis() > deadline) finishCapture("failed", "", 0, 0)
+      else main.postDelayed(::grabFrame, RETRY_MS)
       return
     }
+    latest = null
     val bitmap = try { toBitmap(image) } catch (_: Exception) { null } finally { image.close() }
-    // The capture is done: release the screen immediately, before the slower text recognition.
-    releaseProjection()
-    if (bitmap == null) finish("failed", "", 0, 0) else readText(bitmap)
+    // Stop drawing into the reader straight away, before the slower text recognition.
+    detachSurface()
+    AssistantBus.captureTaken()
+    if (bitmap == null) finishCapture("failed", "", 0, 0) else readText(bitmap)
+  }
+
+  private fun detachSurface() {
+    try { display?.surface = null } catch (_: Exception) {}
+    latest?.close()
+    latest = null
   }
 
   private fun toBitmap(image: Image): Bitmap {
@@ -130,48 +219,64 @@ class ScreenCaptureService : Service() {
   }
 
   private fun readText(bitmap: Bitmap) {
-    val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-    recognizer.process(InputImage.fromBitmap(bitmap, 0))
+    val client = recognizer
+    if (client == null) {
+      bitmap.recycle()
+      finishCapture("failed", "", 0, 0)
+      return
+    }
+    client.process(InputImage.fromBitmap(bitmap, 0))
       .addOnSuccessListener { result ->
         // Reading order: top to bottom, then left to right.
         val blocks = result.textBlocks.sortedWith(compareBy({ it.boundingBox?.top ?: 0 }, { it.boundingBox?.left ?: 0 }))
         val text = blocks.joinToString("\n\n") { block -> block.lines.joinToString("\n") { it.text } }.trim()
         val lines = blocks.sumOf { it.lines.size }
-        finish(if (text.isEmpty()) "empty" else "ok", text, blocks.size, lines)
+        finishCapture(if (text.isEmpty()) "empty" else "ok", text, blocks.size, lines)
       }
-      .addOnFailureListener { finish("failed", "", 0, 0) }
-      .addOnCompleteListener {
-        bitmap.recycle()
-        recognizer.close()
-      }
+      .addOnFailureListener { finishCapture("failed", "", 0, 0) }
+      .addOnCompleteListener { bitmap.recycle() }
   }
 
-  private fun releaseProjection() {
+  private fun finishCapture(status: String, text: String, blocks: Int, lines: Int) {
+    if (!capturing) return
+    capturing = false
+    main.removeCallbacksAndMessages(null)
+    detachSurface()
+    report(status, text, blocks, lines, captureId, captureAction)
+  }
+
+  private fun report(status: String, text: String, blocks: Int, lines: Int, id: String, action: String?) {
+    AssistantBus.captureFinished(CaptureResult(status, id, System.currentTimeMillis(), text, blocks, lines, action))
+  }
+
+  private fun endSession() {
+    finishCapture("failed", "", 0, 0)
+    releaseSession()
+    stopSelf()
+  }
+
+  private fun releaseSession() {
+    if (active === this) active = null
+    main.removeCallbacksAndMessages(null)
+    latest?.close()
+    latest = null
     try { display?.release() } catch (_: Exception) {}
     display = null
     try { reader?.close() } catch (_: Exception) {}
     reader = null
+    try { recognizer?.close() } catch (_: Exception) {}
+    recognizer = null
     projection?.let {
       try { it.unregisterCallback(projectionCallback) } catch (_: Exception) {}
       try { it.stop() } catch (_: Exception) {}
     }
     projection = null
-  }
-
-  private fun finish(status: String, text: String, blocks: Int, lines: Int) {
-    if (finished) return
-    finished = true
-    main.removeCallbacksAndMessages(null)
-    releaseProjection()
-    AssistantBus.captureFinished(
-      CaptureResult(status, captureId, System.currentTimeMillis(), text, blocks, lines, AssistantBus.pendingCaptureAction)
-    )
-    stopSelf()
+    AssistantBus.screenSessionChanged()
   }
 
   override fun onDestroy() {
-    main.removeCallbacksAndMessages(null)
-    releaseProjection()
+    finishCapture("failed", "", 0, 0)
+    releaseSession()
     super.onDestroy()
   }
 
@@ -187,6 +292,7 @@ class ScreenCaptureService : Service() {
       .setSmallIcon(R.drawable.seekora_ic_scan)
       .setContentTitle(strings.captureNotificationTitle)
       .setContentText(strings.captureNotificationText)
+      .setStyle(Notification.BigTextStyle().bigText(strings.captureNotificationText))
       .setOngoing(true)
       .build()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

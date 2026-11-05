@@ -56,6 +56,13 @@ internal class OverlayController(
 
   private class ChatMessage(val id: String, val role: String, var text: String, var isError: Boolean = false)
 
+  private companion object {
+    /** How long Android's consent dialog may take to appear before the launch counts as refused. */
+    const val CONSENT_LAUNCH_MS = 3000L
+    /** Longer than the capture service's own timeout, so this only catches a capture that went silent. */
+    const val CAPTURE_WATCHDOG_MS = 10_000L
+  }
+
   private val main = Handler(Looper.getMainLooper())
   private val overlayType =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
@@ -82,6 +89,12 @@ internal class OverlayController(
   private var screenSummary: String? = null
   private var panelOpen = false
   private var hiddenForCapture = false
+  /** The picture is taken and its text is still being read. */
+  private var readingScreen = false
+  /** Changes with every hide, so a timer from an earlier capture cannot end a later one. */
+  private var hideToken = 0
+  /** A typed question (message id, text) held until the screen under the chat has been read. */
+  private var pendingQuestion: Pair<String, String>? = null
 
   private var bubble: View? = null
   private var bubbleParams: WindowManager.LayoutParams? = null
@@ -312,7 +325,7 @@ internal class OverlayController(
           if (dragging) snapToEdge(view, params, pad)
           else if (!longPressed && event.actionMasked == MotionEvent.ACTION_UP) {
             view.performClick()
-            openPanel()
+            openFromBubble()
           }
         }
       }
@@ -337,18 +350,6 @@ internal class OverlayController(
     }
   }
 
-  private fun moveBubbleTo(onRight: Boolean) {
-    val view = bubble ?: return
-    val params = bubbleParams ?: return
-    val area = area()
-    val pad = bubblePad
-    val range = bubbleYRange(area)
-    val span = max(1, range.last - range.first)
-    BubblePosition.save(service, BubblePosition.Saved(onRight, ((params.y + pad - range.first).toFloat() / span).coerceIn(0f, 1f)))
-    params.x = bubbleX(onRight, area) - pad
-    updateWindow(view, params)
-  }
-
   private fun showMenu() {
     val params = bubbleParams ?: return
     dismissMenu()
@@ -368,8 +369,9 @@ internal class OverlayController(
         action()
       }
     })
-    row(strings.menuOpen, palette.text) { openPanel() }
-    row(if (onRight) strings.menuMoveLeft else strings.menuMoveRight, palette.text) { moveBubbleTo(!onRight) }
+    row(strings.menuOpen, palette.text) { openFromBubble() }
+    if (ScreenCaptureService.sessionActive) row(strings.menuStopReading, palette.text) { ScreenCaptureService.stop(service) }
+    else row(strings.menuReadScreen, palette.text) { readScreen("") }
     row(strings.menuClose, palette.error) { shutDown("user") }
 
     val holder = FrameLayout(ui).apply {
@@ -401,6 +403,13 @@ internal class OverlayController(
   }
 
   // ---------------------------------------------------------------- chat window
+
+  /** With screen reading on, the chat opens already knowing what is under the bubble. */
+  private fun openFromBubble() {
+    // An answer still streaming belongs to the screen it was asked about, so reopen without reading.
+    val read = ScreenCaptureService.sessionActive && AssistantBus.bridge != null && generatingId == null
+    if (read) readScreen("auto") else openPanel()
+  }
 
   private fun openPanel() {
     if (panel != null || hiddenForCapture) return
@@ -494,8 +503,9 @@ internal class OverlayController(
     titles.addView(label(strings.title, 16f, palette.text, bold = true))
     statusView = label("", 12f, palette.textSecondary).also { titles.addView(it) }
     header.addView(titles)
-    header.addView(iconButton(R.drawable.seekora_ic_minimize, strings.minimize, palette.text) { closePanel() })
-    header.addView(iconButton(R.drawable.seekora_ic_close, strings.close, palette.text) { shutDown("user") })
+    // Closing the chat goes back to the bubble. Turning the assistant off is in the bubble's
+    // long-press menu and the notification, so it never happens by accident here.
+    header.addView(iconButton(R.drawable.seekora_ic_close, strings.minimize, palette.text) { closePanel() })
     column.addView(header)
     column.addView(divider())
 
@@ -567,7 +577,6 @@ internal class OverlayController(
     micButton = iconButton(R.drawable.seekora_ic_mic, strings.voiceStart, palette.tint) { toggleVoice() }
       .also { row.addView(it) }
     updateMicButton(voice.isListening)
-    row.addView(iconButton(R.drawable.seekora_ic_scan, strings.actionAnalyze, palette.tint) { explainCapture("") })
     sendButton = iconButton(R.drawable.seekora_ic_send, strings.send, palette.tint) {
       if (generatingId != null) AssistantBus.toJs("onCancelRequested") else submitTyped()
     }.also { row.addView(it) }
@@ -583,9 +592,9 @@ internal class OverlayController(
     addBubbleView(ChatMessage("greeting", "assistant", strings.greeting))
     if (transcript.isEmpty()) {
       addAction(strings.actionAsk, R.drawable.seekora_ic_send) { focusInput() }
-      addAction(strings.actionAnalyze, R.drawable.seekora_ic_scan) { explainCapture("") }
-      addAction(strings.actionExplain, R.drawable.seekora_ic_scan) { explainCapture("explain") }
-      addAction(strings.actionSummarize, R.drawable.seekora_ic_scan) { explainCapture("summarize") }
+      if (!ScreenCaptureService.sessionActive) addAction(strings.actionAnalyze, R.drawable.seekora_ic_scan) { readScreen("") }
+      addAction(strings.actionExplain, R.drawable.seekora_ic_scan) { readScreen("explain") }
+      addAction(strings.actionSummarize, R.drawable.seekora_ic_scan) { readScreen("summarize") }
     }
     transcript.forEach { addBubbleView(it) }
     scrollToEnd()
@@ -675,7 +684,7 @@ internal class OverlayController(
   }
 
   private fun updateStatus() {
-    statusView?.text = when (modelStatus) {
+    statusView?.text = if (readingScreen) strings.capturing else when (modelStatus) {
       "ready" -> strings.statusReady
       "loading" -> strings.statusLoading
       "busy" -> strings.statusBusy
@@ -724,17 +733,40 @@ internal class OverlayController(
   private fun submitTyped() {
     val field = input ?: return
     val text = field.text.toString().trim()
-    if (text.isEmpty() || generatingId != null) return
+    if (text.isEmpty() || generatingId != null || pendingQuestion != null) return
     voice.cancel()
     voicePrefix = ""
     field.setText("")
+    if (ScreenCaptureService.sessionActive && AssistantBus.bridge != null) {
+      // The app under the chat may have changed since it was last read, and the chat covers part
+      // of it. Read the whole screen again first; the question goes out once the text is in.
+      val message = addMessage("user", text)
+      pendingQuestion = message.id to text
+      hideForCapture()
+      if (!ScreenCaptureService.capture("refresh")) {
+        hiddenForCapture = false
+        openPanel()
+        deliverPending()
+      } else watchCapture("refresh", CAPTURE_WATCHDOG_MS)
+      return
+    }
     send(text, "chat")
   }
 
   private fun send(text: String, mode: String) {
     val message = addMessage("user", text)
-    val delivered = AssistantBus.toJs("onUserMessage", mapOf("id" to message.id, "text" to text, "mode" to mode))
+    deliver(message.id, text, mode)
+  }
+
+  private fun deliver(id: String, text: String, mode: String) {
+    val delivered = AssistantBus.toJs("onUserMessage", mapOf("id" to id, "text" to text, "mode" to mode))
     if (!delivered) showAppClosed()
+  }
+
+  private fun deliverPending() {
+    val (id, text) = pendingQuestion ?: return
+    pendingQuestion = null
+    deliver(id, text, "chat")
   }
 
   /** The app's JavaScript side is gone, so nothing can answer. Offer to reopen Seekora. */
@@ -749,7 +781,28 @@ internal class OverlayController(
     scrollToEnd()
   }
 
-  /** Step one of a capture: say plainly what will happen, and let the user back out. */
+  /** Reads the screen now if the user already allowed it, otherwise asks first. */
+  private fun readScreen(action: String) {
+    if (generatingId != null) return
+    if (ScreenCaptureService.sessionActive) {
+      // Nothing could receive the text, so do not take the picture.
+      if (AssistantBus.bridge == null) {
+        openPanel()
+        showAppClosed()
+        return
+      }
+      hideForCapture()
+      if (!ScreenCaptureService.capture(action)) {
+        hiddenForCapture = false
+        openPanel()
+      } else watchCapture(action.ifEmpty { null }, CAPTURE_WATCHDOG_MS)
+      return
+    }
+    openPanel()
+    explainCapture(action)
+  }
+
+  /** Step one of turning on screen reading: say plainly what will happen, and let the user back out. */
   private fun explainCapture(action: String) {
     if (generatingId != null || confirmCard != null) return
     val column = messagesColumn ?: return
@@ -799,30 +852,80 @@ internal class OverlayController(
     scrollToEnd()
   }
 
-  /** Step two: get out of the way, then hand over to Android's own consent dialog. */
-  private fun startCapture(action: String) {
+  /** Takes every Seekora window off the screen so it is not in the picture. The chat reopens after. */
+  private fun hideForCapture() {
     hiddenForCapture = true
+    hideToken += 1
     panelOpen = true
     hideKeyboard()
     voice.cancel()
+    dismissMenu()
     removeWindow(panel)
+    removeWindow(bubble)
     panel = null
+    bubble = null
     statusView = null; messagesColumn = null; scroll = null; input = null
-    sendButton = null; micButton = null; contextRow = null; contextLabel = null
+    sendButton = null; micButton = null; contextRow = null; contextLabel = null; confirmCard = null
     messageViews.clear()
-    AssistantBus.pendingCaptureAction = action.ifEmpty { null }
+  }
+
+  /** Step two: get out of the way, then hand over to Android's own consent dialog. */
+  private fun startCapture(action: String) {
+    val wanted = action.ifEmpty { null }
+    AssistantBus.pendingCaptureAction = wanted
+    AssistantBus.consentShown = false
+    // Launched while the chat is still on screen: recent Android versions let an overlay app open an
+    // activity from the background only while one of its windows is visible.
     try {
       service.startActivity(Intent(service, ScreenCaptureActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     } catch (_: Exception) {
-      AssistantBus.captureFinished(CaptureResult("failed", UUID.randomUUID().toString(), System.currentTimeMillis(), "", 0, 0, action.ifEmpty { null }))
+      giveUpCapture(wanted)
+      return
     }
+    hideForCapture()
+    // Android can refuse the launch without saying so. Then no answer ever comes back, so bring the
+    // chat back instead of leaving the user with no bubble at all.
+    watchCapture(wanted, CONSENT_LAUNCH_MS) { !AssistantBus.consentShown }
+  }
+
+  /** Brings the chat back if this capture is still hidden after [delayMs] and [stuck] holds. */
+  private fun watchCapture(action: String?, delayMs: Long, stuck: () -> Boolean = { true }) {
+    val token = hideToken
+    main.postDelayed({
+      if (hiddenForCapture && hideToken == token && stuck()) giveUpCapture(action)
+    }, delayMs)
+  }
+
+  /** Ends a capture that will never report back, so the chat cannot stay hidden. */
+  private fun giveUpCapture(action: String?) {
+    AssistantBus.captureFinished(CaptureResult("failed", UUID.randomUUID().toString(), System.currentTimeMillis(), "", 0, 0, action))
   }
 
   // ---------------------------------------------------------------- calls from JavaScript
 
+  override fun onCaptureTaken() {
+    readingScreen = true
+    if (hiddenForCapture) {
+      hiddenForCapture = false
+      openPanel()
+    }
+    updateStatus()
+  }
+
   override fun onCaptureFinished(result: CaptureResult) {
-    hiddenForCapture = false
-    openPanel()
+    readingScreen = false
+    if (hiddenForCapture) {
+      hiddenForCapture = false
+      openPanel()
+    }
+    updateStatus()
+    // AssistantBus has already handed the screen text to JavaScript, so the question follows it.
+    deliverPending()
+  }
+
+  override fun onScreenSessionChanged() {
+    // The quick actions offer to turn screen reading on only while it is off.
+    if (panel != null && transcript.isEmpty()) renderTranscript()
   }
 
   override fun beginReply(id: String) {

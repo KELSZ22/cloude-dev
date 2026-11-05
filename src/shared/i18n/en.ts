@@ -71,9 +71,9 @@ export const en = {
     sourceOnline: "Source and license links need an internet connection.",
     errors: {
       network:
-        "Could not reach Wikipedia. Check your connection and try again. Your saved articles are still available in the Library.",
+        "Could not load articles right now. Check your connection and try again. Your saved articles are still available in the Library.",
       unavailable:
-        "Wikipedia could not provide readable text for this article or search. Please try another topic.",
+        "No readable text is available for this article or search. Please try another topic.",
       tooLarge:
         "This article is too large for a text download. Please choose a shorter article.",
       storage:
@@ -623,7 +623,7 @@ export const en = {
     minimize: "Minimize",
     close: "Turn off floating assistant",
     actionAsk: "Ask a question",
-    actionAnalyze: "Analyze current screen",
+    actionAnalyze: "Let Seekora read my screen",
     actionExplain: "Explain this page",
     actionSummarize: "Summarize content",
     statusReady: "Seekora AI ready offline",
@@ -647,24 +647,26 @@ export const en = {
     voiceNoMatch: "Nothing was heard. Tap the microphone and try again.",
     voiceFailed:
       "Voice input stopped unexpectedly. Tap the microphone to try again.",
-    captureTitle: "Analyze this screen?",
+    captureTitle: "Let Seekora read your screen?",
     captureBody:
-      "Seekora will take one picture of the screen, read its words on this device, and discard the picture. Only words are read, not pictures or video. Nothing is uploaded. Android will ask you to confirm.",
+      "While the bubble is on, Seekora reads the words on your screen each time you open it, so you can ask about any app. Only words are read, not pictures or video. Text is read on this device and nothing is uploaded. Android will ask you to confirm once. Stop anytime from the bubble's menu.",
+    capturing: "Reading the screen...",
     captureContinue: "Continue",
     captureCancel: "Cancel",
     screenAttached: "Screen text attached",
     discard: "Discard",
     menuOpen: "Open Seekora AI",
-    menuMoveLeft: "Move to left",
-    menuMoveRight: "Move to right",
+    menuReadScreen: "Read my screen",
+    menuStopReading: "Stop reading screen",
     menuClose: "Turn off",
     notificationChannel: "Floating assistant",
     notificationTitle: "Seekora floating assistant is on",
     notificationText:
-      "Tap the bubble to ask a question. It never reads your screen unless you ask.",
+      "Tap the bubble to ask a question. It reads your screen only after you allow it.",
     notificationStop: "Turn off",
-    captureNotificationTitle: "Seekora is reading this screen",
-    captureNotificationText: "One capture, processed on this device.",
+    captureNotificationTitle: "Seekora can read your screen",
+    captureNotificationText:
+      "Words on screen are read on this device when you open the bubble. Stop it from the bubble's menu.",
     linesRead: "{{count}} lines",
     captureReady:
       "I read the words on your screen. I cannot see pictures or video. What would you like to know about the text?",
@@ -690,7 +692,7 @@ export const en = {
     outOfScopeDevice:
       "I can read and explain things, but I cannot send messages, set alarms or control anything else on your phone.",
     outOfScopePersonal:
-      "I cannot see your messages, photos or accounts. Share the text you want help with instead.",
+      "I cannot open your accounts. To ask about an email or message, open it on your screen, then tap the bubble and I'll read the words there.",
     stopped: "Stopped.",
     failed: "Something went wrong while answering.",
     memoryUnloaded:
